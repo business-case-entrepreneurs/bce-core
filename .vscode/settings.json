@@ -1,0 +1,23 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+
+    "**/node_modules": true,
+    "**/package-lock.json": true,
+
+    "packages/*/.rpt2_cache": true,
+    "packages/*/.stencil": true,
+    "packages/*/dist": false,
+    "packages/*/loader": true,
+    "packages/*/www": true,
+    "packages/*/src/components.d.ts": true,
+
+    ".gitignore": true,
+    "package-lock.json": true
+  },
+  "prettier.ignorePath": "config/.prettierignore"
+}

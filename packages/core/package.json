@@ -1,0 +1,32 @@
+{
+  "name": "@bcase/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "license": "ISC",
+  "author": {
+    "name": "BCE Solutions",
+    "email": "solutions@bcase.nl"
+  },
+  "files": [
+    "dist",
+    "scss",
+    "loader"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/esm/es5/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "stencil build --prerender --docs-json ./dist/docs.json",
+    "clean": "rimraf .stencil dist loader www",
+    "serve": "stencil build --dev --watch --serve --docs-json ./dist/docs.json"
+  },
+  "devDependencies": {
+    "@stencil/core": "^0.17.0",
+    "@stencil/sass": "^0.1.1",
+    "@types/autoprefixer": "^9.1.1",
+    "rimraf": "^2.6.3"
+  },
+  "collection": "dist/collection/collection-manifest.json",
+  "sass": "scss/index.scss"
+}

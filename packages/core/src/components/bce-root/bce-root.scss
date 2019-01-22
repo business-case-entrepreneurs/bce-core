@@ -1,0 +1,38 @@
+bce-root {
+  /* Primary and accent colors */
+  @include define-color(primary, #72222f, #fff);
+  @include define-color(secondary, #333333, #fff);
+
+  /* Semantic colors */
+  @include define-color(success, #1a562f, #fff);
+  @include define-color(error, #b53131, #fff);
+  @include define-color(warning, #d29e31, #fff);
+  @include define-color(info, #3e8ebf, #fff);
+}
+
+bce-root {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  > bce-status-bar {
+    flex: 0 0 20px;
+  }
+
+  > header {
+    flex: 0 0 56px;
+    background-color: bce-color(primary);
+    @include elevate(4);
+  }
+
+  > main {
+    flex: 1 0 auto;
+  }
+
+  > footer {
+    flex: 0 0 auto;
+  }
+}

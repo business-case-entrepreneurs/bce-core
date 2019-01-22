@@ -1,0 +1,15 @@
+@function bce-color($name, $modifier: 'n') {
+  @return unquote('var(--bce-color-#{$name}-#{$modifier})');
+}
+
+@function bce-color-text($name) {
+  @return bce-color($name, 't');
+}
+
+@function bce-color-light($name) {
+  @return bce-color($name, 'l');
+}
+
+@function bce-color-dark($name) {
+  @return bce-color($name, 'd');
+}

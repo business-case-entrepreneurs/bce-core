@@ -1,0 +1,9 @@
+@mixin define-color($name, $color, $color-text: '') {
+  --bce-color-#{$name}-n: #{$color};
+  --bce-color-#{$name}-l: #{lighten($color, 10%)};
+  --bce-color-#{$name}-d: #{darken($color, 10%)};
+
+  @if $color-text != '' {
+    --bce-color-#{$name}-t: #{$color-text};
+  }
+}
