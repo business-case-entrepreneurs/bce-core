@@ -1,0 +1,25 @@
+@mixin define-color($name, $color, $color-text: '') {
+  --bce-color-#{$name}-l: #{lighten($color, 10%)};
+  --bce-color-#{$name}-n: #{$color};
+  --bce-color-#{$name}-d: #{darken($color, 10%)};
+
+  @if $color-text != '' {
+    --bce-color-#{$name}-t: #{$color-text};
+  }
+}
+
+@function bce-color($name, $modifier: 'n') {
+  @return unquote('var(--bce-color-#{$name}-#{$modifier})');
+}
+
+@function bce-color-t($name) {
+  @return bce-color($name, 't');
+}
+
+@function bce-color-l($name) {
+  @return bce-color($name, 'l');
+}
+
+@function bce-color-d($name) {
+  @return bce-color($name, 'd');
+}

@@ -1,13 +1,18 @@
 bce-root {
   /* Primary and accent colors */
   @include define-color(primary, #72222f, #fff);
-  @include define-color(secondary, #333333, #fff);
+  @include define-color(secondary, #2d3142, #fff);
+  @include define-color(tertiary, #384d48, #fff);
 
   /* Semantic colors */
   @include define-color(success, #1a562f, #fff);
   @include define-color(error, #b53131, #fff);
   @include define-color(warning, #d29e31, #fff);
   @include define-color(info, #3e8ebf, #fff);
+
+  /* Neutral colors */
+  @include define-color(dark, #231f20, #fff);
+  @include define-color(light, #f7f9f9, #000);
 }
 
 bce-root {
@@ -17,6 +22,11 @@ bce-root {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: bce-color(light);
+
+  * {
+    box-sizing: border-box;
+  }
 
   > bce-status-bar {
     flex: 0 0 20px;
