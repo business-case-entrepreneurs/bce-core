@@ -15,6 +15,10 @@
       <header></header>
       <main>
         <h2>Business Case Entrepreneurs</h2>
+        <bce-switch value="true" id="switch1"></bce-switch><br />
+        <bce-switch value="true" color="secondary"></bce-switch><br />
+        <bce-switch value="true" color="tertiary"></bce-switch>
+
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           Reprehenderit assumenda omnis sint, tenetur explicabo optio quam natus
@@ -54,5 +58,10 @@
       </main>
     </bce-root>
     <script src="/build/bce.js"></script>
+    <script>
+      document
+        .querySelectorAll('bce-switch')
+        .forEach(s => s.addEventListener('input', console.log.bind(console)));
+    </script>
   </body>
 </html>

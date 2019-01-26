@@ -1,0 +1,51 @@
+bce-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  @include bce-color('switch');
+
+  label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    > input {
+      display: none;
+    }
+
+    > div {
+      width: 36px;
+      height: 12px;
+      border-radius: 14px;
+
+      &:after {
+        @include elevate(1);
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+
+      &[data-off] {
+        background-color: bce-color-d(light);
+
+        &:after {
+          left: 0;
+          background-color: bce-color(light);
+        }
+      }
+
+      &[data-on] {
+        background-color: bce-color-l('switch');
+
+        &:after {
+          background-color: bce-color('switch');
+        }
+      }
+    }
+  }
+}

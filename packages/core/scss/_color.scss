@@ -8,6 +8,17 @@
   }
 }
 
+@mixin bce-color($name) {
+  @each $current in ('tertiary' 'secondary' 'primary') {
+    &[color='#{$current}'] {
+      --bce-color-#{$name}-l: #{bce-color($current, 'l')};
+      --bce-color-#{$name}-n: #{bce-color($current, 'n')};
+      --bce-color-#{$name}-d: #{bce-color($current, 'd')};
+      --bce-color-#{$name}-t: #{bce-color($current, 't')};
+    }
+  }
+}
+
 @function bce-color($name, $modifier: 'n') {
   @return unquote('var(--bce-color-#{$name}-#{$modifier})');
 }

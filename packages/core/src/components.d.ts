@@ -8,6 +8,9 @@
 import '@stencil/core';
 
 
+import {
+  Color,
+} from './models/color';
 
 
 export namespace Components {
@@ -17,17 +20,29 @@ export namespace Components {
 
   interface BceStatusBar {}
   interface BceStatusBarAttributes extends StencilHTMLAttributes {}
+
+  interface BceSwitch {
+    'color': Color;
+    'value': boolean;
+  }
+  interface BceSwitchAttributes extends StencilHTMLAttributes {
+    'color'?: Color;
+    'onInput'?: (event: CustomEvent<boolean>) => void;
+    'value'?: boolean;
+  }
 }
 
 declare global {
   interface StencilElementInterfaces {
     'BceRoot': Components.BceRoot;
     'BceStatusBar': Components.BceStatusBar;
+    'BceSwitch': Components.BceSwitch;
   }
 
   interface StencilIntrinsicElements {
     'bce-root': Components.BceRootAttributes;
     'bce-status-bar': Components.BceStatusBarAttributes;
+    'bce-switch': Components.BceSwitchAttributes;
   }
 
 
@@ -43,14 +58,22 @@ declare global {
     new (): HTMLBceStatusBarElement;
   };
 
+  interface HTMLBceSwitchElement extends Components.BceSwitch, HTMLStencilElement {}
+  var HTMLBceSwitchElement: {
+    prototype: HTMLBceSwitchElement;
+    new (): HTMLBceSwitchElement;
+  };
+
   interface HTMLElementTagNameMap {
     'bce-root': HTMLBceRootElement
     'bce-status-bar': HTMLBceStatusBarElement
+    'bce-switch': HTMLBceSwitchElement
   }
 
   interface ElementTagNameMap {
     'bce-root': HTMLBceRootElement;
     'bce-status-bar': HTMLBceStatusBarElement;
+    'bce-switch': HTMLBceSwitchElement;
   }
 
 
