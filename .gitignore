@@ -1,6 +1,7 @@
-.rpt2_cache/
+packages/*/.rpt2_cache/
 packages/*/dist/
 packages/*/loader/
+packages/*/src/components.d.ts
 packages/*/www/
 node_modules/
 
