@@ -15,6 +15,13 @@ import {
 
 export namespace Components {
 
+  interface BceHeader {
+    'color': Color;
+  }
+  interface BceHeaderAttributes extends StencilHTMLAttributes {
+    'color'?: Color;
+  }
+
   interface BceRoot {}
   interface BceRootAttributes extends StencilHTMLAttributes {}
 
@@ -34,17 +41,25 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'BceHeader': Components.BceHeader;
     'BceRoot': Components.BceRoot;
     'BceStatusBar': Components.BceStatusBar;
     'BceSwitch': Components.BceSwitch;
   }
 
   interface StencilIntrinsicElements {
+    'bce-header': Components.BceHeaderAttributes;
     'bce-root': Components.BceRootAttributes;
     'bce-status-bar': Components.BceStatusBarAttributes;
     'bce-switch': Components.BceSwitchAttributes;
   }
 
+
+  interface HTMLBceHeaderElement extends Components.BceHeader, HTMLStencilElement {}
+  var HTMLBceHeaderElement: {
+    prototype: HTMLBceHeaderElement;
+    new (): HTMLBceHeaderElement;
+  };
 
   interface HTMLBceRootElement extends Components.BceRoot, HTMLStencilElement {}
   var HTMLBceRootElement: {
@@ -65,12 +80,14 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'bce-header': HTMLBceHeaderElement
     'bce-root': HTMLBceRootElement
     'bce-status-bar': HTMLBceStatusBarElement
     'bce-switch': HTMLBceSwitchElement
   }
 
   interface ElementTagNameMap {
+    'bce-header': HTMLBceHeaderElement;
     'bce-root': HTMLBceRootElement;
     'bce-status-bar': HTMLBceStatusBarElement;
     'bce-switch': HTMLBceSwitchElement;

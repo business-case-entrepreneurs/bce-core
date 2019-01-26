@@ -1,0 +1,6 @@
+bce-header {
+  position: relative;
+  display: block;
+  background-color: bce-color('header');
+  @include bce-color('header');
+}
