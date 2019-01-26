@@ -11,10 +11,10 @@ export class Switch {
   public value: boolean = false;
 
   @Prop({ reflectToAttr: true })
-  public color: Color = Color.Primary;
+  public color?: Color;
 
   @Event({ eventName: 'input' })
-  public onInput!: EventEmitter<boolean>;
+  private onInput!: EventEmitter<boolean>;
 
   private onChange = (event: Event) => {
     event.preventDefault();

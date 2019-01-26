@@ -1,10 +1,15 @@
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
+
+import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-status-bar',
   styleUrl: 'bce-status-bar.scss'
 })
 export class StatusBar {
+  @Prop({ reflectToAttr: true })
+  public color?: Color;
+
   render() {
     return (
       <svg>

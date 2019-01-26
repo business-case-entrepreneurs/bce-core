@@ -8,7 +8,7 @@ import { Color } from '../../models/color';
 })
 export class Header {
   @Prop({ reflectToAttr: true })
-  public color: Color = Color.Primary;
+  public color?: Color;
 
   render() {
     return <slot />;

@@ -9,7 +9,12 @@
 }
 
 @mixin bce-color($name) {
-  @each $current in ('tertiary' 'secondary' 'primary') {
+  --bce-color-#{$name}-l: #{bce-color(primary, 'l')};
+  --bce-color-#{$name}-n: #{bce-color(primary, 'n')};
+  --bce-color-#{$name}-d: #{bce-color(primary, 'd')};
+  --bce-color-#{$name}-t: #{bce-color(primary, 't')};
+
+  @each $current in (tertiary secondary primary) {
     &[color='#{$current}'] {
       --bce-color-#{$name}-l: #{bce-color($current, 'l')};
       --bce-color-#{$name}-n: #{bce-color($current, 'n')};

@@ -12,11 +12,11 @@
   <body>
     <bce-root>
       <bce-status-bar></bce-status-bar>
-      <header></header>
+      <bce-header></bce-header>
       <main>
         <h2>Business Case Entrepreneurs</h2>
-        <bce-switch value="true" id="switch1"></bce-switch><br />
-        <bce-switch value="true" color="secondary"></bce-switch><br />
+        <bce-switch value="true" id="switch"></bce-switch>
+        <bce-switch value="true" color="secondary"></bce-switch>
         <bce-switch value="true" color="tertiary"></bce-switch>
 
         <p>
@@ -60,8 +60,8 @@
     <script src="/build/bce.js"></script>
     <script>
       document
-        .querySelectorAll('bce-switch')
-        .forEach(s => s.addEventListener('input', console.log.bind(console)));
+        .getElementById('switch')
+        .addEventListener('input', console.log.bind(console));
     </script>
   </body>
 </html>

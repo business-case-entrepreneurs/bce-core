@@ -1,9 +1,9 @@
 bce-switch {
+  @include bce-color('switch');
   position: relative;
   display: inline-block;
   width: 36px;
   height: 20px;
-  @include bce-color('switch');
 
   label {
     display: flex;

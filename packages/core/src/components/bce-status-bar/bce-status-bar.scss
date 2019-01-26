@@ -1,10 +1,11 @@
 bce-status-bar {
+  @include bce-color('sb');
   position: relative;
   display: block;
   width: 100%;
   height: 20px;
   z-index: 20;
-  color: bce-color(primary);
+  color: bce-color('sb');
 
   > svg {
     position: fixed;
@@ -12,6 +13,6 @@ bce-status-bar {
     width: 100%;
     height: 20px;
     transform: scale(-1, 1);
-    background-color: bce-color-d(primary);
+    background-color: bce-color-d('sb');
   }
 }
