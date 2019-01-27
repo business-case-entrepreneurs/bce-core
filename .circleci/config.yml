@@ -20,6 +20,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
+            - packages/*/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm run build
       - persist_to_workspace:
