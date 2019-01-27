@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10-browsers
     working_directory: ~/bce-core
     steps:
       - checkout
@@ -28,7 +28,7 @@ jobs:
           paths: packages/core/www
   deploy:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10-browsers
     working_directory: ~/bce-core
     steps:
       - add_ssh_keys:
