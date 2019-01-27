@@ -41,7 +41,7 @@ git add -A
 # now commit
 git commit --allow-empty -m "[circleci] Deploy to GitHub pages"
 # and push, but send any output to /dev/null to hide anything sensitive
-git push --force --quiet origin master
+git push --force --quiet origin gh-pages
 # go back to where we started and remove the gh-pages git repo we made and used
 # for deployment
 cd ..
