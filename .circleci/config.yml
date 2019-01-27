@@ -11,11 +11,11 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/bce-core      
+          at: ~/bce-core
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run: npm i
       - save_cache:
           paths:
@@ -28,10 +28,6 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:7.10
-    working_directory: ~/bce-core
-    steps:
-    docker:
-      - image: circleci/node:9.2.0
     working_directory: ~/bce-core
     steps:
       - add_ssh_keys:
