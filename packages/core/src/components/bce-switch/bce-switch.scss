@@ -1,5 +1,7 @@
+$colors: primary secondary tertiary success error warning info dark light;
+
 bce-switch {
-  @include bce-color('switch');
+  @include bce-color('switch', $colors);
   position: relative;
   display: inline-block;
   width: 36px;

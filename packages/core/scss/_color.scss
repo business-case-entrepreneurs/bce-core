@@ -8,20 +8,28 @@
   }
 }
 
-@mixin bce-color($name) {
-  --bce-color-#{$name}-l: #{bce-color(primary, 'l')};
-  --bce-color-#{$name}-n: #{bce-color(primary, 'n')};
-  --bce-color-#{$name}-d: #{bce-color(primary, 'd')};
-  --bce-color-#{$name}-t: #{bce-color(primary, 't')};
+@mixin bce-color($name, $colors: primary secondary tertiary) {
+  // Use the first color as base color
+  @include bce-color-section($name, nth($colors, 1));
 
-  @each $current in (tertiary secondary primary) {
-    &[color='#{$current}'] {
-      --bce-color-#{$name}-l: #{bce-color($current, 'l')};
-      --bce-color-#{$name}-n: #{bce-color($current, 'n')};
-      --bce-color-#{$name}-d: #{bce-color($current, 'd')};
-      --bce-color-#{$name}-t: #{bce-color($current, 't')};
+  // A little sass magic to loop through the list in reverse order, this is
+  // necessary because polyfills in IE don't allow dynamic use of sass variables
+  // and will always revert to showing the last color defined. When looping in
+  // reverse order the first color will end being the fallback color.
+  @for $i from length($colors) * -1 through -1 {
+    $color: nth($colors, abs($i));
+
+    &[color='#{$color}'] {
+      @include bce-color-section($name, $color);
     }
   }
+}
+
+@mixin bce-color-section($name, $color) {
+  --bce-color-#{$name}-l: #{bce-color($color, 'l')};
+  --bce-color-#{$name}-n: #{bce-color($color, 'n')};
+  --bce-color-#{$name}-d: #{bce-color($color, 'd')};
+  --bce-color-#{$name}-t: #{bce-color($color, 't')};
 }
 
 @function bce-color($name, $modifier: 'n') {
