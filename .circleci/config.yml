@@ -37,7 +37,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/bce-core
-      - run: sed -i.bak 's/<head>/<head><base href="\/bce-core">/' packages/core/www/index.html
+      - run: sed -i.bak 's/resources-url="/resources-url="\/bce-core/' packages/core/www/index.html
       - run: rm packages/core/www/index.html.bak
       - run: ./.circleci/gh-pages.sh
 
