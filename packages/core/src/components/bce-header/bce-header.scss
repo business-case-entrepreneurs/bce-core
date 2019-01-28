@@ -1,7 +1,7 @@
 bce-header {
-  @include bce-color('header');
+  @include bce-color(primary);
   position: relative;
   display: block;
   height: 56px;
-  background-color: bce-color('header');
+  background-color: bce-color();
 }

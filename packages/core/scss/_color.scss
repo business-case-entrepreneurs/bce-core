@@ -1,49 +1,45 @@
-@mixin define-color($name, $color, $color-text: '') {
-  --bce-color-#{$name}-l: #{lighten($color, 10%)};
-  --bce-color-#{$name}-n: #{$color};
-  --bce-color-#{$name}-d: #{darken($color, 10%)};
+@mixin bce-define-color($color, $name) {
+  $color1: nth($color, 1);
+  $color2: #fff;
 
-  @if $color-text != '' {
-    --bce-color-#{$name}-t: #{$color-text};
+  @if length($color) > 1 {
+    $color2: nth($color, 2);
+  }
+
+  --bce-color-#{$name}-l: #{lighten($color1, 10%)};
+  --bce-color-#{$name}-n: #{$color1};
+  --bce-color-#{$name}-d: #{darken($color1, 10%)};
+  --bce-color-#{$name}-t: #{$color2};
+
+  *[color='#{$name}'] {
+    @include bce-color($name);
   }
 }
 
-@mixin bce-color($name, $colors: primary secondary tertiary) {
-  // Use the first color as base color
-  @include bce-color-section($name, nth($colors, 1));
+@mixin bce-color($name) {
+  --bce-color-l: #{bce-color($name, 'l')};
+  --bce-color-n: #{bce-color($name, 'n')};
+  --bce-color-d: #{bce-color($name, 'd')};
+  --bce-color-t: #{bce-color($name, 't')};
+}
 
-  // A little sass magic to loop through the list in reverse order, this is
-  // necessary because polyfills in IE don't allow dynamic use of sass variables
-  // and will always revert to showing the last color defined. When looping in
-  // reverse order the first color will end being the fallback color.
-  @for $i from length($colors) * -1 through -1 {
-    $color: nth($colors, abs($i));
-
-    &[color='#{$color}'] {
-      @include bce-color-section($name, $color);
-    }
+@function bce-color($name: '', $modifier: 'n') {
+  $var-name: --bce-color;
+  @if $name != '' {
+    $var-name: --bce-color-#{$name};
   }
+
+  @return unquote('var(#{$var-name}-#{$modifier})');
 }
 
-@mixin bce-color-section($name, $color) {
-  --bce-color-#{$name}-l: #{bce-color($color, 'l')};
-  --bce-color-#{$name}-n: #{bce-color($color, 'n')};
-  --bce-color-#{$name}-d: #{bce-color($color, 'd')};
-  --bce-color-#{$name}-t: #{bce-color($color, 't')};
-}
-
-@function bce-color($name, $modifier: 'n') {
-  @return unquote('var(--bce-color-#{$name}-#{$modifier})');
-}
-
-@function bce-color-t($name) {
+@function bce-color-t($name: '') {
   @return bce-color($name, 't');
 }
 
-@function bce-color-l($name) {
+@function bce-color-l($name: '') {
   @return bce-color($name, 'l');
 }
 
-@function bce-color-d($name) {
+@function bce-color-d($name: '') {
   @return bce-color($name, 'd');
 }

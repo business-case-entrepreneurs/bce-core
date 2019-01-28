@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 
+import { Color } from '../../models/color';
 import { Input } from '../../models/input';
 
 @Component({
@@ -7,6 +8,9 @@ import { Input } from '../../models/input';
   styleUrl: 'bce-input.scss'
 })
 export class BceInput {
+  @Prop({ reflectToAttr: true })
+  public color?: Color;
+
   @Prop({ reflectToAttr: true })
   public type: Input = Input.Text;
 

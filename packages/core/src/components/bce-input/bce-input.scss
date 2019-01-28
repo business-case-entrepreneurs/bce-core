@@ -1,4 +1,5 @@
 bce-input {
+  @include bce-color(primary);
   position: relative;
   display: block;
   margin: 10px 0;
@@ -21,7 +22,7 @@ bce-input {
   }
 
   &[focus] > label {
-    color: bce-color(primary);
+    color: bce-color();
   }
 
   > input {
@@ -38,7 +39,7 @@ bce-input {
   }
 
   &[focus] > input {
-    border-color: bce-color(primary);
+    border-color: bce-color();
   }
 
   @include media-medium {

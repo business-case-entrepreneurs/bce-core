@@ -7,11 +7,11 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-switch.scss'
 })
 export class Switch {
-  @Prop({ mutable: true })
-  public value: boolean = false;
-
   @Prop({ reflectToAttr: true })
   public color?: Color;
+
+  @Prop({ mutable: true })
+  public value: boolean = false;
 
   @Event({ eventName: 'input' })
   private onInput!: EventEmitter<boolean>;
