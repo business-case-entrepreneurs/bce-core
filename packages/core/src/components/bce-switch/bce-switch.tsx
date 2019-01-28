@@ -6,24 +6,20 @@ import { Color } from '../../models/color';
   tag: 'bce-switch',
   styleUrl: 'bce-switch.scss'
 })
-export class Switch {
+export class BceSwitch {
   @Prop({ reflectToAttr: true })
   public color?: Color;
 
   @Prop({ mutable: true })
-  public value: boolean = false;
+  public value = false;
 
   @Event({ eventName: 'input' })
-  private onInput!: EventEmitter<boolean>;
+  private inputEvent!: EventEmitter<Event>;
 
   private onChange = (event: Event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const input = event.target as HTMLInputElement;
-    this.value = input.checked;
-
-    this.onInput.emit(this.value);
+    const input = event.target as HTMLInputElement | undefined;
+    if (input) this.value = input.checked;
+    this.inputEvent.emit(event);
   };
 
   render() {

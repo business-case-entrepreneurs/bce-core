@@ -6,7 +6,7 @@ import { Color } from '../../models/color';
   tag: 'bce-status-bar',
   styleUrl: 'bce-status-bar.scss'
 })
-export class StatusBar {
+export class BceStatusBar {
   @Prop({ reflectToAttr: true })
   public color?: Color;
 

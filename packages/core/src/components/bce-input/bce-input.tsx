@@ -14,14 +14,14 @@ export class BceInput {
   @Prop({ reflectToAttr: true })
   public type: Input = Input.Text;
 
+  @Prop({ mutable: true })
+  public value = '';
+
   @Prop({ reflectToAttr: true })
   public label?: string;
 
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
-
-  @Prop({ mutable: true })
-  public value = '';
 
   @Event({ eventName: 'input' })
   private inputEvent!: EventEmitter<KeyboardEvent>;
