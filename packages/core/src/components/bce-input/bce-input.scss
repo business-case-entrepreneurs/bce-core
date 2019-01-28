@@ -1,0 +1,65 @@
+bce-input {
+  position: relative;
+  display: block;
+  margin: 10px 0;
+  text-align: right;
+
+  > label {
+    position: absolute;
+    left: 16px;
+    top: 15px;
+    font-size: 1em;
+    color: bce-color-l(dark);
+    transition: top 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      left 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      font-size 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease-in-out;
+
+    &[data-hover] {
+      top: 7px;
+      font-size: 0.8em;
+    }
+  }
+
+  &[focus] > label {
+    color: bce-color(primary);
+  }
+
+  > input {
+    padding: 20px 16px 5px;
+    width: 100%;
+    height: 48px;
+    font-size: 0.9em;
+    border: 1px solid bce-color-d(light);
+    border-radius: 4px;
+    outline: none;
+
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &[focus] > input {
+    border-color: bce-color(primary);
+  }
+
+  @include media-medium {
+    > label {
+      left: 0;
+      top: 10px;
+      color: inherit;
+
+      &[data-hover] {
+        top: 10px;
+        font-size: inherit;
+      }
+    }
+
+    > input {
+      position: relative;
+      right: 0;
+      height: 40px;
+      padding: 6px 12px;
+      width: 75%;
+      font-size: 0.9em;
+    }
+  }
+}

@@ -31,6 +31,17 @@
           <bce-switch value="true" color="light"></bce-switch>
         </div>
 
+        <h3>BCE Input</h3>
+        <bce-input
+          type="text"
+          label="Username"
+          value="my-username"
+          id="username"
+        >
+        </bce-input>
+        <bce-input type="password" label="Password"></bce-input>
+
+        <h3>Heading 3</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           Reprehenderit assumenda omnis sint, tenetur explicabo optio quam natus
@@ -73,6 +84,10 @@
     <script>
       document
         .getElementById('switch')
+        .addEventListener('input', console.log.bind(console));
+
+      document
+        .getElementById('username')
         .addEventListener('input', console.log.bind(console));
     </script>
   </body>
