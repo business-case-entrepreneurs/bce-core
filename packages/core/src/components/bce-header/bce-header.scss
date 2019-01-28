@@ -1,5 +1,6 @@
 bce-header {
   @include bce-color(primary);
+  @include elevate(4);
   position: relative;
   display: block;
   height: 56px;
