@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { Input } from '../../models/input';
@@ -8,6 +8,9 @@ import { Input } from '../../models/input';
   styleUrl: 'bce-input.scss'
 })
 export class BceInput {
+  @Element()
+  private el!: HTMLElement;
+
   @Prop({ reflectToAttr: true })
   public color?: Color;
 
@@ -23,24 +26,21 @@ export class BceInput {
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
 
-  @Event({ eventName: 'input' })
-  private inputEvent!: EventEmitter<KeyboardEvent>;
-
   private autofocus = false;
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
-    this.inputEvent.emit(event as KeyboardEvent);
-    event.cancelBubble = true;
   };
 
-  private onFocus = () => {
+  private onFocus = (event: Event) => {
     this.hasFocus = true;
+    this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
-  private onBlur = () => {
+  private onBlur = (event: Event) => {
     this.hasFocus = false;
+    this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
   componentWillLoad() {

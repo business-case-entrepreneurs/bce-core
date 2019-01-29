@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 
 import { Color } from '../../models/color';
 
@@ -7,22 +7,22 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-switch.scss'
 })
 export class BceSwitch {
+  @Element()
+  private el!: HTMLElement;
+
   @Prop({ reflectToAttr: true })
   public color?: Color;
 
   @Prop({ mutable: true })
   public value = false;
 
-  @Event({ eventName: 'input' })
-  private inputEvent!: EventEmitter<Event>;
-
-  private onChange = (event: Event) => {
+  private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.checked;
-    this.inputEvent.emit(event);
+    this.el.dispatchEvent(new Event('input', event));
   };
 
-  private onInput = (event: Event) => {
+  private handleInput = (event: Event) => {
     event.cancelBubble = true;
   };
 
@@ -32,8 +32,8 @@ export class BceSwitch {
         <input
           type="checkbox"
           checked={this.value}
-          onChange={this.onChange}
-          onInput={this.onInput}
+          onChange={this.handleChange}
+          onInput={this.handleInput}
         />
         <div data-on={this.value} data-off={!this.value} />
       </label>

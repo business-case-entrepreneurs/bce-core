@@ -1,0 +1,23 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+bce-root {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+bce-root bce-status-bar {
+  flex: 0 0 auto;
+}
+
+bce-root bce-header {
+  flex: 0 0 auto;
+}
+
+bce-root main {
+  flex: 1 0 auto;
+  padding: 1rem;
+}
