@@ -29,5 +29,6 @@
     "rimraf": "^2.6.3"
   },
   "collection": "dist/collection/collection-manifest.json",
-  "sass": "scss/index.scss"
+  "sass": "scss/index.scss",
+  "unpkg": "dist/bce.js"
 }
