@@ -32,6 +32,7 @@ export class BceInput {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
     this.inputEvent.emit(event as KeyboardEvent);
+    event.cancelBubble = true;
   };
 
   private onFocus = () => {

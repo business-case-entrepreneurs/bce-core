@@ -22,10 +22,19 @@ export class BceSwitch {
     this.inputEvent.emit(event);
   };
 
+  private onInput = (event: Event) => {
+    event.cancelBubble = true;
+  };
+
   render() {
     return (
       <label>
-        <input type="checkbox" checked={this.value} onChange={this.onChange} />
+        <input
+          type="checkbox"
+          checked={this.value}
+          onChange={this.onChange}
+          onInput={this.onInput}
+        />
         <div data-on={this.value} data-off={!this.value} />
       </label>
     );
