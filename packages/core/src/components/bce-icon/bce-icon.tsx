@@ -1,19 +1,24 @@
 import { AbstractElement, icon, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons/faQuestion';
+import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare';
 import { Component, Prop, Watch } from '@stencil/core';
 
 // These icons are added by default
-library.add(faQuestion);
+library.add(faSquare);
 
 @Component({
   tag: 'bce-icon'
 })
 export class BceIcon {
-  @Prop({ reflectToAttr: true, mutable: true })
-  public pre: IconPrefix = 'fas';
+  private static DEFAULT_ICON: IconLookup = {
+    prefix: 'far',
+    iconName: 'square'
+  };
 
   @Prop({ reflectToAttr: true, mutable: true })
-  public name: IconName = 'question';
+  public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
+
+  @Prop({ reflectToAttr: true, mutable: true })
+  public name: IconName = BceIcon.DEFAULT_ICON.iconName;
 
   @Prop({ reflectToAttr: true, mutable: true })
   public raw?: string;
@@ -64,7 +69,8 @@ export class BceIcon {
 
     if (!i) {
       console.warn('Could not find one or more icon(s)', definition);
-      return null;
+      const alt = icon(BceIcon.DEFAULT_ICON, { classes: this.classes });
+      return this.renderIcon(alt.abstract[0]);
     }
 
     return this.renderIcon(i.abstract[0]);
