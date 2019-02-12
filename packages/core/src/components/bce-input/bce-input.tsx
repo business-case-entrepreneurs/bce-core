@@ -1,7 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
 
 import { Color } from '../../models/color';
-import { Input } from '../../models/input';
+import { InputType } from '../../models/input-type';
 
 @Component({
   tag: 'bce-input',
@@ -15,7 +15,7 @@ export class BceInput {
   public color?: Color;
 
   @Prop({ reflectToAttr: true })
-  public type: Input = Input.Text;
+  public type: InputType = InputType.Text;
 
   @Prop({ mutable: true })
   public value = '';
@@ -48,8 +48,8 @@ export class BceInput {
   }
 
   render() {
-    const supportedTypes = Object.keys(Input).map(k => (Input as any)[k]);
-    if (supportedTypes.indexOf(this.type) < 0) {
+    const types = Object.keys(InputType).map(k => (InputType as any)[k]);
+    if (types.indexOf(this.type) < 0) {
       console.warn('[bce-input] unsupported type: ' + this.type);
       return null;
     }

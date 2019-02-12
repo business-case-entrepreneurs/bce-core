@@ -1,7 +1,7 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Component, Element, Prop } from '@stencil/core';
 
-import { Button } from '../../models/button';
+import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
 
 @Component({
@@ -16,7 +16,7 @@ export class BceButton {
   public color?: Color;
 
   @Prop({ reflectToAttr: true })
-  public type?: Button;
+  public type?: ButtonType;
 
   @Prop({ reflectToAttr: true })
   public icon?: IconName;
