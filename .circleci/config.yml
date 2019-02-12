@@ -2,16 +2,20 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+---
+defaults: &defaults
+  docker:
+    - image: circleci/node:10-browsers
+  working_directory: &working_dir ~/bce-core
+
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/node:10-browsers
-    working_directory: ~/bce-core
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
-          at: ~/bce-core
+          at: *working_dir
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -26,34 +30,36 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: packages/core/www
-  deploy:
-    docker:
-      - image: circleci/node:10-browsers
-    working_directory: ~/bce-core
+  gh-pages:
+    <<: *defaults
     steps:
       - add_ssh_keys:
           fingerprints:
             - '71:04:6d:98:7e:bd:e1:d0:af:8a:22:d4:e9:ed:12:4c'
       - checkout
       - attach_workspace:
-          at: ~/bce-core
+          at: *working_dir
       - run: sed -i.bak 's/resources-url="/resources-url="\/bce-core/' packages/core/www/index.html
       - run: rm packages/core/www/index.html.bak
       - run: ./.circleci/gh-pages.sh
 
-defaults: &defaults
+master: &master
   filters:
     branches:
-      ignore:
-        - gh-pages
+      only:
+        - master
 
 workflows:
   version: 2
-  build-and-deploy:
+  deploy:
     jobs:
       - build:
-          <<: *defaults
-      - deploy:
-          <<: *defaults
+          <<: *master
+      - gh-pages:
+          <<: *master
+          requires:
+            - build
+      - version:
+          <<: *master
           requires:
             - build
