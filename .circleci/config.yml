@@ -59,7 +59,3 @@ workflows:
           <<: *master
           requires:
             - build
-      - version:
-          <<: *master
-          requires:
-            - build
