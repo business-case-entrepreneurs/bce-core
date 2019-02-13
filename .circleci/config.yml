@@ -42,9 +42,10 @@ jobs:
       - run: sed -i.bak 's/resources-url="/resources-url="\/bce-core/' packages/core/www/index.html
       - run: rm packages/core/www/index.html.bak
       - run: ./.circleci/gh-pages.sh
-  publish:
+  npm-publish:
     <<: *defaults
     steps:
+      - checkout
       - attach_workspace:
           at: *working_dir
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
@@ -66,7 +67,7 @@ workflows:
           <<: *master
           requires:
             - build
-      - publish:
+      - npm-publish:
           <<: *master
           requires:
             - build
