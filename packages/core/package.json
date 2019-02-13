@@ -21,9 +21,9 @@
     "serve": "stencil build --dev --watch --serve --docs-json ./dist/docs.json"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.13",
-    "@fortawesome/free-regular-svg-icons": "^5.7.1",
-    "@stencil/core": "^0.17.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-regular-svg-icons": "^5.7.2",
+    "@stencil/core": "^0.18.0",
     "@stencil/sass": "^0.1.1",
     "@types/autoprefixer": "^9.1.1",
     "rimraf": "^2.6.3"
