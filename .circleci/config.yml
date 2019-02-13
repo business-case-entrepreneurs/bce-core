@@ -48,6 +48,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: *working_dir
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
       - run: npm run publish:next
 
