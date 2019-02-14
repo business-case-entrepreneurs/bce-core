@@ -23,6 +23,9 @@ export class BceInput {
   @Prop({ reflectToAttr: true })
   public label?: string;
 
+  @Prop({ reflectToAttr: true })
+  public disabled = false;
+
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
 
@@ -63,6 +66,7 @@ export class BceInput {
         onInput={this.onInput}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
+        disabled={this.disabled}
       />
     ];
   }

@@ -25,6 +25,10 @@ bce-input {
     color: bce-color();
   }
 
+  &[disabled] > label {
+    color: bce-color-l(dark);
+  }
+
   > input {
     padding: 20px 12px 5px;
     width: 100%;
@@ -42,6 +46,11 @@ bce-input {
     border-color: bce-color();
   }
 
+  &[disabled] > input {
+    background-color: bce-color(light);
+    color: bce-color-l(dark);
+  }
+
   @include media-medium {
     > label {
       left: 0;
@@ -53,6 +62,10 @@ bce-input {
         font-size: inherit;
       }
     }
+
+    // &[disabled] > label {
+    //   color: bce-color-l(dark);
+    // }
 
     > input {
       position: relative;
