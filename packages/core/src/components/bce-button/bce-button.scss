@@ -1,19 +1,19 @@
 bce-button {
   @include bce-color(primary);
   @include elevate(2);
-  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  background-color: bce-color();
-  color: bce-color-t();
   display: inline-flex;
   align-items: center;
+  margin: 2px 0;
+  background-color: bce-color();
+  color: bce-color-t();
   border-radius: 4px;
   overflow: hidden;
   user-select: none;
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  margin: 2px 0;
 
-  button {
+  > button {
     min-width: 64px;
     padding: 9px 16px;
     font-size: 14px;
@@ -31,7 +31,7 @@ bce-button {
     }
   }
 
-  bce-icon {
+  > bce-icon {
     height: 100%;
     margin-left: -8px;
     font-size: 14px;
@@ -42,7 +42,7 @@ bce-button {
     }
   }
 
-  bce-ripple {
+  > bce-ripple {
     background-color: bce-color-t();
   }
 
@@ -57,16 +57,16 @@ bce-button {
     opacity: 0;
   }
 
-  &:hover:before {
+  &:not([disabled]):hover:before {
     opacity: 0.1;
   }
 
-  &:focus:before {
+  &:not([disabled]):focus:before {
     opacity: 0.2;
   }
 
-  &:focus,
-  &:hover {
+  &:not([disabled]):focus,
+  &:not([disabled]):hover {
     @include elevate(4);
     outline: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -77,13 +77,24 @@ bce-button {
     width: 100%;
     justify-content: center;
 
-    button {
+    > button {
       flex: 1 0 100%;
     }
 
-    bce-icon {
+    > bce-icon {
       flex: 0 0 auto;
       margin-left: -24px;
+    }
+  }
+
+  &[disabled] {
+    @include elevate(0);
+    color: bce-color-t(disable);
+    background-color: bce-color(disable);
+    cursor: default;
+
+    > button {
+      cursor: default;
     }
   }
 }
@@ -94,12 +105,22 @@ bce-button[type='outline'] {
   background-color: transparent;
   color: bce-color();
 
-  bce-ripple {
+  > bce-ripple {
     background-color: bce-color();
   }
 
   &:before {
     background-color: bce-color();
+  }
+
+  &:not([disabled]):focus,
+  &:not([disabled]):hover {
+    @include elevate(0);
+  }
+
+  &[disabled] {
+    color: bce-color-t(disable);
+    border-color: bce-color(disable);
   }
 }
 
@@ -108,17 +129,17 @@ bce-button[type='text'] {
   background-color: transparent;
   color: bce-color();
 
-  button {
+  > button {
     padding: 9px 8px;
   }
 
-  bce-icon {
+  > bce-icon {
     margin: 0 -4px 0 0;
     padding: 9px 0 9px 8px;
     order: -1;
   }
 
-  bce-ripple {
+  > bce-ripple {
     flex: 0 0 auto;
     background-color: bce-color();
   }
@@ -127,7 +148,16 @@ bce-button[type='text'] {
     background-color: bce-color();
   }
 
-  &[block] button {
+  &:not([disabled]):focus,
+  &:not([disabled]):hover {
+    @include elevate(0);
+  }
+
+  &[block] > button {
     flex: 0 0 auto;
+  }
+
+  &[disabled] {
+    color: bce-color-t(disable);
   }
 }

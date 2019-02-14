@@ -12,6 +12,7 @@ bce-root {
 
   /* Neutral colors */
   @include bce-define-color(#231f20 #fff, dark);
+  @include bce-define-color(#cccccc #888, disable);
   @include bce-define-color(#f7f9f9 #000, light);
 }
 

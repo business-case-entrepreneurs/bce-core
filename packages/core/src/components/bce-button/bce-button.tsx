@@ -24,10 +24,18 @@ export class BceButton {
   @Prop({ reflectToAttr: true })
   public block?: boolean;
 
+  @Prop({ reflectToAttr: true })
+  public disabled = false;
+
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
 
+  private handleClick = (event: MouseEvent) => {
+    if (this.disabled) event.stopPropagation();
+  };
+
   private handleMouseDown = (event: MouseEvent) => {
+    if (this.disabled) return;
     const ripple = document.createElement('bce-ripple');
     ripple.x = event.pageX - this.el.offsetLeft;
     ripple.y = event.pageY - this.el.offsetTop;
@@ -36,29 +44,29 @@ export class BceButton {
     setTimeout(() => ripple.parentElement!.removeChild(ripple), 500);
   };
 
-  private onFocus = (event: Event) => {
+  private handleFocus = () => {
     this.hasFocus = true;
   };
 
-  private onBlur = (event: Event) => {
+  private handleBlur = () => {
     this.hasFocus = false;
   };
 
   hostData() {
     return {
-      tabIndex: 0,
+      tabIndex: this.disabled ? undefined : 0,
       onMouseDown: this.handleMouseDown,
-      onFocus: this.onFocus,
-      onBlur: this.onBlur
+      onFocus: this.handleFocus,
+      onBlur: this.handleBlur
     };
   }
 
   render() {
     return [
-      <button tabIndex={-1}>
+      <button tabIndex={-1} disabled={this.disabled}>
         <slot />
       </button>,
-      this.icon && <bce-icon raw={this.icon} />
+      this.icon && <bce-icon raw={this.icon} onClick={this.handleClick} />
     ];
   }
 }
