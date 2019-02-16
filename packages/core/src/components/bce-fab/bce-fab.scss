@@ -1,0 +1,76 @@
+bce-fab {
+  @include bce-color(primary);
+  position: fixed;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+  margin: 16px;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+
+  > button {
+    @include elevate(6);
+    padding: 0;
+    width: 56px;
+    height: 56px;
+    background-color: bce-color();
+    color: bce-color-t();
+    border: none;
+    border-radius: 50%;
+    appearance: none;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  > div {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: bce-color(dark);
+    opacity: 0.5;
+
+    &[data-inactive] {
+      display: none;
+    }
+  }
+}
+
+bce-fab > bce-button {
+  @include elevate(0);
+  z-index: 6;
+  margin: 0 0 10px 0;
+  background-color: transparent;
+  overflow: inherit;
+
+  > button {
+    @include elevate(2);
+    padding: 5px 16px;
+    margin: 0 10px;
+    background-color: bce-color(light);
+    color: bce-color-t(light);
+    text-transform: none;
+    border-radius: 34px;
+  }
+
+  > bce-icon {
+    @include elevate(2);
+    margin: 0 10px 0 0;
+    padding: 9px;
+    background-color: bce-color();
+    color: bce-color-t();
+    border-radius: 50%;
+  }
+
+  &[disabled] {
+    opacity: 1;
+    color: inherit;
+    background-color: inherit;
+  }
+
+  &[data-inactive] {
+    display: none;
+  }
+}
