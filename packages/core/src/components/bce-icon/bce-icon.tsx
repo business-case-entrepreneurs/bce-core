@@ -1,5 +1,5 @@
 import { AbstractElement, icon, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { Component, Prop, Watch } from '@stencil/core';
 
 // These icons are added by default
