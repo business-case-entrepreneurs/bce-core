@@ -1,4 +1,3 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Component, Element, Prop } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
@@ -19,7 +18,7 @@ export class BceButton {
   public type?: ButtonType;
 
   @Prop({ reflectToAttr: true })
-  public icon?: IconName;
+  public icon?: string;
 
   @Prop({ reflectToAttr: true })
   public block?: boolean;
@@ -66,7 +65,9 @@ export class BceButton {
       <button tabIndex={-1} disabled={this.disabled}>
         <slot />
       </button>,
-      this.icon && <bce-icon raw={this.icon} onClick={this.handleClick} />
+      this.icon && (
+        <bce-icon raw={this.icon} onClick={this.handleClick} fixed-width />
+      )
     ];
   }
 }

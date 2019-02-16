@@ -93,8 +93,8 @@ bce-button {
     @include elevate(0);
     color: bce-color-t(disable);
     background-color: bce-color(disable);
-    cursor: default;
     opacity: 0.5;
+    cursor: default;
 
     > button {
       cursor: default;
