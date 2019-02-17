@@ -22,26 +22,32 @@ bce-fab {
     appearance: none;
     overflow: hidden;
     cursor: pointer;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
   }
 
-  > div {
+  &[active] > div {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: bce-color(dark);
-    opacity: 0.5;
-
-    &[data-inactive] {
-      display: none;
-    }
+    opacity: 0.8;
   }
 }
 
 bce-fab > bce-button {
+  display: none;
+}
+
+bce-fab[active] > bce-button {
   @include elevate(0);
-  z-index: 6;
+  z-index: inherit;
+  display: inherit;
   margin: 0 0 10px 0;
   background-color: transparent;
   overflow: inherit;
@@ -65,10 +71,21 @@ bce-fab > bce-button {
     border-radius: 50%;
   }
 
+  &:before {
+    display: none;
+  }
+
+  &:focus,
+  &:hover {
+    @include elevate(0);
+    z-index: inherit;
+  }
+
   &[disabled] {
     opacity: 1;
     color: inherit;
     background-color: inherit;
+    z-index: 0;
   }
 
   &[data-inactive] {

@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Prop, Watch } from '@stencil/core';
 
 import { Color } from '../../models/color';
 
@@ -19,59 +19,68 @@ export class BceFab {
   @Prop({ reflectToAttr: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
-  public hasFocus = false;
-
-  @State()
+  @Prop({ reflectToAttr: true, mutable: true })
   public active = false;
 
-  private handleClick = (event: MouseEvent) => {
+  private get buttons(): HTMLBceButtonElement[] {
+    const buttons: HTMLBceButtonElement[] = [];
+    const { children } = this.el;
+    for (let i = 0; i < children.length; i++) {
+      // Look for every child bce-button component
+      const child = children.item(i);
+      if (!child || child.tagName.toLowerCase() !== 'bce-button') continue;
+
+      buttons.push(child as HTMLBceButtonElement);
+    }
+
+    return buttons;
+  }
+
+  private handleClick = () => {
+    this.active = !this.active;
+  };
+
+  private disableClick = (event: MouseEvent) => {
     if (this.disabled) event.stopPropagation();
   };
 
   @Watch('color')
-  @Watch('active')
-  public updateButtons() {
-    const { children } = this.el;
-    for (let i = 0; i < children.length; i++) {
-      const child = children.item(i);
-      if (!child || child.tagName.toLowerCase() !== 'bce-button') continue;
-
-      // Buttons within a FAB should always have an icon and use the default
-      // (contained) type.
-      const button = child as HTMLBceButtonElement;
-      button.type = undefined;
-      button.color = this.color;
-      if (!button.icon) button.icon = 'square';
-
-      if (!this.active) button.setAttribute('data-inactive', '');
-      else button.removeAttribute('data-inactive');
-    }
+  private updateButtonColor() {
+    for (const button of this.buttons) button.color = this.color;
   }
 
   componentWillLoad() {
-    this.updateButtons();
-  }
+    this.updateButtonColor();
 
-  hostData() {
-    return {};
+    for (const button of this.buttons) {
+      // Always use the default type for internal buttons
+      button.type = undefined;
+
+      // Ensure that there is always an icon
+      if (!button.icon) button.icon = 'square';
+
+      // Deactivate the FAB overlay whenever one of the options is pressed. Call
+      // the original onclick handler afterwards.
+      const { onclick } = button;
+      button.onclick = event => {
+        this.handleClick();
+        if (onclick) onclick.apply(button, [event]);
+      };
+    }
   }
 
   render() {
     return [
       <slot />,
-      <button
-        disabled={this.disabled}
-        onClick={() => (this.active = !this.active)}
-      >
+      <button disabled={this.disabled} onClick={this.handleClick}>
         <bce-icon
           raw={this.icon}
           size="lg"
-          onClick={this.handleClick}
+          onClick={this.disableClick}
           fixed-width
         />
       </button>,
-      <div data-inactive={!this.active} />
+      <div onClick={this.handleClick} />
     ];
   }
 }
