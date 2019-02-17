@@ -9,16 +9,16 @@ library.add(faSquare);
   tag: 'bce-icon'
 })
 export class BceIcon {
-  private static DEFAULT_ICON: IconLookup = {
+  public static DEFAULT_ICON: IconLookup = {
     prefix: 'far',
     iconName: 'square'
   };
 
   @Prop({ reflectToAttr: true, mutable: true })
-  public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
+  public pre = BceIcon.DEFAULT_ICON.prefix;
 
   @Prop({ reflectToAttr: true, mutable: true })
-  public name: IconName = BceIcon.DEFAULT_ICON.iconName;
+  public name = BceIcon.DEFAULT_ICON.iconName;
 
   @Prop({ reflectToAttr: true, mutable: true })
   public raw?: string;
