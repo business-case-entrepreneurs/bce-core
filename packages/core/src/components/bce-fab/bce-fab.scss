@@ -11,6 +11,7 @@ bce-fab {
 
   > button {
     @include elevate(6);
+    position: relative;
     padding: 0;
     width: 56px;
     height: 56px;
