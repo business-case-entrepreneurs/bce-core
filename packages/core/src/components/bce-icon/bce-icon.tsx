@@ -15,10 +15,10 @@ export class BceIcon {
   };
 
   @Prop({ reflectToAttr: true, mutable: true })
-  public pre = BceIcon.DEFAULT_ICON.prefix;
+  public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
 
   @Prop({ reflectToAttr: true, mutable: true })
-  public name = BceIcon.DEFAULT_ICON.iconName;
+  public name: IconName = BceIcon.DEFAULT_ICON.iconName;
 
   @Prop({ reflectToAttr: true, mutable: true })
   public raw?: string;
