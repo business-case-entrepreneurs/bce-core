@@ -1,5 +1,10 @@
 import { Component, Element, Method, State } from '@stencil/core';
 
+interface MessageOptions {
+  readonly text: string;
+  readonly duration: number;
+}
+
 @Component({
   tag: 'bce-root',
   styleUrl: 'bce-root.scss'
@@ -11,38 +16,47 @@ export class BceRoot {
   @State()
   private registeredFAB = false;
 
-  private messageCurrent: string = '';
-  private messageQueue: string[] = [];
-
-  @Method()
-  public message(text: string) {
-    if (!text) return;
-
-    if (!this.messageCurrent) this.renderMessage(text);
-    else this.messageQueue.push(text);
-  }
+  private messageCurrent = false;
+  private messageQueue: MessageOptions[] = [];
 
   @Method()
   public registerFAB(register: boolean) {
     this.registeredFAB = register;
   }
 
-  private renderMessage(text: string) {
-    // Set current message
-    this.messageCurrent = text;
+  @Method()
+  public message(text: string, duration = 2) {
+    if (!text) return;
+
+    // Messages have a minimum duration of 1 second and a maximum of 10 seconds
+    duration = duration < 1 ? 1 : duration;
+    duration = duration > 10 ? 10 : duration;
+
+    // Either render or queue the message
+    if (!this.messageCurrent) this.renderMessage({ text, duration });
+    else this.messageQueue.push({ text, duration });
+  }
+
+  private renderMessage({ text, duration }: MessageOptions) {
+    this.messageCurrent = true;
 
     // Create and append message
     const message = document.createElement('bce-message');
     message.innerText = text;
     this.el.appendChild(message);
 
-    // Remove current message and show queued message if needed
-    setTimeout(() => {
+    const onRemove = () => {
+      // Remove current message
       message.parentElement!.removeChild(message);
+
+      // Render next message if one is queued
       const next = this.messageQueue.shift();
       if (next) this.renderMessage(next);
-      else this.messageCurrent = '';
-    }, 2 * 1000);
+      else this.messageCurrent = false;
+    };
+
+    // Remove message after the specified amount of time
+    setTimeout(onRemove, duration * 1000);
   }
 
   hostData() {
