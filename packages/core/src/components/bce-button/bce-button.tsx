@@ -21,6 +21,9 @@ export class BceButton {
   public icon?: string;
 
   @Prop({ reflectToAttr: true })
+  public 'icon-spin'?: boolean;
+
+  @Prop({ reflectToAttr: true })
   public block?: boolean;
 
   @Prop({ reflectToAttr: true })
@@ -66,7 +69,12 @@ export class BceButton {
         <slot />
       </button>,
       this.icon && (
-        <bce-icon raw={this.icon} onClick={this.handleClick} fixed-width />
+        <bce-icon
+          raw={this.icon}
+          onClick={this.handleClick}
+          spin={this['icon-spin']}
+          fixed-width
+        />
       )
     ];
   }
