@@ -2,7 +2,7 @@ bce-input {
   @include bce-color(primary);
   position: relative;
   display: block;
-  margin: 10px 0;
+  margin: 20px 0;
   text-align: right;
 
   > label {
@@ -14,6 +14,7 @@ bce-input {
     transition: top 0.15s cubic-bezier(0.4, 0, 0.2, 1),
       left 0.15s cubic-bezier(0.4, 0, 0.2, 1),
       font-size 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease-in-out;
+    user-select: none;
 
     &[data-hover] {
       top: 7px;
@@ -26,7 +27,7 @@ bce-input {
   }
 
   &[disabled] > label {
-    color: bce-color-l(dark);
+    color: bce-color-t(disable);
   }
 
   > input {
@@ -47,8 +48,42 @@ bce-input {
   }
 
   &[disabled] > input {
-    background-color: bce-color(light);
+    background-color: bce-color-l(disable);
+    color: bce-color-t(disable);
+  }
+
+  > small {
+    position: absolute;
+    font-size: 12px;
+    left: 12px;
+    bottom: -16px;
+    width: 100%;
     color: bce-color-l(dark);
+    text-align: left;
+    transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:before {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      left: -4px;
+      content: '';
+
+      width: 1px;
+      background-color: bce-color-l(dark);
+    }
+  }
+
+  &[focus] > small:before {
+    background-color: bce-color();
+  }
+
+  &[disabled] > small {
+    color: bce-color(disable);
+
+    &:before {
+      background-color: bce-color(disable);
+    }
   }
 
   @include media-medium {
@@ -74,6 +109,10 @@ bce-input {
       padding: 6px 12px;
       width: 75%;
       font-size: 0.9em;
+    }
+
+    > small {
+      left: calc(25% + 12px);
     }
   }
 }

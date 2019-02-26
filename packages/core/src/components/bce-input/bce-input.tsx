@@ -24,6 +24,9 @@ export class BceInput {
   public label?: string;
 
   @Prop({ reflectToAttr: true })
+  public info?: string;
+
+  @Prop({ reflectToAttr: true })
   public disabled = false;
 
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
@@ -59,6 +62,7 @@ export class BceInput {
 
     return [
       <label data-hover={this.hasFocus || !!this.value}>{this.label}</label>,
+      this.info && <small>{this.info}</small>,
       <input
         type={this.type}
         value={this.value}
