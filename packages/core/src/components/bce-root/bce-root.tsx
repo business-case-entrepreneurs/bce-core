@@ -34,7 +34,7 @@ export class BceRoot {
     // Create and append message
     const message = document.createElement('bce-message');
     message.innerText = text;
-    this.el.append(message);
+    this.el.appendChild(message);
 
     // Remove current message and show queued message if needed
     setTimeout(() => {
