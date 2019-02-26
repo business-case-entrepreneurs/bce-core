@@ -11,10 +11,10 @@ bce-ripple {
   font-size: 0;
 
   @keyframes ripple {
-    0% {
+    from {
       transform: scale(1);
     }
-    100% {
+    to {
       opacity: 0;
       transform: scale(200);
     }
