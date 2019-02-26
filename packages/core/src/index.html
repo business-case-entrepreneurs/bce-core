@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/build/bce.css" />
   </head>
   <body>
-    <bce-root>
+    <bce-root id="app">
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
       <main>
@@ -75,6 +75,9 @@
           <bce-button type="text" icon="square" block>Text + Icon</bce-button>
         </div>
 
+        <h3>BCE message</h3>
+        <bce-button id="message">Trigger</bce-button>
+
         <h3>Heading 3</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -124,5 +127,14 @@
       </main>
     </bce-root>
     <script src="/build/bce.js"></script>
+    <script>
+      var root = document.getElementById('app');
+      var message = document.getElementById('message');
+
+      var i = 0;
+      message.addEventListener('click', function() {
+        root.message('Success message! (' + ++i + ')');
+      });
+    </script>
   </body>
 </html>

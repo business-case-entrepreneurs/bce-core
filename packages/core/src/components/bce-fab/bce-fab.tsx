@@ -9,7 +9,7 @@ import { BceIcon } from '../bce-icon/bce-icon';
 })
 export class BceFab {
   @Element()
-  private el!: HTMLElement;
+  private el!: HTMLBceFabElement;
 
   @Prop({ reflectToAttr: true })
   public color?: Color;
@@ -22,6 +22,8 @@ export class BceFab {
 
   @Prop({ reflectToAttr: true, mutable: true })
   public active = false;
+
+  private root?: HTMLBceRootElement;
 
   private get buttons(): HTMLBceButtonElement[] {
     const buttons: HTMLBceButtonElement[] = [];
@@ -51,6 +53,10 @@ export class BceFab {
   }
 
   componentWillLoad() {
+    // Register FAB with bce-root
+    this.root = this.el.closest('bce-root') as HTMLBceRootElement;
+    if (this.root) this.root.registerFAB(true);
+
     this.updateButtonColor();
 
     for (const button of this.buttons) {
@@ -68,6 +74,10 @@ export class BceFab {
         if (onclick) onclick.apply(button, [event]);
       };
     }
+  }
+
+  componentDidUnload() {
+    if (this.root) this.root.registerFAB(false);
   }
 
   render() {
