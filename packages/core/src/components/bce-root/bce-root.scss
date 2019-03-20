@@ -27,6 +27,14 @@ bce-root {
     box-sizing: border-box;
   }
 
+  a {
+    color: bce-color(primary);
+
+    &:hover {
+      color: bce-color-l(primary);
+    }
+  }
+
   main {
     background-color: bce-color(light);
   }
