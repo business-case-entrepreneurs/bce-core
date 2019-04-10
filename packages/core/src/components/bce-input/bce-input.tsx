@@ -70,7 +70,7 @@ export class BceInput {
         onInput={this.onInput}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        disabled={this.disabled}
+        disabled={this.disabled || false}
       />
     ];
   }
