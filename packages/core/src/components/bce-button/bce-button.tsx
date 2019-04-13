@@ -32,6 +32,9 @@ export class BceButton {
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
 
+  @Prop({ reflectToAttr: true })
+  public submit = false;
+
   private handleClick = (event: MouseEvent) => {
     if (this.disabled) event.stopPropagation();
   };
@@ -64,8 +67,10 @@ export class BceButton {
   }
 
   render() {
+    const type = this.submit ? 'submit' : 'button';
+
     return [
-      <button tabIndex={-1} disabled={this.disabled}>
+      <button tabIndex={-1} disabled={this.disabled} type={type}>
         <slot />
       </button>,
       this.icon && (
