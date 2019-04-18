@@ -13,9 +13,22 @@
   <body>
     <bce-root id="app">
       <bce-status-bar color="dark"></bce-status-bar>
-      <bce-header color="dark"></bce-header>
+      <bce-header logo-src="/logo/logo.png" color="dark">
+        <bce-menu-item href="#switch">
+          Switch
+        </bce-menu-item>
+        <bce-menu-item href="#input">
+          Input
+        </bce-menu-item>
+        <bce-menu-item href="#button">
+          Button
+        </bce-menu-item>
+        <bce-menu-item href="#message">
+          Message
+        </bce-menu-item>
+      </bce-header>
       <main>
-        <h3>BCE Switch</h3>
+        <h3 id="switch">BCE Switch</h3>
         <div>
           <bce-switch value="true"></bce-switch>
           <bce-switch value="true" color="secondary"></bce-switch>
@@ -32,7 +45,7 @@
           <bce-switch value="true" color="light"></bce-switch>
         </div>
 
-        <h3>BCE Input</h3>
+        <h3 id="input">BCE Input</h3>
         <bce-input
           label="Username"
           value="my-username"
@@ -50,7 +63,7 @@
           disabled
         ></bce-input>
 
-        <h3>BCE Button</h3>
+        <h3 id="button">BCE Button</h3>
         <h4>Contained</h4>
         <div>
           <bce-button>Primary</bce-button>
@@ -89,7 +102,7 @@
           <bce-button type="text" icon="square" block>Text + Icon</bce-button>
         </div>
 
-        <h3>BCE message</h3>
+        <h3 id="message">BCE message</h3>
         <bce-button id="message">Trigger</bce-button>
 
         <h3>Heading 3</h3>
