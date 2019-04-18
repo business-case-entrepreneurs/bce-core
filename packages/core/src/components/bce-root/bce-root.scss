@@ -18,8 +18,9 @@ bce-root {
 
 bce-root {
   position: relative;
-  width: 100%;
+  max-width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
@@ -36,6 +37,8 @@ bce-root {
   }
 
   main {
+    position: absolute;
+    top: 76px;
     background-color: bce-color(light);
   }
 }
