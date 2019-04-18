@@ -12,5 +12,8 @@ export const config: Config = {
   outputTargets: [
     { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
     { type: 'www', dir: './www', serviceWorker: null }
+  ],
+  copy: [
+    { src: 'logo' }
   ]
 };
