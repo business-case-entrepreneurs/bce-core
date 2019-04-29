@@ -14,11 +14,6 @@ export class BceHeader {
   public logoSrc?: string;
 
   render() {
-    return [
-      <img src={this.logoSrc} />,
-      <bce-menu>
-        <slot />
-      </bce-menu>
-    ];
+    return <slot />;
   }
 }

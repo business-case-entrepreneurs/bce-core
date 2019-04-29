@@ -13,7 +13,8 @@
   <body>
     <bce-root id="app">
       <bce-status-bar color="dark"></bce-status-bar>
-      <bce-header logo-src="/logo/logo.png" color="dark">
+      <bce-header color="dark">
+        <bce-logo logo-src="/logo/logo.png"></bce-logo>
         <bce-menu-item href="#switch">
           Switch
         </bce-menu-item>
@@ -155,12 +156,12 @@
     </bce-root>
     <script src="/build/bce.js"></script>
     <script>
-      var root = document.getElementById('app');
-      var message = document.getElementById('message');
+      var root = document.getElementById("app");
+      var message = document.getElementById("message");
 
       var i = 0;
-      message.addEventListener('click', function() {
-        root.message('Message ' + ++i);
+      message.addEventListener("click", function() {
+        root.message("Message " + ++i);
       });
     </script>
   </body>

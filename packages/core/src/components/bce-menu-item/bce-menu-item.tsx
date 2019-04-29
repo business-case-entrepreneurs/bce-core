@@ -1,7 +1,5 @@
 import { Component, Prop } from "@stencil/core";
 
-import { Color } from "../../models/color";
-
 @Component({
   tag: "bce-menu-item",
   styleUrl: "bce-menu-item.scss"
