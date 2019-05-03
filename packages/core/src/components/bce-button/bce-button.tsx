@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, h, Host } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
@@ -21,7 +21,7 @@ export class BceButton {
   public icon?: string;
 
   @Prop({ reflectToAttr: true })
-  public 'icon-spin'?: boolean;
+  public iconSpin?: boolean;
 
   @Prop({ reflectToAttr: true })
   public block?: boolean;
@@ -57,30 +57,28 @@ export class BceButton {
     this.hasFocus = false;
   };
 
-  hostData() {
-    return {
-      tabIndex: this.disabled ? undefined : 0,
-      onMouseDown: this.handleMouseDown,
-      onFocus: this.handleFocus,
-      onBlur: this.handleBlur
-    };
-  }
-
   render() {
     const type = this.submit ? 'submit' : 'button';
 
-    return [
-      <button tabIndex={-1} disabled={this.disabled} type={type}>
-        <slot />
-      </button>,
-      this.icon && (
-        <bce-icon
-          raw={this.icon}
-          onClick={this.handleClick}
-          spin={this['icon-spin']}
-          fixed-width
-        />
-      )
-    ];
+    return (
+      <Host
+        tabIndex={this.disabled ? undefined : 0}
+        onMouseDown={this.handleMouseDown}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+      >
+        <button tabIndex={-1} disabled={this.disabled} type={type}>
+          <slot />
+        </button>
+        {this.icon && (
+          <bce-icon
+            raw={this.icon}
+            onClick={this.handleClick}
+            spin={this['iconSpin']}
+            fixed-width
+          />
+        )}
+      </Host>
+    );
   }
 }

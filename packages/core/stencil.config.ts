@@ -10,7 +10,7 @@ export const config: Config = {
   },
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [
-    { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
+    { type: 'dist', dir: './dist' },
     { type: 'www', dir: './www', serviceWorker: null }
   ]
 };
