@@ -1,7 +1,7 @@
 bce-root {
   /* Primary and accent colors */
-  @include bce-define-color(#205375 #fff, primary);
-  @include bce-define-color(#5e2a53 #fff, secondary);
+  @include bce-define-color(#215475 #fff, primary);
+  @include bce-define-color(#5c2a53 #fff, secondary);
   @include bce-define-color(#72222f #fff, tertiary);
 
   /* Semantic colors */
