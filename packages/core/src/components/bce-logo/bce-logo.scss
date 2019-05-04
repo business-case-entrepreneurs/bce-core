@@ -1,0 +1,16 @@
+bce-logo {
+  position: relative;
+  display: inline-block;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+}
+
+bce-header > bce-logo {
+  margin: 0 15px;
+  font-size: 38px;
+  line-height: 56px;
+}
