@@ -9,23 +9,21 @@
   },
   "files": [
     "dist",
-    "scss",
-    "loader"
+    "scss"
   ],
   "main": "dist/index.js",
-  "module": "dist/esm/es5/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
   "scripts": {
-    "build": "stencil build --prerender --docs-json ./dist/docs.json",
+    "build": "stencil build --docs-json ./dist/docs.json",
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
     "serve": "stencil build --dev --watch --serve --docs-json ./dist/docs.json"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-regular-svg-icons": "^5.7.2",
-    "@stencil/core": "^0.18.0",
-    "@stencil/sass": "^0.1.1",
-    "@types/autoprefixer": "^9.1.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-regular-svg-icons": "^5.9.0",
+    "@stencil/core": "^1.0.2",
+    "@stencil/sass": "^1.0.0",
     "rimraf": "^2.6.3"
   },
   "collection": "dist/collection/collection-manifest.json",

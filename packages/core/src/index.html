@@ -8,6 +8,7 @@
     />
     <meta name="theme-color" content="#080707" />
     <title>BCE Core</title>
+
     <link rel="stylesheet" href="/build/bce.css" />
   </head>
   <body>
@@ -140,7 +141,9 @@
         </bce-fab>
       </main>
     </bce-root>
-    <script src="/build/bce.js"></script>
+
+    <script type="module" src="build/bce.esm.js"></script>
+    <script nomodule src="build/bce.js"></script>
     <script>
       var root = document.getElementById('app');
       var message = document.getElementById('message');
