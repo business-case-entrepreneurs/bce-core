@@ -5,8 +5,7 @@ export const config: Config = {
   namespace: 'bce',
   globalStyle: './src/index.scss',
   devServer: {
-    openBrowser: false,
-    devServerDir: './www'
+    openBrowser: false
   },
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [

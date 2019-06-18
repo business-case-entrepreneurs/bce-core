@@ -1,11 +1,4 @@
-import {
-  AbstractElement,
-  icon,
-  IconLookup,
-  IconName,
-  IconPrefix,
-  library
-} from '@fortawesome/fontawesome-svg-core';
+import { AbstractElement, icon, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { Component, h, Prop, Watch } from '@stencil/core';
 
@@ -67,7 +60,7 @@ export class BceIcon {
     const children: any = (element.children || []).map(child =>
       this.renderIcon(child)
     );
-    return h(element.tag, element.attributes, children);
+    return (h as any)(element.tag, element.attributes, children);
   }
 
   render() {
