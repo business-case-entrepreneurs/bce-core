@@ -16,6 +16,9 @@ export class BceSwitch {
   @Prop({ mutable: true })
   public value = false;
 
+  @Prop({ reflectToAttr: true })
+  public disabled = false;
+
   private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.checked;
@@ -32,6 +35,7 @@ export class BceSwitch {
         <input
           type="checkbox"
           checked={this.value}
+          disabled={this.disabled}
           onChange={this.handleChange}
           onInput={this.handleInput}
         />
