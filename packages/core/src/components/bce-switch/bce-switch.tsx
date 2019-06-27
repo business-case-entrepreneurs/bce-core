@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Host } from '@stencil/core';
+import { Component, Element, h, Prop, Host, Method } from '@stencil/core';
 import { Color } from '../../models/color';
 
 @Component({
@@ -20,6 +20,12 @@ export class BceSwitch {
 
   @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
   public hasFocus = false;
+
+  private handleClick = (event: Event) => {
+    const target = event.target as HTMLBceSwitchElement | undefined;
+    const input = target && target.querySelector('input');
+    if (input) input.click();
+  };
 
   private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
@@ -43,6 +49,7 @@ export class BceSwitch {
     return (
       <Host
         tabIndex={this.disabled ? undefined : 0}
+        onClick={this.handleClick}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
