@@ -49,6 +49,27 @@ bce-switch {
     }
   }
 
+  &:not([disabled]):focus {
+    outline: none;
+
+    > label > div {
+      &:after {
+        width: 10px;
+        height: 10px;
+      }
+
+      &[data-off]:after {
+        background-color: bce-color-d(light);
+        border: 5px solid bce-color(light);
+      }
+
+      &[data-on]:after {
+        background-color: bce-color-l();
+        border: 5px solid bce-color();
+      }
+    }
+  }
+
   &[disabled] > label > div {
     background-color: bce-color-l(disable);
 
