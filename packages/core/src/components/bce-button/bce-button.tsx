@@ -41,10 +41,13 @@ export class BceButton {
 
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
+
+    // Create ripple element at mouse position
     const ripple = document.createElement('bce-ripple');
     ripple.x = event.pageX - this.el.offsetLeft;
     ripple.y = event.pageY - this.el.offsetTop;
 
+    // Append ripple to button & remove after 500ms
     this.el.appendChild(ripple);
     setTimeout(() => ripple.parentElement!.removeChild(ripple), 500);
   };
