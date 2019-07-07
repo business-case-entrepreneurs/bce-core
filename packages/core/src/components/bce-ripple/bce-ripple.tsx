@@ -1,4 +1,4 @@
-import { Component, Element, Prop, h } from '@stencil/core';
+import { Component, Element, h, Host, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bce-ripple',
@@ -14,12 +14,7 @@ export class BceRipple {
   @Prop({ reflectToAttr: true })
   public y!: number;
 
-  componentDidLoad() {
-    this.el.style.left = this.x + 'px';
-    this.el.style.top = this.y + 'px';
-  }
-
   render() {
-    return null;
+    return <Host style={{ left: this.x + 'px', top: this.y + 'px' }} />;
   }
 }
