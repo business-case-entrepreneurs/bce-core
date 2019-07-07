@@ -1,4 +1,4 @@
-import { Component, Element, Method, State, h, Host } from '@stencil/core';
+import { Component, Element, h, Host, Method, State } from '@stencil/core';
 
 interface MessageOptions {
   readonly text: string;
