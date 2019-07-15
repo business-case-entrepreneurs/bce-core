@@ -74,7 +74,7 @@ export class BceButton {
           <bce-icon
             raw={this.icon}
             onClick={this.handleClick}
-            spin={this['iconSpin']}
+            spin={this.iconSpin}
             fixed-width
           />
         )}
