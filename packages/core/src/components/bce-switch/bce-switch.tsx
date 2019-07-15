@@ -1,5 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
-
+import { Component, Element, h, Prop, Host, Method } from '@stencil/core';
 import { Color } from '../../models/color';
 
 @Component({
@@ -16,6 +15,18 @@ export class BceSwitch {
   @Prop({ mutable: true })
   public value = false;
 
+  @Prop({ reflectToAttr: true })
+  public disabled = false;
+
+  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
+  public hasFocus = false;
+
+  private handleClick = (event: Event) => {
+    const target = event.target as HTMLBceSwitchElement | undefined;
+    const input = target && target.querySelector('input');
+    if (input) input.click();
+  };
+
   private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.checked;
@@ -26,17 +37,34 @@ export class BceSwitch {
     event.cancelBubble = true;
   };
 
+  private handleFocus = () => {
+    this.hasFocus = true;
+  };
+
+  private handleBlur = () => {
+    this.hasFocus = false;
+  };
+
   render() {
     return (
-      <label>
-        <input
-          type="checkbox"
-          checked={this.value}
-          onChange={this.handleChange}
-          onInput={this.handleInput}
-        />
-        <div data-on={this.value} data-off={!this.value} />
-      </label>
+      <Host
+        tabIndex={this.disabled ? undefined : 0}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+      >
+        <label>
+          <input
+            type="checkbox"
+            tabIndex={-1}
+            checked={this.value}
+            disabled={this.disabled}
+            onChange={this.handleChange}
+            onInput={this.handleInput}
+          />
+          <div data-on={this.value} data-off={!this.value} />
+        </label>
+      </Host>
     );
   }
 }

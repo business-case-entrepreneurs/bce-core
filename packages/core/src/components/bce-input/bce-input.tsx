@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType } from '../../models/input-type';
