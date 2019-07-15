@@ -1,4 +1,44 @@
 bce-menu {
+  display: flex;
   background-color: bce-color();
-  flex: 1,1,1;
+
+  > .mobile-button {
+    color: white;
+    align-self: flex-end;
+  }
+
+  .show-mobile-menu {
+    display: none;
+  }
+  > .menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background-color: bce-color();
+  }
+  @include media-small {
+    > .mobile-button {
+      display: none;
+      position: relative;
+    }
+    > .menu {
+      position: relative;
+      flex-direction: row;
+      top: 0;
+    }
+  }
+}
+.horizontal {
+  min-width: 100%;
+  padding: 1rem;
+}
+.verticale {
+  flex-direction: column;
+  flex: 1 1 10%;
+  z-index: 1;
+  height: auto;
+  padding: 1rem;
 }

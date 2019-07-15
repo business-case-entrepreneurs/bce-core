@@ -16,155 +16,176 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark">
         <bce-logo logo-src="/logo/logo.png"></bce-logo>
-        <bce-menu-item href="#switch">
-          Switch
-        </bce-menu-item>
-        <bce-menu-item href="#input">
-          Input
-        </bce-menu-item>
-        <bce-menu-item href="#button">
-          Button
-        </bce-menu-item>
-        <bce-menu-item href="#message">
-          Message
-        </bce-menu-item>
+        <bce-menu color="dark">
+          <bce-menu-item href="#switch">
+            Switch
+          </bce-menu-item>
+          <bce-menu-item href="#input">
+            Input
+          </bce-menu-item>
+          <bce-menu-item href="#button">
+            Button
+          </bce-menu-item>
+          <bce-menu-item href="#message">
+            Message
+          </bce-menu-item>
+        </bce-menu>
       </bce-header>
-      <main>
-        <h3 id="switch">BCE Switch</h3>
-        <div>
-          <bce-switch value="true"></bce-switch>
-          <bce-switch value="true" color="secondary"></bce-switch>
-          <bce-switch value="true" color="tertiary"></bce-switch>
-        </div>
-        <div>
-          <bce-switch value="true" color="success"></bce-switch>
-          <bce-switch value="true" color="error"></bce-switch>
-          <bce-switch value="true" color="warning"></bce-switch>
-          <bce-switch value="true" color="info"></bce-switch>
-        </div>
-        <div>
-          <bce-switch value="true" color="dark"></bce-switch>
-          <bce-switch value="true" color="light"></bce-switch>
-        </div>
 
-        <h3 id="input">BCE Input</h3>
-        <bce-input
-          label="Username"
-          value="my-username"
-          info="What's your name?"
-        ></bce-input>
-        <bce-input
-          type="password"
-          label="Password"
-          info="This should be a value only you know..."
-        ></bce-input>
-        <bce-input
-          type="number"
-          label="OTP code"
-          info="The One Time Password code."
-          disabled
-        ></bce-input>
+      <div id="main-with_sidebar">
+        <!-- <bce-menu color="dark" verticale>
+          <bce-menu-item href="#switch">
+            Switch
+          </bce-menu-item>
+          <bce-menu-item href="#input">
+            Input
+          </bce-menu-item>
+          <bce-menu-item href="#button">
+            Button
+          </bce-menu-item>
+          <bce-menu-item href="#message">
+            Message
+          </bce-menu-item>
+        </bce-menu> -->
+        <main>
+          <h3 id="switch">BCE Switch</h3>
+          <div>
+            <bce-switch value="true"></bce-switch>
+            <bce-switch value="true" color="secondary"></bce-switch>
+            <bce-switch value="true" color="tertiary"></bce-switch>
+          </div>
+          <div>
+            <bce-switch value="true" color="success"></bce-switch>
+            <bce-switch value="true" color="error"></bce-switch>
+            <bce-switch value="true" color="warning"></bce-switch>
+            <bce-switch value="true" color="info"></bce-switch>
+          </div>
+          <div>
+            <bce-switch value="true" color="dark"></bce-switch>
+            <bce-switch value="true" color="light"></bce-switch>
+          </div>
 
-        <h3 id="button">BCE Button</h3>
-        <h4>Contained</h4>
-        <div>
-          <bce-button>Primary</bce-button>
-          <bce-button color="secondary">Secondary</bce-button>
-          <bce-button color="tertiary">Tertiary</bce-button>
-          <bce-button icon="square">Icon</bce-button>
-          <bce-button disabled>Disabled</bce-button>
-        </div>
-        <br />
-        <h4>Outline</h4>
-        <div>
-          <bce-button type="outline">Primary</bce-button>
-          <bce-button type="outline" color="secondary">Secondary</bce-button>
-          <bce-button type="outline" color="tertiary">Tertiary</bce-button>
-          <bce-button type="outline" icon="square">Icon</bce-button>
-          <bce-button type="outline" disabled>Disabled</bce-button>
-        </div>
-        <br />
-        <h4>Text</h4>
-        <div>
-          <bce-button type="text">Primary</bce-button>
-          <bce-button type="text" color="secondary">Secondary</bce-button>
-          <bce-button type="text" color="tertiary">Tertiary</bce-button>
-          <bce-button type="text" icon="square">Icon</bce-button>
-          <bce-button type="text" disabled>Disabled</bce-button>
-        </div>
-        <h4>Block</h4>
-        <div>
-          <bce-button color="tertiary" block>Contained</bce-button>
-          <bce-button icon="square" block>Contained + Icon</bce-button>
-          <bce-button type="outline" color="tertiary" block>Outline</bce-button>
-          <bce-button type="outline" icon="square" block>
-            Outline + Icon
-          </bce-button>
-          <bce-button type="text" color="tertiary" block>Text</bce-button>
-          <bce-button type="text" icon="square" block>Text + Icon</bce-button>
-        </div>
+          <h3 id="input">BCE Input</h3>
+          <bce-input
+            label="Username"
+            value="my-username"
+            info="What's your name?"
+          ></bce-input>
+          <bce-input
+            type="password"
+            label="Password"
+            info="This should be a value only you know..."
+          ></bce-input>
+          <bce-input
+            type="number"
+            label="OTP code"
+            info="The One Time Password code."
+            disabled
+          ></bce-input>
 
-        <h3 id="message">BCE message</h3>
-        <bce-button id="message">Trigger</bce-button>
+          <h3 id="button">BCE Button</h3>
+          <h4>Contained</h4>
+          <div>
+            <bce-button>Primary</bce-button>
+            <bce-button color="secondary">Secondary</bce-button>
+            <bce-button color="tertiary">Tertiary</bce-button>
+            <bce-button icon="square">Icon</bce-button>
+            <bce-button disabled>Disabled</bce-button>
+          </div>
+          <br />
+          <h4>Outline</h4>
+          <div>
+            <bce-button type="outline">Primary</bce-button>
+            <bce-button type="outline" color="secondary">Secondary</bce-button>
+            <bce-button type="outline" color="tertiary">Tertiary</bce-button>
+            <bce-button type="outline" icon="square">Icon</bce-button>
+            <bce-button type="outline" disabled>Disabled</bce-button>
+          </div>
+          <br />
+          <h4>Text</h4>
+          <div>
+            <bce-button type="text">Primary</bce-button>
+            <bce-button type="text" color="secondary">Secondary</bce-button>
+            <bce-button type="text" color="tertiary">Tertiary</bce-button>
+            <bce-button type="text" icon="square">Icon</bce-button>
+            <bce-button type="text" disabled>Disabled</bce-button>
+          </div>
+          <h4>Block</h4>
+          <div>
+            <bce-button color="tertiary" block>Contained</bce-button>
+            <bce-button icon="square" block>Contained + Icon</bce-button>
+            <bce-button type="outline" color="tertiary" block
+              >Outline</bce-button
+            >
+            <bce-button type="outline" icon="square" block>
+              Outline + Icon
+            </bce-button>
+            <bce-button type="text" color="tertiary" block>Text</bce-button>
+            <bce-button type="text" icon="square" block>Text + Icon</bce-button>
+          </div>
 
-        <h3>Heading 3</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Reprehenderit assumenda omnis sint, tenetur explicabo optio quam natus
-          perferendis. Cupiditate perspiciatis ea, assumenda libero enim
-          praesentium atque repellendus voluptatem explicabo perferendis.
-        </p>
-        <p>
-          Fugiat praesentium distinctio officiis expedita consequuntur vitae
-          amet ipsa enim odit nesciunt facere alias aliquid cupiditate
-          perferendis, nobis aut qui velit maiores recusandae sed? Facilis
-          aliquam rem autem! Dolores, modi?
-        </p>
-        <p>
-          Sunt rem praesentium exercitationem eveniet excepturi impedit delectus
-          qui similique quaerat! Fugit obcaecati sint quaerat animi cumque a
-          beatae? Error, facilis necessitatibus? Provident, perferendis
-          doloribus? Delectus quibusdam fugiat nulla vel!
-        </p>
-        <p>
-          Quis delectus iure perferendis exercitationem suscipit necessitatibus
-          doloribus? In dolore voluptates temporibus odit sapiente ea provident
-          rerum, officia et magni consequuntur esse est unde, cumque accusamus
-          dignissimos? Ullam, sit quidem?
-        </p>
-        <p>
-          Aliquam odio excepturi quis reiciendis, recusandae dolor at, quam
-          ipsam sunt magni modi beatae libero maiores similique amet iusto minus
-          aspernatur quisquam. Veritatis, ducimus illum. Fugiat iure dolores
-          assumenda voluptatum!
-        </p>
-        <p>
-          Aperiam beatae quo cupiditate hic recusandae ad laudantium
-          voluptatibus fugiat odit, harum sunt officia sed eaque unde ipsam
-          obcaecati non magni voluptatem adipisci quia dignissimos dolores modi.
-          Optio, tempora mollitia.
-        </p>
+          <h3 id="message">BCE message</h3>
+          <bce-button id="message">Trigger</bce-button>
 
-        <bce-fab color="dark">
-          <bce-button>TODO</bce-button>
-          <bce-button>animate</bce-button>
-          <bce-button>floating</bce-button>
-          <bce-button>action</bce-button>
-          <bce-button>button</bce-button>
-          <bce-button>(de)activation</bce-button>
-        </bce-fab>
-      </main>
+          <h3>Heading 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Reprehenderit assumenda omnis sint, tenetur explicabo optio quam
+            natus perferendis. Cupiditate perspiciatis ea, assumenda libero enim
+            praesentium atque repellendus voluptatem explicabo perferendis.
+          </p>
+          <p>
+            Fugiat praesentium distinctio officiis expedita consequuntur vitae
+            amet ipsa enim odit nesciunt facere alias aliquid cupiditate
+            perferendis, nobis aut qui velit maiores recusandae sed? Facilis
+            aliquam rem autem! Dolores, modi?
+          </p>
+          <p>
+            Sunt rem praesentium exercitationem eveniet excepturi impedit
+            delectus qui similique quaerat! Fugit obcaecati sint quaerat animi
+            cumque a beatae? Error, facilis necessitatibus? Provident,
+            perferendis doloribus? Delectus quibusdam fugiat nulla vel!
+          </p>
+          <p>
+            Quis delectus iure perferendis exercitationem suscipit
+            necessitatibus doloribus? In dolore voluptates temporibus odit
+            sapiente ea provident rerum, officia et magni consequuntur esse est
+            unde, cumque accusamus dignissimos? Ullam, sit quidem?
+          </p>
+          <p>
+            Aliquam odio excepturi quis reiciendis, recusandae dolor at, quam
+            ipsam sunt magni modi beatae libero maiores similique amet iusto
+            minus aspernatur quisquam. Veritatis, ducimus illum. Fugiat iure
+            dolores assumenda voluptatum!
+          </p>
+          <p>
+            Aperiam beatae quo cupiditate hic recusandae ad laudantium
+            voluptatibus fugiat odit, harum sunt officia sed eaque unde ipsam
+            obcaecati non magni voluptatem adipisci quia dignissimos dolores
+            modi. Optio, tempora mollitia.
+          </p>
+
+          <bce-fab color="dark">
+            <bce-button>TODO</bce-button>
+            <bce-button>animate</bce-button>
+            <bce-button>floating</bce-button>
+            <bce-button>action</bce-button>
+            <bce-button>button</bce-button>
+            <bce-button>(de)activation</bce-button>
+          </bce-fab>
+        </main>
+      </div>
     </bce-root>
 
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>
     <script>
-      var root = document.getElementById("app");
-      var message = document.getElementById("message");
+      var root = document.getElementById('app');
+      var message = document.getElementById('message');
 
       var i = 0;
-      message.addEventListener("click", function() {
-        root.message("Message " + ++i);
+      message.addEventListener('click', function() {
+        root.message('Message ' + ++i);
       });
     </script>
   </body>

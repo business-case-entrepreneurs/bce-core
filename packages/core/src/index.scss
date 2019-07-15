@@ -7,6 +7,7 @@ body {
 bce-root {
   display: flex;
   flex-flow: column nowrap;
+  height: 100vh;
 }
 
 bce-root bce-status-bar {
@@ -17,7 +18,19 @@ bce-root bce-header {
   flex: 0 0 auto;
 }
 
+#main-with_sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding-top: 50px;
+  height: 100%;
+}
+
 bce-root main {
-  flex: 1 0 auto;
+  flex: 1 0 90%;
+  box-sizing: border-box;
+  position: relative;
   padding: 1rem 1rem 82px;
+  height: 100%;
+  overflow-x: hidden;
 }
