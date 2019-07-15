@@ -8,13 +8,7 @@ bce-menu-item {
 
     &:active,
     &:hover {
-      border-bottom: 1px solid bce-color-t();
       color: bce-color-t();
     }
   }
-}
-
-.current {
-  border-bottom: 1px solid bce-color-t();
-  color: bce-color-t();
 }
