@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 
@@ -7,12 +7,11 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-menu.scss'
 })
 export class BceMenu {
-
   render() {
     return (
       <nav>
-        <slot/>
+        <slot />
       </nav>
-    )
+    );
   }
 }
