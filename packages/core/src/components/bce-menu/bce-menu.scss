@@ -1,44 +1,47 @@
 bce-menu {
-  display: flex;
   background-color: bce-color();
 
-  > .mobile-button {
-    color: white;
-    align-self: flex-end;
+  display: none;
+
+  &.full-width {
+    flex: 1 1 100%;
   }
 
-  .show-mobile-menu {
-    display: none;
-  }
   > .menu {
     display: flex;
-    flex-direction: column;
     position: absolute;
-    top: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 75px;
     left: 0;
+    bottom: 0;
     right: 0;
+    z-index: 5;
+    font-size: 1.5rem;
     background-color: bce-color();
   }
-  @include media-small {
-    > .mobile-button {
-      display: none;
+
+  @include media-medium {
+    .menu {
       position: relative;
-    }
-    > .menu {
-      position: relative;
-      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-size: 1.2rem;
+      margin-top: 75px;
       top: 0;
     }
+    &.right {
+      order: 1;
+    }
+    & .horizontal {
+      flex-direction: row;
+    }
+    & .verticale {
+      flex-direction: column;
+    }
   }
-}
-.horizontal {
-  min-width: 100%;
-  padding: 1rem;
-}
-.verticale {
-  flex-direction: column;
-  flex: 1 1 10%;
-  z-index: 1;
-  height: auto;
-  padding: 1rem;
+  &[active] {
+    display: flex;
+  }
 }

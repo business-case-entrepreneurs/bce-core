@@ -1,12 +1,4 @@
-import {
-  Component,
-  Prop,
-  Host,
-  Element,
-  State,
-  Listen,
-  h
-} from '@stencil/core';
+import { Component, Prop, Host, State, Listen, h } from '@stencil/core';
 import { Color } from '../../models/color';
 
 @Component({
@@ -14,78 +6,73 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-menu.scss'
 })
 export class BceMenu {
-  @Prop()
+  @Prop({ reflect: true })
   public verticale: boolean = false;
+
+  @Prop({ reflect: true })
+  public right: boolean = false;
 
   @Prop({ reflect: true })
   public color?: Color;
 
-  @Element() el!: HTMLElement;
+  @Prop({ reflect: true })
+  public toggleDesktop: boolean = false;
+
+  @Prop({ reflectToAttr: true, mutable: true })
+  public active = false;
 
   @State() isMobileMenuShown: boolean = false;
+  @State() isDeskstopMenuShown: boolean = true;
 
   @Listen('resize', { target: 'window' })
   public handleResize() {
     requestAnimationFrame(() => {
       if (window.innerWidth > 768) {
-        const menu = this.el.querySelector('.menu') as HTMLElement;
-        menu.style.display = '';
-        this.el.classList.remove('show-mobile-menu');
-        document.body.classList.remove('no-scroll');
         this.isMobileMenuShown = false;
       }
     });
   }
 
-  public componentDidLoad() {
-    this.isMobileMenuShown === false;
+  @Listen('toggleMenu', { target: 'window' })
+  public toggleMenu() {
+    this.isMobileMenuShown ? this.hideMenu() : this.showMenu();
   }
 
-  public showNav = () => {
+  public componentDidLoad() {
+    this.isMobileMenuShown === false;
+    // if (!this.toggleDesktop) {
+    //   this.active = true;
+    // }
+  }
+
+  public showMenu = () => {
     if (this.isMobileMenuShown) return;
     this.isMobileMenuShown = true;
-
-    const menu = this.el.querySelector('.menu') as HTMLElement;
-
-    menu.style.display = 'flex';
-    setTimeout(() => {
-      this.el.classList.add('show-mobile-menu');
-      document.body.classList.add('no-scroll');
-    }, 1);
+    this.active = true;
   };
 
-  public hideNav = () => {
+  public hideMenu = () => {
     if (!this.isMobileMenuShown) return;
     this.isMobileMenuShown = false;
-
-    const menu = this.el.querySelector('.menu') as HTMLElement;
-
-    this.el.classList.remove('show-mobile-menu');
-
-    menu.style.display = 'none';
-    setTimeout(() => {
-      document.body.classList.remove('no-scroll');
-    }, 300);
-  };
-
-  public onClick = () => {
-    if (this.isMobileMenuShown) {
-      this.hideNav();
-    } else {
-      this.showNav();
-    }
+    this.active = false;
   };
 
   render() {
     return (
-      <Host class={{ verticale: this.verticale }}>
-        <bce-icon
-          onClick={this.onClick}
-          class="mobile-button"
-          size={'lg'}
-          fixed-width
-        />
-        <div class="menu show-mobile-menu">
+      <Host
+        class={{
+          'full-width': !this.verticale,
+          right: this.right
+        }}
+        active={this.active}
+      >
+        <div
+          class={{
+            menu: true,
+            horizontal: !this.verticale,
+            verticale: this.verticale
+          }}
+        >
           <slot />
         </div>
       </Host>
