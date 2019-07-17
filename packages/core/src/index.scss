@@ -5,9 +5,32 @@ body {
 }
 
 bce-root {
-  display: flex;
-  flex-flow: column nowrap;
   height: 100vh;
+  /* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+  /* total width */
+  > ::-webkit-scrollbar {
+    background-color: #fff;
+    width: 16px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  > ::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  /* scrollbar itself */
+  > ::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 4px solid #fff;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  > ::-webkit-scrollbar-button {
+    display: none;
+  }
 }
 
 bce-root bce-status-bar {
@@ -18,19 +41,18 @@ bce-root bce-header {
   flex: 0 0 auto;
 }
 
-#main-with_sidebar {
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-  padding-top: 50px;
-  height: 100%;
-}
-
 bce-root main {
-  flex: 1 0 90%;
-  box-sizing: border-box;
+  flex: 1 1 80%;
   position: relative;
-  padding: 1rem 1rem 82px;
+  padding: 5rem 1rem 82px;
   height: 100%;
   overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  bce-root {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
+  }
 }
