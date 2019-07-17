@@ -1,4 +1,4 @@
-import { Component, Prop, Host, State, Listen, h } from '@stencil/core';
+import { Component, Prop, Host, Listen, h } from '@stencil/core';
 import { Color } from '../../models/color';
 
 @Component({
@@ -21,41 +21,35 @@ export class BceMenu {
   @Prop({ reflectToAttr: true, mutable: true })
   public active = false;
 
-  @State() isMobileMenuShown: boolean = false;
-  @State() isDeskstopMenuShown: boolean = true;
-
   @Listen('resize', { target: 'window' })
   public handleResize() {
     requestAnimationFrame(() => {
-      if (window.innerWidth > 768) {
-        this.isMobileMenuShown = false;
+      if (window.innerWidth < 1024) {
+        this.active = false;
+      } else if (window.innerWidth > 1024 && !this.toggleDesktop) {
+        this.active = true;
       }
     });
   }
 
   @Listen('toggleMenu', { target: 'window' })
   public toggleMenu() {
-    this.isMobileMenuShown ? this.hideMenu() : this.showMenu();
+    this.active = !this.active;
   }
 
   public componentDidLoad() {
-    this.isMobileMenuShown === false;
-    // if (!this.toggleDesktop) {
-    //   this.active = true;
-    // }
+    if (!this.toggleDesktop && window.innerWidth > 1024) {
+      this.active = true;
+    }
   }
 
-  public showMenu = () => {
-    if (this.isMobileMenuShown) return;
-    this.isMobileMenuShown = true;
-    this.active = true;
-  };
+  // public showMenu = () => {
+  //   this.active = true;
+  // };
 
-  public hideMenu = () => {
-    if (!this.isMobileMenuShown) return;
-    this.isMobileMenuShown = false;
-    this.active = false;
-  };
+  // public hideMenu = () => {
+  //   this.active = false;
+  // };
 
   render() {
     return (
