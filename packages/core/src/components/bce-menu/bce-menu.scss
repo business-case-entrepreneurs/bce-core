@@ -1,6 +1,6 @@
 bce-menu {
+  @include bce-color(primary);
   background-color: bce-color();
-
   display: none;
 
   &.full-width {
@@ -34,10 +34,10 @@ bce-menu {
     &.right {
       order: 1;
     }
-    & .horizontal {
+    &.horizontal {
       flex-direction: row;
     }
-    & .verticale {
+    &.verticale {
       flex-direction: column;
     }
   }

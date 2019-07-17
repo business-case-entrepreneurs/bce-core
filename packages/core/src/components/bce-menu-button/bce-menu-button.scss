@@ -1,3 +1,4 @@
 bce-menu-button {
-  color: white;
+  @include bce-color(primary);
+  color: bce-color();
 }
