@@ -67,7 +67,7 @@ export class BceIcon {
     const children: any = (element.children || []).map(child =>
       this.renderIcon(child)
     );
-    return (h as any)(element.tag, element.attributes, children);
+    return (h as any)(element.tag, element.attributeibutes, children);
   }
 
   render() {

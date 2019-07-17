@@ -29,7 +29,7 @@ export class BceInput {
   @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflect: true, mutable: true })
+  @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
   private autofocus = false;
