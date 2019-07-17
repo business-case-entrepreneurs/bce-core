@@ -22,7 +22,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-regular-svg-icons": "^5.9.0",
-    "@stencil/core": "^1.1.2",
+    "@stencil/core": "^1.1.7",
     "@stencil/sass": "^1.0.1",
     "rimraf": "^2.6.3"
   },
