@@ -9,16 +9,16 @@ export class BceSwitch {
   @Element()
   private el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
   @Prop({ mutable: true })
   public value = false;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
+  @Prop({ attr: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
   private handleClick = (event: Event) => {

@@ -7,7 +7,7 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-status-bar.scss'
 })
 export class BceStatusBar {
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
   render() {

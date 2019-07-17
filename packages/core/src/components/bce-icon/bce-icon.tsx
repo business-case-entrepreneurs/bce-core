@@ -1,4 +1,11 @@
-import { AbstractElement, icon, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
+import {
+  AbstractElement,
+  icon,
+  IconLookup,
+  IconName,
+  IconPrefix,
+  library
+} from '@fortawesome/fontawesome-svg-core';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { Component, h, Prop, Watch } from '@stencil/core';
 
@@ -14,25 +21,25 @@ export class BceIcon {
     iconName: 'square'
   };
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public name: IconName = BceIcon.DEFAULT_ICON.iconName;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public raw?: string;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public size?: 'xs' | 'sm' | 'lg' | '2x' | '3x' | '5x' | '7x' | '10x';
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public fixedWidth?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public listItem?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public spin?: boolean;
 
   private get classes(): string[] {
