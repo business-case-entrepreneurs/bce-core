@@ -7,7 +7,7 @@ import { Color } from '../../models/color';
   styleUrl: 'bce-header.scss'
 })
 export class BceHeader {
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
   render() {

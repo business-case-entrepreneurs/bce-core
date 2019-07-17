@@ -11,28 +11,28 @@ export class BceButton {
   @Element()
   private el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public type?: ButtonType;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public icon?: string;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public iconSpin?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public block?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
+  @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public submit = false;
 
   private handleClick = (event: MouseEvent) => {

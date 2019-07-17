@@ -8,10 +8,10 @@ export class BceRipple {
   @Element()
   public el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public x!: number;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public y!: number;
 
   componentDidLoad() {
