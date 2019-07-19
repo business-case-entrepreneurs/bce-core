@@ -1,13 +1,4 @@
-import {
-  Component,
-  Prop,
-  Element,
-  State,
-  Event,
-  EventEmitter,
-  h,
-  Host
-} from '@stencil/core';
+import { Component, Prop, Element, State, h } from '@stencil/core';
 
 @Component({
   tag: 'bce-slider',
@@ -15,23 +6,35 @@ import {
   shadow: false
 })
 export class BceSlider {
-  @Prop({ reflect: true }) intialValue: number = 50;
-  @Prop({ reflect: true }) min: number = 0;
-  @Prop({ reflect: true }) max: number = 100;
-  @Prop({ reflect: true }) step: number = 1;
+  @Element()
+  private el!: HTMLElement;
+
+  @Prop({ reflect: true })
+  public initialValue: number = 50;
+
+  @Prop({ reflect: true })
+  public min: number = 0;
+
+  @Prop({ reflect: true })
+  public max: number = 100;
+
+  @Prop({ reflect: true })
+  public step: number = 1;
 
   // todo
-  @Prop({ reflect: true }) disabled: boolean = false;
-  @Prop({ reflect: true }) discrete: boolean = false;
+  @Prop({ reflect: true })
+  public disabled: boolean = false;
+
+  @Prop({ reflect: true })
+  public discrete: boolean = false;
   // todo
 
-  @State() value!: number;
-
-  @Element() el!: HTMLElement;
+  @State()
+  private value!: number;
 
   componentDidLoad() {
-    this.value = this.intialValue;
-    this.setFillWidth(this.intialValue);
+    this.value = this.initialValue;
+    this.setFillWidth(this.initialValue);
   }
 
   private handleChange = (event: any) => {
