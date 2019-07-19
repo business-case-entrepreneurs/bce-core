@@ -12,7 +12,5 @@ export const config: Config = {
     { type: 'dist', dir: './dist' },
     { type: 'www', dir: './www', serviceWorker: null }
   ],
-  copy: [
-    { src: 'logo' }
-  ]
+  copy: [{ src: 'logo' }]
 };
