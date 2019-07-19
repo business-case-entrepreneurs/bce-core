@@ -12,6 +12,7 @@
     "scss"
   ],
   "main": "dist/index.js",
+  "unpkg": "dist/bce.js",
   "module": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
   "scripts": {
@@ -28,6 +29,5 @@
     "rimraf": "^2.6.3"
   },
   "collection": "dist/collection/collection-manifest.json",
-  "sass": "scss/index.scss",
-  "unpkg": "dist/bce.js"
+  "sass": "scss/index.scss"
 }
