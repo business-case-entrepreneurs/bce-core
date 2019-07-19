@@ -2,6 +2,7 @@ import { Component, Element, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType } from '../../models/input-type';
+import Popper from 'popper.js';
 
 @Component({
   tag: 'bce-input',
@@ -54,6 +55,62 @@ export class BceInput {
     this.autofocus = this.hasFocus;
   }
 
+  componentDidLoad() {
+    if (this.type === InputType.Dropdown) {
+      const reference = this.el.querySelector('input')!;
+      const dropdown = this.el.querySelector('.options')!;
+      const container = this.el.closest('bce-root')!;
+
+      new Popper(reference, dropdown, {
+        placement: 'bottom-start',
+        modifiers: {
+          // flip: { behavior: ['top', 'bottom'] },
+          preventOverflow: { boundariesElement: container }
+        }
+      });
+    }
+  }
+
+  private renderInput() {
+    switch (this.type) {
+      case InputType.Number:
+      case InputType.Password:
+      case InputType.Text:
+        return (
+          <input
+            type={this.type}
+            value={this.value}
+            autofocus={this.autofocus}
+            onInput={this.onInput}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            disabled={this.disabled || false}
+          />
+        );
+
+      case InputType.Dropdown:
+        return [
+          <input
+            type="text"
+            value={this.value}
+            onInput={this.onInput}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            disabled={this.disabled || false}
+          />,
+          <bce-icon
+            pre="fas"
+            name="caret-down"
+            fixed-width
+            data-active={this.hasFocus}
+          />,
+          <div class="options" data-active={this.hasFocus}>
+            <slot />
+          </div>
+        ];
+    }
+  }
+
   render() {
     const types = Object.keys(InputType).map(k => (InputType as any)[k]);
     if (types.indexOf(this.type) < 0) {
@@ -61,18 +118,13 @@ export class BceInput {
       return null;
     }
 
+    const hover =
+      this.hasFocus || !!this.value || this.type === InputType.Dropdown;
+
     return [
-      <label data-hover={this.hasFocus || !!this.value}>{this.label}</label>,
+      <label data-hover={hover}>{this.label}</label>,
       this.info && <small>{this.info}</small>,
-      <input
-        type={this.type}
-        value={this.value}
-        autofocus={this.autofocus}
-        onInput={this.onInput}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        disabled={this.disabled || false}
-      />
+      this.renderInput()
     ];
   }
 }
