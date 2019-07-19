@@ -7,7 +7,7 @@ import { Color } from '../../models/color';
 })
 export class BceMenu {
   @Prop({ reflect: true })
-  public verticale: boolean = false;
+  public vertical: boolean = false;
 
   @Prop({ reflect: true })
   public right: boolean = false;
@@ -54,17 +54,14 @@ export class BceMenu {
   render() {
     return (
       <Host
-        class={{
-          'full-width': !this.verticale,
-          right: this.right
-        }}
+        class={{ 'full-width': !this.vertical, right: this.right }}
         active={this.active}
       >
         <div
           class={{
             menu: true,
-            horizontal: !this.verticale,
-            verticale: this.verticale
+            horizontal: !this.vertical,
+            verticle: this.vertical
           }}
         >
           <slot />

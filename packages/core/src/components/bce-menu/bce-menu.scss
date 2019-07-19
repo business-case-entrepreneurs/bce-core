@@ -22,6 +22,18 @@ bce-menu {
     background-color: bce-color();
   }
 
+  > div > a {
+    margin: 1rem;
+    color: bce-color-t();
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:active,
+    &:hover {
+      color: bce-color-t();
+    }
+  }
+
   @include media-medium {
     .menu {
       position: relative;

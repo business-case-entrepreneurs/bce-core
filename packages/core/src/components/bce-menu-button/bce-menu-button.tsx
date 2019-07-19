@@ -1,5 +1,6 @@
-import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { Color } from '../../models/color';
+
 @Component({
   tag: 'bce-menu-button',
   styleUrl: 'bce-menu-button.scss'
@@ -16,15 +17,7 @@ export class BceMenuButton {
 
   render() {
     return (
-      <Host>
-        <bce-icon
-          class="mobile-button"
-          onClick={this.onClick}
-          raw={'bars'}
-          pre={'fas'}
-          size={'2x'}
-        />
-      </Host>
+      <bce-icon onClick={this.onClick} raw={'bars'} pre={'fas'} size={'2x'} />
     );
   }
 }
