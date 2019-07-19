@@ -1,9 +1,7 @@
 bce-header {
   @include bce-color(primary);
   @include elevate(4);
-  position: fixed;
-  width: 100%;
-  top: 20px;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
