@@ -9,6 +9,7 @@
   },
   "files": [
     "dist",
+    "loader",
     "scss"
   ],
   "main": "dist/index.js",
