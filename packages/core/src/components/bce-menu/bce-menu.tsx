@@ -3,7 +3,8 @@ import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-menu',
-  styleUrl: 'bce-menu.scss'
+  styleUrl: 'bce-menu.scss',
+  shadow: false
 })
 export class BceMenu {
   @Prop({ reflect: true })

@@ -5,7 +5,8 @@ import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-button',
-  styleUrl: 'bce-button.scss'
+  styleUrl: 'bce-button.scss',
+  shadow: false
 })
 export class BceButton {
   @Element()

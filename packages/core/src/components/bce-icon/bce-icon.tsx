@@ -14,7 +14,8 @@ import { Component, h, Prop, Watch } from '@stencil/core';
 library.add(faSquare, faBars);
 
 @Component({
-  tag: 'bce-icon'
+  tag: 'bce-icon',
+  shadow: false
 })
 export class BceIcon {
   public static DEFAULT_ICON: IconLookup = {

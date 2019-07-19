@@ -3,7 +3,8 @@ import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-menu-button',
-  styleUrl: 'bce-menu-button.scss'
+  styleUrl: 'bce-menu-button.scss',
+  shadow: false
 })
 export class BceMenuButton {
   @Prop({ reflect: true })

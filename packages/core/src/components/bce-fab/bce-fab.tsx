@@ -5,7 +5,8 @@ import { BceIcon } from '../bce-icon/bce-icon';
 
 @Component({
   tag: 'bce-fab',
-  styleUrl: 'bce-fab.scss'
+  styleUrl: 'bce-fab.scss',
+  shadow: false
 })
 export class BceFab {
   @Element()

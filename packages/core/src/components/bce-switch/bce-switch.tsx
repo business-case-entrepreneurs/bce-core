@@ -3,7 +3,8 @@ import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-switch',
-  styleUrl: 'bce-switch.scss'
+  styleUrl: 'bce-switch.scss',
+  shadow: false
 })
 export class BceSwitch {
   @Element()

@@ -7,7 +7,8 @@ interface MessageOptions {
 
 @Component({
   tag: 'bce-root',
-  styleUrl: 'bce-root.scss'
+  styleUrl: 'bce-root.scss',
+  shadow: false
 })
 export class BceRoot {
   @Element()

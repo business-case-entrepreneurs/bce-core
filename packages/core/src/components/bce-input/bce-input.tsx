@@ -5,7 +5,8 @@ import { InputType } from '../../models/input-type';
 
 @Component({
   tag: 'bce-input',
-  styleUrl: 'bce-input.scss'
+  styleUrl: 'bce-input.scss',
+  shadow: false
 })
 export class BceInput {
   @Element()

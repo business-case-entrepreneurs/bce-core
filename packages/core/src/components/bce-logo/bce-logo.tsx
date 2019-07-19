@@ -1,8 +1,9 @@
-import { Component, Prop, h } from "@stencil/core";
+import { Component, Prop, h } from '@stencil/core';
 
 @Component({
-  tag: "bce-logo",
-  styleUrl: "bce-logo.scss"
+  tag: 'bce-logo',
+  styleUrl: 'bce-logo.scss',
+  shadow: false
 })
 export class BceLogo {
   @Prop()
