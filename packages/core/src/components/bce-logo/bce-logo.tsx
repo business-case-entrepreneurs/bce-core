@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { LogoMode } from '../../models/logo-mode';
 
 @Component({
@@ -6,7 +6,7 @@ import { LogoMode } from '../../models/logo-mode';
   styleUrl: 'bce-logo.scss'
 })
 export class BceLogo {
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public mode!: LogoMode;
 
   private get colors() {
@@ -18,11 +18,11 @@ export class BceLogo {
   }
 
   render() {
-    return [
+    return (
       <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         {this.paths}
       </svg>
-    ];
+    );
   }
 }
 
