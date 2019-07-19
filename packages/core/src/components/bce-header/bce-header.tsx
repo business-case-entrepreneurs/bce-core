@@ -1,13 +1,14 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-header',
-  styleUrl: 'bce-header.scss'
+  styleUrl: 'bce-header.scss',
+  shadow: false
 })
 export class BceHeader {
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
   render() {

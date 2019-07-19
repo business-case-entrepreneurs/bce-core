@@ -1,12 +1,21 @@
-import { AbstractElement, icon, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
+import {
+  AbstractElement,
+  icon,
+  IconLookup,
+  IconName,
+  IconPrefix,
+  library
+} from '@fortawesome/fontawesome-svg-core';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
-import { Component, Prop, Watch } from '@stencil/core';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { Component, h, Prop, Watch } from '@stencil/core';
 
 // These icons are added by default
-library.add(faSquare);
+library.add(faSquare, faBars);
 
 @Component({
-  tag: 'bce-icon'
+  tag: 'bce-icon',
+  shadow: false
 })
 export class BceIcon {
   public static DEFAULT_ICON: IconLookup = {
@@ -14,32 +23,32 @@ export class BceIcon {
     iconName: 'square'
   };
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public name: IconName = BceIcon.DEFAULT_ICON.iconName;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public raw?: string;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public size?: 'xs' | 'sm' | 'lg' | '2x' | '3x' | '5x' | '7x' | '10x';
 
-  @Prop({ reflectToAttr: true })
-  public 'fixed-width'?: boolean;
+  @Prop({ reflect: true })
+  public fixedWidth?: boolean;
 
-  @Prop({ reflectToAttr: true })
-  public 'list-item'?: boolean;
+  @Prop({ reflect: true })
+  public listItem?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public spin?: boolean;
 
   private get classes(): string[] {
     const classes = {
       'fa-spin': this.spin,
-      'fa-fw': this['fixed-width'],
-      'fa-li': this['list-item'],
+      'fa-fw': this['fixedWidth'],
+      'fa-li': this['listItem'],
       [`fa-${this.size}`]: this.size !== undefined
     };
 
@@ -60,7 +69,7 @@ export class BceIcon {
     const children: any = (element.children || []).map(child =>
       this.renderIcon(child)
     );
-    return h(element.tag, element.attributes, children);
+    return (h as any)(element.tag, element.attributes, children);
   }
 
   render() {

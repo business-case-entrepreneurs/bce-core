@@ -1,4 +1,4 @@
-import { Component, Element, Method, State } from '@stencil/core';
+import { Component, Element, Method, State, h, Host } from '@stencil/core';
 
 interface MessageOptions {
   readonly text: string;
@@ -7,7 +7,8 @@ interface MessageOptions {
 
 @Component({
   tag: 'bce-root',
-  styleUrl: 'bce-root.scss'
+  styleUrl: 'bce-root.scss',
+  shadow: false
 })
 export class BceRoot {
   @Element()
@@ -20,12 +21,12 @@ export class BceRoot {
   private messageQueue: MessageOptions[] = [];
 
   @Method()
-  public registerFAB(register: boolean) {
+  public async registerFAB(register: boolean) {
     this.registeredFAB = register;
   }
 
   @Method()
-  public message(text: string, duration = 2) {
+  public async message(text: string, duration = 2) {
     if (!text) return;
 
     // Messages have a minimum duration of 1 second and a maximum of 10 seconds
@@ -59,11 +60,11 @@ export class BceRoot {
     setTimeout(onRemove, duration * 1000);
   }
 
-  hostData() {
-    return { fab: this.registeredFAB };
-  }
-
   render() {
-    return <slot />;
+    return (
+      <Host fab={this.registeredFAB}>
+        <slot />
+      </Host>
+    );
   }
 }

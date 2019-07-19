@@ -1,8 +1,13 @@
 bce-header {
   @include bce-color(primary);
   @include elevate(4);
-  position: relative;
-  display: block;
+  position: fixed;
+  width: 100%;
+  top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 56px;
+  padding: 1rem;
   background-color: bce-color();
 }

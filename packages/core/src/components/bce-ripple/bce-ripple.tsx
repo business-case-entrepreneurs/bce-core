@@ -1,17 +1,18 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'bce-ripple',
-  styleUrl: 'bce-ripple.scss'
+  styleUrl: 'bce-ripple.scss',
+  shadow: false
 })
 export class BceRipple {
   @Element()
   public el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public x!: number;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public y!: number;
 
   componentDidLoad() {

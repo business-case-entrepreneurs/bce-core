@@ -1,38 +1,39 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, h, Host } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-button',
-  styleUrl: 'bce-button.scss'
+  styleUrl: 'bce-button.scss',
+  shadow: false
 })
 export class BceButton {
   @Element()
   private el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public type?: ButtonType;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public icon?: string;
 
-  @Prop({ reflectToAttr: true })
-  public 'icon-spin'?: boolean;
+  @Prop({ reflect: true })
+  public iconSpin?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public block?: boolean;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
+  @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public submit = false;
 
   private handleClick = (event: MouseEvent) => {
@@ -57,30 +58,28 @@ export class BceButton {
     this.hasFocus = false;
   };
 
-  hostData() {
-    return {
-      tabIndex: this.disabled ? undefined : 0,
-      onMouseDown: this.handleMouseDown,
-      onFocus: this.handleFocus,
-      onBlur: this.handleBlur
-    };
-  }
-
   render() {
     const type = this.submit ? 'submit' : 'button';
 
-    return [
-      <button tabIndex={-1} disabled={this.disabled} type={type}>
-        <slot />
-      </button>,
-      this.icon && (
-        <bce-icon
-          raw={this.icon}
-          onClick={this.handleClick}
-          spin={this['icon-spin']}
-          fixed-width
-        />
-      )
-    ];
+    return (
+      <Host
+        tabIndex={this.disabled ? undefined : 0}
+        onMouseDown={this.handleMouseDown}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+      >
+        <button tabIndex={-1} disabled={this.disabled} type={type}>
+          <slot />
+        </button>
+        {this.icon && (
+          <bce-icon
+            raw={this.icon}
+            onClick={this.handleClick}
+            spin={this.iconSpin}
+            fixed-width
+          />
+        )}
+      </Host>
+    );
   }
 }

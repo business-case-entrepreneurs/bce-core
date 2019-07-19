@@ -9,6 +9,5 @@ module.exports = {
     { value: 'refactor', name: 'refactor Code refactoring change' },
     { value: 'chore',    name: 'chore    Chore change' }
   ],
-  scopes: [],
-  allowCustomScopes: false
+  skipQuestions: ['scope']
 };

@@ -1,35 +1,36 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType } from '../../models/input-type';
 
 @Component({
   tag: 'bce-input',
-  styleUrl: 'bce-input.scss'
+  styleUrl: 'bce-input.scss',
+  shadow: false
 })
 export class BceInput {
   @Element()
   private el!: HTMLElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public type: InputType = InputType.Text;
 
   @Prop({ mutable: true })
   public value = '';
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public label?: string;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public info?: string;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attr: 'focus', reflectToAttr: true, mutable: true })
+  @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
   private autofocus = false;

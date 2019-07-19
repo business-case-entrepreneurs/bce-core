@@ -6,7 +6,8 @@
     "lib": ["dom", "es2017"],
     "declaration": true,
     "sourceMap": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "jsxFactory": "h"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["dist", "node_modules"]
