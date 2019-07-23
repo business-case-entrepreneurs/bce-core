@@ -1,24 +1,22 @@
 bce-dropdown-menu {
-  .dropdown {
-    @include elevate(6);
-    position: relative;
-    top: calc();
-    display: block;
-    max-width: 250px;
+  .dropdown-menu {
+    @include elevate(8);
+    display: none;
     background-color: bce-color(dark);
-    color: bce-color-t(dark);
-    font-size: 14px;
+    font-size: 1rem;
     border-radius: 4px;
-    padding: 16px;
-    opacity: 0.95;
-    animation: slide-in 200ms 1;
+    animation: slide-in 330ms;
+
+    &[data-active] {
+      display: block;
+    }
 
     @keyframes slide-in {
       from {
-        bottom: 0;
+        opacity: 0.1;
       }
       to {
-        bottom: 19px;
+        opacity: 1;
       }
     }
   }
