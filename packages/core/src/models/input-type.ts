@@ -1,6 +1,1 @@
-export enum InputType {
-  Dropdown = 'dropdown',
-  Number = 'number',
-  Password = 'password',
-  Text = 'text'
-}
+export type InputType = 'dropdown' | 'number' | 'password' | 'text';

@@ -2,7 +2,6 @@ import { Component, Element, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType } from '../../models/input-type';
-import Popper from 'popper.js';
 
 @Component({
   tag: 'bce-input',
@@ -17,7 +16,7 @@ export class BceInput {
   public color?: Color;
 
   @Prop({ reflect: true })
-  public type: InputType = InputType.Text;
+  public type: InputType = 'text';
 
   @Prop({ mutable: true })
   public value = '';
@@ -34,7 +33,7 @@ export class BceInput {
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
-  private autofocus = false;
+  private _autofocus = false;
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
@@ -52,79 +51,50 @@ export class BceInput {
   };
 
   componentWillLoad() {
-    this.autofocus = this.hasFocus;
+    this._autofocus = this.hasFocus;
   }
 
-  componentDidLoad() {
-    if (this.type === InputType.Dropdown) {
-      const reference = this.el.querySelector('input')!;
-      const dropdown = this.el.querySelector('.options')!;
-      const container = this.el.closest('bce-root')!;
+  renderInput() {
+    const disabled = this.disabled || false;
 
-      new Popper(reference, dropdown, {
-        placement: 'bottom-start',
-        modifiers: {
-          // flip: { behavior: ['top', 'bottom'] },
-          preventOverflow: { boundariesElement: container }
-        }
-      });
-    }
-  }
-
-  private renderInput() {
     switch (this.type) {
-      case InputType.Number:
-      case InputType.Password:
-      case InputType.Text:
+      case 'dropdown':
+        return (
+          <bce-dropdown
+            onInput={this.onInput}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            disabled={disabled}
+          >
+            <slot />
+          </bce-dropdown>
+        );
+
+      default:
         return (
           <input
             type={this.type}
             value={this.value}
-            autofocus={this.autofocus}
+            autofocus={this._autofocus}
             onInput={this.onInput}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            disabled={this.disabled || false}
+            disabled={disabled}
           />
         );
-
-      case InputType.Dropdown:
-        return [
-          <input
-            type="text"
-            value={this.value}
-            onInput={this.onInput}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            disabled={this.disabled || false}
-          />,
-          <bce-icon
-            pre="fas"
-            name="caret-down"
-            fixed-width
-            data-active={this.hasFocus}
-          />,
-          <div class="options" data-active={this.hasFocus}>
-            <slot />
-          </div>
-        ];
     }
   }
 
   render() {
-    const types = Object.keys(InputType).map(k => (InputType as any)[k]);
-    if (types.indexOf(this.type) < 0) {
-      console.warn('[bce-input] unsupported type: ' + this.type);
-      return null;
-    }
-
     const hover =
-      this.hasFocus || !!this.value || this.type === InputType.Dropdown;
+      this.hasFocus ||
+      !!this.value ||
+      (this.type === 'dropdown' && this.hasFocus);
 
     return [
-      <label data-hover={hover}>{this.label}</label>,
-      this.info && <small>{this.info}</small>,
-      this.renderInput()
+      this.renderInput(),
+      this.label && <label data-hover={hover}>{this.label}</label>,
+      this.info && <small>{this.info}</small>
     ];
   }
 }

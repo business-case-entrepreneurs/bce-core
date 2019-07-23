@@ -1,0 +1,15 @@
+bce-option {
+  position: relative;
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: bce-color-l(primary);
+    color: bce-color-t(primary);
+  }
+
+  &[filter] {
+    display: none;
+  }
+}
