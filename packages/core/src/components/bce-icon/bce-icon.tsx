@@ -7,11 +7,15 @@ import {
   library
 } from '@fortawesome/fontawesome-svg-core';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faEllipsisH,
+  faCaretDown
+} from '@fortawesome/free-solid-svg-icons';
 import { Component, h, Prop, Watch } from '@stencil/core';
 
 // These icons are added by default
-library.add(faSquare, faBars, faEllipsisH);
+library.add(faSquare, faBars, faEllipsisH, faCaretDown);
 
 @Component({
   tag: 'bce-icon',

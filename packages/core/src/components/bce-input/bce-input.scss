@@ -30,28 +30,6 @@ bce-input {
     color: bce-color-t(disable);
   }
 
-  > input {
-    padding: 20px 12px 5px;
-    width: 100%;
-    height: 48px;
-    font-size: 0.9em;
-    border: 1px solid bce-color-d(light);
-    border-radius: 4px;
-    outline: none;
-
-    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  &[focus] > input {
-    border-color: bce-color();
-  }
-
-  &[disabled] > input {
-    background-color: bce-color-l(disable);
-    color: bce-color-t(disable);
-  }
-
   > small {
     position: absolute;
     font-size: 12px;
@@ -98,10 +76,39 @@ bce-input {
       }
     }
 
-    // &[disabled] > label {
-    //   color: bce-color-l(dark);
-    // }
+    > small {
+      left: calc(25% + 12px);
+    }
+  }
+}
 
+bce-input[type='dropdown'],
+bce-input[type='number'],
+bce-input[type='password'],
+bce-input[type='text'] {
+  > input {
+    padding: 20px 12px 5px;
+    width: 100%;
+    height: 48px;
+    font-size: 0.9em;
+    border: 1px solid bce-color-d(light);
+    border-radius: 4px;
+    outline: none;
+
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &[focus] > input {
+    border-color: bce-color();
+  }
+
+  &[disabled] > input {
+    background-color: bce-color-l(disable);
+    color: bce-color-t(disable);
+  }
+
+  @include media-medium {
     > input {
       position: relative;
       right: 0;
@@ -110,9 +117,68 @@ bce-input {
       width: 75%;
       font-size: 0.9em;
     }
+  }
+}
 
-    > small {
-      left: calc(25% + 12px);
+bce-input[type='dropdown'] {
+  &:not([disabled]) > input {
+    cursor: pointer;
+  }
+
+  > bce-icon {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    color: bce-color-l(dark);
+    pointer-events: none;
+    transition: transform 0.3s ease-out;
+
+    &[data-active] {
+      transform: rotate(180deg);
+    }
+  }
+
+  .options {
+    @include elevate(2);
+    width: 100%;
+    max-height: 0;
+    font-size: 0.9em;
+    background-color: white;
+    border-radius: 4px;
+    margin: 2px 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-in-out;
+    z-index: 8;
+
+    &[data-active] {
+      display: block;
+      border: 1px solid bce-color-d(light);
+      max-height: 500px;
+    }
+
+    option {
+      padding: 10px;
+      text-align: left;
+
+      &:hover {
+        background-color: bce-color-l(primary);
+        color: bce-color-t(primary);
+      }
+    }
+  }
+
+  &[disabled] > bce-icon {
+    color: bce-color-d(disable);
+  }
+
+  @include media-medium {
+    > bce-icon {
+      top: 12px;
+      right: 10px;
+    }
+
+    .options {
+      width: 75%;
     }
   }
 }
