@@ -1,0 +1,58 @@
+bce-menu {
+  @include bce-color(primary);
+  background-color: bce-color();
+  display: none;
+
+  &.full-width {
+    flex: 1 1 100%;
+  }
+
+  > .menu {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 75px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    font-size: 1.5rem;
+    background-color: bce-color();
+  }
+
+  > div > a {
+    margin: 1rem;
+    color: bce-color-t();
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:active,
+    &:hover {
+      color: bce-color-t();
+    }
+  }
+
+  @include media-medium {
+    .menu {
+      position: relative;
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-size: 1.2rem;
+      top: 0;
+    }
+    &.right {
+      order: 1;
+    }
+    &.horizontal {
+      flex-direction: row;
+    }
+    &.verticale {
+      flex-direction: column;
+    }
+  }
+  &[active] {
+    display: flex;
+  }
+}

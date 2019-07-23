@@ -4,10 +4,11 @@ import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-status-bar',
-  styleUrl: 'bce-status-bar.scss'
+  styleUrl: 'bce-status-bar.scss',
+  shadow: false
 })
 export class BceStatusBar {
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
   render() {

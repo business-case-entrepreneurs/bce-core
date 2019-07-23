@@ -9,10 +9,11 @@
   },
   "files": [
     "dist",
+    "loader",
     "scss"
   ],
   "main": "dist/index.js",
-  "unpkg": "dist/bce.js",
+  "unpkg": "dist/bce/bce.js",
   "module": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
   "scripts": {
@@ -23,10 +24,14 @@
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-regular-svg-icons": "^5.9.0",
-    "@stencil/core": "^1.1.2",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@stencil/core": "^1.1.7",
     "@stencil/sass": "^1.0.1",
     "rimraf": "^2.6.3"
   },
   "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
   "sass": "scss/index.scss"
 }

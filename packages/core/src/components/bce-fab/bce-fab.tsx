@@ -5,22 +5,23 @@ import { BceIcon } from '../bce-icon/bce-icon';
 
 @Component({
   tag: 'bce-fab',
-  styleUrl: 'bce-fab.scss'
+  styleUrl: 'bce-fab.scss',
+  shadow: false
 })
 export class BceFab {
   @Element()
   private el!: HTMLBceFabElement;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public color?: Color;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public icon: string = BceIcon.DEFAULT_ICON.iconName;
 
-  @Prop({ reflectToAttr: true })
+  @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public active = false;
 
   private root?: HTMLBceRootElement;
