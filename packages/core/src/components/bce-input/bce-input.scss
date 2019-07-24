@@ -5,7 +5,11 @@ bce-input {
   margin: 20px 0;
   text-align: right;
 
-  input {
+  * {
+    text-align: left;
+  }
+
+  > input {
     padding: 13px 12px;
     width: 100%;
     height: 48px;
@@ -18,17 +22,28 @@ bce-input {
       border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &[label] input {
+  &[label] > input {
     padding: 20px 12px 5px;
   }
 
-  &[focus] input {
+  &[focus] > input {
     border-color: bce-color();
   }
 
-  &[disabled] input {
+  &[disabled] > input {
     background-color: bce-color-l(disable);
     color: bce-color-t(disable);
+  }
+
+  > bce-option {
+    display: inline-block;
+    width: 100%;
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &[label] > bce-option:first-child {
+    padding-top: 40px;
   }
 
   > label {
@@ -91,17 +106,26 @@ bce-input {
   }
 
   @include media-medium {
-    input {
+    > input {
       height: 40px;
       padding: 6px 12px;
       font-size: 0.9em;
     }
 
-    &[label] input {
+    &[label] > bce-dropdown input,
+    &[label] > input {
       position: relative;
       right: 0;
       width: 75%;
       padding: 6px 12px;
+    }
+
+    &[label] > bce-option {
+      width: 75%;
+
+      &:first-child {
+        padding-top: 0;
+      }
     }
 
     > label {

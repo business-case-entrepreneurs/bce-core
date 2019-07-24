@@ -1,1 +1,7 @@
-export type InputType = 'dropdown' | 'number' | 'password' | 'text';
+export type InputType =
+  | 'checkbox'
+  | 'dropdown'
+  | 'number'
+  | 'password'
+  | 'radio'
+  | 'text';

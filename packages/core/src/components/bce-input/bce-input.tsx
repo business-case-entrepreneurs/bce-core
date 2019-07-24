@@ -1,4 +1,4 @@
-import { Component, Element, Prop, h } from '@stencil/core';
+import { Component, Element, Method, Prop, h } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType } from '../../models/input-type';
@@ -34,6 +34,7 @@ export class BceInput {
   public hasFocus = false;
 
   private _autofocus = false;
+  private options: HTMLBceOptionElement[] = [];
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
@@ -50,6 +51,11 @@ export class BceInput {
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
+  @Method()
+  public async registerOption(option: HTMLBceOptionElement) {
+    this.options = [...this.options, option];
+  }
+
   componentWillLoad() {
     this._autofocus = this.hasFocus;
   }
@@ -58,6 +64,10 @@ export class BceInput {
     const disabled = this.disabled || false;
 
     switch (this.type) {
+      case 'checkbox':
+      case 'radio':
+        return <slot />;
+
       case 'dropdown':
         return (
           <bce-dropdown

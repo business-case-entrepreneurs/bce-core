@@ -2,6 +2,11 @@ bce-dropdown {
   @include bce-color(primary);
   position: relative;
   display: block;
+  text-align: right;
+
+  * {
+    text-align: left;
+  }
 
   input {
     padding: 13px 12px;
