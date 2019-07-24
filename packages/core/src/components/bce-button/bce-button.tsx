@@ -1,4 +1,4 @@
-import { Component, Element, Prop, h, Host } from '@stencil/core';
+import { Component, Element, h, Host, Prop } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
@@ -42,10 +42,13 @@ export class BceButton {
 
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
+
+    // Create ripple element at mouse position
     const ripple = document.createElement('bce-ripple');
     ripple.x = event.pageX - this.el.offsetLeft;
     ripple.y = event.pageY - this.el.offsetTop;
 
+    // Append ripple to button & remove after 500ms
     this.el.appendChild(ripple);
     setTimeout(() => ripple.parentElement!.removeChild(ripple), 500);
   };

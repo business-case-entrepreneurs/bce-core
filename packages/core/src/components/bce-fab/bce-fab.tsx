@@ -1,4 +1,4 @@
-import { Component, Element, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { BceIcon } from '../bce-icon/bce-icon';
