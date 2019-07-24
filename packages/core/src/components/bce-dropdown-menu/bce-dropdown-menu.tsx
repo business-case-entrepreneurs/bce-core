@@ -8,6 +8,7 @@ import Popper from 'popper.js';
 })
 export class BceDropdownMenu {
   public dropDownMenu!: Popper;
+
   @Prop({ reflect: true, mutable: true })
   public active: boolean = false;
 
@@ -24,8 +25,10 @@ export class BceDropdownMenu {
     const dropdown = this.el.querySelector('.dropdown-menu')!;
 
     this.dropDownMenu = new Popper(reference, dropdown, {
-      placement: 'bottom-end',
-      eventsEnabled: true
+      placement: 'bottom-start',
+      modifiers: {
+        flip: { boundariesElement: 'scrollParent' }
+      }
     });
   }
 
