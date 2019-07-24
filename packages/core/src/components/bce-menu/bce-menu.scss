@@ -1,11 +1,8 @@
 bce-menu {
   @include bce-color(primary);
   background-color: bce-color();
+  width: 100%;
   display: none;
-
-  &.full-width {
-    flex: 1 1 100%;
-  }
 
   > .menu {
     display: flex;
@@ -42,8 +39,12 @@ bce-menu {
       font-size: 1.2rem;
       top: 0;
     }
+    &.left {
+      animation: slide-in-l 0.3s ease-in-out;
+    }
     &.right {
       order: 1;
+      animation: slide-in-r 0.3s ease-in-out;
     }
     &.horizontal {
       flex-direction: row;
@@ -54,5 +55,24 @@ bce-menu {
   }
   &[active] {
     display: flex;
+  }
+
+  @keyframes slide-in-r {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-in-l {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
   }
 }
