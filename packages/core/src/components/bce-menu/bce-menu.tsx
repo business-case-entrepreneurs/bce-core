@@ -44,14 +44,6 @@ export class BceMenu {
     }
   }
 
-  // public showMenu = () => {
-  //   this.active = true;
-  // };
-
-  // public hideMenu = () => {
-  //   this.active = false;
-  // };
-
   render() {
     return (
       <Host
