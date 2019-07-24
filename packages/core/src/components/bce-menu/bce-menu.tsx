@@ -46,10 +46,7 @@ export class BceMenu {
 
   render() {
     return (
-      <Host
-        class={{ 'full-width': !this.vertical, right: this.right }}
-        active={this.active}
-      >
+      <Host class={this.right ? 'right' : 'left'} active={this.active}>
         <div
           class={{
             menu: true,
