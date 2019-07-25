@@ -44,7 +44,12 @@ bce-input {
     align-self: flex-start;
   }
 
-  &[label] > bce-option:first-child {
+  > div {
+    width: 100%;
+  }
+
+  &[label] > bce-option:first-child,
+  &[label] > div {
     margin-top: 45px;
   }
 
@@ -136,6 +141,11 @@ bce-input {
 
     &[label] > bce-switch {
       margin: 10px 0 10px 25%;
+    }
+
+    &[label] > div {
+      margin-top: 0;
+      width: 75%;
     }
 
     > label {

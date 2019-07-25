@@ -1,5 +1,6 @@
 export type InputType =
   | 'checkbox'
+  | 'container'
   | 'dropdown'
   | 'number'
   | 'password'

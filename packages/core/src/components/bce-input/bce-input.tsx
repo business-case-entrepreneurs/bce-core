@@ -108,6 +108,13 @@ export class BceInput {
       case 'radio':
         return <slot />;
 
+      case 'container':
+        return (
+          <div>
+            <slot />
+          </div>
+        );
+
       case 'dropdown':
         return (
           <bce-dropdown
