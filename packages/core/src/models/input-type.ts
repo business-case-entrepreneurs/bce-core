@@ -5,3 +5,5 @@ export type InputType =
   | 'password'
   | 'radio'
   | 'text';
+
+export type InputValue = string | string[] | boolean;

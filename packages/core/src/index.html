@@ -16,15 +16,17 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark">
         <bce-logo logo-src="/logo/logo.png"></bce-logo>
-        <bce-menu-button color="light"></bce-menu-button>
+        <!-- <bce-menu-button color="light"></bce-menu-button> -->
       </bce-header>
 
+      <!--
       <bce-menu color="dark" verticale right>
         <a href="#switch">Switch</a>
         <a href="#input">Input</a>
         <a href="#button">Button</a>
         <a href="#message">Message</a>
       </bce-menu>
+      -->
 
       <main>
         <h3 id="switch">BCE Slider</h3>
@@ -47,44 +49,60 @@
         </div>
 
         <h3 id="input">BCE Input</h3>
-        <bce-input
-          label="Username"
-          value="my-username"
-          info="What's your name?"
-        ></bce-input>
-        <bce-input
-          type="password"
-          label="Password"
-          info="This should be a value only you know..."
-        ></bce-input>
-        <bce-input
-          type="number"
-          label="OTP code"
-          info="The One Time Password code."
-          disabled
-        ></bce-input>
+        <form action="">
+          <bce-input
+            id="username"
+            label="Username"
+            value="my-username"
+            info="What's your name?"
+          ></bce-input>
+          <bce-input
+            id="password"
+            type="password"
+            label="Password"
+            info="This should be a value only you know..."
+          ></bce-input>
+          <bce-input
+            id="otp"
+            type="number"
+            label="OTP code"
+            info="The One Time Password code."
+            disabled
+          ></bce-input>
 
-        <bce-input type="dropdown" label="Dropdown" info="testing..">
-          <bce-option value="A">Option A</bce-option>
-          <bce-option value="B">Option B</bce-option>
-          <bce-option value="C">Option C</bce-option>
-          <bce-option value="D">Option D</bce-option>
-          <bce-option value="E">Option E</bce-option>
-          <bce-option value="F">Option F</bce-option>
-          <bce-option value="G">Option G</bce-option>
-        </bce-input>
+          <bce-input
+            id="dropdown"
+            type="dropdown"
+            label="Dropdown"
+            info="testing.."
+          >
+            <bce-option value="A">Option A</bce-option>
+            <bce-option value="B">Option B</bce-option>
+            <bce-option value="C">Option C</bce-option>
+            <bce-option value="D">Option D</bce-option>
+            <bce-option value="E">Option E</bce-option>
+            <bce-option value="F">Option F</bce-option>
+            <bce-option value="G">Option G</bce-option>
+          </bce-input>
 
-        <bce-input type="checkbox" label="Checkbox">
-          <bce-option checked>Option A</bce-option>
-          <bce-option>Option B</bce-option>
-          <bce-option>Option C</bce-option>
-        </bce-input>
+          <bce-input
+            id="checkbox"
+            type="checkbox"
+            label="Checkbox"
+            value='["A","B"]'
+          >
+            <bce-option value="A">Option A</bce-option>
+            <bce-option value="B">Option B</bce-option>
+            <bce-option value="C">Option C</bce-option>
+          </bce-input>
 
-        <bce-input type="radio" label="Dropdown">
-          <bce-option checked>Option A</bce-option>
-          <bce-option>Option B</bce-option>
-          <bce-option>Option C</bce-option>
-        </bce-input>
+          <bce-input id="radio" type="radio" label="Dropdown" value="C">
+            <bce-option value="A">Option A</bce-option>
+            <bce-option value="B">Option B</bce-option>
+            <bce-option value="C">Option C</bce-option>
+          </bce-input>
+          <pre><code id="form-data"></code></pre>
+        </form>
 
         <h3 id="button">BCE Button</h3>
         <h4>Contained</h4>
@@ -180,13 +198,40 @@
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>
     <script>
-      var root = document.getElementById('app');
-      var message = document.getElementById('message');
+      window.onload = function() {
+        // Form demo
+        const data = document.getElementById('form-data');
+        const ids = [
+          'username',
+          'password',
+          'otp',
+          'dropdown',
+          'checkbox',
+          'radio'
+        ];
 
-      var i = 0;
-      message.addEventListener('click', function() {
-        root.message('Message ' + ++i);
-      });
+        let form = {};
+        for (const id of ids) {
+          const element = document.getElementById(id);
+
+          form[id] = element.value;
+          element.addEventListener('input', event => {
+            form[id] = event.target.value;
+            data.innerText = JSON.stringify(form, undefined, 2);
+          });
+        }
+
+        data.innerText = JSON.stringify(form, undefined, 2);
+
+        // Message trigger
+        var root = document.getElementById('app');
+        var message = document.getElementById('message');
+
+        var i = 0;
+        message.addEventListener('click', function() {
+          root.message('Message ' + ++i);
+        });
+      };
     </script>
   </body>
 </html>

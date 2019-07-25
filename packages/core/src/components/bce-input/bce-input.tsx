@@ -1,7 +1,8 @@
-import { Component, Element, Method, Prop, h } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { Color } from '../../models/color';
-import { InputType } from '../../models/input-type';
+import { InputType, InputValue } from '../../models/input-type';
+import { UUID } from '../../utils/uuid';
 
 @Component({
   tag: 'bce-input',
@@ -19,13 +20,16 @@ export class BceInput {
   public type: InputType = 'text';
 
   @Prop({ mutable: true })
-  public value = '';
+  public value: InputValue = '';
 
   @Prop({ reflect: true })
   public label?: string;
 
   @Prop({ reflect: true })
   public info?: string;
+
+  @Prop({ reflect: false })
+  public uuid: string = UUID.v4();
 
   @Prop({ reflect: true })
   public disabled = false;
@@ -34,30 +38,63 @@ export class BceInput {
   public hasFocus = false;
 
   private _autofocus = false;
-  private options: HTMLBceOptionElement[] = [];
+  private _options: HTMLBceOptionElement[] = [];
+  private _initialized = false;
 
-  private onInput = (event: Event) => {
+  private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
   };
 
-  private onFocus = (event: Event) => {
+  private handleFocus = (event: Event) => {
     this.hasFocus = true;
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
-  private onBlur = (event: Event) => {
+  private handleBlur = (event: Event) => {
     this.hasFocus = false;
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
-  @Method()
-  public async registerOption(option: HTMLBceOptionElement) {
-    this.options = [...this.options, option];
+  private get hover() {
+    switch (this.type) {
+      case 'checkbox':
+      case 'radio':
+        return false;
+      case 'dropdown':
+        if (this.type === 'dropdown' && this.hasFocus) return true;
+    }
+
+    return this.hasFocus || !!this.value;
   }
 
   componentWillLoad() {
+    this.value = this.parseValue(this.value);
     this._autofocus = this.hasFocus;
+    this._initialized = true;
+  }
+
+  @Method()
+  public async registerOption(option: HTMLBceOptionElement) {
+    this._options = [...this._options, option];
+  }
+
+  @Watch('value')
+  public watchValue(value: InputValue) {
+    if (!this._initialized) return;
+
+    this.value = this.parseValue(value);
+    if (this.value !== value) return;
+
+    const event = new Event('input');
+    this.el.dispatchEvent(event);
+  }
+
+  private parseValue(value: InputValue): InputValue {
+    if (this.type === 'checkbox' && typeof value === 'string')
+      return value ? JSON.parse(value) : [];
+
+    return value;
   }
 
   renderInput() {
@@ -71,9 +108,9 @@ export class BceInput {
       case 'dropdown':
         return (
           <bce-dropdown
-            onInput={this.onInput}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
+            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             disabled={disabled}
           >
             <slot />
@@ -81,14 +118,19 @@ export class BceInput {
         );
 
       default:
+        console.warn(`[bce-input] Unsupported type: ${this.type}`);
+
+      case 'number':
+      case 'password':
+      case 'text':
         return (
           <input
             type={this.type}
-            value={this.value}
+            value={this.value as string}
             autofocus={this._autofocus}
-            onInput={this.onInput}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
+            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             disabled={disabled}
           />
         );
@@ -96,14 +138,9 @@ export class BceInput {
   }
 
   render() {
-    const hover =
-      this.hasFocus ||
-      !!this.value ||
-      (this.type === 'dropdown' && this.hasFocus);
-
     return [
       this.renderInput(),
-      this.label && <label data-hover={hover}>{this.label}</label>,
+      this.label && <label data-hover={this.hover}>{this.label}</label>,
       this.info && <small>{this.info}</small>
     ];
   }
