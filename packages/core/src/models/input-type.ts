@@ -8,4 +8,4 @@ export type InputType =
   | 'switch'
   | 'text';
 
-export type InputValue = string | string[] | boolean;
+export type InputValue = string | string[] | boolean | null;

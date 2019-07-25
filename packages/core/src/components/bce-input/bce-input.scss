@@ -20,7 +20,8 @@ bce-input {
       border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &[label] > input {
+  &[label] > input,
+  &[label] > bce-dropdown > input {
     padding: 20px 12px 5px;
   }
 
@@ -40,12 +41,13 @@ bce-input {
       border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  > bce-switch {
-    align-self: flex-start;
-  }
-
+  > bce-dropdown,
   > div {
     width: 100%;
+  }
+
+  > bce-switch {
+    align-self: flex-start;
   }
 
   &[label] > bce-option:first-child,
