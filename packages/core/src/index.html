@@ -51,31 +51,23 @@
         <h3 id="input">BCE Input</h3>
         <form action="">
           <bce-input
-            id="username"
             label="Username"
             value="my-username"
             info="What's your name?"
-          ></bce-input>
+          /></bce-input>
           <bce-input
-            id="password"
             type="password"
             label="Password"
             info="This should be a value only you know..."
           ></bce-input>
           <bce-input
-            id="otp"
             type="number"
             label="OTP code"
             info="The One Time Password code."
             disabled
           ></bce-input>
 
-          <bce-input
-            id="dropdown"
-            type="dropdown"
-            label="Dropdown"
-            info="testing.."
-          >
+          <bce-input type="dropdown" label="Dropdown">
             <bce-option value="A">Option A</bce-option>
             <bce-option value="B">Option B</bce-option>
             <bce-option value="C">Option C</bce-option>
@@ -86,7 +78,6 @@
           </bce-input>
 
           <bce-input
-            id="checkbox"
             type="checkbox"
             label="Checkbox"
             value='["A","B"]'
@@ -96,11 +87,14 @@
             <bce-option value="C">Option C</bce-option>
           </bce-input>
 
-          <bce-input id="radio" type="radio" label="Dropdown" value="C">
+          <bce-input type="radio" label="Dropdown" value="C">
             <bce-option value="A">Option A</bce-option>
             <bce-option value="B">Option B</bce-option>
             <bce-option value="C">Option C</bce-option>
           </bce-input>
+
+          <bce-input type="switch" label="Switch"></bce-input>
+
           <pre><code id="form-data"></code></pre>
         </form>
 
@@ -201,22 +195,24 @@
       window.onload = function() {
         // Form demo
         const data = document.getElementById('form-data');
-        const ids = [
-          'username',
-          'password',
-          'otp',
-          'dropdown',
-          'checkbox',
-          'radio'
+        const selectors = [
+          "bce-input[type='text']",
+          "bce-input[type='password']",
+          "bce-input[type='number']",
+          "bce-input[type='dropdown']",
+          "bce-input[type='checkbox']",
+          "bce-input[type='radio']",
+          "bce-input[type='switch']"
         ];
 
         let form = {};
-        for (const id of ids) {
-          const element = document.getElementById(id);
+        for (const selector of selectors) {
+          const element = document.querySelector(selector);
+          const name = (element.label || '').toLowerCase().replace(' ', '-');
 
-          form[id] = element.value;
+          form[name] = element.value;
           element.addEventListener('input', event => {
-            form[id] = event.target.value;
+            form[name] = event.target.value;
             data.innerText = JSON.stringify(form, undefined, 2);
           });
         }

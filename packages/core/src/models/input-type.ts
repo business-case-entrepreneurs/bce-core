@@ -4,6 +4,7 @@ export type InputType =
   | 'number'
   | 'password'
   | 'radio'
+  | 'switch'
   | 'text';
 
 export type InputValue = string | string[] | boolean;

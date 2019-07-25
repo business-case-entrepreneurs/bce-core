@@ -60,6 +60,7 @@ export class BceInput {
     switch (this.type) {
       case 'checkbox':
       case 'radio':
+      case 'switch':
         return false;
       case 'dropdown':
         if (this.type === 'dropdown' && this.hasFocus) return true;
@@ -93,6 +94,8 @@ export class BceInput {
   private parseValue(value: InputValue): InputValue {
     if (this.type === 'checkbox' && typeof value === 'string')
       return value ? JSON.parse(value) : [];
+    if (this.type === 'switch' && typeof value === 'string')
+      return value === 'true';
 
     return value;
   }
@@ -116,6 +119,9 @@ export class BceInput {
             <slot />
           </bce-dropdown>
         );
+
+      case 'switch':
+        return <bce-switch value={this.value as boolean} />;
 
       default:
         console.warn(`[bce-input] Unsupported type: ${this.type}`);
