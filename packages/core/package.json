@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@stencil/core": "^1.1.7",
     "@stencil/sass": "^1.0.1",
+    "popper.js": "^1.15.0",
     "rimraf": "^2.6.3"
   },
   "collection": "dist/collection/collection-manifest.json",

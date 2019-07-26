@@ -1,9 +1,63 @@
 bce-input {
   @include bce-color(primary);
   position: relative;
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-end;
   margin: 20px 0;
-  text-align: right;
+
+  > input {
+    padding: 13px 12px;
+    width: 100%;
+    height: 48px;
+    font-size: 0.9em;
+    border: 1px solid bce-color-d(light);
+    border-radius: 4px;
+    outline: none;
+
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &[label] > input,
+  &[label] > bce-dropdown > input {
+    padding: 20px 12px 5px;
+  }
+
+  &[focus] > input {
+    border-color: bce-color();
+  }
+
+  &[disabled] > input {
+    background-color: bce-color-l(disable);
+    color: bce-color-t(disable);
+  }
+
+  > bce-option {
+    display: inline-block;
+    width: 100%;
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  > bce-dropdown,
+  > div {
+    width: 100%;
+  }
+
+  > bce-switch {
+    align-self: flex-start;
+  }
+
+  &[label] > bce-option:first-child,
+  &[label] > div {
+    margin-top: 45px;
+  }
+
+  &[label] > bce-switch {
+    margin: 45px 0 6px;
+  }
 
   > label {
     position: absolute;
@@ -27,28 +81,6 @@ bce-input {
   }
 
   &[disabled] > label {
-    color: bce-color-t(disable);
-  }
-
-  > input {
-    padding: 20px 12px 5px;
-    width: 100%;
-    height: 48px;
-    font-size: 0.9em;
-    border: 1px solid bce-color-d(light);
-    border-radius: 4px;
-    outline: none;
-
-    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.3s ease-in-out, height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  &[focus] > input {
-    border-color: bce-color();
-  }
-
-  &[disabled] > input {
-    background-color: bce-color-l(disable);
     color: bce-color-t(disable);
   }
 
@@ -87,6 +119,37 @@ bce-input {
   }
 
   @include media-medium {
+    > input {
+      height: 40px;
+      padding: 6px 12px;
+      font-size: 0.9em;
+    }
+
+    &[label] > bce-dropdown input,
+    &[label] > input {
+      position: relative;
+      right: 0;
+      width: 75%;
+      padding: 6px 12px;
+    }
+
+    &[label] > bce-option {
+      width: 75%;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &[label] > bce-switch {
+      margin: 10px 0 10px 25%;
+    }
+
+    &[label] > div {
+      margin-top: 0;
+      width: 75%;
+    }
+
     > label {
       left: 0;
       top: 10px;
@@ -98,17 +161,8 @@ bce-input {
       }
     }
 
-    // &[disabled] > label {
-    //   color: bce-color-l(dark);
-    // }
-
-    > input {
-      position: relative;
-      right: 0;
-      height: 40px;
-      padding: 6px 12px;
+    &[label] bce-dropdown > div {
       width: 75%;
-      font-size: 0.9em;
     }
 
     > small {
