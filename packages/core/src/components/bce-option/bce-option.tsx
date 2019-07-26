@@ -10,7 +10,7 @@ export class BceOption {
   private el!: HTMLBceOptionElement;
 
   @Prop({ reflect: true })
-  public value?: string;
+  public value?: string | null;
 
   @Prop({ reflect: true })
   public type: 'checkbox' | 'dropdown' | 'radio' = 'dropdown';
@@ -50,13 +50,13 @@ export class BceOption {
       }
       case 'radio': {
         this.parent.value = this.value || this.parent.value;
+        break;
       }
     }
   };
 
   private handleClick = () => {
-    console.log(this.value);
-    // if (this.parent) this.parent.select(this.value);
+    if (this.parent) this.parent.value = this.value || null;
   };
 
   componentDidLoad() {

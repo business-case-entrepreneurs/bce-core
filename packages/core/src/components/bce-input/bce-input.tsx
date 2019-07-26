@@ -94,6 +94,10 @@ export class BceInput {
   private parseValue(value: InputValue): InputValue {
     if (this.type === 'checkbox' && typeof value === 'string')
       return value ? JSON.parse(value) : [];
+    if (this.type === 'dropdown' && typeof value === 'string')
+      return value || null;
+    if (this.type === 'radio' && typeof value === 'string')
+      return value || null;
     if (this.type === 'switch' && typeof value === 'string')
       return value === 'true';
 
@@ -118,6 +122,7 @@ export class BceInput {
       case 'dropdown':
         return (
           <bce-dropdown
+            value={this.value as string | null}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}

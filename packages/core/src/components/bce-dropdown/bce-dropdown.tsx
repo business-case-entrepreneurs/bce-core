@@ -1,4 +1,12 @@
-import { Component, Element, h, Method, Prop, State } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Method,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core';
 import Popper from 'popper.js';
 
 import { Color } from '../../models/color';
@@ -16,7 +24,7 @@ export class BceDropdown {
   public color?: Color;
 
   @Prop({ mutable: true })
-  public value = '';
+  public value: string | null = null;
 
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
@@ -25,11 +33,15 @@ export class BceDropdown {
   public disabled = false;
 
   @State()
+  private filter: string = '';
+
+  @State()
   private options: HTMLBceOptionElement[] = [];
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
-    if (input) this.setFilter(input.value || '');
+    if (input) this.filter = input.value || '';
+    event.cancelBubble = true;
   };
 
   private onFocus = (event: Event) => {
@@ -42,23 +54,25 @@ export class BceDropdown {
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
+  private get text() {
+    const option = this.options.find(o => o.value === this.value);
+    return option ? option.innerText : '';
+  }
+
   @Method()
   public async registerOption(option: HTMLBceOptionElement) {
     this.options = [...this.options, option];
   }
 
-  @Method()
-  public async select(option: string) {
-    if (this.value === option) return;
-
-    this.setFilter('');
-    this.value = option;
-
+  @Watch('value')
+  public watchValue() {
+    this.filter = '';
     const event = new Event('input');
     this.el.dispatchEvent(event);
   }
 
-  private setFilter(value: string) {
+  @Watch('filter')
+  public watchFilter(value: string) {
     for (const option of this.options) option.filter = value;
   }
 
@@ -78,6 +92,7 @@ export class BceDropdown {
     return [
       <input
         type="text"
+        value={this.hasFocus ? this.filter : this.text}
         onInput={this.onInput}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
@@ -90,6 +105,7 @@ export class BceDropdown {
         data-active={this.hasFocus}
       />,
       <div data-active={this.hasFocus}>
+        {this.value && !this.filter && <bce-option value={null} />}
         <slot />
       </div>
     ];
