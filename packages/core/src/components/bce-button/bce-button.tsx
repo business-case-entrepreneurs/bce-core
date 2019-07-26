@@ -45,8 +45,9 @@ export class BceButton {
 
     // Create ripple element at mouse position
     const ripple = document.createElement('bce-ripple');
-    ripple.x = event.pageX - this.el.offsetLeft;
-    ripple.y = event.pageY - this.el.offsetTop;
+    const rect = this.el.getBoundingClientRect();
+    ripple.x = event.clientX - rect.left;
+    ripple.y = event.clientY - rect.top;
 
     // Append ripple to button & remove after 500ms
     this.el.appendChild(ripple);
