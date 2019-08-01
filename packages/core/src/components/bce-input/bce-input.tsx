@@ -44,6 +44,7 @@ export class BceInput {
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
+    event.cancelBubble = true;
   };
 
   private handleFocus = (event: Event) => {
