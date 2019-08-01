@@ -67,7 +67,8 @@ export class BceDropdown {
   @Watch('value')
   public watchValue() {
     this.filter = '';
-    const event = new Event('input');
+
+    const event = new Event('input', { bubbles: true });
     this.el.dispatchEvent(event);
   }
 

@@ -88,7 +88,7 @@ export class BceInput {
     this.value = this.parseValue(value);
     if (this.value !== value) return;
 
-    const event = new Event('input');
+    const event = new Event('input', { bubbles: true });
     this.el.dispatchEvent(event);
   }
 
@@ -134,7 +134,12 @@ export class BceInput {
         );
 
       case 'switch':
-        return <bce-switch value={this.value as boolean} />;
+        return (
+          <bce-switch
+            value={this.value as boolean}
+            onInput={this.handleInput}
+          />
+        );
 
       default:
         console.warn(`[bce-input] Unsupported type: ${this.type}`);
