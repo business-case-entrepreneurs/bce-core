@@ -6,6 +6,7 @@ export type InputType =
   | 'password'
   | 'radio'
   | 'switch'
-  | 'text';
+  | 'text'
+  | 'textarea';
 
 export type InputValue = string | string[] | boolean | null;

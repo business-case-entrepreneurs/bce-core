@@ -45,6 +45,11 @@ export class BceInput {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
     event.cancelBubble = true;
+
+    if (this.type === 'textarea') {
+      const textarea = this.el.querySelector('textarea')!;
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
   };
 
   private handleFocus = (event: Event) => {
@@ -74,6 +79,13 @@ export class BceInput {
     this.value = this.parseValue(this.value);
     this._autofocus = this.hasFocus;
     this._initialized = true;
+  }
+
+  componentDidLoad() {
+    if (this.type !== 'textarea') return;
+
+    const textarea = this.el.querySelector('textarea')!;
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
 
   @Method()
@@ -138,6 +150,18 @@ export class BceInput {
           <bce-switch
             value={this.value as boolean}
             onInput={this.handleInput}
+          />
+        );
+
+      case 'textarea':
+        return (
+          <textarea
+            value={this.value as string}
+            autofocus={this._autofocus}
+            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            disabled={disabled}
           />
         );
 
