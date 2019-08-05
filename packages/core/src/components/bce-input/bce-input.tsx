@@ -54,12 +54,14 @@ export class BceInput {
 
   private handleFocus = (event: Event) => {
     this.hasFocus = true;
-    this.el.dispatchEvent(new FocusEvent(event.type, event));
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
   };
 
   private handleBlur = (event: Event) => {
     this.hasFocus = false;
-    this.el.dispatchEvent(new FocusEvent(event.type, event));
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
   };
 
   private get hover() {
