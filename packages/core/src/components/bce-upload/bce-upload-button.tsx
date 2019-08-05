@@ -71,6 +71,7 @@ export class BceCard {
         accept={this.accept}
         multiple={this.multiple}
         onChange={this.handleChange}
+        tabIndex={-1}
       />,
       <bce-button
         color={this.color}
