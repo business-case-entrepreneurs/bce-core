@@ -15,6 +15,7 @@
     "packages/*/loader": false,
     "packages/*/www": true,
     "packages/*/src/components.d.ts": true,
+    "packages/*/src/types.d.ts": true,
 
     ".gitignore": true,
     "package-lock.json": true

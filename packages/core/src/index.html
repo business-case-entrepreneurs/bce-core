@@ -188,6 +188,9 @@
         <h3>BCE message</h3>
         <bce-button id="message">Trigger</bce-button>
 
+        <h3>BCE upload</h3>
+        <bce-upload-button multiple>Upload Button</bce-upload-button>
+
         <h3>Heading 3</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -241,6 +244,8 @@
     <script nomodule src="build/bce.js"></script>
     <script>
       window.onload = function() {
+        const root = document.getElementById('app');
+
         // Form demo
         const data = document.getElementById('form-data');
         const selectors = [
@@ -269,13 +274,25 @@
         data.innerText = JSON.stringify(form, undefined, 2);
 
         // Message trigger
-        const root = document.getElementById('app');
         const message = document.getElementById('message');
 
         let i = 0;
         message.addEventListener('click', function() {
           root.message('Message ' + ++i);
         });
+
+        // Upload demo
+        const uploadButton = document.querySelector('bce-upload-button');
+        uploadButton.addEventListener('file', e => {
+          root.message('Files logged in debug console.');
+          for (const file of e.detail.files) {
+            console.groupCollapsed('file-upload: ' + file.name)
+            console.log('id', file.id);
+            console.log('type', file.type);
+            console.log(file);
+            console.groupEnd();
+          }
+        })
       };
     </script>
   </body>

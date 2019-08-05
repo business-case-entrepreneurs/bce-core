@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "unpkg": "dist/bce/bce.js",
   "module": "dist/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/types.d.ts",
   "scripts": {
     "build": "stencil build --docs-json ./dist/docs.json",
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
