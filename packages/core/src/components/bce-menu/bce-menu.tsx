@@ -19,7 +19,7 @@ export class BceMenu {
   @Prop({ reflect: true })
   public toggleDesktop: boolean = false;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public active = false;
 
   @Listen('resize', { target: 'window' })
@@ -44,20 +44,9 @@ export class BceMenu {
     }
   }
 
-  // public showMenu = () => {
-  //   this.active = true;
-  // };
-
-  // public hideMenu = () => {
-  //   this.active = false;
-  // };
-
   render() {
     return (
-      <Host
-        class={{ 'full-width': !this.vertical, right: this.right }}
-        active={this.active}
-      >
+      <Host class={this.right ? 'right' : 'left'} active={this.active}>
         <div
           class={{
             menu: true,
