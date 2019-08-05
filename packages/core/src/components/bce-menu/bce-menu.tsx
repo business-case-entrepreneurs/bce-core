@@ -19,7 +19,7 @@ export class BceMenu {
   @Prop({ reflect: true })
   public toggleDesktop: boolean = false;
 
-  @Prop({ reflectToAttr: true, mutable: true })
+  @Prop({ reflect: true, mutable: true })
   public active = false;
 
   @Listen('resize', { target: 'window' })
