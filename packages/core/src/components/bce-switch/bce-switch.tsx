@@ -38,12 +38,16 @@ export class BceSwitch {
     event.cancelBubble = true;
   };
 
-  private handleFocus = () => {
+  private handleFocus = (event: FocusEvent) => {
     this.hasFocus = true;
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
   };
 
-  private handleBlur = () => {
+  private handleBlur = (event: FocusEvent) => {
     this.hasFocus = false;
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
   };
 
   render() {

@@ -52,13 +52,17 @@ export class BceInput {
     }
   };
 
-  private handleFocus = (event: Event) => {
+  private handleFocus = (event: FocusEvent) => {
+    event.cancelBubble = true;
+
     this.hasFocus = true;
     const e = new FocusEvent(event.type, { ...event, bubbles: true });
     this.el.dispatchEvent(e);
   };
 
-  private handleBlur = (event: Event) => {
+  private handleBlur = (event: FocusEvent) => {
+    event.cancelBubble = true;
+
     this.hasFocus = false;
     const e = new FocusEvent(event.type, { ...event, bubbles: true });
     this.el.dispatchEvent(e);
@@ -152,6 +156,8 @@ export class BceInput {
           <bce-switch
             value={this.value as boolean}
             onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
           />
         );
 
