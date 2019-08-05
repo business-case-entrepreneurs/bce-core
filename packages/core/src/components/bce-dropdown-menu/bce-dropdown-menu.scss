@@ -1,0 +1,27 @@
+bce-dropdown-menu {
+  position: relative;
+
+  .dropdown-menu {
+    @include elevate(8);
+    display: none;
+    flex-direction: column;
+    background-color: bce-color(dark);
+    font-size: 1rem;
+    border-radius: 4px;
+    animation: fade-in 0.3s linear;
+
+    &[data-active] {
+      display: flex;
+      height: auto;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+}
