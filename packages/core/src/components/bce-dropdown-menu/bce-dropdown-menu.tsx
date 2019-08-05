@@ -22,7 +22,7 @@ export class BceDropdownMenu {
 
   componentDidLoad() {
     const reference = this.el.querySelector('.dropdown-button')!;
-    const dropdown = this.el.querySelector('.dropdown-menu')!;
+    const dropdown = this.el.querySelector('.bce-dropdown-menu-items')!;
 
     this.dropDownMenu = new Popper(reference, dropdown, {
       placement: 'bottom-start',
@@ -52,7 +52,7 @@ export class BceDropdownMenu {
           fixed-width
         />
 
-        <div class="dropdown-menu" data-active={this.active}>
+        <div class="bce-dropdown-menu-items" data-active={this.active}>
           <slot />
         </div>
       </Host>

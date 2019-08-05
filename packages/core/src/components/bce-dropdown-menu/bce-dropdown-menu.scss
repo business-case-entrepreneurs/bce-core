@@ -1,8 +1,14 @@
 bce-dropdown-menu {
   position: relative;
+  width: 100%;
 
-  .dropdown-menu {
+  .dropdown-button {
+    position: relative;
+  }
+
+  .bce-dropdown-menu-items {
     @include elevate(8);
+    position: relative;
     display: none;
     flex-direction: column;
     background-color: bce-color(dark);
