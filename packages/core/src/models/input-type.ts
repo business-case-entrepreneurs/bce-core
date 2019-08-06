@@ -9,4 +9,4 @@ export type InputType =
   | 'text'
   | 'textarea';
 
-export type InputValue = string | string[] | boolean | null;
+export type InputValue = string | string[] | number | boolean | null;
