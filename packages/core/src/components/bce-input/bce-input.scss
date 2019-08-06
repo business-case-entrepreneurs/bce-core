@@ -149,6 +149,10 @@ bce-input {
       padding: 6px 12px;
     }
 
+    &[label] > textarea {
+      padding: 10px 12px;
+    }
+
     &[label] > bce-option {
       width: 75%;
 
