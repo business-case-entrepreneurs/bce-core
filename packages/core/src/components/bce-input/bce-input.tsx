@@ -19,8 +19,11 @@ export class BceInput {
   @Prop({ reflect: true })
   public type: InputType = 'text';
 
-  @Prop({ mutable: true })
+  @Prop({ reflect: false, mutable: true })
   public value: InputValue = '';
+
+  @Prop({ reflect: false })
+  public placeholder = '';
 
   @Prop({ reflect: true })
   public label?: string;
@@ -78,7 +81,7 @@ export class BceInput {
         if (this.type === 'dropdown' && this.hasFocus) return true;
     }
 
-    return this.hasFocus || !!this.value;
+    return this.hasFocus || this.placeholder || !!this.value;
   }
 
   componentWillLoad() {
@@ -165,11 +168,12 @@ export class BceInput {
         return (
           <textarea
             value={this.value as string}
+            placeholder={this.placeholder}
             autofocus={this._autofocus}
+            disabled={disabled}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
-            disabled={disabled}
           />
         );
 
@@ -183,11 +187,12 @@ export class BceInput {
           <input
             type={this.type}
             value={this.value as string}
+            placeholder={this.placeholder}
             autofocus={this._autofocus}
+            disabled={disabled}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
-            disabled={disabled}
           />
         );
     }
