@@ -294,7 +294,7 @@
         const uploadButton = document.querySelector('bce-upload-button');
         uploadButton.addEventListener('file', e => {
           root.message('Files logged in debug console.');
-          for (const file of e.detail.files) {
+          for (const file of e.detail) {
             console.groupCollapsed('file-upload: ' + file.name)
             console.log('id', file.id);
             console.log('type', file.type);

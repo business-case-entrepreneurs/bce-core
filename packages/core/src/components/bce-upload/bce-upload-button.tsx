@@ -1,6 +1,13 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { Component, Element, h, Prop } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Prop
+} from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
@@ -45,6 +52,9 @@ export class BceCard {
   @Prop({ reflect: true })
   public multiple = false;
 
+  @Event({ bubbles: true })
+  private file!: EventEmitter<File[]>;
+
   private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | null;
     if (!input || !input.files) return;
@@ -55,8 +65,7 @@ export class BceCard {
     });
 
     // Dispatch custom event
-    const e = new CustomEvent('file', { bubbles: true, detail: { files } });
-    this.el.dispatchEvent(e);
+    this.file.emit(files);
   };
 
   private handleClick = () => {
