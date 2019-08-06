@@ -1,4 +1,12 @@
-import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  Watch
+} from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType, InputValue } from '../../models/input-type';
@@ -56,19 +64,23 @@ export class BceInput {
   };
 
   private handleFocus = (event: FocusEvent) => {
-    event.cancelBubble = true;
-
     this.hasFocus = true;
-    const e = new FocusEvent(event.type, { ...event, bubbles: true });
-    this.el.dispatchEvent(e);
+
+    event.cancelBubble = true;
+    if (!event.bubbles) {
+      const e = new FocusEvent(event.type, { ...event, bubbles: true });
+      this.el.dispatchEvent(e);
+    }
   };
 
   private handleBlur = (event: FocusEvent) => {
-    event.cancelBubble = true;
-
     this.hasFocus = false;
-    const e = new FocusEvent(event.type, { ...event, bubbles: true });
-    this.el.dispatchEvent(e);
+
+    event.cancelBubble = true;
+    if (!event.bubbles) {
+      const e = new FocusEvent(event.type, { ...event, bubbles: true });
+      this.el.dispatchEvent(e);
+    }
   };
 
   private get hover() {
@@ -199,10 +211,12 @@ export class BceInput {
   }
 
   render() {
-    return [
-      this.renderInput(),
-      this.label && <label data-hover={this.hover}>{this.label}</label>,
-      this.info && <small>{this.info}</small>
-    ];
+    return (
+      <Host onFocus={this.handleFocus} onBlur={this.handleBlur}>
+        {this.renderInput()}
+        {this.label && <label data-hover={this.hover}>{this.label}</label>}
+        {this.info && <small>{this.info}</small>}
+      </Host>
+    );
   }
 }

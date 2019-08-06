@@ -55,6 +55,18 @@ export class BceOption {
     }
   };
 
+  private handleFocus = (event: FocusEvent) => {
+    if (event.bubbles) return;
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    if (event.bubbles) return;
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
+  };
+
   private handleClick = () => {
     if (this.parent) this.parent.value = this.value || null;
   };
@@ -110,6 +122,8 @@ export class BceOption {
               name={this.uuid}
               checked={this.checked}
               onInput={this.handleInput}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
             />
             <slot />
           </label>
