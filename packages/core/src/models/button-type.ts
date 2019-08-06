@@ -1,5 +1,1 @@
-export enum ButtonType {
-  Contained = 'contained',
-  Text = 'text',
-  Outline = 'outline'
-}
+export type ButtonType = 'contained' | 'text' | 'outline';

@@ -29,7 +29,7 @@ export class BceCard {
   public color?: Color;
 
   @Prop({ reflect: true })
-  public type = ButtonType.Text;
+  public type: ButtonType = 'text';
 
   @Prop({ reflect: true })
   public icon: string = 'fas:upload';
