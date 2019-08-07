@@ -1,12 +1,4 @@
-import {
-  Component,
-  Element,
-  h,
-  Host,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType, InputValue } from '../../models/input-type';
@@ -65,8 +57,8 @@ export class BceInput {
 
   private handleFocus = (event: FocusEvent) => {
     this.hasFocus = true;
-
     event.cancelBubble = true;
+
     if (!event.bubbles) {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
       this.el.dispatchEvent(e);
@@ -75,8 +67,8 @@ export class BceInput {
 
   private handleBlur = (event: FocusEvent) => {
     this.hasFocus = false;
-
     event.cancelBubble = true;
+
     if (!event.bubbles) {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
       this.el.dispatchEvent(e);
@@ -112,6 +104,9 @@ export class BceInput {
   @Method()
   public async registerOption(option: HTMLBceOptionElement) {
     this._options = [...this._options, option];
+
+    option.addEventListener('focus', this.handleFocus);
+    option.addEventListener('blur', this.handleBlur);
   }
 
   @Watch('value')
@@ -148,7 +143,7 @@ export class BceInput {
 
       case 'container':
         return (
-          <div>
+          <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
             <slot />
           </div>
         );
@@ -211,12 +206,10 @@ export class BceInput {
   }
 
   render() {
-    return (
-      <Host onFocus={this.handleFocus} onBlur={this.handleBlur}>
-        {this.renderInput()}
-        {this.label && <label data-hover={this.hover}>{this.label}</label>}
-        {this.info && <small>{this.info}</small>}
-      </Host>
-    );
+    return [
+      this.renderInput(),
+      this.label && <label data-hover={this.hover}>{this.label}</label>,
+      this.info && <small>{this.info}</small>
+    ];
   }
 }
