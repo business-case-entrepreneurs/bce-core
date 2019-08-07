@@ -57,7 +57,6 @@ export class BceInput {
 
   private handleFocus = (event: FocusEvent) => {
     this.hasFocus = true;
-    event.cancelBubble = true;
 
     if (!event.bubbles) {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
@@ -67,7 +66,6 @@ export class BceInput {
 
   private handleBlur = (event: FocusEvent) => {
     this.hasFocus = false;
-    event.cancelBubble = true;
 
     if (!event.bubbles) {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
