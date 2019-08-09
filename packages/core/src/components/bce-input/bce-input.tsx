@@ -79,8 +79,12 @@ export class BceInput {
       case 'radio':
       case 'switch':
         return false;
+      case 'color':
+      case 'date':
+      case 'file':
+        return true;
       case 'dropdown':
-        if (this.type === 'dropdown' && this.hasFocus) return true;
+        if (this.hasFocus) return true;
     }
 
     return this.hasFocus || this.placeholder || !!this.value;
