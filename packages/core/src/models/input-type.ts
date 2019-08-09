@@ -1,7 +1,10 @@
 export type InputType =
   | 'checkbox'
+  | 'color'
   | 'container'
+  | 'date'
   | 'dropdown'
+  | 'file'
   | 'number'
   | 'password'
   | 'radio'

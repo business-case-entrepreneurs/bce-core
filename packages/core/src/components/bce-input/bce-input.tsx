@@ -185,6 +185,9 @@ export class BceInput {
       default:
         console.warn(`[bce-input] Unsupported type: ${this.type}`);
 
+      case 'color':
+      case 'date':
+      case 'file':
       case 'number':
       case 'password':
       case 'text':
