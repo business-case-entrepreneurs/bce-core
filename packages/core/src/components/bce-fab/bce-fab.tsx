@@ -26,18 +26,10 @@ export class BceFab {
 
   private root?: HTMLBceRootElement;
 
-  private get buttons(): HTMLBceButtonElement[] {
-    const buttons: HTMLBceButtonElement[] = [];
-    const { children } = this.el;
-    for (let i = 0; i < children.length; i++) {
-      // Look for every child bce-button component
-      const child = children.item(i);
-      if (!child || child.tagName.toLowerCase() !== 'bce-button') continue;
-
-      buttons.push(child as HTMLBceButtonElement);
-    }
-
-    return buttons;
+  private get buttons() {
+    const children = Array.from(this.el.children);
+    const buttons = children.filter(c => c.tagName !== 'bce-button');
+    return buttons as HTMLBceButtonElement[];
   }
 
   private handleClick = () => {
