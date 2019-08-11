@@ -1,33 +1,54 @@
 bce-dropdown-menu {
-  position: relative;
-  width: 100%;
+  @include bce-color(primary);
+  display: inline-block;
 
   .dropdown-button {
-    position: relative;
+    cursor: pointer;
   }
 
   .bce-dropdown-menu-items {
     @include elevate(8);
-    position: relative;
     display: none;
-    flex-direction: column;
-    background-color: bce-color(dark);
-    font-size: 1rem;
+    background-color: bce-color();
     border-radius: 4px;
-    animation: fade-in 0.3s linear;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
 
     &[data-active] {
-      display: flex;
-      height: auto;
+      display: block;
+      opacity: 1;
     }
+  }
+}
 
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+bce-dropdown-menu bce-button {
+  @include elevate(0);
+  display: flex;
+  background-color: transparent;
+  color: bce-color-t();
+  overflow: inherit;
+  z-index: inherit;
+
+  > button {
+    margin: 0;
+  }
+
+  > bce-icon {
+    order: -1;
+    margin: 0;
+    padding: 9px 0 9px 12px;
+  }
+
+  &:not([disabled]):focus,
+  &:not([disabled]):hover {
+    @include elevate(0);
+    z-index: inherit;
+  }
+
+  &[disabled] {
+    opacity: 1;
+    color: inherit;
+    background-color: inherit;
+    z-index: 0;
   }
 }

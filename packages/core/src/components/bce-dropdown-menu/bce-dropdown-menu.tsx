@@ -1,5 +1,15 @@
-import { Component, Element, Prop, h, Host, Listen } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Listen,
+  Prop,
+  Watch
+} from '@stencil/core';
 import Popper from 'popper.js';
+
+import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-dropdown-menu',
@@ -7,17 +17,43 @@ import Popper from 'popper.js';
   shadow: false
 })
 export class BceDropdownMenu {
-  public dropDownMenu!: Popper;
+  @Element()
+  private el!: HTMLElement;
+
+  @Prop({ reflect: true })
+  public color?: Color;
 
   @Prop({ reflect: true, mutable: true })
   public active: boolean = false;
 
-  @Element()
-  private el!: HTMLElement;
+  private dropDownMenu!: Popper;
+
+  private get buttons() {
+    const container = this.el.querySelector('bce-dropdown-menu-items');
+    if (!container) return [];
+
+    const children = Array.from(container.children);
+    const buttons = children.filter(c => c.tagName !== 'bce-button');
+    return buttons as HTMLBceButtonElement[];
+  }
+
+  private handleClick = (event: Event) => {
+    this.active = !this.active;
+    event.stopPropagation();
+  };
 
   @Listen('click', { target: 'window' })
   public closeDropdown() {
     this.active = false;
+  }
+
+  @Watch('color')
+  private updateButtonColor() {
+    for (const button of this.buttons) button.color = this.color;
+  }
+
+  componentWillLoad() {
+    this.updateButtonColor();
   }
 
   componentDidLoad() {
@@ -36,19 +72,14 @@ export class BceDropdownMenu {
     this.dropDownMenu.destroy();
   }
 
-  handleClick(event: Event) {
-    this.active = !this.active;
-    event.stopPropagation();
-  }
-
   render() {
     return (
       <Host onClick={this.handleClick}>
         <bce-icon
           class="dropdown-button"
-          raw={'ellipsis-h'}
+          pre="fas"
+          name="ellipsis-h"
           size="lg"
-          pre={'fas'}
           fixed-width
         />
 
