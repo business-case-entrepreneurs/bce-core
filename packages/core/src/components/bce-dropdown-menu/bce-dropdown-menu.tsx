@@ -79,7 +79,6 @@ export class BceDropdownMenu {
           class="dropdown-button"
           pre="fas"
           name="ellipsis-h"
-          size="lg"
           fixed-width
         />
 
