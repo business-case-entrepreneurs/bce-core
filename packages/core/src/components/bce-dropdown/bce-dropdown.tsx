@@ -29,6 +29,9 @@ export class BceDropdown {
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
+  @Prop()
+  public placeholder = '';
+
   @Prop({ reflect: true })
   public disabled = false;
 
@@ -94,10 +97,11 @@ export class BceDropdown {
       <input
         type="text"
         value={this.hasFocus ? this.filter : this.text}
+        placeholder={this.placeholder}
+        disabled={this.disabled}
         onInput={this.onInput}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        disabled={this.disabled}
       />,
       <bce-icon
         pre="fas"
