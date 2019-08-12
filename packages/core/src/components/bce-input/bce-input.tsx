@@ -37,6 +37,9 @@ export class BceInput {
   @Prop({ reflect: true })
   public disabled = false;
 
+  @Prop({ reflect: true })
+  public min: number = 0;
+
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
@@ -49,10 +52,7 @@ export class BceInput {
     if (input) this.value = input.value || '';
     event.cancelBubble = true;
 
-    if (this.type === 'textarea') {
-      const textarea = this.el.querySelector('textarea')!;
-      textarea.style.height = textarea.scrollHeight + 'px';
-    }
+    if (this.type === 'textarea') this.handleTextareaSize();
   };
 
   private handleFocus = (event: FocusEvent) => {
@@ -72,6 +72,11 @@ export class BceInput {
       this.el.dispatchEvent(e);
     }
   };
+
+  private handleTextareaSize() {
+    const { style, scrollHeight } = this.el.querySelector('textarea')!;
+    style.height = (this.min > scrollHeight ? this.min : scrollHeight) + 'px';
+  }
 
   private get hover() {
     switch (this.type) {
@@ -98,9 +103,7 @@ export class BceInput {
 
   componentDidLoad() {
     if (this.type !== 'textarea') return;
-
-    const textarea = this.el.querySelector('textarea')!;
-    textarea.style.height = textarea.scrollHeight + 'px';
+    this.handleTextareaSize();
   }
 
   @Method()
