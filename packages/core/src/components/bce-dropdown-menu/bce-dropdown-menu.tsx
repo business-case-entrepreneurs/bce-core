@@ -39,6 +39,7 @@ export class BceDropdownMenu {
 
   private handleClick = (event: Event) => {
     this.active = !this.active;
+    this.dropDownMenu.scheduleUpdate();
     event.stopPropagation();
   };
 
@@ -59,12 +60,11 @@ export class BceDropdownMenu {
   componentDidLoad() {
     const reference = this.el.querySelector('.dropdown-button')!;
     const dropdown = this.el.querySelector('.bce-dropdown-menu-items')!;
+    const container = this.el.closest('bce-root')!;
 
     this.dropDownMenu = new Popper(reference, dropdown, {
       placement: 'bottom-start',
-      modifiers: {
-        flip: { boundariesElement: 'scrollParent' }
-      }
+      modifiers: { flip: { boundariesElement: container } }
     });
   }
 
