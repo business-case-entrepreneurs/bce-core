@@ -79,6 +79,12 @@ export class BceInput {
     }
   };
 
+  private handleClick = () => {
+    const container = this.el.querySelector('[data-input]')!;
+    const input = container.firstChild as HTMLElement;
+    if (input && typeof input.focus === 'function') input.focus();
+  };
+
   private resizeTextarea = () => {
     if (this.type !== 'textarea') return;
 
@@ -228,7 +234,7 @@ export class BceInput {
     if (!this.label) return null;
 
     return (
-      <label data-hover={this.hover}>
+      <label data-hover={this.hover} onClick={this.handleClick}>
         {this.label}{' '}
         {this.tooltip && (
           <bce-tooltip placement="right">{this.tooltip}</bce-tooltip>
