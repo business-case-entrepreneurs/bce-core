@@ -1,0 +1,14 @@
+@mixin bce-input() {
+  height: 48px;
+  padding: 13px 12px;
+  font-size: 0.9em;
+  border: 1px solid bce-color-d(light);
+  border-radius: 4px;
+  outline: none;
+
+  @include media-medium {
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+}

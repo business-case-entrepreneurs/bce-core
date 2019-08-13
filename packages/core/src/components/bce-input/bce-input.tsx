@@ -7,7 +7,7 @@ import { UUID } from '../../utils/uuid';
 @Component({
   tag: 'bce-input',
   styleUrl: 'bce-input.scss',
-  shadow: false
+  shadow: true
 })
 export class BceInput {
   @Element()
@@ -47,12 +47,9 @@ export class BceInput {
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
-    event.cancelBubble = true;
 
-    if (this.type === 'textarea') {
-      const textarea = this.el.querySelector('textarea')!;
-      textarea.style.height = textarea.scrollHeight + 'px';
-    }
+    event.cancelBubble = true;
+    this.resizeTextarea();
   };
 
   private handleFocus = (event: FocusEvent) => {
@@ -71,6 +68,15 @@ export class BceInput {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
       this.el.dispatchEvent(e);
     }
+  };
+
+  private resizeTextarea = () => {
+    if (this.type !== 'textarea') return;
+
+    const textarea = this.el.shadowRoot!.querySelector('textarea')!;
+    const min = window.innerWidth < 1024 ? 48 : 40;
+    const height = textarea.scrollHeight < min ? min : textarea.scrollHeight;
+    this.el.style.setProperty('--bce-input-height', height + 'px');
   };
 
   private get hover() {
@@ -97,10 +103,12 @@ export class BceInput {
   }
 
   componentDidLoad() {
-    if (this.type !== 'textarea') return;
+    this.resizeTextarea();
+    window.addEventListener('resize', this.resizeTextarea);
+  }
 
-    const textarea = this.el.querySelector('textarea')!;
-    textarea.style.height = textarea.scrollHeight + 'px';
+  componentDidUnload() {
+    window.removeEventListener('resize', this.resizeTextarea);
   }
 
   @Method()
@@ -140,15 +148,9 @@ export class BceInput {
 
     switch (this.type) {
       case 'checkbox':
+      case 'container':
       case 'radio':
         return <slot />;
-
-      case 'container':
-        return (
-          <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
-            <slot />
-          </div>
-        );
 
       case 'dropdown':
         return (
@@ -213,8 +215,8 @@ export class BceInput {
 
   render() {
     return [
-      this.renderInput(),
       this.label && <label data-hover={this.hover}>{this.label}</label>,
+      <div data-input>{this.renderInput()}</div>,
       this.info && <small>{this.info}</small>
     ];
   }

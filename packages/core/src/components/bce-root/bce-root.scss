@@ -38,4 +38,14 @@ bce-root {
   main {
     background-color: bce-color(light);
   }
+
+  textarea,
+  input[type='color'],
+  input[type='date'],
+  input[type='file'],
+  input[type='number'],
+  input[type='password'],
+  input[type='text'] {
+    @include bce-input();
+  }
 }
