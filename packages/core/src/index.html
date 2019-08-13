@@ -18,26 +18,26 @@
         <bce-logo logo-src="/logo/logo.png"></bce-logo>
         <bce-menu-button color="light"></bce-menu-button>
       </bce-header>
-
+      
       <bce-menu color="dark" verticale right toggle-desktop>
         <a href="#switch">Switch</a>
         <a href="#input">Input</a>
         <a href="#button">Button</a>
         <a href="#message">Message</a>
       </bce-menu>
-
+      
       <main>
         <h3 id="dropdown">BCE Dropdown menu</h3>
-        <div>
-          <bce-dropdown-menu color="dark">
-            <bce-button icon="square">Action 1</bce-button>
-            <bce-button icon="square">Action 2</bce-button>
-            <bce-button icon="square">Action 3</bce-button>
-            <bce-button icon="square">Action 4</bce-button>
-          </bce-dropdown-menu>
-        </div>
+        <bce-dropdown-menu color="dark">
+          <bce-button icon="square">Action 1</bce-button>
+          <bce-button icon="square">Action 2</bce-button>
+          <bce-button icon="square">Action 3</bce-button>
+          <bce-button icon="square">Action 4</bce-button>
+        </bce-dropdown-menu>
+
         <h3 id="slider">BCE Slider</h3>
-        <div><bce-slider max="200"></bce-slider></div>
+        <bce-slider max="200"></bce-slider>
+
         <h3 id="switch">BCE Switch</h3>
         <div>
           <bce-switch value="true"></bce-switch>
@@ -59,13 +59,15 @@
         <form action="">
           <bce-input
             label="Username"
-            value="my-username"
+            tooltip="bce-tooltip"
             info="What's your name?"
+            value="my-username"
           /></bce-input>
-          
+            
           <bce-input
             type="password"
             label="Password"
+            tooltip="bce-tooltip"
             placeholder="**********"
             info="This should be a value only you know..."
           ></bce-input>

@@ -7,7 +7,7 @@ import { UUID } from '../../utils/uuid';
 @Component({
   tag: 'bce-input',
   styleUrl: 'bce-input.scss',
-  shadow: true
+  shadow: false
 })
 export class BceInput {
   @Element()
@@ -22,8 +22,11 @@ export class BceInput {
   @Prop({ reflect: false, mutable: true })
   public value: InputValue = '';
 
-  @Prop({ reflect: false })
+  @Prop()
   public placeholder = '';
+
+  @Prop()
+  public tooltip = '';
 
   @Prop({ reflect: true })
   public label?: string;
@@ -31,7 +34,7 @@ export class BceInput {
   @Prop({ reflect: true })
   public info?: string;
 
-  @Prop({ reflect: false })
+  @Prop()
   public uuid: string = UUID.v4();
 
   @Prop({ reflect: true })
@@ -73,7 +76,7 @@ export class BceInput {
   private resizeTextarea = () => {
     if (this.type !== 'textarea') return;
 
-    const textarea = this.el.shadowRoot!.querySelector('textarea')!;
+    const textarea = this.el.querySelector('textarea')!;
     const min = window.innerWidth < 1024 ? 48 : 40;
     const height = textarea.scrollHeight < min ? min : textarea.scrollHeight;
     this.el.style.setProperty('--bce-input-height', height + 'px');
@@ -93,7 +96,7 @@ export class BceInput {
         if (this.hasFocus) return true;
     }
 
-    return this.hasFocus || this.placeholder || !!this.value;
+    return this.hasFocus || !!this.placeholder || !!this.value;
   }
 
   componentWillLoad() {
@@ -213,9 +216,22 @@ export class BceInput {
     }
   }
 
+  renderLabel() {
+    if (!this.label) return null;
+
+    return (
+      <label data-hover={this.hover}>
+        {this.label}{' '}
+        {this.tooltip && (
+          <bce-tooltip placement="right">{this.tooltip}</bce-tooltip>
+        )}
+      </label>
+    );
+  }
+
   render() {
     return [
-      this.label && <label data-hover={this.hover}>{this.label}</label>,
+      this.renderLabel(),
       <div data-input>{this.renderInput()}</div>,
       this.info && <small>{this.info}</small>
     ];
