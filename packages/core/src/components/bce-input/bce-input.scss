@@ -91,17 +91,12 @@ bce-input {
 
     > [data-input] {
       align-self: center;
-      width: 75%;
 
       > input,
       > textarea {
         padding: 6px 12px;
         font-size: 0.9em;
       }
-    }
-
-    > small {
-      left: calc(25% + 12px);
     }
   }
 }
@@ -113,12 +108,21 @@ bce-input[label] {
   }
 
   @include media-medium {
-    > [data-input] > input {
-      padding: 6px 12px;
+    > [data-input] {
+      align-self: center;
+      width: 75%;
+
+      > input {
+        padding: 6px 12px;
+      }
+
+      > textarea {
+        padding: 10px 12px;
+      }
     }
 
-    > [data-input] > textarea {
-      padding: 10px 12px;
+    > small {
+      left: calc(25% + 12px);
     }
   }
 }
