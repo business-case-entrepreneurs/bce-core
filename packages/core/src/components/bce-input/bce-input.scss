@@ -1,4 +1,3 @@
-:host,
 bce-input {
   @include bce-color(primary);
   --bce-input-height: 48px;
@@ -31,8 +30,13 @@ bce-input {
 
     > input,
     > textarea {
-      // @include bce-input();
       width: 100%;
+      height: var(--bce-input-height);
+      padding: 13px 12px;
+      font-size: 0.9em;
+      border: 1px solid bce-color-d(light);
+      border-radius: 4px;
+      outline: none;
       box-sizing: border-box;
       transition: border-color 0.3s ease-in-out,
         height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
@@ -88,6 +92,12 @@ bce-input {
     > [data-input] {
       align-self: center;
       width: 75%;
+
+      > input,
+      > textarea {
+        padding: 6px 12px;
+        font-size: 0.9em;
+      }
     }
 
     > small {
@@ -96,7 +106,6 @@ bce-input {
   }
 }
 
-:host([label]),
 bce-input[label] {
   > [data-input] > input,
   > [data-input] > textarea {
@@ -114,14 +123,6 @@ bce-input[label] {
   }
 }
 
-:host([label][type='color']),
-:host([label][type='dropdown']),
-:host([label][type='date']),
-:host([label][type='file']),
-:host([label][type='number']),
-:host([label][type='password']),
-:host([label][type='text']),
-:host([label][type='textarea']),
 bce-input[label][type='color'],
 bce-input[label][type='dropdown'],
 bce-input[label][type='date'],
@@ -145,7 +146,6 @@ bce-input[label][type='textarea'] {
   }
 }
 
-:host([focus]),
 bce-input[focus] {
   > label {
     color: bce-color();
@@ -161,7 +161,6 @@ bce-input[focus] {
   }
 }
 
-:host([disabled]),
 bce-input[disabled] {
   > label {
     color: bce-color-t(disable);
