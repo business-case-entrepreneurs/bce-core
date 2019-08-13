@@ -43,6 +43,9 @@ export class BceInput {
   @Prop({ reflect: true })
   public disabled = false;
 
+  @Prop({ reflect: true })
+  public min = 0;
+
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
@@ -79,9 +82,9 @@ export class BceInput {
   private resizeTextarea = () => {
     if (this.type !== 'textarea') return;
 
-    const textarea = this.el.querySelector('textarea')!;
-    const height = textarea.scrollHeight + 'px';
-    this.el.style.setProperty('--bce-input-height', height);
+    const { scrollHeight } = this.el.querySelector('textarea')!;
+    const height = this.min > scrollHeight ? this.min : scrollHeight;
+    this.el.style.setProperty('--bce-input-height', height + 'px');
   };
 
   private get hover() {
