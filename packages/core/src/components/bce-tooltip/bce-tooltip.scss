@@ -1,0 +1,27 @@
+bce-tooltip {
+  @include bce-color(primary);
+  display: inline-block;
+
+  > div {
+    @include elevate(2);
+    display: none;
+    padding: 6px 16px;
+    background-color: bce-color(dark);
+    color: bce-color-t(dark);
+    border-radius: 4px;
+    max-width: 400px;
+    opacity: 0.9;
+    z-index: 8;
+
+    &[data-active] {
+      display: block;
+    }
+  }
+
+  @include media-medium {
+    > div {
+      padding: 7px 8px;
+      font-size: 14px;
+    }
+  }
+}
