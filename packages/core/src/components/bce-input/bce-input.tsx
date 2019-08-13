@@ -82,8 +82,11 @@ export class BceInput {
   private resizeTextarea = () => {
     if (this.type !== 'textarea') return;
 
+    const min =
+      this.min || (window.innerWidth < 1024 || this.compact ? 48 : 40);
+
     const { scrollHeight } = this.el.querySelector('textarea')!;
-    const height = this.min > scrollHeight ? this.min : scrollHeight;
+    const height = min > scrollHeight ? min : scrollHeight;
     this.el.style.setProperty('--bce-input-height', height + 'px');
   };
 
