@@ -42,6 +42,11 @@ bce-button {
     }
   }
 
+  &[icon-only] > bce-icon {
+    margin: 0;
+    padding: 9px 12px;
+  }
+
   > bce-ripple {
     background-color: bce-color-t();
   }
@@ -140,6 +145,12 @@ bce-button[type='text'] {
     margin: 0 -4px 0 0;
     padding: 9px 0 9px 8px;
     order: -1;
+  }
+
+  &[icon-only] > bce-icon {
+    margin: 0;
+    padding: 4px;
+    font-size: inherit;
   }
 
   > bce-ripple {

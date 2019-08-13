@@ -25,6 +25,9 @@ export class BceButton {
   public iconSpin?: boolean;
 
   @Prop({ reflect: true })
+  public iconOnly?: boolean;
+
+  @Prop({ reflect: true })
   public block?: boolean;
 
   @Prop({ reflect: true })
@@ -82,9 +85,11 @@ export class BceButton {
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
-        <button tabIndex={-1} disabled={this.disabled} type={type}>
-          <slot />
-        </button>
+        {!this.iconOnly && (
+          <button tabIndex={-1} disabled={this.disabled} type={type}>
+            <slot />
+          </button>
+        )}
         {this.icon && (
           <bce-icon
             raw={this.icon}
