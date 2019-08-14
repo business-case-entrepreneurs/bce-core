@@ -28,14 +28,15 @@ bce-dropdown {
 
   bce-icon {
     position: absolute;
-    top: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 12px;
     color: bce-color-l(dark);
     pointer-events: none;
     transition: transform 0.3s ease-out;
 
     &[data-active] {
-      transform: rotate(180deg);
+      transform: rotate(180deg) translateY(50%);
     }
   }
 
@@ -68,11 +69,6 @@ bce-dropdown {
       height: 40px;
       padding: 6px 12px;
       font-size: 0.9em;
-    }
-
-    bce-icon {
-      top: 12px;
-      right: 10px;
     }
   }
 }
