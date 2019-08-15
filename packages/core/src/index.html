@@ -205,6 +205,9 @@
         <h3>BCE upload</h3>
         <bce-upload-button multiple>Upload Button</bce-upload-button>
 
+        <h3>BCE dialog</h3>
+        <bce-button id="dialog">dialog</bce-button>
+
         <h3>Heading 3</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -251,6 +254,7 @@
           <bce-button>button</bce-button>
           <bce-button>(de)activation</bce-button>
         </bce-fab>
+        <bce-dialog><h1>hello dialog</h1></bce-dialog>
       </main>
     </bce-root>
 
@@ -293,6 +297,14 @@
         let i = 0;
         message.addEventListener('click', function() {
           root.message('Message ' + ++i);
+        });
+
+        // Dialog
+        const dialogButton = document.getElementById('dialog');
+        dialogButton.addEventListener('click', () =>{
+          const dialog = document.querySelector('bce-dialog');
+          dialog.style.display = 'block';
+          setTimeout(()=> dialog.style.display = "none", 1000);
         });
 
         // Upload demo
