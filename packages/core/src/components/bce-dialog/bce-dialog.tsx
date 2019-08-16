@@ -1,4 +1,4 @@
-import { Component, h } from "@stencil/core";
+import { Component, h, Host, Prop } from "@stencil/core";
 
 @Component({
   tag: "bce-dialog",
@@ -6,7 +6,16 @@ import { Component, h } from "@stencil/core";
   shadow: false
 })
 export class BceDialog {
+  @Prop({ reflect: true })
+  public active: boolean = false;
+
   render() {
-    return <slot />;
+    return (
+      <Host active={this.active}>
+        <div class="dialog-container">
+          <slot />
+        </div>
+      </Host>
+    );
   }
 }
