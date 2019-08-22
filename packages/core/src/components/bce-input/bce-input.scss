@@ -11,7 +11,6 @@ bce-input {
   > label {
     margin: 15px 12px 5px;
     font-size: 1em;
-    color: bce-color-l(dark);
     transition: margin 0.15s cubic-bezier(0.4, 0, 0.2, 1),
       font-size 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease-in-out;
     user-select: none;
@@ -59,19 +58,14 @@ bce-input {
     bottom: -16px;
     left: 12px;
     width: 100%;
-    color: bce-color-l(dark);
     text-align: left;
     transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:before {
+      content: '|';
       position: absolute;
-      top: 2px;
-      bottom: 2px;
-      left: -4px;
-      content: '';
-
-      width: 1px;
-      background-color: bce-color-l(dark);
+      left: -5px;
+      font-weight: 100;
     }
   }
 
@@ -160,8 +154,8 @@ bce-input[focus] {
     border-color: bce-color();
   }
 
-  > small:before {
-    background-color: bce-color();
+  > small {
+    color: bce-color();
   }
 }
 
@@ -178,9 +172,5 @@ bce-input[disabled] {
 
   > small {
     color: bce-color(disable);
-
-    &:before {
-      background-color: bce-color(disable);
-    }
   }
 }
