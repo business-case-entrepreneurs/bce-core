@@ -1,3 +1,7 @@
+@mixin bce-default-color($name) {
+  @include bce-color($name);
+}
+
 @mixin bce-define-color($color, $name) {
   $color1: nth($color, 1);
   $color2: #fff;

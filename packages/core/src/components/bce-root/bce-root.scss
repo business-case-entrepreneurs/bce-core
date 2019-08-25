@@ -1,4 +1,6 @@
 bce-root {
+  @include bce-default-color(primary);
+  
   /* Primary and accent colors */
   @include bce-define-color(#215475 #fff, primary);
   @include bce-define-color(#5c2a53 #fff, secondary);
