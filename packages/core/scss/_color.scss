@@ -2,7 +2,7 @@
   @include bce-color($name);
 }
 
-@mixin bce-define-color($color, $name) {
+@mixin bce-define-color($color, $name, $custom-shades: ()) {
   $color1: nth($color, 1);
   $color2: #fff;
 
@@ -10,11 +10,18 @@
     $color2: nth($color, 2);
   }
 
+  // Define color
   --bce-color-#{$name}-l: #{lighten($color1, 10%)};
   --bce-color-#{$name}-n: #{$color1};
   --bce-color-#{$name}-d: #{darken($color1, 10%)};
   --bce-color-#{$name}-t: #{$color2};
-
+  
+  // Define custom shades
+  @each $key, $opacity in $custom-shades {
+    --bce-color-#{$name}-#{$key}: #{rgba($color1, $opacity)};
+  }
+  
+  // Define color attribute modifiers
   *[color='#{$name}'] {
     @include bce-color($name);
   }
