@@ -1,21 +1,21 @@
 bce-root {
-  @include bce-default-color(primary);
+  @include bce-color-default(primary);
   
   /* Primary and accent colors */
-  @include bce-define-color(#215475 #fff, primary);
-  @include bce-define-color(#5c2a53 #fff, secondary);
-  @include bce-define-color(#72222f #fff, tertiary);
+  @include bce-color-define(#215475 #fff, primary);
+  @include bce-color-define(#5c2a53 #fff, secondary);
+  @include bce-color-define(#72222f #fff, tertiary);
 
   /* Semantic colors */
-  @include bce-define-color(#1a562f #fff, success);
-  @include bce-define-color(#b53131 #fff, error);
-  @include bce-define-color(#d29e31 #fff, warning);
-  @include bce-define-color(#3e8ebf #fff, info);
+  @include bce-color-define(#1a562f #fff, success);
+  @include bce-color-define(#b53131 #fff, error);
+  @include bce-color-define(#d29e31 #fff, warning);
+  @include bce-color-define(#3e8ebf #fff, info);
 
   /* Neutral colors */
-  @include bce-define-color(#231f20 #fff, dark);
-  @include bce-define-color(#f7f9f9 #000, light);
-  @include bce-define-color(#cccccc #888, disable);
+  @include bce-color-define(#231f20 #fff, dark);
+  @include bce-color-define(#f7f9f9 #000, light);
+  @include bce-color-define(#cccccc #888, disable);
 }
 
 bce-root {

@@ -1,56 +1,74 @@
-@mixin bce-default-color($name) {
-  @include bce-color($name);
+@function _bce-color-shades-default($color, $font) {
+  @return (
+    l: lighten($color, 10%),
+    n: $color,
+    d: darken($color, 10%),
+    t: $font
+  );
 }
 
-@mixin bce-define-color($color, $name, $custom-shades: ()) {
-  $color1: nth($color, 1);
-  $color2: #fff;
+@function _bce-color-shades-noop($color, $font) {
+  @return ();
+}
 
-  @if length($color) > 1 {
-    $color2: nth($color, 2);
-  }
+$_bce-color-shades-default: 'n' !default;
+$_bce-color-shades-func: get-function(_bce-color-shades-default) !default;
 
-  // Define color
-  --bce-color-#{$name}-l: #{lighten($color1, 10%)};
-  --bce-color-#{$name}-n: #{$color1};
-  --bce-color-#{$name}-d: #{darken($color1, 10%)};
-  --bce-color-#{$name}-t: #{$color2};
-  
-  // Define custom shades
-  @each $key, $opacity in $custom-shades {
-    --bce-color-#{$name}-#{$key}: #{rgba($color1, $opacity)};
+@mixin bce-color-default($name) {
+  $shades: map-keys(call($_bce-color-shades-func, #000, #000));
+  @each $key in $shades {
+    --bce-color-#{$key}: #{bce-color($name, $key)};
   }
+}
+
+@mixin bce-color-define($colors, $name, $shades-func: _bce-color-shades-noop) {
+  // Parse arguments
+  $color: nth($colors, 1);
+  $color-text: #fff;
+
+  @if length($colors) > 1 {
+    $color-text: nth($colors, 2);
+  }
+    
+  // Parse shades
+  $global-shades: call($_bce-color-shades-func, $color, $color-text);
+  $custom-shades: call(get-function($shades-func), $color, $color-text);
+
+  // Define shades
+  @include bce-color-define-shades($name, $global-shades);
+  @include bce-color-define-shades($name, $custom-shades);
   
   // Define color attribute modifiers
   *[color='#{$name}'] {
-    @include bce-color($name);
+    @include bce-color-default($name);
   }
 }
 
-@mixin bce-color($name) {
-  --bce-color-l: #{bce-color($name, 'l')};
-  --bce-color-n: #{bce-color($name, 'n')};
-  --bce-color-d: #{bce-color($name, 'd')};
-  --bce-color-t: #{bce-color($name, 't')};
+@mixin bce-color-define-shades($name, $shades) {
+  @each $key, $shade in $shades {
+    --bce-color-#{$name}-#{$key}: #{$shade};
+  }
 }
 
-@function bce-color($name: '', $modifier: 'n') {
-  $var-name: --bce-color;
-  @if $name != '' {
-    $var-name: --bce-color-#{$name};
+@function bce-color($name: null, $shade: $_bce-color-shades-default) {
+  // Construct var base
+  $var-base: --bce-color;
+  @if $name {
+    $var-base: --bce-color-#{$name};
   }
 
-  @return unquote('var(#{$var-name}-#{$modifier})');
+  // Return css variable
+  @return unquote('var(#{$var-base}-#{$shade})');
 }
 
-@function bce-color-t($name: '') {
+@function bce-color-t($name: null) {
   @return bce-color($name, 't');
 }
 
-@function bce-color-l($name: '') {
+@function bce-color-l($name: null) {
   @return bce-color($name, 'l');
 }
 
-@function bce-color-d($name: '') {
+@function bce-color-d($name: null) {
   @return bce-color($name, 'd');
 }
