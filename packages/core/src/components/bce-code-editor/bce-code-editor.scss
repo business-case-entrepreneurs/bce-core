@@ -1,0 +1,37 @@
+bce-code-editor {
+  position: relative;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid bce-color-d(light);
+
+  .CodeMirror {
+    height: auto;
+    border-radius: 4px;
+
+    pre {
+      padding: 0 8px;
+    }
+
+    &-scroll {
+      min-height: 46px;
+    }
+  }
+}
+
+bce-code-editor[disabled] {
+  .CodeMirror {
+    background: bce-color(disable);
+
+    &-scroll {
+      background: bce-color(disable);
+    }
+
+    &-lines {
+      cursor: inherit;
+    }
+
+    &-gutters {
+      background-color: transparent;
+    }
+  }
+}
