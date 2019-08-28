@@ -1,4 +1,5 @@
 bce-dropdown {
+  @include bce-color-default(primary);
   position: relative;
   display: block;
   text-align: right;

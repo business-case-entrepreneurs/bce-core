@@ -1,4 +1,5 @@
 bce-button {
+  @include bce-color-default(primary);
   @include elevate(2);
   position: relative;
   display: inline-flex;

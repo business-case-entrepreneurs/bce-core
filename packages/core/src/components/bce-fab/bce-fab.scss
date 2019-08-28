@@ -1,4 +1,5 @@
 bce-fab {
+  @include bce-color-default(primary);
   position: fixed;
   display: flex;
   flex-flow: column nowrap;

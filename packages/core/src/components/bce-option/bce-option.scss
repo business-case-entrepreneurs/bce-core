@@ -1,7 +1,8 @@
 bce-option {
+  // No default color defined, the default color is inherited from the parent.
   position: relative;
   display: block;
-
+  
   &[filter] {
     display: none;
   }
@@ -12,8 +13,8 @@ bce-option[type='dropdown'] {
   cursor: pointer;
 
   &:hover {
-    background-color: bce-color-l(primary);
-    color: bce-color-t(primary);
+    background-color: bce-color-l();
+    color: bce-color-t();
   }
 }
 

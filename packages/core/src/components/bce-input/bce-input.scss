@@ -1,4 +1,5 @@
 bce-input {
+  @include bce-color-default(primary);
   --bce-input-height: 48px;
 
   position: relative;

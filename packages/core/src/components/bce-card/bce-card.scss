@@ -1,9 +1,10 @@
 bce-card {
+  @include bce-color-default(light);
   @include elevate(1);
   position: relative;
   display: block;
   margin-bottom: 0.5rem;
   padding: 1rem;
   border-radius: 4px;
-  background-color: bce-color-l(light);
+  background-color: bce-color-l();
 }

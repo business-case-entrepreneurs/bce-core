@@ -1,4 +1,6 @@
 bce-upload-button {
+  @include bce-color-default(primary);
+  
   // Visually hide input
   > input {
     position: absolute !important;

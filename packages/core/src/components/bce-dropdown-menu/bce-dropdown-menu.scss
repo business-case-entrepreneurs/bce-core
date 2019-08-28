@@ -1,4 +1,5 @@
 bce-dropdown-menu {
+  @include bce-color-default(primary);
   display: inline-block;
 
   .dropdown-button {

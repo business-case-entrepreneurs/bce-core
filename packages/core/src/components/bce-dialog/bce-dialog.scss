@@ -1,4 +1,5 @@
 bce-dialog {
+  @include bce-color-default(light);
   position: fixed;
   display: none;
   height: 100vh;
@@ -22,6 +23,6 @@ bce-dialog {
     transform: translate(-50%, -50%);
     padding: 1rem;
     border-radius: 4px;
-    background-color: bce-color-l(light);
+    background-color: bce-color-l();
   }
 }

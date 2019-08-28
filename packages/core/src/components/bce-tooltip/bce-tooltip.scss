@@ -1,12 +1,13 @@
 bce-tooltip {
+  @include bce-color-default(dark);
   display: inline-block;
 
   > div {
     @include elevate(2);
     display: none;
     padding: 6px 16px;
-    background-color: bce-color(dark);
-    color: bce-color-t(dark);
+    background-color: bce-color();
+    color: bce-color-t();
     border-radius: 4px;
     max-width: 400px;
     opacity: 0.9;

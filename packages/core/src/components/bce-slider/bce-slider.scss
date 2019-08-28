@@ -1,4 +1,5 @@
 bce-slider {
+  @include bce-color-default(primary);
   --fill-width: 50%;
 
   position: relative;

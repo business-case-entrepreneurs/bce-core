@@ -1,4 +1,5 @@
 bce-message {
+  @include bce-color-default(dark);
   @include elevate(6);
   position: fixed;
   left: 16px;
@@ -6,8 +7,8 @@ bce-message {
   bottom: 19px;
   display: block;
   max-width: 600px;
-  background-color: bce-color(dark);
-  color: bce-color-t(dark);
+  background-color: bce-color();
+  color: bce-color-t();
   font-size: 14px;
   border-radius: 4px;
   padding: 16px;

@@ -1,4 +1,5 @@
 bce-status-bar {
+  @include bce-color-default(primary);
   position: relative;
   display: block;
   width: 100%;
