@@ -19,6 +19,5 @@
 
     ".gitignore": true,
     "package-lock.json": true
-  },
-  "prettier.ignorePath": "config/.prettierignore"
+  }
 }
