@@ -20,6 +20,9 @@ export class BceTooltip {
   @Prop({ reflect: true })
   public target = '';
 
+  @Prop({ reflect: true })
+  public icon = 'fas:info-circle';
+
   @State()
   private active = false;
 
@@ -52,7 +55,7 @@ export class BceTooltip {
 
   render() {
     return [
-      !this.target && <bce-icon raw="fas:info-circle" fixed-width></bce-icon>,
+      !this.target && <bce-icon raw={this.icon} fixed-width></bce-icon>,
       <div data-active={this.active}>
         <slot />
       </div>
