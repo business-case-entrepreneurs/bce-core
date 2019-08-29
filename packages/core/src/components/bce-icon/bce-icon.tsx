@@ -10,12 +10,13 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
   faBars,
   faEllipsisH,
-  faCaretDown
+  faCaretDown,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { Component, h, Prop, Watch } from '@stencil/core';
 
 // These icons are added by default
-library.add(faSquare, faBars, faEllipsisH, faCaretDown);
+library.add(faSquare, faBars, faEllipsisH, faCaretDown, faTimesCircle);
 
 @Component({
   tag: 'bce-icon',

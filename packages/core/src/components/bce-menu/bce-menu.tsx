@@ -20,7 +20,7 @@ export class BceMenu {
   public toggleDesktop: boolean = false;
 
   @Prop({ reflect: true, mutable: true })
-  public active = false;
+  public active?: boolean = false;
 
   @Listen('resize', { target: 'window' })
   public handleResize() {
@@ -44,9 +44,23 @@ export class BceMenu {
     }
   }
 
+  public close = () => {
+    this.active = false;
+  };
+
   render() {
     return (
       <Host class={this.right ? 'right' : 'left'} active={this.active}>
+        {window.innerWidth < 1024 ? (
+          <bce-icon
+            onClick={this.close}
+            raw={'times-circle'}
+            pre={'fas'}
+            size={'3x'}
+          />
+        ) : (
+          ''
+        )}
         <div
           class={{
             menu: true,
