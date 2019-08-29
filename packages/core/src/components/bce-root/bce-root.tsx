@@ -5,6 +5,11 @@ interface MessageOptions {
   readonly duration: number;
 }
 
+export type Executor<T> = (
+  resolve: (value?: T | PromiseLike<T>) => void,
+  reject: (reason?: any) => void
+) => Promise<any> | void;
+
 @Component({
   tag: 'bce-root',
   styleUrl: 'bce-root.scss',
@@ -36,6 +41,20 @@ export class BceRoot {
     // Either render or queue the message
     if (!this.messageCurrent) this.renderMessage({ text, duration });
     else this.messageQueue.push({ text, duration });
+  }
+
+  @Method()
+  public async execute<T>(el: HTMLElement, exec: Executor<T>): Promise<T> {
+    el.style.display = 'none';
+    this.el.appendChild(el);
+
+    const result = await new Promise<T>((res, rej) => {
+      const execution = exec(res, rej);
+      if (execution) res(execution);
+    });
+
+    this.el.removeChild(el);
+    return result;
   }
 
   private renderMessage({ text, duration }: MessageOptions) {

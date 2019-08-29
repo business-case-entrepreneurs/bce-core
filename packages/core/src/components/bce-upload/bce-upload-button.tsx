@@ -6,6 +6,7 @@ import {
   Event,
   EventEmitter,
   h,
+  Method,
   Prop
 } from '@stencil/core';
 
@@ -69,9 +70,14 @@ export class BceCard {
   };
 
   private handleClick = () => {
+    this.upload();
+  };
+
+  @Method()
+  public async upload() {
     const input = this.el.querySelector('input') as HTMLInputElement | null;
     if (input) input.click();
-  };
+  }
 
   render() {
     return [

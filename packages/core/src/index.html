@@ -207,6 +207,7 @@
         <bce-button id="message">Trigger</bce-button>
 
         <h3>BCE upload</h3>
+        <bce-button type="text" onclick="upload()">Scripted</bce-button>
         <bce-upload-button multiple>Upload Button</bce-upload-button>
 
         <h3>BCE dialog</h3>
@@ -266,7 +267,7 @@
     <script nomodule src="build/bce.js"></script>
     <script>
       window.onload = function() {
-      const root = document.getElementById('app');
+        const root = document.getElementById('app');
 
         // Form demo
         const data = document.getElementById('form-data');
@@ -314,17 +315,31 @@
 
         // Upload demo
         const uploadButton = document.querySelector('bce-upload-button');
-        uploadButton.addEventListener('file', e => {
-          root.message('Files logged in debug console.');
-          for (const file of e.detail) {
-            console.groupCollapsed('file-upload: ' + file.name)
-            console.log('id', file.id);
-            console.log('type', file.type);
-            console.log(file);
-            console.groupEnd();
-          }
-        })
+        uploadButton.addEventListener('file', onFile);
       };
+
+      async function upload() {
+        const root = document.querySelector('bce-root');
+        const button = document.createElement('bce-upload-button');
+        button.multiple = true;
+
+        const event = await root.execute(button, res => {
+          button.addEventListener('file', res);
+          button.upload();
+        });
+
+        onFile(event);
+      }
+
+      function onFile(e) {
+        for (const file of e.detail) {
+          console.groupCollapsed('file-upload: ' + file.name)
+          console.log('id', file.id);
+          console.log('type', file.type);
+          console.log(file);
+          console.groupEnd();
+        }
+      }
     </script>
   </body>
 </html>
