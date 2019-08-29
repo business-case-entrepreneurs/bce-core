@@ -11,7 +11,7 @@ import {
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
-import { File } from '../../models/file';
+import { File } from '../../utils/file';
 import { UUID } from '../../utils/uuid';
 
 library.add(faUpload);

@@ -151,6 +151,10 @@
           </bce-input>
           
           <bce-input type="switch" label="Switch"></bce-input>
+
+          <bce-input type="container" label="Code">
+            <bce-code-editor value="function main() {return 'Hello World!'}" format></bce-code-editor>
+          </bce-input>
           
           <bce-input type="container" label="Data">
             <code id="form-data" style="white-space: pre;"></code>
@@ -262,7 +266,7 @@
     <script nomodule src="build/bce.js"></script>
     <script>
       window.onload = function() {
-        const root = document.getElementById('app');
+      const root = document.getElementById('app');
 
         // Form demo
         const data = document.getElementById('form-data');
@@ -274,16 +278,17 @@
           "bce-input[type='dropdown']",
           "bce-input[type='checkbox']",
           "bce-input[type='radio']",
-          "bce-input[type='switch']"
+          "bce-input[type='switch']",
+          "bce-code-editor"
         ];
 
         let form = {};
         for (const selector of selectors) {
           const element = document.querySelector(selector);
-          const name = (element.label || '').toLowerCase().replace(' ', '-');
+          const name = (element.label || element.closest('bce-input').label || '').toLowerCase().replace(' ', '-');
 
           form[name] = element.value;
-          element.addEventListener('input', () => {
+          element.addEventListener('input', event => {
             form[name] = event.target.value;
             data.innerText = JSON.stringify(form, undefined, 2);
           });
