@@ -1,0 +1,20 @@
+bce-menu-button {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  width: 56px;
+  height: 56px;
+  padding: 16px;
+  cursor: pointer;
+
+  span {
+    flex: 0 0 3px;
+    background-color: bce-color-t();
+    border-radius: 3px;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

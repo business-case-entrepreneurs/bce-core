@@ -18,7 +18,10 @@ bce-root bce-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+}
+
+bce-root bce-header bce-logo {
+  padding: 0 1rem;
 }
 
 bce-root main {
