@@ -33,7 +33,7 @@ export class BceMenu {
     });
   }
 
-  @Listen('toggleMenu', { target: 'window' })
+  @Listen('toggle-menu', { target: 'window' })
   public toggleMenu() {
     this.active = !this.active;
   }
