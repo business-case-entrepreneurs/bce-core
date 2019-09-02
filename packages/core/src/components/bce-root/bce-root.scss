@@ -1,6 +1,6 @@
 bce-root {
   @include bce-color-default(primary);
-  
+
   /* Primary and accent colors */
   @include bce-color-define(#215475 #fff, primary);
   @include bce-color-define(#5c2a53 #fff, secondary);
@@ -21,7 +21,6 @@ bce-root {
 bce-root {
   position: relative;
   overflow-x: hidden;
-  display: block;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
@@ -35,9 +34,5 @@ bce-root {
     &:hover {
       color: bce-color-l(primary);
     }
-  }
-
-  main {
-    background-color: bce-color(light);
   }
 }

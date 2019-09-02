@@ -2,10 +2,6 @@ bce-header {
   @include bce-color-default(primary);
   @include elevate(4);
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 56px;
-  padding: 1rem;
   background-color: bce-color();
 }
