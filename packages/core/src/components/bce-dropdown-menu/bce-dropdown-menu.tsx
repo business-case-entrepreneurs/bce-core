@@ -26,6 +26,9 @@ export class BceDropdownMenu {
   @Prop({ reflect: true, mutable: true })
   public active: boolean = false;
 
+  @Prop({ reflect: true })
+  public icon = 'fas:ellipsis-h';
+
   private dropDownMenu!: Popper;
 
   private get buttons() {
@@ -75,13 +78,7 @@ export class BceDropdownMenu {
   render() {
     return (
       <Host onClick={this.handleClick}>
-        <bce-icon
-          class="dropdown-button"
-          pre="fas"
-          name="ellipsis-h"
-          fixed-width
-        />
-
+        <bce-icon class="dropdown-button" raw={this.icon} fixed-width />
         <div class="bce-dropdown-menu-items" data-active={this.active}>
           <slot />
         </div>
