@@ -5,9 +5,7 @@ $breakpoint-xlarge: 1920px !default;
 
 @mixin media-small {
   @media screen and (min-width: #{$breakpoint-small}) {
-    &:not([compact]) {
-      @content;
-    }
+    @content;
   }
 }
 
@@ -19,9 +17,7 @@ $breakpoint-xlarge: 1920px !default;
 
 @mixin media-medium {
   @media screen and (min-width: #{$breakpoint-medium}) {
-    &:not([compact]) {
-      @content;
-    }
+    @content;
   }
 }
 
@@ -33,9 +29,7 @@ $breakpoint-xlarge: 1920px !default;
 
 @mixin media-large {
   @media screen and (min-width: #{$breakpoint-large}) {
-    &:not([compact]) {
-      @content;
-    }
+    @content;
   }
 }
 
@@ -47,9 +41,7 @@ $breakpoint-xlarge: 1920px !default;
 
 @mixin media-xlarge {
   @media screen and (min-width: #{$breakpoint-xlarge}) {
-    &:not([compact]) {
-      @content;
-    }
+    @content;
   }
 }
 

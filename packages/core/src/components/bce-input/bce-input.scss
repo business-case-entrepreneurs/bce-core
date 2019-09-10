@@ -70,26 +70,28 @@ bce-input {
   }
 
   @include media-medium {
-    flex-flow: row nowrap;
-    --bce-input-height: 40px;
+    &:not([compact]) {
+      flex-flow: row nowrap;
+      --bce-input-height: 40px;
 
-    > label {
-      margin: 10px 0;
-      width: 25%;
-
-      &[data-hover] {
+      > label {
         margin: 10px 0;
-        font-size: inherit;
+        width: 25%;
+
+        &[data-hover] {
+          margin: 10px 0;
+          font-size: inherit;
+        }
       }
-    }
 
-    > [data-input] {
-      align-self: center;
+      > [data-input] {
+        align-self: center;
 
-      > input,
-      > textarea {
-        padding: 6px 12px;
-        font-size: 0.9em;
+        > input,
+        > textarea {
+          padding: 6px 12px;
+          font-size: 0.9em;
+        }
       }
     }
   }
@@ -102,21 +104,23 @@ bce-input[label] {
   }
 
   @include media-medium {
-    > [data-input] {
-      align-self: center;
-      width: 75%;
+    &:not([compact]) {
+      > [data-input] {
+        align-self: center;
+        width: 75%;
 
-      > input {
-        padding: 6px 12px;
+        > input {
+          padding: 6px 12px;
+        }
+
+        > textarea {
+          padding: 10px 12px;
+        }
       }
 
-      > textarea {
-        padding: 10px 12px;
+      > small {
+        left: calc(25% + 12px);
       }
-    }
-
-    > small {
-      left: calc(25% + 12px);
     }
   }
 }
@@ -136,10 +140,12 @@ bce-input[label][type='textarea'] {
   }
 
   @include media-medium {
-    flex-flow: column nowrap;
+    &:not([compact]) {
+      flex-flow: column nowrap;
 
-    > [data-input] {
-      align-self: flex-end;
+      > [data-input] {
+        align-self: flex-end;
+      }
     }
   }
 }
