@@ -1,28 +1,47 @@
 bce-dialog {
   @include bce-color-default(light);
   position: fixed;
-  display: none;
-  height: 100vh;
-  width: 100vw;
   top: 0;
-  left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  left: 0;
+  z-index: 64;
 
-  &[active] {
-    display: block;
+  [data-backdrop] {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
-  > div {
-    @include elevate(16);
+  [data-dialog] {
+    @include elevate(24);
     position: fixed;
-    z-index: 9;
     top: 50%;
     left: 50%;
+    padding: 24px;
+    width: 280px;
     transform: translate(-50%, -50%);
-    padding: 1rem;
     border-radius: 4px;
-    background-color: bce-color-l();
+    color: bce-color-t();
+    background-color: bce-color();
+
+    h3 {
+      margin: 0;
+    }
+
+    p {
+      opacity: 0.75;
+    }
+  }
+
+  [data-actions] {
+    text-align: right;
+    margin: 0 -16px -16px 0;
+  }
+
+  @include media-medium {
+    [data-dialog] {
+      width: 560px;
+    }
   }
 }

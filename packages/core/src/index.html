@@ -206,12 +206,12 @@
         <h3>BCE message</h3>
         <bce-button id="message">Trigger</bce-button>
 
+        <h3>BCE dialog</h3>
+        <bce-button id="dialog">dialog</bce-button>
+
         <h3>BCE upload</h3>
         <bce-button type="text" onclick="upload()">Scripted</bce-button>
         <bce-upload-button multiple>Upload Button</bce-upload-button>
-
-        <h3>BCE dialog</h3>
-        <bce-button id="dialog">dialog</bce-button>
 
         <h3>Heading 3</h3>
         <p>
@@ -259,7 +259,6 @@
           <bce-button>button</bce-button>
           <bce-button>(de)activation</bce-button>
         </bce-fab>
-        <bce-dialog><h1>hello dialog</h1></bce-dialog>
       </main>
     </bce-root>
 
@@ -305,12 +304,13 @@
           root.message('Message ' + ++i);
         });
 
-        // Dialog
+        // Dialog trigger
         const dialogButton = document.getElementById('dialog');
-        dialogButton.addEventListener('click', () => {
-          const dialog = document.querySelector('bce-dialog');
-          dialog.style.display = 'block';
-          setTimeout(()=> dialog.style.display = "none", 5000);
+        dialogButton.addEventListener('click', async () => {
+          const title = 'Dialog';
+          const message = 'Lorem ipsum dolor sit amet?';
+          const answer = await root.confirm(title, message, 'Yes', 'Cancel');
+          root.message('Answer: ' + answer);
         });
 
         // Upload demo

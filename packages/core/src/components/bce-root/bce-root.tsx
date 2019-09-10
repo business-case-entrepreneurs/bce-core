@@ -54,16 +54,47 @@ export class BceRoot {
   }
 
   @Method()
-  public async execute<T>(el: HTMLElement, exec: Executor<T>): Promise<T> {
-    el.style.display = 'none';
-    this.el.appendChild(el);
+  public confirm(title: string, message: string, options: ConfirmOptions = {}) {
+    const dialog = document.createElement('bce-dialog');
+    dialog.required = true;
+    dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
 
-    const result = await new Promise<T>((res, rej) => {
+    const action2 = document.createElement('bce-button');
+    action2.type = 'text';
+    action2.slot = 'action';
+    action2.innerText = options.cancel || 'Cancel';
+    dialog.appendChild(action2);
+
+    const action1 = document.createElement('bce-button');
+    action1.type = 'text';
+    action1.slot = 'action';
+    action1.innerText = options.ok || 'Ok';
+    dialog.appendChild(action1);
+
+    const result = new Promise<boolean>(res => {
+      dialog.addEventListener('backdrop', () => res(false));
+      action1.addEventListener('click', () => res(true));
+      action2.addEventListener('click', () => res(false));
+    });
+
+    this.el.appendChild(dialog);
+    result.then(() => this.el.removeChild(dialog));
+
+    return result;
+  }
+
+  @Method()
+  public execute<T>(el: HTMLElement, exec: Executor<T>): Promise<T> {
+    el.style.display = 'none';
+
+    const result = new Promise<T>((res, rej) => {
       const execution = exec(res, rej);
       if (execution) res(execution);
     });
 
-    this.el.removeChild(el);
+    this.el.appendChild(el);
+    result.then(() => this.el.removeChild(el));
+
     return result;
   }
 
@@ -78,7 +109,7 @@ export class BceRoot {
 
     const onRemove = () => {
       // Remove current message
-      message.parentElement!.removeChild(message);
+      this.el.removeChild(message);
 
       // Render next message if one is queued
       const next = this.messageQueue.shift();
@@ -103,6 +134,11 @@ interface MessageOptions {
   readonly text: string;
   readonly duration: number;
   readonly color: string;
+}
+
+export interface ConfirmOptions {
+  readonly cancel?: string;
+  readonly ok?: string;
 }
 
 export type Executor<T> = (

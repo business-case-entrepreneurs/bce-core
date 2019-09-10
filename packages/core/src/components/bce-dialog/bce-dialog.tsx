@@ -1,21 +1,31 @@
-import { Component, h, Host, Prop } from "@stencil/core";
+import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 
 @Component({
-  tag: "bce-dialog",
-  styleUrl: "bce-dialog.scss",
+  tag: 'bce-dialog',
+  styleUrl: 'bce-dialog.scss',
   shadow: false
 })
 export class BceDialog {
   @Prop({ reflect: true })
-  public active: boolean = false;
+  public required = false;
+
+  @Event()
+  private backdrop!: EventEmitter;
+
+  private handleClick = () => {
+    if (!this.required) this.backdrop.emit();
+  };
 
   render() {
-    return (
-      <Host active={this.active}>
-        <div class="dialog-container">
-          <slot />
+    return [
+      <div data-backdrop onClick={this.handleClick} />,
+      <div data-dialog>
+        <slot />
+
+        <div data-actions>
+          <slot name="action" />
         </div>
-      </Host>
-    );
+      </div>
+    ];
   }
 }
