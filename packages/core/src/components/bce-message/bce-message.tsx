@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bce-message',
@@ -6,6 +6,9 @@ import { Component, h } from '@stencil/core';
   shadow: false
 })
 export class BceMessage {
+  @Prop({ reflect: true })
+  public color?: string;
+
   render() {
     return <slot />;
   }

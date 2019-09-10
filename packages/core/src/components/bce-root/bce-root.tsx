@@ -1,15 +1,5 @@
 import { Component, Element, h, Host, Method, State } from '@stencil/core';
 
-interface MessageOptions {
-  readonly text: string;
-  readonly duration: number;
-}
-
-export type Executor<T> = (
-  resolve: (value?: T | PromiseLike<T>) => void,
-  reject: (reason?: any) => void
-) => Promise<any> | void;
-
 @Component({
   tag: 'bce-root',
   styleUrl: 'bce-root.scss',
@@ -31,7 +21,27 @@ export class BceRoot {
   }
 
   @Method()
-  public async message(text: string, duration = 2) {
+  public async success(text: string, duration = 2) {
+    return this.message(text, duration, 'success');
+  }
+
+  @Method()
+  public async error(text: string, duration = 5) {
+    return this.message(text, duration, 'error');
+  }
+
+  @Method()
+  public async warning(text: string, duration = 2) {
+    return this.message(text, duration, 'warning');
+  }
+
+  @Method()
+  public async info(text: string, duration = 2) {
+    return this.message(text, duration, 'info');
+  }
+
+  @Method()
+  public async message(text: string, duration = 2, color = 'dark') {
     if (!text) return;
 
     // Messages have a minimum duration of 1 second and a maximum of 10 seconds
@@ -39,8 +49,8 @@ export class BceRoot {
     duration = duration > 10 ? 10 : duration;
 
     // Either render or queue the message
-    if (!this.messageCurrent) this.renderMessage({ text, duration });
-    else this.messageQueue.push({ text, duration });
+    if (!this.messageCurrent) this.renderMessage({ text, duration, color });
+    else this.messageQueue.push({ text, duration, color });
   }
 
   @Method()
@@ -57,12 +67,13 @@ export class BceRoot {
     return result;
   }
 
-  private renderMessage({ text, duration }: MessageOptions) {
+  private renderMessage({ text, duration, color }: MessageOptions) {
     this.messageCurrent = true;
 
     // Create and append message
     const message = document.createElement('bce-message');
     message.innerText = text;
+    message.color = color;
     this.el.appendChild(message);
 
     const onRemove = () => {
@@ -87,3 +98,14 @@ export class BceRoot {
     );
   }
 }
+
+interface MessageOptions {
+  readonly text: string;
+  readonly duration: number;
+  readonly color: string;
+}
+
+export type Executor<T> = (
+  resolve: (value?: T | PromiseLike<T>) => void,
+  reject: (reason?: any) => void
+) => Promise<any> | void;
