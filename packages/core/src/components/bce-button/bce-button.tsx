@@ -2,7 +2,7 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { Color } from '../../models/color';
-import { appendRipple } from '../../utils/append-ripple';
+import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-button',
@@ -45,7 +45,7 @@ export class BceButton {
   };
 
   private handleMouseDown = (event: MouseEvent) => {
-    if (!this.disabled) appendRipple(this.el, event);
+    if (!this.disabled) ripple(this.el, event);
   };
 
   private handleFocus = (event: FocusEvent) => {

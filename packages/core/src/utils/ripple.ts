@@ -1,4 +1,4 @@
-export const appendRipple = (el: Element, event: MouseEvent) => {
+export const ripple = (el: Element, event: MouseEvent) => {
   // Create ripple element at mouse position
   const ripple = document.createElement('bce-ripple');
   const rect = el.getBoundingClientRect();

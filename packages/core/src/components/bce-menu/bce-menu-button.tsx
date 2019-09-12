@@ -6,7 +6,8 @@ import {
   h,
   Host
 } from '@stencil/core';
-import { appendRipple } from '../../utils/append-ripple';
+
+import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-menu-button',
@@ -21,7 +22,7 @@ export class BceMenuButton {
   private onToggleMenu!: EventEmitter;
 
   private handleClick = (event: MouseEvent) => {
-    appendRipple(this.el, event);
+    ripple(this.el, event);
     this.onToggleMenu.emit();
   };
 
