@@ -164,7 +164,7 @@ export class BceInput {
 
   @Method()
   public async validate() {
-    if (!this.validation) return null;
+    if (!this.validation) return [];
 
     const label = this.label || this.placeholder || '';
     const name = this.name || '';
