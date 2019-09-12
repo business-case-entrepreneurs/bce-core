@@ -180,3 +180,20 @@ bce-input[disabled] {
     color: bce-color(disable);
   }
 }
+
+bce-input[error] {
+  &[focus] > label {
+    color: bce-color(error);
+  }
+
+  > [data-input] {
+    > input,
+    > textarea {
+      border: 1px solid bce-color(error);
+    }
+  }
+
+  > small {
+    color: bce-color(error);
+  }
+}

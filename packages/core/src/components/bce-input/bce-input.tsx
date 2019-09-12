@@ -1,8 +1,20 @@
-import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core';
 
 import { Color } from '../../models/color';
 import { InputType, InputValue } from '../../models/input-type';
+import { Validation } from '../../models/validation';
+import { debounce } from '../../utils/debounce';
 import { UUID } from '../../utils/uuid';
+import { validator } from '../../utils/validator';
 
 @Component({
   tag: 'bce-input',
@@ -29,13 +41,13 @@ export class BceInput {
   public tooltip = '';
 
   @Prop({ reflect: true })
+  public name?: string;
+
+  @Prop({ reflect: true })
   public label?: string;
 
   @Prop({ reflect: true })
   public info?: string;
-
-  @Prop()
-  public uuid: string = UUID.v4();
 
   @Prop({ reflect: true })
   public compact = false;
@@ -49,13 +61,26 @@ export class BceInput {
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
+  @Prop({ reflect: true })
+  public validation?: string;
+
+  @Prop()
+  public uuid: string = UUID.v4();
+
+  @State()
+  private error: string = '';
+
   private _autofocus = false;
+  private _debounceValidate = debounce(this.validate.bind(this), 1000);
   private _options: HTMLBceOptionElement[] = [];
   private _initialized = false;
 
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
+
+    if (this.error) this.validate();
+    else this._debounceValidate();
 
     event.cancelBubble = true;
     this.resizeTextarea();
@@ -72,6 +97,7 @@ export class BceInput {
 
   private handleBlur = (event: FocusEvent) => {
     this.hasFocus = false;
+    this.validate();
 
     if (!event.bubbles) {
       const e = new FocusEvent(event.type, { ...event, bubbles: true });
@@ -134,6 +160,20 @@ export class BceInput {
 
     option.addEventListener('focus', this.handleFocus);
     option.addEventListener('blur', this.handleBlur);
+  }
+
+  @Method()
+  public async validate() {
+    if (!this.validation) return null;
+
+    const label = this.label || this.placeholder || '';
+    const name = this.name || '';
+    const meta = { el: this.el };
+
+    const errors = await validator.validate(this.validation, this.value, meta);
+
+    this.error = errors.length ? errors[0].message : '';
+    return errors.map(e => ({ label, name, ...e } as Validation));
   }
 
   @Watch('value')
@@ -244,10 +284,12 @@ export class BceInput {
   }
 
   render() {
-    return [
-      this.renderLabel(),
-      <div data-input>{this.renderInput()}</div>,
-      this.info && <small>{this.info}</small>
-    ];
+    return (
+      <Host error={!!this.error}>
+        {this.renderLabel()}
+        <div data-input>{this.renderInput()}</div>
+        {(this.error || this.info) && <small>{this.error || this.info}</small>}
+      </Host>
+    );
   }
 }
