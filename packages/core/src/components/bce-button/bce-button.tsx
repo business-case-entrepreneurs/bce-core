@@ -45,7 +45,15 @@ export class BceButton {
   };
 
   private handleMouseDown = (event: MouseEvent) => {
-    if (!this.disabled) ripple(this.el, event);
+    if (this.disabled) return;
+
+    ripple(this.el, event);
+
+    // Submit bce-form
+    if (this.submit) {
+      const form = this.el.closest('bce-form');
+      if (form) form.submit();
+    }
   };
 
   private handleFocus = (event: FocusEvent) => {
