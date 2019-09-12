@@ -13,8 +13,8 @@
     "build": "npm run sort && npm run clean && lerna run build",
     "clean": "lerna run clean",
     "postinstall": "lerna bootstrap && npm run sort",
-    "publish:next": "lerna publish --canary --preid next --dist-tag next --yes",
     "publish": "lerna publish -- --access public",
+    "publish:next": "lerna publish --canary --preid next --dist-tag next --yes",
     "serve": "lerna run serve --parallel --stream",
     "sort": "sort-package-json && lerna exec sort-package-json"
   },
