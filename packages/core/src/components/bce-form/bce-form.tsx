@@ -25,7 +25,7 @@ export class BceForm {
   @Method()
   public async submit() {
     const errors = await this.validate();
-    if (!errors) this.el.dispatchEvent(new Event('submit'));
+    if (!errors.length) this.el.dispatchEvent(new Event('submit'));
     else this.el.dispatchEvent(new Event('error'));
   }
 
