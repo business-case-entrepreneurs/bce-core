@@ -56,6 +56,7 @@ export class BceRoot {
   @Method()
   public confirm(title: string, message: string, options: ConfirmOptions = {}) {
     const dialog = document.createElement('bce-dialog');
+    dialog.active = true;
     dialog.required = true;
     dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
 

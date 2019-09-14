@@ -4,15 +4,14 @@ import { Validation } from '../../models/validation';
 
 @Component({
   tag: 'bce-form',
-  styleUrl: 'bce-form.scss',
-  shadow: false
+  shadow: true
 })
 export class BceForm {
   @Element()
   private el!: HTMLBceFormElement;
 
   @Prop()
-  public errors: Validation[] | null = null;
+  public errors: Validation[] = [];
 
   @Method()
   public async validate() {

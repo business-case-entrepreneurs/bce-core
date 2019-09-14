@@ -5,7 +5,12 @@ bce-dialog {
   bottom: 0;
   right: 0;
   left: 0;
+  display: none;
   z-index: 64;
+
+  &[active] {
+    display: block;
+  }
 
   [data-backdrop] {
     width: 100%;
@@ -13,7 +18,7 @@ bce-dialog {
     background-color: rgba(0, 0, 0, 0.5);
   }
 
-  [data-dialog] {
+  > bce-form {
     @include elevate(24);
     position: fixed;
     top: 50%;
@@ -32,15 +37,15 @@ bce-dialog {
     p {
       opacity: 0.75;
     }
-  }
 
-  [data-actions] {
-    text-align: right;
-    margin: 0 -16px -16px 0;
+    [data-actions] {
+      text-align: right;
+      margin: 0 -16px -16px 0;
+    }
   }
 
   @include media-medium {
-    [data-dialog] {
+    > bce-form {
       width: 560px;
     }
   }
