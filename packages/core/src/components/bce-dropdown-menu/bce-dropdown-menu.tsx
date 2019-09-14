@@ -1,12 +1,4 @@
-import {
-  Component,
-  Element,
-  h,
-  Host,
-  Listen,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 import Popper from 'popper.js';
 
 import { Color } from '../../models/color';
@@ -40,16 +32,15 @@ export class BceDropdownMenu {
     return buttons as HTMLBceButtonElement[];
   }
 
+  private handleBlur = () => {
+    this.active = false;
+  };
+
   private handleClick = (event: Event) => {
     this.active = !this.active;
     this.dropDownMenu.scheduleUpdate();
     event.stopPropagation();
   };
-
-  @Listen('click', { target: 'window' })
-  public closeDropdown() {
-    this.active = false;
-  }
 
   @Watch('color')
   private updateButtonColor() {
@@ -77,7 +68,7 @@ export class BceDropdownMenu {
 
   render() {
     return (
-      <Host onClick={this.handleClick}>
+      <Host onClick={this.handleClick} onBlur={this.handleBlur} tabIndex={0}>
         <bce-icon class="dropdown-button" raw={this.icon} fixed-width />
         <div class="bce-dropdown-menu-items" data-active={this.active}>
           <slot />
