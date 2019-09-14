@@ -35,6 +35,9 @@ export class BceDropdown {
   @Prop({ reflect: true })
   public disabled = false;
 
+  @Prop({ reflect: true })
+  public compact = false;
+
   @State()
   private filter: string = '';
 

@@ -65,10 +65,12 @@ bce-dropdown {
   }
 
   @include media-medium {
-    input {
-      height: 40px;
-      padding: 6px 12px;
-      font-size: 0.9em;
+    &:not([compact]) {
+      input {
+        height: 40px;
+        padding: 6px 12px;
+        font-size: 0.9em;
+      }
     }
   }
 }

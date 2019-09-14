@@ -99,7 +99,8 @@ bce-input {
 
 bce-input[label] {
   > [data-input] > input,
-  > [data-input] > textarea {
+  > [data-input] > textarea,
+  > [data-input] > bce-dropdown input {
     padding: 20px 12px 5px;
   }
 
@@ -115,6 +116,10 @@ bce-input[label] {
 
         > textarea {
           padding: 10px 12px;
+        }
+
+        > bce-dropdown input {
+          padding: 13px 12px;
         }
       }
 

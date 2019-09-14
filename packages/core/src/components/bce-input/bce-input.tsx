@@ -216,6 +216,7 @@ export class BceInput {
           <bce-dropdown
             value={this.value as string | null}
             placeholder={this.placeholder}
+            compact={this.compact}
             disabled={disabled}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
