@@ -159,7 +159,7 @@ validator.rules.set('numeric', async value => {
 });
 
 validator.rules.set('required', async value => {
-  const valid = value === 0 || !!value;
+  const valid = Array.isArray(value) ? !!value.length : value === 0 || !!value;
   const message = 'This field is required.';
   return { valid, message };
 });

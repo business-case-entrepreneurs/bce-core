@@ -75,12 +75,14 @@ export class BceInput {
   private _options: HTMLBceOptionElement[] = [];
   private _initialized = false;
 
+  private handleValidation = () => {
+    if (this.error) this.validate();
+    else this._debounceValidate();
+  };
+
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
-
-    if (this.error) this.validate();
-    else this._debounceValidate();
 
     event.cancelBubble = true;
     this.resizeTextarea();
@@ -285,7 +287,7 @@ export class BceInput {
 
   render() {
     return (
-      <Host error={!!this.error}>
+      <Host error={!!this.error} onInput={this.handleValidation}>
         {this.renderLabel()}
         <div data-input>{this.renderInput()}</div>
         {(this.error || this.info) && <small>{this.error || this.info}</small>}
