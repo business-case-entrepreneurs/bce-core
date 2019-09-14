@@ -32,7 +32,8 @@ export class BceDropdownMenu {
     return buttons as HTMLBceButtonElement[];
   }
 
-  private handleBlur = () => {
+  private handleBlur = async () => {
+    await new Promise(res => setTimeout(res, 100));
     this.active = false;
   };
 
