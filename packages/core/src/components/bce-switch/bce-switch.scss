@@ -20,7 +20,7 @@ bce-switch {
       border-radius: 14px;
 
       &:after {
-        @include elevate(1);
+        @include elevate(1, false);
         content: '';
         position: absolute;
         top: 0;
