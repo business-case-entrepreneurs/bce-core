@@ -54,10 +54,33 @@ export class BceRoot {
   }
 
   @Method()
+  public alert(title: string, message: string, options: AlertOptions = {}) {
+    const dialog = document.createElement('bce-dialog');
+    dialog.active = true;
+    dialog.required = options.required == undefined ? true : options.required;
+    dialog.innerHTML = `
+      <h3>${title}</h3>
+      <p>${message}</p>
+      <bce-button slot="action" type="text" submit>
+        ${options.ok || 'Ok'}
+      </bce-button>
+    `;
+
+    return this.execute<void>(
+      dialog,
+      res => {
+        dialog.addEventListener('submit', () => res());
+        dialog.addEventListener('backdrop', () => res());
+      },
+      { display: true }
+    );
+  }
+
+  @Method()
   public confirm(title: string, message: string, options: ConfirmOptions = {}) {
     const dialog = document.createElement('bce-dialog');
     dialog.active = true;
-    dialog.required = true;
+    dialog.required = options.required == undefined ? true : options.required;
     dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
 
     const action2 = document.createElement('bce-button');
@@ -72,21 +95,27 @@ export class BceRoot {
     action1.innerText = options.ok || 'Ok';
     dialog.appendChild(action1);
 
-    const result = new Promise<boolean>(res => {
-      dialog.addEventListener('backdrop', () => res(false));
-      action1.addEventListener('click', () => res(true));
-      action2.addEventListener('click', () => res(false));
-    });
-
-    this.el.appendChild(dialog);
-    result.then(() => this.el.removeChild(dialog));
-
-    return result;
+    return this.execute<boolean>(
+      dialog,
+      res => {
+        dialog.addEventListener('backdrop', () => res(false));
+        action1.addEventListener('click', () => res(true));
+        action2.addEventListener('click', () => res(false));
+      },
+      { display: true }
+    );
   }
 
   @Method()
-  public execute<T>(el: HTMLElement, exec: Executor<T>): Promise<T> {
-    el.style.display = 'none';
+  public execute<T>(
+    el: HTMLElement,
+    exec: Executor<T>,
+    options: ExecuteOptions = {}
+  ): Promise<T> {
+    const defaults: ExecuteOptions = { display: false };
+    options = Object.assign({}, defaults, options);
+
+    if (!options.display) el.style.display = 'none';
 
     const result = new Promise<T>((res, rej) => {
       const execution = exec(res, rej);
@@ -137,9 +166,19 @@ interface MessageOptions {
   readonly color: string;
 }
 
+export interface AlertOptions {
+  readonly required?: boolean;
+  readonly ok?: string;
+}
+
 export interface ConfirmOptions {
+  readonly required?: boolean;
   readonly cancel?: string;
   readonly ok?: string;
+}
+
+export interface ExecuteOptions {
+  readonly display?: boolean;
 }
 
 export type Executor<T> = (
