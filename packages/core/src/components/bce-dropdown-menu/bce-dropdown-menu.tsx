@@ -69,7 +69,7 @@ export class BceDropdownMenu {
 
   render() {
     return (
-      <Host onClick={this.handleClick} onBlur={this.handleBlur} tabIndex={0}>
+      <Host onClick={this.handleClick} onBlur={this.handleBlur} tabIndex={-1}>
         <bce-icon class="dropdown-button" raw={this.icon} fixed-width />
         <div class="bce-dropdown-menu-items" data-active={this.active}>
           <slot />
