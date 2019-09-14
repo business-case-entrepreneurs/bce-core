@@ -20,7 +20,9 @@ library.add(faSquare, faBars, faEllipsisH, faCaretDown, faTimesCircle);
 
 @Component({
   tag: 'bce-icon',
-  shadow: false
+  styleUrl:
+    '../../../node_modules/@fortawesome/fontawesome-svg-core/styles.css',
+  shadow: true
 })
 export class BceIcon {
   public static DEFAULT_ICON: IconLookup = {
