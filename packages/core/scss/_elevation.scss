@@ -1,9 +1,16 @@
 /* prettier-ignore */
-@mixin elevate($dp: 1) {
-  z-index: $dp;
-  // transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+@mixin elevate($dp: 1, $z-index: true, $transition: false) {
+  @if $z-index {
+    z-index: $dp;
+  }
+  @if $transition {
+    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+  }
 
-  @if $dp == 1 {
+  @if $dp == 0 {
+    box-shadow: none;
+  }
+  @else if $dp == 1 {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
                 0 1px 2px rgba(0, 0, 0, 0.24);
   }
@@ -43,7 +50,6 @@
                 0 11px 15px -7px rgba(0, 0, 0, .4);
   }
   @else {
-    // TODO: Throw error instead and allow @include elevation(0) to reset.
-    box-shadow: none;
+    @error '[elevation] Must pick one of the following values: 1, 2, 3, 4, 6, 8, 16, 24';
   }
 }
