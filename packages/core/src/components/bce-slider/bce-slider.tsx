@@ -53,6 +53,7 @@ export class BceSlider {
       <input
         onInput={this.handleChange}
         type="range"
+        step={this.step}
         min={this.min}
         max={this.max}
         value={this.value}
