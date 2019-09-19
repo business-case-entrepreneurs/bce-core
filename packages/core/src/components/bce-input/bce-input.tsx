@@ -162,6 +162,8 @@ export class BceInput {
 
     option.addEventListener('focus', this.handleFocus);
     option.addEventListener('blur', this.handleBlur);
+
+    this.updateOptionValue(option);
   }
 
   @Method()
@@ -185,8 +187,24 @@ export class BceInput {
     this.value = this.parseValue(value);
     if (this.value !== value) return;
 
+    for (const option of this._options) this.updateOptionValue(option);
     const event = new Event('input', { bubbles: true });
     this.el.dispatchEvent(event);
+  }
+
+  private updateOptionValue(option: HTMLBceOptionElement) {
+    switch (this.type) {
+      case 'checkbox': {
+        const v = this.value as string[] | undefined;
+        option.checked = !!v && v.indexOf(option.value!) >= 0;
+        break;
+      }
+      case 'radio': {
+        const v = this.value as string | undefined;
+        option.checked = v === option.value;
+        break;
+      }
+    }
   }
 
   private parseValue(value: InputValue): InputValue {
