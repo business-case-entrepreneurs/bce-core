@@ -21,8 +21,10 @@ export class BceOption {
   @Prop({ reflect: false })
   public filter?: string;
 
+  @Prop()
+  public uuid?: string;
+
   private parent?: HTMLBceDropdownElement | HTMLBceInputElement;
-  private uuid?: string;
 
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
@@ -90,20 +92,6 @@ export class BceOption {
     // Inherit type and uuid from parent component
     this.type = (this.parent as any).type || 'dropdown';
     this.uuid = (this.parent as any).uuid;
-
-    // Initialize initial state from parent's value attribute
-    switch (this.type) {
-      case 'checkbox': {
-        const value = this.parent.value as string[];
-        this.checked = (this.value && value.indexOf(this.value) >= 0) || false;
-        break;
-      }
-      case 'radio': {
-        const value = this.parent.value as string;
-        this.checked = this.value === value;
-        break;
-      }
-    }
   }
 
   render() {
