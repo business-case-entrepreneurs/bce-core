@@ -2,6 +2,7 @@ bce-header {
   @include bce-color-default(primary);
   @include elevate(4);
   position: relative;
+  display: block;
   height: 56px;
   background-color: bce-color();
 }
