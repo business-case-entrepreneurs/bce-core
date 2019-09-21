@@ -33,18 +33,6 @@ jobs:
             - packages/core/www
             - packages/core/dist
             - packages/core/loader
-  gh-pages:
-    <<: *defaults
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - '71:04:6d:98:7e:bd:e1:d0:af:8a:22:d4:e9:ed:12:4c'
-      - checkout
-      - attach_workspace:
-          at: *working_dir
-      - run: sed -i.bak 's/resources-url="/resources-url="\/bce-core/' packages/core/www/index.html
-      - run: rm packages/core/www/index.html.bak
-      - run: ./.circleci/gh-pages.sh
   npm-publish:
     <<: *defaults
     steps:
@@ -70,10 +58,6 @@ workflows:
     jobs:
       - build:
           <<: *master
-      - gh-pages:
-          <<: *master
-          requires:
-            - build
       - npm-publish:
           <<: *master
           requires:
