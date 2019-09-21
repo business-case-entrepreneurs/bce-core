@@ -33,7 +33,7 @@ export class BceDropdownMenu {
   }
 
   private handleBlur = async () => {
-    await new Promise(res => setTimeout(res, 100));
+    await new Promise(res => setTimeout(res, 200));
     this.active = false;
   };
 
