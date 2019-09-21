@@ -1,0 +1,50 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+bce-root {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    'stat stat'
+    'head head'
+    'main menu';
+  height: 100vh;
+}
+
+bce-root bce-status-bar {
+  grid-area: stat;
+  flex: 0 0 auto;
+}
+
+bce-root bce-header {
+  grid-area: head;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+bce-header label {
+  padding: 16px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+bce-root main {
+  grid-area: main;
+  position: relative;
+  padding: 1rem 1rem 82px;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--bce-color-light-n);
+}
+
+bce-root bce-menu {
+  grid-area: menu;
+}
