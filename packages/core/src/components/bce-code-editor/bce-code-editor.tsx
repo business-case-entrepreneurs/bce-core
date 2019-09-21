@@ -1,15 +1,9 @@
-import 'codemirror/mode/javascript/javascript';
-
-import CodeMirror from 'codemirror';
-import prettier from 'prettier/standalone';
-import prettierTS from 'prettier/parser-typescript';
-
 import { Component, Element, h, Prop, Watch, Method } from '@stencil/core';
+import CodeFlask from 'codeflask';
 
 @Component({
   tag: 'bce-code-editor',
   styleUrl: 'bce-code-editor.scss',
-  styleUrls: ['../../../node_modules/codemirror/lib/codemirror.css'],
   shadow: false
 })
 export class BceCodeEditor {
@@ -20,91 +14,82 @@ export class BceCodeEditor {
   public value = '';
 
   @Prop({ reflect: true })
-  public language = 'application/typescript';
-
-  @Prop({ reflect: true })
-  public lineNumbers = true;
+  public lineNumbers = false;
 
   @Prop({ reflect: true })
   public disabled = false;
 
   @Prop({ reflect: true })
-  public format = false;
+  public compact = false;
+
+  @Prop({ attribute: 'focus', reflect: true, mutable: true })
+  public hasFocus = false;
 
   private editor?: any;
 
-  private ignoreInput = (event: Event) => {
-    event.cancelBubble = true;
+  private handleFocus = (event: FocusEvent) => {
+    this.hasFocus = true;
+
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
   };
 
-  @Method()
-  public async runFormatter() {
-    if (!this.editor) return;
+  private handleBlur = (event: FocusEvent) => {
+    this.hasFocus = false;
 
-    try {
-      const value = prettier.format(this.value, {
-        parser: 'typescript',
-        plugins: [prettierTS]
-      });
-
-      if (this.value !== value) {
-        this.editor.setValue(value);
-        this.el.dispatchEvent(new Event('input'));
-      }
-    } catch (e) {}
-  }
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
+  };
 
   @Watch('value')
   private watchValue(value: string) {
-    if (!this.editor) return;
-
-    // TS typing is incomplete
-    const editor = this.editor as any;
-
-    const coords = editor.getCursor();
-    editor.setValue(value);
-    editor.setCursor(coords);
+    if (this.editor) this.editor.updateCode(value);
   }
 
   @Watch('disabled')
   private watchDisabled(value: boolean) {
-    if (this.editor) this.editor.setOption('readOnly', value);
+    if (!this.editor) return;
+
+    if (value) this.editor.enableReadonlyMode();
+    else this.editor.disableReadonlyMode();
+  }
+
+  private resize() {
+    const min = window.innerWidth < 1024 || this.compact ? 48 : 40;
+
+    // Reset
+    const textarea = this.el.querySelector('textarea')!;
+    textarea.style.setProperty('height', min + 'px');
+
+    // Recalculate
+    const height = min > textarea.scrollHeight ? min : textarea.scrollHeight;
+    textarea.style.setProperty('height', height + 'px');
   }
 
   async componentDidLoad() {
-    const textarea = this.el.querySelector('textarea')!;
-    this.editor = CodeMirror.fromTextArea(textarea, {
+    this.editor = new CodeFlask(this.el, {
+      language: 'js',
       lineNumbers: this.lineNumbers,
-      readOnly: this.disabled,
-      tabindex: 0,
-      viewportMargin: Infinity
+      readonly: this.disabled
     });
-
-    this.el
-      .querySelector('.CodeMirror')!
-      .addEventListener('input', this.ignoreInput);
 
     this.watchValue(this.value);
     this.watchDisabled(this.disabled);
 
-    if (this.format) await this.runFormatter();
-
-    this.editor.on('change', (instance: any) => {
-      this.value = instance.getValue();
+    this.editor.onUpdate((code: string) => {
+      this.resize();
+      this.value = code;
       this.el.dispatchEvent(new Event('input'));
     });
 
-    this.editor.on('blur', () => {
-      if (!this.disabled && this.format) this.runFormatter();
-      this.el.dispatchEvent(new Event('blur'));
-    });
-  }
+    const textarea = this.el.querySelector('textarea')!;
+    textarea.addEventListener('focus', this.handleFocus);
+    textarea.addEventListener('blur', this.handleBlur);
 
-  componentDidUnload() {
-    if (this.editor) this.editor.toTextArea();
+    this.resize();
   }
 
   render() {
-    return <textarea />;
+    return <slot />;
   }
 }
