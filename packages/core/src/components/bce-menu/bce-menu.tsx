@@ -1,5 +1,4 @@
 import { Component, Prop, Host, Listen, h } from '@stencil/core';
-import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-menu',
@@ -14,7 +13,7 @@ export class BceMenu {
   public right: boolean = false;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true })
   public toggleDesktop: boolean = false;

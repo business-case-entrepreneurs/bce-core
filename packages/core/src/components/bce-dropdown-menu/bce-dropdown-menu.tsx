@@ -1,8 +1,6 @@
 import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 import Popper from 'popper.js';
 
-import { Color } from '../../models/color';
-
 @Component({
   tag: 'bce-dropdown-menu',
   styleUrl: 'bce-dropdown-menu.scss',
@@ -13,7 +11,7 @@ export class BceDropdownMenu {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true, mutable: true })
   public active: boolean = false;

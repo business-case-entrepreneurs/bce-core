@@ -9,7 +9,6 @@ import {
   Watch
 } from '@stencil/core';
 
-import { Color } from '../../models/color';
 import { InputType, InputValue } from '../../models/input-type';
 import { Validation } from '../../models/validation';
 import { debounce } from '../../utils/debounce';
@@ -26,7 +25,7 @@ export class BceInput {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true })
   public type: InputType = 'text';

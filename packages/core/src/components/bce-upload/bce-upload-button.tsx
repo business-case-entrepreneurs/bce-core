@@ -11,7 +11,6 @@ import {
 } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
-import { Color } from '../../models/color';
 import { File } from '../../utils/file';
 import { UUID } from '../../utils/uuid';
 
@@ -27,7 +26,7 @@ export class BceCard {
   public el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true })
   public type: ButtonType = 'text';

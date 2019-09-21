@@ -1,5 +1,4 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
-import { Color } from '../../models/color';
 
 @Component({
   tag: 'bce-switch',
@@ -11,7 +10,7 @@ export class BceSwitch {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ mutable: true })
   public value = false;

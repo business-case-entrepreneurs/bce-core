@@ -1,7 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
-import { Color } from '../../models/color';
 import { ripple } from '../../utils/ripple';
 
 @Component({
@@ -14,7 +13,7 @@ export class BceButton {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true })
   public type?: ButtonType;

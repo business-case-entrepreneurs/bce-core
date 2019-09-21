@@ -1,7 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
 
-import { Color } from '../../models/color';
-
 @Component({
   tag: 'bce-status-bar',
   styleUrl: 'bce-status-bar.scss',
@@ -9,7 +7,7 @@ import { Color } from '../../models/color';
 })
 export class BceStatusBar {
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   render() {
     return (

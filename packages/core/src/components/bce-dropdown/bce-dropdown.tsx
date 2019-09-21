@@ -9,8 +9,6 @@ import {
 } from '@stencil/core';
 import Popper from 'popper.js';
 
-import { Color } from '../../models/color';
-
 @Component({
   tag: 'bce-dropdown',
   styleUrl: 'bce-dropdown.scss',
@@ -21,7 +19,7 @@ export class BceDropdown {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ mutable: true })
   public value: string | null = null;

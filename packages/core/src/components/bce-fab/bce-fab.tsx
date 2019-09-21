@@ -1,6 +1,5 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { Color } from '../../models/color';
 import { BceIcon } from '../bce-icon/bce-icon';
 
 @Component({
@@ -13,7 +12,7 @@ export class BceFab {
   private el!: HTMLBceFabElement;
 
   @Prop({ reflect: true })
-  public color?: Color;
+  public color?: string;
 
   @Prop({ reflect: true })
   public icon: string = BceIcon.DEFAULT_ICON.iconName;
