@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
   outputDir: path.join(__dirname, 'dist'),
+  publicPath: process.env.NODE_ENV === 'production' ? '/bce-core/' : '/',
   chainWebpack: config => {
     config.resolve.symlinks(false);
 
