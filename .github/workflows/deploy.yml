@@ -86,7 +86,7 @@ jobs:
           name: docs
           path: packages/docs/dist
 
-      - uses: JamesIves/github-pages-deploy-action@v2.0.2
+      - uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.GH_TOKEN }}
           BASE_BRANCH: master
