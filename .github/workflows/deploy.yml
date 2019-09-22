@@ -16,14 +16,21 @@ jobs:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm install
-      - run: npm run build
+      - run: |
+          npm install
+          npm run build
 
-  deploy-core:
-    name: Deploy @bcase/core
+      - uses: actions/upload-artifact@v1
+        with:
+          name: 'core'
+          path: packages/core
 
-  deploy-core-vue:
-    name: Deploy @bcase/core-vure
+      - uses: actions/upload-artifact@v1
+        with:
+          name: 'core-vue'
+          path: packages/core-vue
 
-  deploy-docs:
-    name: Deploy gh-pages
+      - uses: actions/upload-artifact@v1
+        with:
+          name: 'docs'
+          path: packages/docs/dist
