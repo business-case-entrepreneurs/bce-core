@@ -18,3 +18,12 @@ jobs:
 
       - run: npm install
       - run: npm run build
+
+  deploy-core:
+    name: Deploy @bcase/core
+
+  deploy-core-vue:
+    name: Deploy @bcase/core-vure
+
+  deploy-docs:
+    name: Deploy gh-pages
