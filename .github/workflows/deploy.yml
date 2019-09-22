@@ -40,9 +40,10 @@ jobs:
           name: docs
           path: packages/docs/dist
 
-  deploy-core:
+  deploy-npm:
     name: Deploy npm packages
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
