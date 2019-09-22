@@ -1,6 +1,6 @@
 {
   "name": "@bcase/core",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "",
   "license": "UNLICENSED",
   "author": {
@@ -36,5 +36,6 @@
   "collection:main": "dist/collection/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "sass": "scss/index.scss"
+  "sass": "scss/index.scss",
+  "gitHead": "e8841349768d5bfa824c90de7e2685fd19791c3b"
 }
