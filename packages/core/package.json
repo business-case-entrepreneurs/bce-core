@@ -32,10 +32,12 @@
     "rimraf": "^2.6.3",
     "typescript": "^3.6.3"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "sass": "scss/index.scss",
-  "gitHead": "e8841349768d5bfa824c90de7e2685fd19791c3b"
+  "sass": "scss/index.scss"
 }
