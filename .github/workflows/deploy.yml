@@ -53,14 +53,17 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: core
+          path: packages/core/dist
 
       - uses: actions/download-artifact@v1
         with:
           name: core-loader
+          path: packages/core/loader
 
       - uses: actions/download-artifact@v1
         with:
           name: core-vue
+          path: packages/core-vue
 
       - run: npm install
       - run: npm run publish:next
@@ -81,6 +84,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: docs
+          path: packages/docs/dist
 
       - uses: JamesIves/github-pages-deploy-action@v2.0.2
         env:
