@@ -16,29 +16,32 @@ jobs:
           node-version: 10.x
           registry-url: https://registry.npmjs.org
 
-      - run: npm install
-      - run: npm run build
+      - run: |
+          npm install
+          npm run build
 
       - uses: actions/upload-artifact@v1
         with:
           name: core
           path: packages/core/dist
+
       - uses: actions/upload-artifact@v1
         with:
           name: core-loader
           path: packages/core/loader
 
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: core-vue
-      #     path: packages/core-vue
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: docs
-      #     path: packages/docs/dist
+      - uses: actions/upload-artifact@v1
+        with:
+          name: core-vue
+          path: packages/core-vue
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: docs
+          path: packages/docs/dist
 
   deploy-core:
-    name: Deploy @bcase/core
+    name: Deploy npm packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -50,11 +53,17 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: core
+
       - uses: actions/download-artifact@v1
         with:
           name: core-loader
 
-      - run: npm install
-      - run: npm run publish:next
-        env:
+      - uses: actions/download-artifact@v1
+        with:
+          name: core-vue
+
+      - env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm install
+          npm run publish:next
