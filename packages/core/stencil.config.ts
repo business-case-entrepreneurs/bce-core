@@ -4,7 +4,13 @@ import { sass } from '@stencil/sass';
 export const config: Config = {
   namespace: 'bce',
   globalStyle: './src/index.scss',
+  devServer: {
+    openBrowser: false
+  },
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
-  outputTargets: [{ type: 'dist', dir: './dist', esmLoaderPath: '../loader' }],
+  outputTargets: [
+    { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
+    { type: 'www', dir: './www', serviceWorker: null }
+  ],
   copy: [{ src: 'logo' }]
 };

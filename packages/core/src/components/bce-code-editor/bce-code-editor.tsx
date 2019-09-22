@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Watch, Method } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 import CodeFlask from 'codeflask';
 
 @Component({
