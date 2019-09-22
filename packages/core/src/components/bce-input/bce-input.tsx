@@ -57,6 +57,12 @@ export class BceInput {
   @Prop({ reflect: true })
   public min = 0;
 
+  @Prop({ reflect: true })
+  public dateMin = '';
+
+  @Prop({ reflect: true })
+  public dateMax = '';
+
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
@@ -283,6 +289,8 @@ export class BceInput {
             placeholder={this.placeholder}
             autofocus={this._autofocus}
             disabled={disabled}
+            min={this.type === 'date' ? this.dateMin : undefined}
+            max={this.type === 'date' ? this.dateMax : undefined}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
