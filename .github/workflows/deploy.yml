@@ -66,6 +66,7 @@ jobs:
           path: packages/core-vue
 
       - run: npm install
+      - run: git reset --hard
       - run: npm run publish:next
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
