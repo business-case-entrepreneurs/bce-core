@@ -67,9 +67,10 @@ jobs:
 
       - run: npm install
       - run: git reset --hard
-      - run: npm run publish:next
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run publish:next
 
   deploy-gh:
     name: Deploy GitHub pages
