@@ -11,6 +11,7 @@
 
     "packages/*/.rpt2_cache": true,
     "packages/*/.stencil": true,
+    "packages/*/babel.config.js": true,
     "packages/*/dist": false,
     "packages/*/loader": false,
     "packages/*/www": true,

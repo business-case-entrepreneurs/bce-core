@@ -30,7 +30,7 @@ export class BceInput {
   @Prop({ reflect: true })
   public type: InputType = 'text';
 
-  @Prop({ reflect: false, mutable: true })
+  @Prop({ mutable: true })
   public value: InputValue = '';
 
   @Prop()
@@ -149,6 +149,7 @@ export class BceInput {
   componentDidLoad() {
     this.resizeTextarea();
     window.addEventListener('resize', this.resizeTextarea);
+    this.el.dispatchEvent(new Event('load'));
   }
 
   componentDidUnload() {

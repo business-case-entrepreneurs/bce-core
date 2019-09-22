@@ -1,27 +1,29 @@
 {
-  "name": "@app/docs",
-  "version": "0.0.0",
+  "name": "@bcase/docs",
+  "version": "0.1.0",
   "private": true,
-  "license": "MIT",
   "scripts": {
-    "build": "preact build --no-prerender --dest dist",
+    "build": "vue-cli-service build",
     "clean": "rimraf dist",
-    "dev": "preact watch",
-    "serve": "preact watch",
-    "start": "preact build && preact serve"
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@bcase/core": "^0.0.20",
-    "preact": "^8.5.2",
-    "preact-compat": "^3.17.0",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.5.7"
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.1.0",
+    "vue-router": "^3.0.3"
   },
   "devDependencies": {
-    "preact-cli": "^2.1.0",
-    "preact-cli-plugin-fast-async": "^1.0.1",
-    "preact-cli-plugin-typescript": "^0.2.2",
+    "@bcase/core-vue": "^0.0.0",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "node-sass": "^4.9.0",
     "rimraf": "^3.0.0",
-    "typescript": "^3.6.3"
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.6.10"
   }
 }

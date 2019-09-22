@@ -1,0 +1,21 @@
+{
+  "name": "@bcase/core-vue",
+  "version": "0.0.0",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "BCE Solutions",
+    "email": "solutions@bcase.nl"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.3"
+  }
+}
