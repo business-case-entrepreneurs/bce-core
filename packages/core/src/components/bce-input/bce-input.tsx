@@ -167,7 +167,7 @@ export class BceInput {
   }
 
   @Method()
-  public async validate() {
+  public async validate(silent = false) {
     if (!this.validation) return [];
 
     const label = this.label || this.placeholder || '';
@@ -176,7 +176,7 @@ export class BceInput {
 
     const errors = await validator.validate(this.validation, this.value, meta);
 
-    this.error = errors.length ? errors[0].message : '';
+    if (!silent) this.error = errors.length ? errors[0].message : '';
     return errors.map(e => ({ label, name, ...e } as Validation));
   }
 

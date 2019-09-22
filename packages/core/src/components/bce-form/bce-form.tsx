@@ -14,10 +14,10 @@ export class BceForm {
   public errors: Validation[] = [];
 
   @Method()
-  public async validate() {
+  public async validate(silent = false) {
     const inputs = Array.from(this.el.querySelectorAll('bce-input'));
-    const nested = await Promise.all<any>(inputs.map(el => el.validate()));
-    this.errors = [].concat(...nested);
+    const nested = await Promise.all(inputs.map(el => el.validate(silent)));
+    this.errors = [].concat(...(nested as any[]));
     return this.errors;
   }
 
