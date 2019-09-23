@@ -1,6 +1,6 @@
 {
   "name": "@bcase/docs",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
@@ -15,8 +15,8 @@
     "vue-router": "^3.0.3"
   },
   "devDependencies": {
-    "@bcase/core": "^0.0.28",
-    "@bcase/core-vue": "^0.0.28",
+    "@bcase/core": "^0.0.29",
+    "@bcase/core-vue": "^0.0.29",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
