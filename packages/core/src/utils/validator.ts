@@ -2,7 +2,12 @@ export type ValidatorError = { rule: string; message: string };
 
 type Rule = { rule: string; arg?: string };
 type Validation = { valid: boolean; message: string };
-type ValidatorFunc = (value: any, arg?: string) => Promise<Validation>;
+
+type ValidatorFunc = (
+  value: any,
+  arg: string | undefined,
+  el: HTMLElement
+) => Promise<Validation>;
 
 interface TranslatorContext {
   readonly arg?: string;
@@ -17,31 +22,37 @@ class Validator {
   public readonly rules = new Map<string, ValidatorFunc>();
   public translator?: Translator;
 
-  public validate(rule: string, value: any, meta?: any) {
+  public validate(rule: string, value: any, el: HTMLElement, meta?: any) {
     const rules = rule.split('|').map(r => {
       const [rule, arg] = r.split(':');
       return { rule, arg } as Rule;
     });
 
-    return this.exec(value, rules, meta);
+    return this.exec(value, rules, el, meta);
   }
 
-  private async exec(value: any, rules: Rule[], meta?: any) {
+  private async exec(value: any, rules: Rule[], el: HTMLElement, meta?: any) {
     let errors: ValidatorError[] = [];
 
     for (const { rule, arg } of rules) {
-      const error = await this.rule(value, rule, arg, meta);
+      const error = await this.rule(value, rule, el, arg, meta);
       if (error) errors.push(error);
     }
 
     return errors;
   }
 
-  private async rule(value: any, rule: string, arg?: string, meta?: any) {
+  private async rule(
+    value: any,
+    rule: string,
+    el: HTMLElement,
+    arg?: string,
+    meta?: any
+  ) {
     const validator = this.rules.get(rule);
     if (!validator) throw new Error('Unknown validation rule: ' + rule);
 
-    const validation = await validator(value, arg);
+    const validation = await validator(value, arg, el);
     if (validation.valid) return null;
 
     const message = this.translator
