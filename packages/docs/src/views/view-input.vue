@@ -61,7 +61,7 @@
     </bce-form>
 
     <h3>BCE Slider</h3>
-    <bce-slider :min="1" :max="200" />
+    <bce-slider :initial-value="5" :min="0" :max="10" />
 
     <h3>BCE Switch</h3>
     <bce-switch :value="true" />
