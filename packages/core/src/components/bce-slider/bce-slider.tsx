@@ -33,7 +33,8 @@ export class BceSlider {
   private value: number | undefined = undefined;
 
   componentDidLoad() {
-    this.setFillWidth(this.initialValue || this.min);
+    this.value = this.initialValue;
+    this.setFillWidth(this.initialValue || this.max);
   }
 
   private handleChange = (event: any) => {
