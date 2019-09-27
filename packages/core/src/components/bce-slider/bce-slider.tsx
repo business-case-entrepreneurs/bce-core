@@ -13,7 +13,7 @@ export class BceSlider {
   public min: number = 0;
 
   @Prop({ reflect: true })
-  public max: number = 100;
+  public max: number = 10;
 
   @Prop({ reflect: true })
   public initialValue: number | undefined = undefined;
@@ -33,7 +33,8 @@ export class BceSlider {
   private value: number | undefined = undefined;
 
   componentDidLoad() {
-    this.setFillWidth(this.initialValue || this.min);
+    this.value = this.initialValue;
+    this.setFillWidth(this.initialValue || this.max);
   }
 
   private handleChange = (event: any) => {
@@ -43,7 +44,8 @@ export class BceSlider {
   };
 
   public setFillWidth(newValue: number) {
-    const width = (100 / this.max) * (newValue - this.min);
+    const step = (100 / (this.max - this.min)) * this.step;
+    const width = newValue * step - step * this.min;
     this.el.style.setProperty("--fill-width", `${width}%`);
   }
 
@@ -51,7 +53,6 @@ export class BceSlider {
     return [
       <input
         onInput={this.handleChange}
-        default-value={this.initialValue}
         type="range"
         step={this.step}
         min={this.min}
