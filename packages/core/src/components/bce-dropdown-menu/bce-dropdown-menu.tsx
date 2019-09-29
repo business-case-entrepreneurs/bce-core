@@ -19,7 +19,7 @@ export class BceDropdownMenu {
   @Prop({ reflect: true })
   public icon = 'fas:ellipsis-h';
 
-  private dropDownMenu!: Popper;
+  private dropDownMenu?: Popper;
 
   private get buttons() {
     const container = this.el.querySelector('bce-dropdown-menu-items');
@@ -37,7 +37,7 @@ export class BceDropdownMenu {
 
   private handleClick = (event: Event) => {
     this.active = !this.active;
-    this.dropDownMenu.scheduleUpdate();
+    if (this.dropDownMenu) this.dropDownMenu.scheduleUpdate();
     event.stopPropagation();
   };
 
@@ -62,7 +62,7 @@ export class BceDropdownMenu {
   }
 
   componentDidUnload() {
-    this.dropDownMenu.destroy();
+    if (this.dropDownMenu) this.dropDownMenu.destroy();
   }
 
   render() {
