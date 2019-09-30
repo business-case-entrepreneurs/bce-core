@@ -29,10 +29,15 @@ bce-root {
   }
 
   a {
-    color: bce-color(primary);
+    color: bce-color();
 
     &:hover {
-      color: bce-color-l(primary);
+      color: bce-color-l();
     }
+  }
+
+  ::selection {
+    background-color: bce-color();
+    color: bce-color-t();
   }
 }
