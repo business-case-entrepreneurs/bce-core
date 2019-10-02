@@ -70,6 +70,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git stash
+      - run: git checkout master
       - run: npm run publish:next
 
   deploy-gh:
