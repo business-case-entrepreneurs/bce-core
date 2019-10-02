@@ -14,7 +14,7 @@
     "clean": "lerna run clean",
     "postinstall": "lerna bootstrap && npm run sort",
     "publish": "lerna publish -- --access public",
-    "publish:next": "lerna publish --canary --preid next --dist-tag next --yes",
+    "publish:next": "lerna publish --no-git-reset --canary --preid next --dist-tag next --yes",
     "serve": "lerna run serve --parallel --stream",
     "sort": "sort-package-json && lerna exec sort-package-json"
   },
