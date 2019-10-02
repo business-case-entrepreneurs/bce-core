@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 @Component({
   tag: 'bce-status-bar',
   styleUrl: 'bce-status-bar.scss',
-  shadow: false
+  shadow: true
 })
 export class BceStatusBar {
   @Prop({ reflect: true })
