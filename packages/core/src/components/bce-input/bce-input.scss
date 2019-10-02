@@ -155,6 +155,10 @@ bce-input[label][type='textarea'] {
   }
 }
 
+bce-input[label][type='dropdown'] > label {
+  pointer-events: none;
+}
+
 bce-input[focus] {
   > label {
     color: bce-color();
