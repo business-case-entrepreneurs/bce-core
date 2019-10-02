@@ -66,10 +66,10 @@ jobs:
           path: packages/core-vue
 
       - run: npm install
-      - run: git status
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: git stash
       - run: npm run publish:next
 
   deploy-gh:
