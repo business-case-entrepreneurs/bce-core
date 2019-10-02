@@ -1,4 +1,4 @@
-bce-message {
+:host {
   @include bce-color-default(dark);
   @include elevate(6);
   position: fixed;
@@ -23,8 +23,4 @@ bce-message {
       bottom: 19px;
     }
   }
-}
-
-bce-root[fab] bce-message {
-  right: 89px;
 }

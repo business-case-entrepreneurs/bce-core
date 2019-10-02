@@ -41,4 +41,8 @@ bce-root {
     background-color: bce-color();
     color: bce-color-t();
   }
+
+  &[fab] bce-message {
+    right: 89px;
+  }
 }

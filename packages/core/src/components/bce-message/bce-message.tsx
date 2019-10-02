@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 @Component({
   tag: 'bce-message',
   styleUrl: 'bce-message.scss',
-  shadow: false
+  shadow: true
 })
 export class BceMessage {
   @Prop({ reflect: true })
