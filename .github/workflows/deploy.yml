@@ -69,6 +69,7 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: git stash
       - run: npx lerna publish --no-git-reset --canary --preid next --dist-tag next --yes
 
   deploy-gh:
