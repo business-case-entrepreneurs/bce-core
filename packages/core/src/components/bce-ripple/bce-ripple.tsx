@@ -3,7 +3,7 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
 @Component({
   tag: 'bce-ripple',
   styleUrl: 'bce-ripple.scss',
-  shadow: false
+  shadow: true
 })
 export class BceRipple {
   @Element()
