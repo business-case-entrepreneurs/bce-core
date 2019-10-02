@@ -6,3 +6,4 @@ packages/*/www/
 node_modules/
 
 *.log
+.npmrc
