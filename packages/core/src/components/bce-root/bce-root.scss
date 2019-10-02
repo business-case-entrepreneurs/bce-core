@@ -29,6 +29,7 @@ bce-root {
   }
 
   a {
+    @include bce-color-default(primary);
     color: bce-color();
 
     &:hover {
