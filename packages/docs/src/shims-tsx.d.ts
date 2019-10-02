@@ -8,7 +8,7 @@ declare global {
     interface Element extends VNode {}
     interface ElementClass extends Vue {}
 
-    interface IntrinsicElements extends CoreJSX.IntrinsicElements {
+    interface IntrinsicElements {
       [elem: string]: any;
     }
   }
