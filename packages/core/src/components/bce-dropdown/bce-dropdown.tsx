@@ -68,6 +68,12 @@ export class BceDropdown {
     this.options = [...this.options, option];
   }
 
+  @Method()
+  public async focus() {
+    const input = this.el.querySelector('input');
+    if (input && typeof input.focus === 'function') input.focus();
+  }
+
   @Watch('value')
   public watchValue() {
     this.filter = '';
