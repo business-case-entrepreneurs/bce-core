@@ -114,7 +114,11 @@ export class BceInput {
 
   private handleClick = () => {
     const container = this.el.querySelector('[data-input]')!;
-    const input = container.firstChild as HTMLElement;
+    const input =
+      this.type === 'dropdown'
+        ? (container.firstChild as HTMLElement).querySelector('input')
+        : (container.firstChild as HTMLElement);
+
     if (input && typeof input.focus === 'function') input.focus();
   };
 
