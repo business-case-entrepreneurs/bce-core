@@ -1,4 +1,4 @@
-import { Component, Prop, Element, State, h } from "@stencil/core";
+import { Component, Prop, Element, h } from "@stencil/core";
 
 @Component({
   tag: "bce-slider",
@@ -15,8 +15,8 @@ export class BceSlider {
   @Prop({ reflect: true })
   public max: number = 10;
 
-  @Prop({ reflect: true })
-  public initialValue: number | undefined = undefined;
+  // @Prop({ reflect: true })
+  // public initialValue: number | undefined = undefined;
 
   @Prop({ reflect: true })
   public step: number = 1;
@@ -29,14 +29,19 @@ export class BceSlider {
   public discrete: boolean = false;
   // todo
 
-  @State()
-  private value: number | undefined = undefined;
+  @Prop()
+  public value: number | undefined = undefined;
 
   componentDidLoad() {
-    this.value = this.initialValue;
-    this.setFillWidth(this.initialValue || this.max);
+    this.value = this.value || this.defaultValue();
+    this.setFillWidth(this.value);
   }
 
+  private defaultValue = () => {
+    return this.max < this.min
+      ? this.min
+      : (this.max - this.min) / 2 + this.min;
+  };
   private handleChange = (event: any) => {
     const newValue = event.target.value;
     this.setFillWidth(newValue);
