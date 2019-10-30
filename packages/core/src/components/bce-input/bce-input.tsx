@@ -15,6 +15,8 @@ import { debounce } from '../../utils/debounce';
 import { UUID } from '../../utils/uuid';
 import { validator } from '../../utils/validator';
 
+// TODO: Better handling of min & max value
+
 @Component({
   tag: 'bce-input',
   styleUrl: 'bce-input.scss',
@@ -62,6 +64,12 @@ export class BceInput {
 
   @Prop({ reflect: true })
   public dateMax = '';
+
+  @Prop({ reflect: true })
+  public numberMin = '';
+
+  @Prop({ reflect: true })
+  public numberMax = '';
 
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
@@ -148,6 +156,28 @@ export class BceInput {
     }
 
     return this.hasFocus || !!this.placeholder || !!this.value;
+  }
+
+  public get _min() {
+    switch (this.type) {
+      case 'date':
+        return this.dateMin;
+      case 'number':
+        return this.numberMin;
+      default:
+        return undefined;
+    }
+  }
+
+  public get _max() {
+    switch (this.type) {
+      case 'date':
+        return this.dateMax;
+      case 'number':
+        return this.numberMax;
+      default:
+        return undefined;
+    }
   }
 
   componentWillLoad() {
@@ -298,8 +328,8 @@ export class BceInput {
             placeholder={this.placeholder}
             autofocus={this._autofocus}
             disabled={disabled}
-            min={this.type === 'date' ? this.dateMin : undefined}
-            max={this.type === 'date' ? this.dateMax : undefined}
+            min={this._min}
+            max={this._max}
             onInput={this.handleInput}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
