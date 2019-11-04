@@ -24,7 +24,7 @@ import { validator } from '../../utils/validator';
 })
 export class BceInput {
   @Element()
-  private el!: HTMLElement;
+  private el!: HTMLBceInputElement;
 
   @Prop({ reflect: true })
   public color?: string;

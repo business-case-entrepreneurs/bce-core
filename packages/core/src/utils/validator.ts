@@ -6,7 +6,7 @@ type Validation = { valid: boolean; message: string };
 type ValidatorFunc = (
   value: any,
   arg: string | undefined,
-  el: HTMLElement
+  el: HTMLBceInputElement
 ) => Promise<Validation>;
 
 interface TranslatorContext {
@@ -22,7 +22,12 @@ class Validator {
   public readonly rules = new Map<string, ValidatorFunc>();
   public translator?: Translator;
 
-  public validate(rule: string, value: any, el: HTMLElement, meta?: any) {
+  public validate(
+    rule: string,
+    value: any,
+    el: HTMLBceInputElement,
+    meta?: any
+  ) {
     const rules = rule.split('|').map(r => {
       const [rule, arg] = r.split(':');
       return { rule, arg } as Rule;
@@ -31,7 +36,12 @@ class Validator {
     return this.exec(value, rules, el, meta);
   }
 
-  private async exec(value: any, rules: Rule[], el: HTMLElement, meta?: any) {
+  private async exec(
+    value: any,
+    rules: Rule[],
+    el: HTMLBceInputElement,
+    meta?: any
+  ) {
     let errors: ValidatorError[] = [];
 
     for (const { rule, arg } of rules) {
@@ -45,7 +55,7 @@ class Validator {
   private async rule(
     value: any,
     rule: string,
-    el: HTMLElement,
+    el: HTMLBceInputElement,
     arg?: string,
     meta?: any
   ) {
@@ -136,9 +146,18 @@ validator.rules.set('is', async (value, arg) => {
   return { valid, message };
 });
 
-validator.rules.set('max', async (value, arg) => {
+validator.rules.set('max', async (value, arg, el) => {
   const max = Number(arg);
-  const size = typeof value === 'number' ? value : ('' + value).length;
+  const size = ((): number => {
+    switch (el.type) {
+      case 'checkbox':
+        return value.length;
+      case 'number':
+        return value;
+      default:
+        return ('' + value).length;
+    }
+  })();
 
   const valid = size <= max;
   const message =
