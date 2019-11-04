@@ -47,8 +47,7 @@ export class BceSlider {
 
   public setFillWidth(newValue: number) {
     const step = (100 / (this.max - this.min)) * this.step;
-    const width = newValue * step - step * this.min; // 6 * 1 - 1 * 1
-    console.log(step, width);
+    const width = newValue * step - step * this.min;
     this.el.style.setProperty("--fill-width", `${width}%`);
   }
 
