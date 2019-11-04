@@ -15,9 +15,6 @@ export class BceSlider {
   @Prop({ reflect: true })
   public max: number = 10;
 
-  // @Prop({ reflect: true })
-  // public initialValue: number | undefined = undefined;
-
   @Prop({ reflect: true })
   public step: number = 1;
 
@@ -30,9 +27,9 @@ export class BceSlider {
   // todo
 
   @Prop()
-  public value: number | undefined = undefined;
+  public value: number | null = null;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.value = this.value || this.defaultValue();
     this.setFillWidth(this.value);
   }
@@ -40,7 +37,7 @@ export class BceSlider {
   private defaultValue = () => {
     return this.max < this.min
       ? this.min
-      : (this.max - this.min) / 2 + this.min;
+      : Math.round((this.max - this.min) / 2 + this.min);
   };
   private handleChange = (event: any) => {
     const newValue = event.target.value;
@@ -50,7 +47,8 @@ export class BceSlider {
 
   public setFillWidth(newValue: number) {
     const step = (100 / (this.max - this.min)) * this.step;
-    const width = newValue * step - step * this.min;
+    const width = newValue * step - step * this.min; // 6 * 1 - 1 * 1
+    console.log(step, width);
     this.el.style.setProperty("--fill-width", `${width}%`);
   }
 
