@@ -27,7 +27,7 @@ export class BceSlider {
   // todo
 
   @Prop()
-  public value: number | null = null;
+  public value: any = null;
 
   componentWillLoad() {
     this.value = this.value || this.defaultValue();
