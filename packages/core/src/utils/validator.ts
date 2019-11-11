@@ -147,38 +147,56 @@ validator.rules.set('is', async (value, arg) => {
 });
 
 validator.rules.set('max', async (value, arg, el) => {
-  const max = Number(arg);
-  const size = ((): number => {
-    switch (el.type) {
-      case 'checkbox':
-        return value.length;
-      case 'number':
-        return value;
-      default:
-        return ('' + value).length;
-    }
-  })();
-
+  const size = getSize(value, el);
+  const max = getRangeArg(arg, el);
   const valid = size <= max;
-  const message =
-    typeof value === 'number'
-      ? `This field may not exceed ${max}.`
-      : `This field may not exceed ${max} characters.`;
 
-  return { valid, message };
+  switch (el.type) {
+    case 'checkbox': {
+      const message = `This field may not exceed ${max} options.`;
+      return { valid, message };
+    }
+    case 'date': {
+      const maxDate = new Date(max).toISOString().slice(0, 10);
+      const message = `This field max not not exceed ${maxDate}.`;
+      return { valid, message };
+    }
+    case 'number': {
+      const message = `This field may not exceed ${max}.`;
+      return { valid, message };
+    }
+    default: {
+      const message = `This field may not exceed ${max} characters.`;
+      return { valid, message };
+    }
+  }
 });
 
-validator.rules.set('min', async (value, arg) => {
-  const min = Number(arg);
-  const size = typeof value === 'number' ? value : ('' + value).length;
+validator.rules.set('min', async (value, arg, el) => {
+  const size = getSize(value, el);
+  const min = getRangeArg(arg, el);
 
   const valid = size >= min;
-  const message =
-    typeof value === 'number'
-      ? `This field should be ${min} or higher.`
-      : `This field requires at least ${min} characters.`;
 
-  return { valid, message };
+  switch (el.type) {
+    case 'checkbox': {
+      const message = `This requires at least ${min} options.`;
+      return { valid, message };
+    }
+    case 'date': {
+      const minDate = new Date(min).toISOString().slice(0, 10);
+      const message = `This field be after ${minDate}.`;
+      return { valid, message };
+    }
+    case 'number': {
+      const message = `This field should be ${min} or higher.`;
+      return { valid, message };
+    }
+    default: {
+      const message = `This field requires at least ${min} characters.`;
+      return { valid, message };
+    }
+  }
 });
 
 validator.rules.set('numeric', async value => {
@@ -193,3 +211,28 @@ validator.rules.set('required', async value => {
   const message = 'This field is required.';
   return { valid, message };
 });
+
+const getSize = (value: any, el: HTMLBceInputElement): number => {
+  switch (el.type) {
+    case 'checkbox':
+      return value.length;
+    case 'date':
+      return new Date(value).getTime();
+    case 'number':
+      return value;
+    default:
+      return ('' + value).length;
+  }
+};
+
+const getRangeArg = (
+  arg: string | undefined,
+  el: HTMLBceInputElement
+): number => {
+  switch (el.type) {
+    case 'date':
+      return new Date(arg!).getTime();
+    default:
+      return Number(arg);
+  }
+};
