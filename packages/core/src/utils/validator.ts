@@ -12,6 +12,7 @@ type ValidatorFunc = (
 interface TranslatorContext {
   readonly arg?: string;
   readonly default: string;
+  readonly el: HTMLBceInputElement;
   readonly meta?: any;
   readonly value: any;
 }
@@ -69,6 +70,7 @@ class Validator {
       ? await this.translator(rule, {
           arg,
           default: validation.message,
+          el,
           meta,
           value
         })
