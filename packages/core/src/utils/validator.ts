@@ -151,25 +151,24 @@ validator.rules.set('is', async (value, arg) => {
 validator.rules.set('max', async (value, arg, el) => {
   const size = getSize(value, el);
   const max = getRangeArg(arg, el);
-  const valid = size <= max;
 
   switch (el.type) {
     case 'checkbox': {
       const message = `This field may not exceed ${max} options.`;
-      return { valid, message };
+      return { valid: size <= max, message };
     }
     case 'date': {
       const maxDate = new Date(max).toISOString().slice(0, 10);
       const message = `This field max not not exceed ${maxDate}.`;
-      return { valid, message };
+      return { valid: !value || size <= max, message };
     }
     case 'number': {
       const message = `This field may not exceed ${max}.`;
-      return { valid, message };
+      return { valid: size <= max, message };
     }
     default: {
       const message = `This field may not exceed ${max} characters.`;
-      return { valid, message };
+      return { valid: size <= max, message };
     }
   }
 });
@@ -178,25 +177,23 @@ validator.rules.set('min', async (value, arg, el) => {
   const size = getSize(value, el);
   const min = getRangeArg(arg, el);
 
-  const valid = size >= min;
-
   switch (el.type) {
     case 'checkbox': {
       const message = `This requires at least ${min} options.`;
-      return { valid, message };
+      return { valid: size === 0 || size >= min, message };
     }
     case 'date': {
       const minDate = new Date(min).toISOString().slice(0, 10);
-      const message = `This field be after ${minDate}.`;
-      return { valid, message };
+      const message = `This field must be after ${minDate}.`;
+      return { valid: !value || size >= min, message };
     }
     case 'number': {
       const message = `This field should be ${min} or higher.`;
-      return { valid, message };
+      return { valid: size >= min, message };
     }
     default: {
       const message = `This field requires at least ${min} characters.`;
-      return { valid, message };
+      return { valid: size >= min, message };
     }
   }
 });
