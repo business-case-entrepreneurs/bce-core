@@ -61,10 +61,14 @@ export class BceRoot {
     dialog.innerHTML = `
       <h3>${title}</h3>
       <p>${message}</p>
-      <bce-button slot="action" type="text" submit>
-        ${options.ok || 'Ok'}
-      </bce-button>
     `;
+
+    const action = document.createElement('bce-button');
+    action.type = 'text';
+    action.slot = 'action';
+    action.submit = true;
+    action.innerText = options.ok || 'Ok';
+    if (options.ok !== false) dialog.appendChild(action);
 
     return this.execute<void>(
       dialog,
@@ -169,7 +173,7 @@ interface MessageOptions {
 
 export interface AlertOptions {
   readonly required?: boolean;
-  readonly ok?: string;
+  readonly ok?: string | false;
 }
 
 export interface ConfirmOptions {
