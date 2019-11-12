@@ -94,7 +94,7 @@ export class BceRoot {
     action1.type = 'text';
     action1.slot = 'action';
     action1.innerText = options.ok || 'Ok';
-    dialog.appendChild(action1);
+    if (options.ok !== false) dialog.appendChild(action1);
 
     return this.execute<boolean>(
       dialog,
@@ -175,7 +175,7 @@ export interface AlertOptions {
 export interface ConfirmOptions {
   readonly required?: boolean;
   readonly cancel?: string;
-  readonly ok?: string;
+  readonly ok?: string | false;
 }
 
 export interface ExecuteOptions {
