@@ -47,6 +47,12 @@ export class BceDialog {
   };
 
   @Method()
+  public async close() {
+    this.active = false;
+    this.el.dispatchEvent(new NativeEvent('close'));
+  }
+
+  @Method()
   public async show() {
     this.active = true;
   }

@@ -71,6 +71,7 @@ export class BceRoot {
       res => {
         dialog.addEventListener('submit', () => res());
         dialog.addEventListener('backdrop', () => res());
+        dialog.addEventListener('close', () => res());
       },
       { display: true }
     );
