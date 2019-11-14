@@ -3,10 +3,17 @@
     <bce-status-bar color="dark" />
     <bce-header color="dark">
       <router-link to="/">BCE Core</router-link>
+      <bce-menu>
+        <router-link to="/">Home</router-link>
+        <router-link to="/button">Button</router-link>
+        <router-link to="/input">Input</router-link>
+        <router-link to="/message">Message</router-link>
+        <router-link to="/other">Other</router-link>
+      </bce-menu>
       <bce-menu-button></bce-menu-button>
     </bce-header>
 
-    <bce-menu right toggle-desktop>
+    <bce-menu vertical right toggle-desktop>
       <router-link to="/">Home</router-link>
       <router-link to="/button">Button</router-link>
       <router-link to="/input">Input</router-link>
@@ -32,9 +39,9 @@ bce-root {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
-    "stat stat"
-    "head head"
-    "main menu";
+    'stat stat'
+    'head head'
+    'main menu';
   height: 100vh;
   background-color: var(--bce-color-light-n);
 
