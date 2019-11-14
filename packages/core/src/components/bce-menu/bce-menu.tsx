@@ -64,7 +64,7 @@ export class BceMenu {
           class={{
             menu: true,
             horizontal: !this.vertical,
-            verticle: this.vertical
+            vertical: this.vertical
           }}
         >
           <slot />
