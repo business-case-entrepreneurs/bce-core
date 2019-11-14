@@ -53,7 +53,8 @@ export class BceDropdown {
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
 
-  private onBlur = (event: Event) => {
+  private onBlur = async (event: Event) => {
+    await new Promise(res => setTimeout(res, 200));
     this.hasFocus = false;
     this.el.dispatchEvent(new FocusEvent(event.type, event));
   };
