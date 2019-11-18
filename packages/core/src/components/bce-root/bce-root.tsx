@@ -89,13 +89,13 @@ export class BceRoot {
     dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
 
     const action2 = document.createElement('bce-button');
-    action2.type = 'text';
     action2.slot = 'action';
+    action2.color = 'light';
+    action2.style.opacity = '0.7';
     action2.innerText = options.cancel || 'Cancel';
     dialog.appendChild(action2);
 
     const action1 = document.createElement('bce-button');
-    action1.type = 'text';
     action1.slot = 'action';
     action1.innerText = options.ok || 'Ok';
     if (options.ok !== false) dialog.appendChild(action1);
