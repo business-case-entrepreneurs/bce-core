@@ -26,6 +26,8 @@ export class BceOption {
 
   private parent?: HTMLBceDropdownElement | HTMLBceInputElement;
 
+  private ignoreInput = (event: Event) => (event.cancelBubble = true);
+
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (!input) return;
@@ -109,6 +111,7 @@ export class BceOption {
               type={this.type}
               name={this.uuid}
               checked={this.checked}
+              onInput={this.ignoreInput}
               onClick={this.handleInput}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
