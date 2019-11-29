@@ -164,11 +164,11 @@ validator.rules.set('max', async (value, arg, el) => {
     }
     case 'number': {
       const message = `This field may not exceed ${max}.`;
-      return { valid: size <= max, message };
+      return { valid: value == undefined || size <= max, message };
     }
     default: {
       const message = `This field may not exceed ${max} characters.`;
-      return { valid: size <= max, message };
+      return { valid: !value || size <= max, message };
     }
   }
 });
@@ -189,11 +189,11 @@ validator.rules.set('min', async (value, arg, el) => {
     }
     case 'number': {
       const message = `This field should be ${min} or higher.`;
-      return { valid: size >= min, message };
+      return { valid: value == undefined || size >= min, message };
     }
     default: {
       const message = `This field requires at least ${min} characters.`;
-      return { valid: size >= min, message };
+      return { valid: !value || size >= min, message };
     }
   }
 });
