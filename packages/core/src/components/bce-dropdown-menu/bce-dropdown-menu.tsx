@@ -1,4 +1,12 @@
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  Watch
+} from '@stencil/core';
 import Popper from 'popper.js';
 
 @Component({
@@ -44,6 +52,19 @@ export class BceDropdownMenu {
     event.stopPropagation();
   };
 
+  @Method()
+  public async reattach() {
+    const reference = this.el.querySelector('.dropdown-button')!;
+    const dropdown = this.el.querySelector('.bce-dropdown-menu-items')!;
+    const container = this.el.closest('bce-root')!;
+
+    if (this.dropDownMenu) this.dropDownMenu.destroy();
+    this.dropDownMenu = new Popper(reference, dropdown, {
+      placement: this.placement as Popper.Placement,
+      modifiers: { flip: { boundariesElement: container } }
+    });
+  }
+
   @Watch('color')
   private updateButtonColor() {
     for (const button of this.buttons) button.color = this.color;
@@ -54,19 +75,7 @@ export class BceDropdownMenu {
   }
 
   componentDidLoad() {
-    this.componentDidUpdate();
-  }
-
-  componentDidUpdate() {
-    const reference = this.el.querySelector('.dropdown-button')!;
-    const dropdown = this.el.querySelector('.bce-dropdown-menu-items')!;
-    const container = this.el.closest('bce-root')!;
-
-    if (this.dropDownMenu) this.dropDownMenu.destroy();
-    this.dropDownMenu = new Popper(reference, dropdown, {
-      placement: this.placement as Popper.Placement,
-      modifiers: { flip: { boundariesElement: container } }
-    });
+    this.reattach();
   }
 
   componentDidUnload() {
