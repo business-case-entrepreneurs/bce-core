@@ -11,6 +11,9 @@ export class BceDropdownMenu {
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
+  public placement = 'bottom-start';
+
+  @Prop({ reflect: true })
   public color?: string;
 
   @Prop({ reflect: true, mutable: true })
@@ -56,7 +59,7 @@ export class BceDropdownMenu {
     const container = this.el.closest('bce-root')!;
 
     this.dropDownMenu = new Popper(reference, dropdown, {
-      placement: 'bottom-start',
+      placement: this.placement as Popper.Placement,
       modifiers: { flip: { boundariesElement: container } }
     });
   }
