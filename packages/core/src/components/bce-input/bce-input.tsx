@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import {
   Component,
   Element,
@@ -14,6 +16,8 @@ import { Validation } from '../../models/validation';
 import { debounce } from '../../utils/debounce';
 import { UUID } from '../../utils/uuid';
 import { validator } from '../../utils/validator';
+
+library.add(faEye, faEyeSlash);
 
 // TODO: Better handling of min & max value
 
@@ -83,6 +87,9 @@ export class BceInput {
   @State()
   private error: string = '';
 
+  @State()
+  private reveal: boolean = false;
+
   private _autofocus = false;
   private _debounceValidate = debounce(this.validate.bind(this), 1000);
   private _options: HTMLBceOptionElement[] = [];
@@ -128,6 +135,10 @@ export class BceInput {
         : (container.firstChild as HTMLElement);
 
     if (input && typeof input.focus === 'function') input.focus();
+  };
+
+  private toggleReveal = () => {
+    this.reveal = !this.reveal;
   };
 
   private resizeTextarea = () => {
@@ -289,6 +300,29 @@ export class BceInput {
           </bce-dropdown>
         );
 
+      case 'password':
+        return [
+          <input
+            type={this.reveal ? 'text' : 'password'}
+            value={this.value as string}
+            placeholder={this.placeholder}
+            autofocus={this._autofocus}
+            disabled={disabled}
+            min={this._min}
+            max={this._max}
+            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />,
+
+          <bce-button
+            type="text"
+            icon={this.reveal ? 'eye-slash' : 'eye'}
+            icon-only
+            onClick={this.toggleReveal}
+          />
+        ];
+
       case 'switch':
         return (
           <bce-switch
@@ -319,7 +353,6 @@ export class BceInput {
       case 'date':
       case 'file':
       case 'number':
-      case 'password':
       case 'text':
         return (
           <input
