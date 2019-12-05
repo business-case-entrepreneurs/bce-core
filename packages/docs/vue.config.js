@@ -6,6 +6,7 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/bce-core/' : '/',
   chainWebpack: config => {
     config.resolve.symlinks(false);
+    config.plugins.delete('progress');
 
     config.module
       .rule('vue')
