@@ -75,6 +75,15 @@ export class BceInput {
   @Prop({ reflect: true })
   public numberMax = '';
 
+  @Prop({ reflect: true })
+  public sliderMin: number = 0;
+
+  @Prop({ reflect: true })
+  public sliderMax: number = 10;
+
+  @Prop({ reflect: true })
+  public sliderStep: number = 1;
+
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
@@ -322,6 +331,20 @@ export class BceInput {
             onClick={this.toggleReveal}
           />
         ];
+
+      case 'slider':
+        return (
+          <bce-slider
+            value={this.value}
+            disabled={disabled}
+            min={this.sliderMin}
+            max={this.sliderMax}
+            step={this.sliderStep}
+            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+        );
 
       case 'switch':
         return (

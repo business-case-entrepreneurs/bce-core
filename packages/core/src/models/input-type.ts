@@ -8,6 +8,7 @@ export type InputType =
   | 'number'
   | 'password'
   | 'radio'
+  | 'slider'
   | 'switch'
   | 'text'
   | 'textarea';
