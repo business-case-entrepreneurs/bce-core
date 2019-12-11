@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { BceIcon } from '../bce-icon/bce-icon';
+import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-fab',
@@ -32,7 +33,12 @@ export class BceFab {
   }
 
   private handleClick = () => {
-    this.active = !this.active;
+    const buttons = Array.from(this.el.querySelectorAll('bce-button'));
+    if (buttons.length) this.active = !this.active;
+  };
+
+  private handleMouseDown = (event: MouseEvent) => {
+    ripple(event.target as Element, event);
   };
 
   private disableClick = (event: MouseEvent) => {
@@ -75,7 +81,11 @@ export class BceFab {
   render() {
     return [
       <slot />,
-      <button disabled={this.disabled} onClick={this.handleClick}>
+      <button
+        disabled={this.disabled}
+        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
+      >
         <bce-icon
           raw={this.icon}
           size="lg"
