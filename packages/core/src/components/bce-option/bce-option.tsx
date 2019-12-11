@@ -98,8 +98,7 @@ export class BceOption {
 
   render() {
     const filter = this.filter
-      ? this.value &&
-        !this.value.toLowerCase().startsWith(this.filter.toLowerCase())
+      ? this.el.innerText.toLowerCase().indexOf(this.filter.toLowerCase()) < 0
       : false;
 
     switch (this.type) {
