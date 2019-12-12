@@ -120,10 +120,14 @@ export class BceOption {
         );
       case 'dropdown':
         return (
-          <Host filter={filter} onClick={this.handleClick}>
+          <Host
+            filter={filter ? this.filter : false}
+            onClick={this.handleClick}
+          >
             <slot />
           </Host>
         );
+
       default:
         console.warn(`[bce-option] Unsupported type: ${this.type}`);
         return null;

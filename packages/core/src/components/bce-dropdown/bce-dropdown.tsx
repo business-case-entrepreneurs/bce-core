@@ -44,7 +44,7 @@ export class BceDropdown {
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
-    if (input) this.filter = input.value || '';
+    if (input) this.filter = (input.value || '').trim();
     event.cancelBubble = true;
   };
 

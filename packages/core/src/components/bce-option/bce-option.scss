@@ -2,8 +2,8 @@ bce-option {
   // No default color defined, the default color is inherited from the parent.
   position: relative;
   display: block;
-  
-  &[filter] {
+
+  &[filter]:not([filter='']) {
     display: none;
   }
 }
