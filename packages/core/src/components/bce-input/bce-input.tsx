@@ -245,6 +245,11 @@ export class BceInput {
     return errors.map(e => ({ label, name, ...e } as Validation));
   }
 
+  @Method()
+  public async reset() {
+    this.error = '';
+  }
+
   @Watch('value')
   public watchValue(value: InputValue) {
     if (!this._initialized) return;
