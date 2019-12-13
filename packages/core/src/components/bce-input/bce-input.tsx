@@ -251,6 +251,7 @@ export class BceInput {
   public async reset() {
     this.value = this._initialValue;
     this.error = '';
+    this.el.dispatchEvent(new Event('input'));
   }
 
   @Watch('value')
