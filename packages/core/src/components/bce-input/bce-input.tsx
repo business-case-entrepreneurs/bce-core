@@ -104,10 +104,11 @@ export class BceInput {
   private _options: HTMLBceOptionElement[] = [];
   private _initialized = false;
   private _initialValue: any = '';
+  private _resetting = false;
 
   private handleValidation = () => {
     if (this.error) this.validate();
-    else this._debounceValidate();
+    else if (!this._resetting) this._debounceValidate();
   };
 
   private handleInput = (event: Event) => {
@@ -249,9 +250,9 @@ export class BceInput {
 
   @Method()
   public async reset() {
+    this._resetting = true;
     this.value = this._initialValue;
     this.error = '';
-    this.el.dispatchEvent(new Event('input'));
   }
 
   @Watch('value')
