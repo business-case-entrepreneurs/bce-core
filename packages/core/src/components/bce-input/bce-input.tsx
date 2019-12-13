@@ -103,6 +103,7 @@ export class BceInput {
   private _debounceValidate = debounce(this.validate.bind(this), 1000);
   private _options: HTMLBceOptionElement[] = [];
   private _initialized = false;
+  private _initialValue: any = '';
 
   private handleValidation = () => {
     if (this.error) this.validate();
@@ -204,6 +205,7 @@ export class BceInput {
     this.value = this.parseValue(this.value);
     this._autofocus = this.hasFocus;
     this._initialized = true;
+    this._initialValue = this.value;
   }
 
   componentDidLoad() {
@@ -247,6 +249,7 @@ export class BceInput {
 
   @Method()
   public async reset() {
+    this.value = this._initialValue;
     this.error = '';
   }
 
