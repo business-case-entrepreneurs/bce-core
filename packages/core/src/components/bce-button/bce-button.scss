@@ -1,177 +1,164 @@
-bce-button {
+:host {
   @include bce-color-default(primary);
   @include elevate(2);
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  margin: 2px 0;
+  display: inline-block;
   background-color: bce-color();
   color: bce-color-t();
   border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   overflow: hidden;
   user-select: none;
   transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 
+  bce-ripple {
+    background-color: bce-color-t();
+  }
+
   > button {
-    min-width: 64px;
-    padding: 9px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    padding: 0 12px;
+    width: 100%;
+    height: 36px;
+    letter-spacing: inherit;
+    text-transform: inherit;
     background-color: transparent;
     color: inherit;
     border: none;
     appearance: none;
     cursor: pointer;
 
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      box-sizing: border-box;
+      pointer-events: none;
+      background-color: bce-color-t();
+      opacity: 0;
+    }
+
+    &:hover:before {
+      opacity: 0.1;
+    }
+
     &:focus {
       outline: none;
-    }
-  }
 
-  > bce-icon {
-    height: 100%;
-    margin-left: -8px;
-    font-size: 14px;
-    padding: 9px 12px 9px 0;
-
-    svg {
-      pointer-events: none;
-    }
-  }
-
-  &[icon-only] > bce-icon {
-    margin: 0;
-    padding: 9px 12px;
-  }
-
-  > bce-ripple {
-    background-color: bce-color-t();
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    box-sizing: border-box;
-    pointer-events: none;
-    background-color: bce-color-t();
-    opacity: 0;
-  }
-
-  &:not([disabled]):hover:before {
-    opacity: 0.1;
-  }
-
-  &:not([disabled]):focus:before {
-    opacity: 0.2;
-  }
-
-  &:not([disabled]):focus,
-  &:not([disabled]):hover {
-    @include elevate(4);
-    outline: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  &[block] {
-    width: 100%;
-    justify-content: center;
-
-    > button {
-      flex: 1 0 100%;
-    }
-
-    > bce-icon {
-      flex: 0 0 auto;
-      margin-left: -24px;
-    }
-  }
-
-  &[disabled] {
-    @include elevate(0);
-    color: bce-color-t(disable);
-    background-color: bce-color(disable);
-    opacity: 0.5;
-    cursor: default;
-
-    > button {
-      cursor: default;
+      &:before {
+        opacity: 0.2;
+      }
     }
   }
 }
 
-bce-button[type='outline'] {
+:host([block]) {
+  width: 100%;
+}
+
+:host([disabled]) {
+  @include elevate(0);
+  color: bce-color-t(disable);
+  background-color: bce-color(disable);
+  opacity: 0.5;
+  cursor: default;
+
+  > button {
+    cursor: default;
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+:host([focus]) {
+  @include elevate(4);
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:host([icon]) > button {
+  > span {
+    padding-left: 24px;
+  }
+
+  > bce-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &[data-icon-only] {
+    padding: 0;
+
+    > bce-icon {
+      position: relative;
+    }
+
+    > span {
+      display: none;
+    }
+  }
+}
+
+:host([type='outline']),
+:host([type='text']) {
   @include elevate(0);
   border: 1px solid bce-color-d(light);
   background-color: transparent;
   color: bce-color();
 
-  > bce-ripple {
+  bce-ripple {
     background-color: bce-color();
   }
 
-  &:before {
+  > button:before {
     background-color: bce-color();
-  }
-
-  &:not([disabled]):focus,
-  &:not([disabled]):hover {
-    @include elevate(0);
-  }
-
-  &[disabled] {
-    color: bce-color-t(disable);
-    border-color: bce-color(disable);
   }
 }
 
-bce-button[type='text'] {
-  @include elevate(0);
-  background-color: transparent;
-  color: bce-color();
+:host([type='outline'][disabled]),
+:host([type='text'][disabled]) {
+  color: bce-color-t(disable);
+}
+
+:host([type='text']) {
+  border: none;
 
   > button {
-    padding: 9px 8px;
+    padding: 0 8px;
+    height: 28px;
+
+    > bce-icon {
+      width: 28px;
+    }
+  }
+}
+
+:host([type='text'][icon]) > button > span {
+  padding-left: 18px;
+}
+
+:host([type='text'][icon][block]) > button {
+  > span {
+    padding-left: 0;
   }
 
   > bce-icon {
-    margin: 0 -4px 0 0;
-    padding: 9px 0 9px 8px;
-    order: -1;
-  }
-
-  &[icon-only] > bce-icon {
-    margin: 0;
-    padding: 4px;
-    font-size: inherit;
-  }
-
-  > bce-ripple {
-    flex: 0 0 auto;
-    background-color: bce-color();
-  }
-
-  &:before {
-    background-color: bce-color();
-  }
-
-  &:not([disabled]):focus,
-  &:not([disabled]):hover {
-    @include elevate(0);
-  }
-
-  &[block] > button {
-    flex: 0 0 auto;
-  }
-
-  &[disabled] {
-    color: bce-color-t(disable);
+    top: 1px;
+    position: relative;
   }
 }

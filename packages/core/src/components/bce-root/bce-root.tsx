@@ -1,4 +1,12 @@
-import { Component, Element, h, Host, Method, State } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  State
+} from '@stencil/core';
 
 @Component({
   tag: 'bce-root',
@@ -8,6 +16,9 @@ import { Component, Element, h, Host, Method, State } from '@stencil/core';
 export class BceRoot {
   @Element()
   private el!: HTMLBceRootElement;
+
+  @Prop({ reflect: true })
+  public mode?: 'default' | 'bucket';
 
   @State()
   private registeredFAB = false;
@@ -66,7 +77,7 @@ export class BceRoot {
     const action = document.createElement('bce-button');
     action.type = 'text';
     action.slot = 'action';
-    action.submit = true;
+    action.formType = 'submit';
     action.innerText = options.ok || 'Ok';
     if (options.ok !== false) dialog.appendChild(action);
 

@@ -17,10 +17,70 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
       <main>
-        <bce-dropdown>
-          <bce-option value="male">Man</bce-option>
-          <bce-option value="female">Vrouw</bce-option>
-        </bce-dropdown>
+        <h2>BCE Button</h2>
+        <div>
+          <h4>Contained</h4>
+          <bce-button>Primary</bce-button>
+          <bce-button color="secondary">Secondary</bce-button>
+          <bce-button color="tertiary">Tertiary</bce-button>
+          <bce-button disabled>Disabled</bce-button>
+          <br />
+          <bce-button icon="square"></bce-button>
+          <bce-button icon="square" color="secondary">Icon</bce-button>
+          <bce-button icon="square" disabled>
+            Disabled Icon
+          </bce-button>
+        </div>
+        <div>
+          <h4>Outline</h4>
+          <bce-button type="outline">Primary</bce-button>
+          <bce-button type="outline" color="secondary">Secondary</bce-button>
+          <bce-button type="outline" color="tertiary">Tertiary</bce-button>
+          <bce-button type="outline" disabled>Disabled</bce-button>
+          <br />
+          <bce-button type="outline" icon="square"></bce-button>
+          <bce-button type="outline" icon="square" color="secondary">
+            Icon
+          </bce-button>
+          <bce-button type="outline" icon="square" disabled>
+            Disabled Icon
+          </bce-button>
+        </div>
+        <div>
+          <h4>Text</h4>
+          <bce-button type="text">Primary</bce-button>
+          <bce-button type="text" color="secondary">Secondary</bce-button>
+          <bce-button type="text" color="tertiary">Tertiary</bce-button>
+          <bce-button type="text" disabled>Disabled</bce-button>
+          <br />
+          <bce-button type="text" icon="square"></bce-button>
+          <bce-button type="text" icon="square" color="secondary">
+            Icon
+          </bce-button>
+          <bce-button type="text" icon="square" disabled>
+            Disabled Icon
+          </bce-button>
+        </div>
+        <div>
+          <h4>Block</h4>
+          <bce-button block type="contained" color="primary">
+            Contained
+          </bce-button>
+          <bce-button block type="outline" color="tertiary">
+            Outline
+          </bce-button>
+          <bce-button block type="text" color="secondary">Text</bce-button>
+
+          <bce-button block type="contained" color="secondary" icon="square">
+            Contained + Icon
+          </bce-button>
+          <bce-button block type="outline" icon="square" color="primary">
+            Outline + Icon
+          </bce-button>
+          <bce-button block type="text" icon="square" color="tertiary">
+            Text + Icon
+          </bce-button>
+        </div>
       </main>
     </bce-root>
 

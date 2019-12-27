@@ -1,12 +1,15 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
 import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-button',
-  styleUrl: 'bce-button.scss',
-  shadow: false
+  styleUrls: {
+    default: 'bce-button.scss',
+    bucket: 'bce-button.bucket.scss'
+  },
+  shadow: true
 })
 export class BceButton {
   @Element()
@@ -25,77 +28,95 @@ export class BceButton {
   public iconSpin?: boolean;
 
   @Prop({ reflect: true })
-  public iconOnly?: boolean;
-
-  @Prop({ reflect: true })
   public block?: boolean;
+
+  @Prop({ reflect: true, attribute: 'focus' })
+  public hasFocus?: boolean;
+
+  /** Forwarded to native button **/
 
   @Prop({ reflect: true })
   public disabled = false;
 
-  @Prop({ attribute: 'focus', reflect: true, mutable: true })
-  public hasFocus = false;
-
   @Prop({ reflect: true })
-  public submit = false;
+  public form?: string;
 
-  private handleClick = (event: MouseEvent) => {
-    if (this.disabled) event.stopPropagation();
+  @Prop({ reflect: false, attribute: 'formaction' })
+  public formAction?: string;
+
+  @Prop({ reflect: false, attribute: 'formenctype' })
+  public formEnctype?:
+    | 'application/x-www-form-urlencoded'
+    | 'multipart/form-data'
+    | 'text/plain';
+
+  @Prop({ reflect: false, attribute: 'formmethod' })
+  public formMethod?: 'get' | 'post';
+
+  @Prop({ reflect: false, attribute: 'formtarget' })
+  public formTarget?: string;
+
+  @Prop({ reflect: false, attribute: 'formtype' })
+  public formType: 'button' | 'reset' | 'submit' = 'button';
+
+  @State()
+  private slotEmpty = false;
+
+  private handleBlur = () => {
+    this.hasFocus = false;
+  };
+
+  private handleFocus = () => {
+    this.hasFocus = true;
   };
 
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
-
-    ripple(this.el, event);
-
-    // Submit bce-form
-    if (this.submit) {
-      const form = this.el.closest('bce-form');
-      if (form) form.submit();
-    }
+    ripple(this.el.shadowRoot!.querySelector('button')!, event);
   };
 
-  private handleFocus = (event: FocusEvent) => {
-    this.hasFocus = true;
+  private handleSlotChange = (event: Event | HTMLSlotElement) => {
+    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
+    if (!slot || slot.tagName !== 'SLOT') return;
 
-    if (!event.bubbles) {
-      const e = new FocusEvent(event.type, { ...event, bubbles: true });
-      this.el.dispatchEvent(e);
-    }
+    const nodes = slot.assignedNodes({ flatten: true });
+    this.slotEmpty = !nodes.length;
   };
 
-  private handleBlur = (event: FocusEvent) => {
-    this.hasFocus = false;
-
-    if (!event.bubbles) {
-      const e = new FocusEvent(event.type, { ...event, bubbles: true });
-      this.el.dispatchEvent(e);
+  componentDidLoad() {
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    if (slot) {
+      slot.addEventListener('slotchange', this.handleSlotChange);
+      this.handleSlotChange(slot);
     }
-  };
+  }
+
+  renderIcon() {
+    return <bce-icon raw={this.icon} spin={this.iconSpin} fixed-width />;
+  }
 
   render() {
-    const type = this.submit ? 'submit' : 'button';
-
     return (
       <Host
-        tabIndex={this.disabled ? undefined : 0}
-        onMouseDown={this.handleMouseDown}
-        onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onMouseDown={this.handleMouseDown}
       >
-        {!this.iconOnly && (
-          <button tabIndex={-1} disabled={this.disabled} type={type}>
+        <button
+          disabled={this.disabled}
+          form={this.form}
+          formaction={this.formAction}
+          formenctype={this.formEnctype}
+          formmethod={this.formMethod}
+          formtarget={this.formTarget}
+          type={this.formType}
+          data-icon-only={this.slotEmpty}
+        >
+          {this.icon && this.renderIcon()}
+          <span>
             <slot />
-          </button>
-        )}
-        {this.icon && (
-          <bce-icon
-            raw={this.icon}
-            onClick={this.handleClick}
-            spin={this.iconSpin}
-            fixed-width
-          />
-        )}
+          </span>
+        </button>
       </Host>
     );
   }

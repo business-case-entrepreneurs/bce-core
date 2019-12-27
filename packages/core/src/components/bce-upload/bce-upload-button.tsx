@@ -94,7 +94,6 @@ export class BceCard {
         iconSpin={this.iconSpin}
         block={this.block}
         disabled={this.disabled}
-        hasFocus={this.hasFocus}
         onClick={this.handleClick}
       >
         <slot>Upload</slot>

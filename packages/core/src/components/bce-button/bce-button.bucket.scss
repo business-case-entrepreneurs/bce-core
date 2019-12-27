@@ -1,0 +1,36 @@
+@import './bce-button.scss';
+
+:host {
+  @include bce-color-default(primary);
+  @include elevate(0);
+  border-radius: 0;
+  font-weight: 700;
+
+  button:after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0.25;
+    border-radius: 0 0 0 0;
+  }
+}
+
+:host([icon]) > button {
+  > span {
+    padding-left: 36px;
+  }
+
+  > bce-icon {
+    color: bce-color();
+    background-color: bce-color(null, 'icon');
+  }
+}
+
+:host([icon][disabled]) > button > bce-icon {
+  color: bce-color-d(disable);
+  background-color: bce-color(disable, 'icon');
+}
