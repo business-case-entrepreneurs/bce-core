@@ -4,7 +4,6 @@
   @include bce-color-default(primary);
   @include elevate(0);
   border-radius: 0;
-  font-weight: 700;
 
   button:after {
     content: '';
@@ -19,6 +18,10 @@
   }
 }
 
+:host([focus]) {
+  @include elevate(0);
+}
+
 :host([icon]) > button {
   > span {
     padding-left: 36px;
@@ -28,9 +31,58 @@
     color: bce-color();
     background-color: bce-color(null, 'icon');
   }
+
+  &[data-icon-only] > bce-icon {
+    background-color: bce-color();
+    color: bce-color-t();
+  }
 }
 
 :host([icon][disabled]) > button > bce-icon {
   color: bce-color-d(disable);
   background-color: bce-color(disable, 'icon');
+}
+
+:host([icon]:not([type='text']):not([type='outline'])) > button {
+  > bce-icon {
+    left: auto;
+    right: 0;
+  }
+
+  > span {
+    padding-left: 0;
+    padding-right: 36px;
+  }
+}
+
+:host([type='outline']) > button,
+:host([type='text']) > button {
+  > bce-icon {
+    background-color: transparent;
+  }
+
+  &:after {
+    display: none;
+  }
+}
+
+:host([type='outline'][icon]) > button,
+:host([type='text'][icon]) > button {
+  > span {
+    padding-left: 22px;
+  }
+
+  &[data-icon-only] > bce-icon {
+    background-color: transparent;
+    color: bce-color();
+  }
+}
+
+:host([type='outline'][disabled]) > button > bce-icon,
+:host([type='text'][disabled]) > button > bce-icon {
+  background-color: transparent;
+}
+
+:host([type='text']) {
+  border-radius: 4px;
 }

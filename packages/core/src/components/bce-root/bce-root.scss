@@ -1,22 +1,19 @@
-@function custom-shades($color, $font) {
+@function bucket-shades($color, $font) {
   @return (
     l: lighten($color, 10%),
     n: $color,
     d: darken($color, 10%),
     t: $font,
-    icon: scale-color($color, $lightness: 80%)
+    icon: grayscale(scale-color($color, $lightness: 90%))
   );
 }
 
-$_bce-color-shades-func: get-function(custom-shades);
+$_bce-color-shades-func: get-function(bucket-shades);
 
 bce-root {
   @include bce-color-default(primary);
 
   /* Primary and accent colors */
-  // @include bce-color-define(#00aeef #fff, primary);
-  // @include bce-color-define(#ff58b9 #fff, secondary);
-  // @include bce-color-define(#f36b22 #fff, tertiary);
   @include bce-color-define(#215475 #fff, primary);
   @include bce-color-define(#5c2a53 #fff, secondary);
   @include bce-color-define(#72222f #fff, tertiary);
