@@ -6,13 +6,13 @@ import { ripple } from '../../utils/ripple';
 @Component({
   tag: 'bce-button',
   styleUrls: {
-    default: 'bce-button.scss',
-    fab: 'bce-button.fab.scss',
-    bucket: 'bce-button.bucket.scss'
+    default: 'button.scss',
+    fab: 'button.fab.scss',
+    bucket: 'button.bucket.scss'
   },
   shadow: true
 })
-export class BceButton {
+export class Button {
   @Element()
   private el!: HTMLElement;
 

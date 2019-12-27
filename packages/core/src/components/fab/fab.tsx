@@ -5,7 +5,7 @@ import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-fab',
-  styleUrl: 'bce-fab.scss',
+  styleUrl: 'fab.scss',
   shadow: true
 })
 export class BceFab {
