@@ -7,6 +7,7 @@ import { ripple } from '../../utils/ripple';
   tag: 'bce-button',
   styleUrls: {
     default: 'bce-button.scss',
+    fab: 'bce-button.fab.scss',
     bucket: 'bce-button.bucket.scss'
   },
   shadow: true

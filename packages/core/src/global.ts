@@ -1,6 +1,16 @@
 import { setMode } from '@stencil/core';
 
-setMode(elm => {
-  const root = elm.closest('bce-root');
-  return elm.getAttribute('mode') || (root && root.mode) || 'default';
+setMode(el => {
+  const root = el.closest('bce-root');
+
+  // Component specific mode's (e.g. bce-button within bce-fab)
+  if (isFabButton(el)) return 'fab';
+
+  return el.getAttribute('mode') || (root && root.mode) || 'default';
 });
+
+const isFabButton = (el: HTMLElement) => {
+  const parent = el.parentElement && el.parentElement.tagName;
+  const child = el.tagName;
+  return child === 'BCE-BUTTON' && parent === 'BCE-FAB';
+};

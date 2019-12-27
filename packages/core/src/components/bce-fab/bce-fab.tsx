@@ -6,7 +6,7 @@ import { ripple } from '../../utils/ripple';
 @Component({
   tag: 'bce-fab',
   styleUrl: 'bce-fab.scss',
-  shadow: false
+  shadow: true
 })
 export class BceFab {
   @Element()
@@ -25,57 +25,79 @@ export class BceFab {
   public active = false;
 
   private root?: HTMLBceRootElement;
-
-  private get buttons() {
-    const children = Array.from(this.el.children);
-    const buttons = children.filter(c => c.tagName !== 'bce-button');
-    return buttons as HTMLBceButtonElement[];
-  }
+  private buttons: HTMLBceButtonElement[] = [];
 
   private handleClick = () => {
-    const buttons = Array.from(this.el.querySelectorAll('bce-button'));
-    if (buttons.length) this.active = !this.active;
+    if (this.buttons.length) this.active = !this.active;
   };
 
   private handleMouseDown = (event: MouseEvent) => {
+    if (this.disabled) return;
     ripple(event.target as Element, event);
+  };
+
+  private handleSlotChange = (event: Event | HTMLSlotElement) => {
+    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
+    if (!slot || slot.tagName !== 'SLOT') return;
+
+    this.buttons = slot
+      .assignedNodes({ flatten: true })
+      .filter(node => node.nodeName === 'BCE-BUTTON') as any;
+
+    for (const button of this.buttons) this.initButton(button);
   };
 
   private disableClick = (event: MouseEvent) => {
     if (this.disabled) event.stopPropagation();
   };
 
-  @Watch('color')
-  private updateButtonColor() {
-    for (const button of this.buttons) button.color = this.color;
+  @Watch('active')
+  public watchActive() {
+    for (const button of this.buttons) this.propagateState(button);
   }
 
   componentWillLoad() {
     // Register FAB with bce-root
     this.root = this.el.closest('bce-root') as HTMLBceRootElement;
     if (this.root) this.root.registerFAB(true);
+  }
 
-    this.updateButtonColor();
-
-    for (const button of this.buttons) {
-      // Always use the default type for internal buttons
-      button.type = undefined;
-
-      // Ensure that there is always an icon
-      if (!button.icon) button.icon = BceIcon.DEFAULT_ICON.iconName;
-
-      // Deactivate the FAB overlay whenever one of the options is pressed. Call
-      // the original onclick handler afterwards.
-      const { onclick } = button;
-      button.onclick = event => {
-        this.handleClick();
-        if (onclick) onclick.apply(button, [event]);
-      };
+  componentDidLoad() {
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    if (slot) {
+      slot.addEventListener('slotchange', this.handleSlotChange);
+      this.handleSlotChange(slot);
     }
   }
 
   componentDidUnload() {
     if (this.root) this.root.registerFAB(false);
+  }
+
+  private initButton(button: HTMLBceButtonElement) {
+    this.propagateState(button);
+
+    // Always use default type for internal buttons
+    button.type = undefined;
+
+    // Inherit color
+    button.color = this.color;
+
+    // Ensure that there is always an icon
+    button.icon = button.icon || BceIcon.DEFAULT_ICON.iconName;
+
+    // Deactivate the FAB overlay whenever one of the options is pressed. Call
+    // the original onclick handler afterwards.
+    const { onclick } = button;
+    button.onclick = event => {
+      this.active = false;
+      if (onclick) onclick.apply(button, [event]);
+    };
+  }
+
+  private propagateState(button: HTMLBceButtonElement) {
+    if (!this.active) button.dataset.inactive = '';
+    else delete button.dataset.inactive;
   }
 
   render() {

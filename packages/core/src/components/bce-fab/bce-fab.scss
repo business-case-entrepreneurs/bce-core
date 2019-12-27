@@ -1,4 +1,4 @@
-bce-fab {
+:host {
   @include bce-color-default(primary);
   position: fixed;
   display: flex;
@@ -8,6 +8,14 @@ bce-fab {
   right: 0;
   bottom: 0;
   z-index: 6;
+
+  bce-ripple {
+    background-color: bce-color-t();
+  }
+
+  bce-button {
+    display: none;
+  }
 
   > button {
     @include elevate(6);
@@ -23,13 +31,19 @@ bce-fab {
     overflow: hidden;
     cursor: pointer;
 
+    > bce-icon {
+      pointer-events: none;
+    }
+
     &:focus {
       border: none;
       outline: none;
     }
   }
+}
 
-  &[active] > div {
+:host([active]) {
+  > div {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -38,10 +52,6 @@ bce-fab {
     background-color: bce-color(dark);
     opacity: 0.8;
   }
-}
-
-bce-fab > bce-button {
-  display: none;
 }
 
 bce-fab[active] > bce-button {
