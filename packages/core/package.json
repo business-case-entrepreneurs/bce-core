@@ -22,15 +22,15 @@
     "serve": "stencil build --watch --serve --docs-json ./dist/docs.json"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-regular-svg-icons": "^5.11.2",
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@stencil/core": "^1.8.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-regular-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@stencil/core": "^1.8.2",
     "@stencil/sass": "^1.1.1",
     "codeflask": "^1.4.1",
-    "popper.js": "^1.15.0",
-    "rimraf": "^2.7.1",
-    "typescript": "^3.6.3"
+    "popper.js": "^1.16.0",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.4"
   },
   "publishConfig": {
     "access": "public"
