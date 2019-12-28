@@ -1,14 +1,26 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Host,
+  Prop,
+  State
+} from '@stencil/core';
 
 import { ButtonType } from '../../models/button-type';
+import { File } from '../../utils/file';
+import { NativeEvent } from '../../utils/native-event';
 import { ripple } from '../../utils/ripple';
+import { UUID } from '../../utils/uuid';
 
 @Component({
   tag: 'bce-button',
   styleUrls: {
-    default: 'button.scss',
-    fab: 'button.fab.scss',
-    bucket: 'button.bucket.scss'
+    default: 'bce-button.scss',
+    fab: 'bce-button.fab.scss',
+    bucket: 'bce-button.bucket.scss'
   },
   shadow: true
 })
@@ -16,6 +28,7 @@ export class Button {
   @Element()
   private el!: HTMLElement;
 
+  // #region Custom properties
   @Prop({ reflect: true })
   public color?: string;
 
@@ -34,8 +47,11 @@ export class Button {
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus?: boolean;
 
-  /** Forwarded to native button **/
+  @Prop({ reflect: true })
+  public upload?: boolean;
+  // #endregion
 
+  // #region Forwarded to native button
   @Prop({ reflect: true })
   public disabled = false;
 
@@ -59,12 +75,36 @@ export class Button {
 
   @Prop({ reflect: false, attribute: 'formtype' })
   public formType: 'button' | 'reset' | 'submit' = 'button';
+  // #endregion
+
+  // #region Forwarded to native input[type='file']
+  @Prop({ reflect: true })
+  public accept?: string;
+
+  @Prop({ reflect: true })
+  public multiple = false;
+  // #endregion
+
+  @Event({ eventName: 'file' })
+  private onFile!: EventEmitter<File[]>;
 
   @State()
   private slotEmpty = false;
 
   private handleBlur = () => {
     this.hasFocus = false;
+  };
+
+  private handleClick = (event: NativeEvent) => {
+    if (this.upload) {
+      // Trigger input[type='file'] click
+      const input = this.el.shadowRoot!.querySelector('input');
+      if (input) input.click();
+
+      // Let input's click event be the only propagated click event
+      event.cancelBubble = true;
+      event.preventDefault();
+    }
   };
 
   private handleFocus = () => {
@@ -76,12 +116,25 @@ export class Button {
     ripple(this.el.shadowRoot!.querySelector('button')!, event);
   };
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
+  private handleSlotChange = (event: NativeEvent | HTMLSlotElement) => {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
 
     const nodes = slot.assignedNodes({ flatten: true });
     this.slotEmpty = !nodes.length;
+  };
+
+  private handleUpload = (event: NativeEvent) => {
+    const input = event.target as HTMLInputElement | null;
+    if (!input || !input.files) return;
+
+    // Extract required data and generate id
+    const files = Array.from(input.files).map(file => {
+      return new File(UUID.v4(), file.name, file);
+    });
+
+    // Dispatch custom event
+    this.onFile.emit(files);
   };
 
   componentDidLoad() {
@@ -112,12 +165,23 @@ export class Button {
           formtarget={this.formTarget}
           type={this.formType}
           data-icon-only={this.slotEmpty}
+          onClick={this.handleClick}
         >
           {this.icon && this.renderIcon()}
           <span>
             <slot />
           </span>
         </button>
+
+        {this.upload && (
+          <input
+            type="file"
+            accept={this.accept}
+            multiple={this.multiple}
+            onChange={this.handleUpload}
+            tabIndex={-1}
+          />
+        )}
       </Host>
     );
   }
