@@ -25,7 +25,7 @@ export type BceCodeLanguage =
 
 @Component({
   tag: 'bce-code',
-  styleUrl: 'code.scss',
+  styleUrl: 'bce-code.scss',
   shadow: true
 })
 export class Code {

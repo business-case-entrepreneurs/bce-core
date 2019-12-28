@@ -1,14 +1,14 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { BceIcon } from '../bce-icon/bce-icon';
+import { Icon } from '../bce-icon/bce-icon';
 import { ripple } from '../../utils/ripple';
 
 @Component({
   tag: 'bce-fab',
-  styleUrl: 'fab.scss',
+  styleUrl: 'bce-fab.scss',
   shadow: true
 })
-export class BceFab {
+export class Fab {
   @Element()
   private el!: HTMLBceFabElement;
 
@@ -16,7 +16,7 @@ export class BceFab {
   public color?: string;
 
   @Prop({ reflect: true })
-  public icon: string = BceIcon.DEFAULT_ICON.iconName;
+  public icon: string = Icon.DEFAULT_ICON.iconName;
 
   @Prop({ reflect: true })
   public disabled = false;
@@ -84,7 +84,7 @@ export class BceFab {
     button.color = this.color;
 
     // Ensure that there is always an icon
-    button.icon = button.icon || BceIcon.DEFAULT_ICON.iconName;
+    button.icon = button.icon || Icon.DEFAULT_ICON.iconName;
 
     // Deactivate the FAB overlay whenever one of the options is pressed. Call
     // the original onclick handler afterwards.

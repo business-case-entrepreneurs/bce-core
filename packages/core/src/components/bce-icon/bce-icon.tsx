@@ -24,17 +24,17 @@ library.add(faSquare, faBars, faEllipsisH, faCaretDown, faTimesCircle);
     '../../../node_modules/@fortawesome/fontawesome-svg-core/styles.css',
   shadow: true
 })
-export class BceIcon {
+export class Icon {
   public static DEFAULT_ICON: IconLookup = {
     prefix: 'far',
     iconName: 'square'
   };
 
   @Prop({ reflect: true, mutable: true })
-  public pre: IconPrefix = BceIcon.DEFAULT_ICON.prefix;
+  public pre: IconPrefix = Icon.DEFAULT_ICON.prefix;
 
   @Prop({ reflect: true, mutable: true })
-  public name: IconName = BceIcon.DEFAULT_ICON.iconName;
+  public name: IconName = Icon.DEFAULT_ICON.iconName;
 
   @Prop({ reflect: true, mutable: true })
   public raw?: string;
@@ -85,7 +85,7 @@ export class BceIcon {
 
     if (!i) {
       console.warn('Could not find one or more icon(s)', definition);
-      const alt = icon(BceIcon.DEFAULT_ICON, { classes: this.classes });
+      const alt = icon(Icon.DEFAULT_ICON, { classes: this.classes });
       return this.renderIcon(alt.abstract[0]);
     }
 
