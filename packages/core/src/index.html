@@ -82,6 +82,8 @@
           </bce-button>
         </div>
 
+        <bce-code id="code" language="jsx"></bce-code>
+
         <bce-fab color="dark">
           <bce-button>Option A</bce-button>
           <bce-button>Option B</bce-button>
@@ -92,5 +94,21 @@
 
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>
+    <script>
+      code.content = [
+        "'use strict';",
+        '',
+        'var ProfileLink = React.createClass({',
+        '  render: function(h) {',
+        '    return (',
+        "      <a href={'https://www.facebook.com/' + this.props.username}>",
+        '        {this.props.username}',
+        '      </a>',
+        '    );',
+        '  }',
+        '});',
+        ''
+      ];
+    </script>
   </body>
 </html>
