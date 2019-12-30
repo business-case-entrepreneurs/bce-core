@@ -56,12 +56,7 @@ export class Code {
       ? this.content.join('\n')
       : this.content;
 
-    return this.inline ? (
-      <code class={classes}>{content}</code>
-    ) : (
-      <pre class={classes}>
-        <code>{content}</code>
-      </pre>
-    );
+    const code = <code class={classes}>{content}</code>;
+    return this.inline ? code : <pre class={classes}>{code}</pre>;
   }
 }
