@@ -117,6 +117,18 @@
   }
 }
 
+:host([small]),
+:host([type='text']) {
+  > button {
+    padding: 0 8px;
+    height: 28px;
+
+    > bce-icon {
+      width: 28px;
+    }
+  }
+}
+
 :host([type='outline']),
 :host([type='text']) {
   @include elevate(0);
@@ -140,15 +152,6 @@
 
 :host([type='text']) {
   border: none;
-
-  > button {
-    padding: 0 8px;
-    height: 28px;
-
-    > bce-icon {
-      width: 28px;
-    }
-  }
 }
 
 :host([type='text'][icon]) > button > span {

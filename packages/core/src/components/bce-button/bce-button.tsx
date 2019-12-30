@@ -44,6 +44,9 @@ export class Button {
   @Prop({ reflect: true })
   public block?: boolean;
 
+  @Prop({ reflect: true })
+  public small?: boolean;
+
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus?: boolean;
 
