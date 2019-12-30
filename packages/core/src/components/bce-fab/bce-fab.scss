@@ -13,10 +13,6 @@
     background-color: bce-color-t();
   }
 
-  bce-button {
-    display: none;
-  }
-
   > button {
     @include elevate(6);
     position: relative;
@@ -42,63 +38,30 @@
   }
 }
 
-:host([active]) {
-  > div {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: bce-color(dark);
-    opacity: 0.8;
-  }
+:host([active]) [data-backdrop] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: bce-color(dark);
+  opacity: 0.8;
 }
 
-bce-fab[active] > bce-button {
-  @include elevate(0);
-  z-index: inherit;
-  display: inherit;
-  margin: 0 0 10px 0;
-  background-color: transparent;
-  overflow: inherit;
+:host([info]) [data-info] {
+  position: absolute;
+  right: 72px;
+  bottom: 0px;
+  width: 500px;
+  height: 56px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-  > button {
-    @include elevate(2);
-    padding: 5px 16px;
-    margin: 0 10px;
-    background-color: bce-color(light);
-    color: bce-color-t(light);
+  > bce-button {
+    @include bce-color-inherit();
+    display: block;
+    font-size: 12px;
     text-transform: none;
-    border-radius: 34px;
-  }
-
-  > bce-icon {
-    @include elevate(2);
-    margin: 0 10px 0 0;
-    padding: 9px;
-    background-color: bce-color();
-    color: bce-color-t();
-    border-radius: 50%;
-  }
-
-  &:before {
-    display: none;
-  }
-
-  &:focus,
-  &:hover {
-    @include elevate(0);
-    z-index: inherit;
-  }
-
-  &[disabled] {
-    opacity: 1;
-    color: inherit;
-    background-color: inherit;
-    z-index: 0;
-  }
-
-  &[data-inactive] {
-    display: none;
   }
 }

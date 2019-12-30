@@ -1,5 +1,9 @@
 @import './bce-button.scss';
 
+:host {
+  @include bce-color-inherit();
+}
+
 :host([icon]) {
   @include elevate(0, false);
   margin: 0 10px 10px 0;

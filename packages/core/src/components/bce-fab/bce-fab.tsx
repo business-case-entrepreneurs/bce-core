@@ -19,6 +19,9 @@ export class Fab {
   public icon: string = Icon.DEFAULT_ICON.iconName;
 
   @Prop({ reflect: true })
+  public info: string = '';
+
+  @Prop({ reflect: true })
   public disabled = false;
 
   @Prop({ reflect: true, mutable: true })
@@ -80,9 +83,6 @@ export class Fab {
     // Always use default type for internal buttons
     button.type = undefined;
 
-    // Inherit color
-    button.color = this.color;
-
     // Ensure that there is always an icon
     button.icon = button.icon || Icon.DEFAULT_ICON.iconName;
 
@@ -103,6 +103,20 @@ export class Fab {
   render() {
     return [
       <slot />,
+      this.info && (
+        <div data-info>
+          <bce-button
+            type={this.active ? 'text' : 'contained'}
+            color={this.color}
+            disabled={this.disabled}
+            onClick={this.handleClick}
+            onMouseDown={this.handleMouseDown}
+            small
+          >
+            {this.info}
+          </bce-button>
+        </div>
+      ),
       <button
         disabled={this.disabled}
         onClick={this.handleClick}
@@ -115,7 +129,7 @@ export class Fab {
           fixed-width
         />
       </button>,
-      <div onClick={this.handleClick} />
+      <div data-backdrop onClick={this.handleClick} />
     ];
   }
 }
