@@ -49,19 +49,21 @@
 }
 
 :host([info]) [data-info] {
-  position: absolute;
-  right: 72px;
-  bottom: 0px;
-  width: 500px;
+  position: fixed;
+  right: 88px;
+  bottom: 16px;
+  left: 16px;
   height: 56px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  pointer-events: none;
 
   > bce-button {
     @include bce-color-inherit();
     display: block;
     font-size: 12px;
     text-transform: none;
+    pointer-events: auto;
   }
 }
