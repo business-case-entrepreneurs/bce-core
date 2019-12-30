@@ -43,17 +43,17 @@
   background-color: bce-color(disable, 'icon');
 }
 
-:host([icon]:not([type='text']):not([type='outline'])) > button {
-  > bce-icon {
-    left: auto;
-    right: 0;
-  }
-
-  > span {
-    padding-left: 0;
-    padding-right: 36px;
-  }
-}
+// :host([icon]:not([type='text']):not([type='outline'])) > button {
+//   > bce-icon {
+//     left: auto;
+//     right: 0;
+//   }
+//
+//   > span {
+//     padding-left: 0;
+//     padding-right: 36px;
+//   }
+// }
 
 :host([type='outline']) > button,
 :host([type='text']) > button {
