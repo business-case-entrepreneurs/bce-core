@@ -2,7 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { Component, Element, h, Prop, Host } from '@stencil/core';
 import { faCheck, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { ChipKind } from '../../models/chip-kind';
+import { ChipDesign } from '../../models/chip-design';
 import { ChipType } from '../../models/chip-type';
 import { ripple } from '../../utils/ripple';
 import { UUID } from '../../utils/uuid';
@@ -23,14 +23,14 @@ const INPUT_TYPES: { [Type in ChipType]: string } = {
 })
 export class BceChip {
   @Element()
-  private el!: HTMLBceFormElement;
+  private el!: HTMLBceOptionElement;
 
   // #region Custom properties
   @Prop({ reflect: true })
   public type?: ChipType;
 
   @Prop({ reflect: true })
-  public kind?: ChipKind;
+  public design?: ChipDesign;
 
   @Prop({ reflect: true })
   public thumbnail?: string;
@@ -38,9 +38,11 @@ export class BceChip {
   @Prop({ reflect: true })
   public icon?: string;
 
+  @Prop({ reflect: true })
+  public removable?: boolean;
+
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus?: boolean;
-
   // #endregion
 
   // #region Forwarded to native input
@@ -65,6 +67,13 @@ export class BceChip {
 
   public handleClick = (event: Event) => {
     switch (this.type) {
+      case 'choice':
+        const query = `bce-chip[type='${this.type}'][name='${this.name}']`;
+        const options = Array.from(document.querySelectorAll(query));
+        for (const option of options as HTMLBceOptionElement[])
+          option.checked = this.el === option ? !option.checked : false;
+        return;
+
       case 'filter':
         this.checked = !this.checked;
         return;
@@ -81,6 +90,11 @@ export class BceChip {
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
     ripple(this.el.shadowRoot!.querySelector('label')!, event);
+  };
+
+  private ignoreClick = (event: Event) => {
+    event.preventDefault();
+    event.cancelBubble = true;
   };
 
   private isColor(color?: string): boolean {
@@ -126,7 +140,22 @@ export class BceChip {
     );
   }
 
+  renderRemove() {
+    if (!this.removable) return;
+
+    return (
+      <div data-remove>
+        <bce-icon pre="fas" name="times-circle" />
+      </div>
+    );
+  }
+
   render() {
+    if (this.type === 'input')
+      console.warn('[bce-chip] The input type is unimplemented.');
+    if (this.design === 'outline')
+      console.warn('[bce-chip] The outline design is unimplemented.');
+
     return (
       <Host
         onBlur={this.handleBlur}
@@ -139,12 +168,14 @@ export class BceChip {
           id={this.id}
           type={this.type ? INPUT_TYPES[this.type] : 'button'}
           checked={!!this.checked}
+          name={this.name}
+          onClick={this.ignoreClick}
         />
         <label htmlFor={this.id} onClick={this.handleClick}>
           <slot />
         </label>
+        {this.renderRemove()}
       </Host>
     );
-    // this.kind === 'input' && <bce-icon pre="fas" name="times-circle" />
   }
 }

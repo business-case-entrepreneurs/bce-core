@@ -17,31 +17,10 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
       <main>
-        <h2>BCE Chip</h2>
-        <div>
-          <bce-chip>Rick Koster</bce-chip>
-          <bce-chip type="filter" thumbnail="#3e8ebf" checked>
-            Rick Koster
-          </bce-chip>
-
-          <bce-chip
-            type="filter"
-            thumbnail="https://ui-avatars.com/api/?name=rick@bcase.nl&background=231f20&color=0a5460&font-size=0.6&size=24"
-          >
-            Rick Koster
-          </bce-chip>
-          <br />
-          <bce-chip>Rick Koster</bce-chip>
-          <bce-chip type="filter" checked>
-            Rick Koster
-          </bce-chip>
-
-          <br />
-          <bce-chip>Matthew Polaris</bce-chip>
-        </div>
-
-        <!--
         <h2>BCE Button</h2>
+        <a href="https://material.io/components/buttons/" target="_blank">
+          https://material.io/components/buttons/
+        </a>
         <div>
           <h4>Contained</h4>
           <bce-button>Primary</bce-button>
@@ -50,7 +29,7 @@
           <bce-button disabled>Disabled</bce-button>
           <br />
           <bce-button icon="square"></bce-button>
-          <bce-button icon="square" color="secondary">Icoqn</bce-button>
+          <bce-button icon="square" color="secondary">Icon</bce-button>
           <bce-button icon="square" disabled>
             Disabled Icon
           </bce-button>
@@ -106,14 +85,55 @@
           </bce-button>
         </div>
 
-        <bce-code id="code" language="jsx"></bce-code>
+        <h2>BCE Chip</h2>
+        <a href="https://material.io/components/chips/" target="_blank">
+          https://material.io/components/chips/
+        </a>
+        <div>
+          <h4>Action</h4>
+          <bce-chip>Action Chip</bce-chip>
+          <bce-chip icon="square">Icon</bce-chip>
+          <bce-chip thumbnail="#6f42c1">Color</bce-chip>
+          <bce-chip thumbnail="https://via.placeholder.com/24">Image</bce-chip>
+          <bce-chip icon="square" thumbnail="https://via.placeholder.com/24">
+            Image + Icon
+          </bce-chip>
+        </div>
+
+        <div>
+          <h4>Choice</h4>
+          <bce-chip type="choice" name="choice1">Choice Chip X</bce-chip>
+          <bce-chip type="choice" name="choice1">Choice Chip Y</bce-chip>
+          <br />
+          <bce-chip type="choice" name="choice2">Option 1</bce-chip>
+          <bce-chip type="choice" name="choice2">Option 2</bce-chip>
+          <bce-chip type="choice" name="choice2">Option 3</bce-chip>
+          <br />
+          <bce-chip type="choice" name="choice3">Option A</bce-chip>
+          <bce-chip type="choice" name="choice3">Option B</bce-chip>
+          <bce-chip type="choice" name="choice3">Option C</bce-chip>
+        </div>
+        <div>
+          <h4>Filter</h4>
+          <bce-chip type="filter">Filter Chip</bce-chip>
+          <bce-chip type="filter" icon="square">Custom Icon</bce-chip>
+          <bce-chip type="filter" thumbnail="#3e8ebf">
+            Color Chip
+          </bce-chip>
+          <bce-chip type="filter" thumbnail="https://via.placeholder.com/24">
+            Image Chip
+          </bce-chip>
+          <div>
+            <h4>Input</h4>
+            <p>Unimplemented</p>
+          </div>
+        </div>
 
         <bce-fab info="bce-fab[info]" color="dark">
           <bce-button>Option A</bce-button>
           <bce-button>Option B</bce-button>
           <bce-button>Option C</bce-button>
         </bce-fab>
-        -->
       </main>
     </bce-root>
 
