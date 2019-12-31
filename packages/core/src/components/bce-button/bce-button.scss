@@ -118,7 +118,7 @@
 }
 
 :host([small]),
-:host([type='text']) {
+:host([design='text']) {
   > button {
     padding: 0 8px;
     height: 28px;
@@ -129,8 +129,8 @@
   }
 }
 
-:host([type='outline']),
-:host([type='text']) {
+:host([design='outline']),
+:host([design='text']) {
   @include elevate(0);
   border: 1px solid bce-color-d(light);
   background-color: transparent;
@@ -145,20 +145,20 @@
   }
 }
 
-:host([type='outline'][disabled]),
-:host([type='text'][disabled]) {
+:host([design='outline'][disabled]),
+:host([design='text'][disabled]) {
   color: bce-color-t(disable);
 }
 
-:host([type='text']) {
+:host([design='text']) {
   border: none;
 }
 
-:host([type='text'][icon]) > button > span {
+:host([design='text'][icon]) > button > span {
   padding-left: 18px;
 }
 
-:host([type='text'][icon][block]) > button {
+:host([design='text'][icon][block]) > button {
   > span {
     padding-left: 0;
   }
@@ -171,7 +171,7 @@
 
 :host([upload]) {
   // Visually hide input
-  > input[type='file'] {
+  > input[design='file'] {
     position: absolute !important;
     height: 1px;
     width: 1px;

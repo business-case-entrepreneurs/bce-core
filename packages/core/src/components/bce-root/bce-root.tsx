@@ -75,7 +75,7 @@ export class BceRoot {
     `;
 
     const action = document.createElement('bce-button');
-    action.type = 'text';
+    action.design = 'text';
     action.slot = 'action';
     action.formType = 'submit';
     action.innerText = options.ok || 'Ok';

@@ -9,7 +9,7 @@ import {
   State
 } from '@stencil/core';
 
-import { ButtonType } from '../../models/button-type';
+import { ButtonDesign } from '../../models/button-design';
 import { File } from '../../utils/file';
 import { NativeEvent } from '../../utils/native-event';
 import { ripple } from '../../utils/ripple';
@@ -33,7 +33,7 @@ export class Button {
   public color?: string;
 
   @Prop({ reflect: true })
-  public type?: ButtonType;
+  public design?: ButtonDesign;
 
   @Prop({ reflect: true })
   public icon?: string;

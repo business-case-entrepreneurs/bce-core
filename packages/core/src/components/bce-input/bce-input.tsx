@@ -335,7 +335,7 @@ export class BceInput {
           />,
 
           <bce-button
-            type="text"
+            design="text"
             icon={this.reveal ? 'eye-slash' : 'eye'}
             icon-only
             onClick={this.toggleReveal}

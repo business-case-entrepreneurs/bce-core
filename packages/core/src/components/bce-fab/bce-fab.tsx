@@ -80,8 +80,8 @@ export class Fab {
   private initButton(button: HTMLBceButtonElement) {
     this.propagateState(button);
 
-    // Always use default type for internal buttons
-    button.type = undefined;
+    // Always use default design for internal buttons
+    button.design = undefined;
 
     // Ensure that there is always an icon
     button.icon = button.icon || Icon.DEFAULT_ICON.iconName;
@@ -106,7 +106,7 @@ export class Fab {
       this.info && (
         <div data-info>
           <bce-button
-            type={this.active ? 'text' : 'contained'}
+            design={this.active ? 'text' : 'contained'}
             color={this.color}
             disabled={this.disabled}
             onClick={this.handleClick}
