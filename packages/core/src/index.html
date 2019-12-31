@@ -17,6 +17,30 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
       <main>
+        <h2>BCE Chip</h2>
+        <div>
+          <bce-chip>Rick Koster</bce-chip>
+          <bce-chip type="filter" thumbnail="#3e8ebf" checked>
+            Rick Koster
+          </bce-chip>
+
+          <bce-chip
+            type="filter"
+            thumbnail="https://ui-avatars.com/api/?name=rick@bcase.nl&background=231f20&color=0a5460&font-size=0.6&size=24"
+          >
+            Rick Koster
+          </bce-chip>
+          <br />
+          <bce-chip>Rick Koster</bce-chip>
+          <bce-chip type="filter" checked>
+            Rick Koster
+          </bce-chip>
+
+          <br />
+          <bce-chip>Matthew Polaris</bce-chip>
+        </div>
+
+        <!--
         <h2>BCE Button</h2>
         <div>
           <h4>Contained</h4>
@@ -26,7 +50,7 @@
           <bce-button disabled>Disabled</bce-button>
           <br />
           <bce-button icon="square"></bce-button>
-          <bce-button icon="square" color="secondary">Icon</bce-button>
+          <bce-button icon="square" color="secondary">Icoqn</bce-button>
           <bce-button icon="square" disabled>
             Disabled Icon
           </bce-button>
@@ -89,26 +113,11 @@
           <bce-button>Option B</bce-button>
           <bce-button>Option C</bce-button>
         </bce-fab>
+        -->
       </main>
     </bce-root>
 
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>
-    <script>
-      code.content = [
-        "'use strict';",
-        '',
-        'var ProfileLink = React.createClass({',
-        '  render: function(h) {',
-        '    return (',
-        "      <a href={'https://www.facebook.com/' + this.props.username}>",
-        '        {this.props.username}',
-        '      </a>',
-        '    );',
-        '  }',
-        '});',
-        ''
-      ];
-    </script>
   </body>
 </html>

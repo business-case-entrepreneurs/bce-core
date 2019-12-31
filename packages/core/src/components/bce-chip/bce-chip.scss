@@ -1,55 +1,136 @@
 :host {
-  --shade1: rgba(0, 0, 0, 0.12);
-  --shade2: rgba(0, 0, 0, 0.67);
-  --shade3: rgba(0, 0, 0, 0.87);
-
-  display: inline-flex;
-  align-items: center;
-  padding: 0 12px;
+  @include bce-color-default(primary);
+  position: relative;
+  display: inline-block;
+  background-color: bce-color(shade);
+  color: bce-color-t(shade);
   height: 32px;
   font-size: 14px;
-  background-color: var(--shade1);
-  color: var(--shade3);
+  margin: 4px 0;
   border-radius: 16px;
-  margin: 2px 0;
+  overflow: hidden;
+  cursor: pointer;
 
-  bce-icon {
-    padding: 3.5px 3.25px;
+  [data-thumbnail],
+  [data-icon] {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    font-size: 90%;
+  }
 
-    &:nth-child(2) {
-      padding: 3.5px 3.25px;
-      margin-right: 4px;
-    }
+  // Visually hide input
+  > input {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
 
-    &:last-child {
-      color: var(--shade2);
-      margin-left: 4px;
-    }
+  > label {
+    display: block;
+    height: inherit;
+    padding: 0 12px;
+    line-height: 32px;
+    user-select: none;
+    transition: padding 200ms ease;
+    cursor: inherit;
   }
 }
 
-:host([icon]) {
-  padding-left: 4px;
+:host([thumbnail][icon]) [data-icon],
+:host([thumbnail][checked]) [data-icon] {
+  background-color: rgba(0, 0, 0, 20%);
+  color: #fff;
 }
 
-:host([type='outline']) {
-  background-color: transparent;
-  border: 1px solid var(--shade1);
+:host([thumbnail]) > label,
+:host([icon]) > label,
+:host([checked]) > label {
+  padding-left: 32px;
 }
 
-:host([role='input']) {
-  padding-right: 4px;
-}
+// :host {
+//   --shade1: rgba(0, 0, 0, 0.12);
+//   --shade2: rgba(0, 0, 0, 0.67);
+//   --shade3: rgba(0, 0, 0, 0.87);
 
-:host([small]) {
-  height: 25px;
-  font-size: 12px;
+//   display: inline-flex;
+//   align-items: center;
+//   padding: 0 12px;
+//   height: 32px;
+//   font-size: 14px;
+//   background-color: var(--shade1);
+//   color: var(--shade3);
+//   border-radius: 16px;
+//   margin: 2px 0;
+//   cursor: pointer;
 
-  bce-icon:nth-child(2) {
-    margin-right: 0px;
-  }
+//   [data-thumbnail] {
+//     width: 24px;
+//     height: 24px;
+//     border-radius: 50%;
+//   }
 
-  bce-icon:last-child {
-    margin-left: 2px;
-  }
-}
+//   bce-icon {
+//     padding: 3.5px 3.25px;
+
+//     &:nth-child(2) {
+//       padding: 3.5px 3.25px;
+//       margin-right: 4px;
+//     }
+
+//     &:last-child {
+//       color: var(--shade2);
+//       margin-left: 4px;
+//     }
+//   }
+
+//   // Visually hide input
+//   > input {
+//     position: absolute !important;
+//     height: 1px;
+//     width: 1px;
+//     overflow: hidden;
+//     clip: rect(1px, 1px, 1px, 1px);
+//   }
+
+//   > label {
+//     user-select: none;
+//     cursor: inherit;
+//   }
+// }
+
+// :host([icon]) {
+//   padding-left: 4px;
+// }
+
+// :host([type='outline']) {
+//   background-color: transparent;
+//   border: 1px solid var(--shade1);
+// }
+
+// :host([role='input']) {
+//   padding-right: 4px;
+// }
+
+// :host([small]) {
+//   height: 25px;
+//   font-size: 12px;
+
+//   bce-icon:nth-child(2) {
+//     margin-right: 0px;
+//   }
+
+//   bce-icon:last-child {
+//     margin-left: 2px;
+//   }
+// }

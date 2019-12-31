@@ -1,1 +1,1 @@
-export type ChipType = 'contained' | 'outline';
+export type ChipType = 'action' | 'choice' | 'filter' | 'input';
