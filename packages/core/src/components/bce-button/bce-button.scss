@@ -32,7 +32,7 @@
     color: inherit;
     border: none;
     appearance: none;
-    cursor: pointer;
+    cursor: inherit;
 
     &:before {
       content: '';
@@ -72,12 +72,8 @@
   opacity: 0.5;
   cursor: default;
 
-  > button {
-    cursor: default;
-
-    &:before {
-      display: none;
-    }
+  > button:before {
+    display: none;
   }
 }
 

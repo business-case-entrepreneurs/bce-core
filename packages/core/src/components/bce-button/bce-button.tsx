@@ -26,7 +26,7 @@ import { UUID } from '../../utils/uuid';
 })
 export class Button {
   @Element()
-  private el!: HTMLElement;
+  private el!: HTMLBceButtonElement;
 
   // #region Custom properties
   @Prop({ reflect: true })
