@@ -1,17 +1,26 @@
-bce-switch {
+:host {
   @include bce-color-default(primary);
   position: relative;
   display: inline-block;
   width: 36px;
   height: 20px;
+  margin: 2px 0;
+  cursor: pointer;
 
   > label {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100%;
+    cursor: inherit;
 
+    // Visually hide input
     > input {
-      display: none;
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
     }
 
     > div {
@@ -48,29 +57,33 @@ bce-switch {
       }
     }
   }
+}
 
-  &:not([disabled]):focus {
-    outline: none;
+:host([focus]) {
+  outline: none;
 
-    > label > div {
-      &:after {
-        width: 10px;
-        height: 10px;
-      }
+  > label > div {
+    &:after {
+      width: 10px;
+      height: 10px;
+    }
 
-      &[data-off]:after {
-        background-color: bce-color-d(light);
-        border: 5px solid bce-color(light);
-      }
+    &[data-off]:after {
+      background-color: bce-color-d(light);
+      border: 5px solid bce-color(light);
+    }
 
-      &[data-on]:after {
-        background-color: bce-color-l();
-        border: 5px solid bce-color();
-      }
+    &[data-on]:after {
+      background-color: bce-color-l();
+      border: 5px solid bce-color();
     }
   }
+}
 
-  &[disabled] > label > div {
+:host([disabled]) {
+  cursor: default;
+
+  > label > div {
     background-color: bce-color-l(disable);
 
     &:after {
