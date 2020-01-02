@@ -8,9 +8,9 @@ library.add(faInfoCircle);
 @Component({
   tag: 'bce-tooltip',
   styleUrl: 'bce-tooltip.scss',
-  shadow: false
+  shadow: true
 })
-export class BceTooltip {
+export class Tooltip {
   @Element()
   private el!: HTMLBceTooltipElement;
 
@@ -18,7 +18,7 @@ export class BceTooltip {
   public placement = 'bottom';
 
   @Prop({ reflect: true })
-  public target = '';
+  public target?: string;
 
   @Prop({ reflect: true })
   public icon = 'fas:info-circle';
@@ -29,9 +29,9 @@ export class BceTooltip {
   componentDidLoad() {
     const reference = this.target
       ? (document.querySelector(this.target) as HTMLElement)
-      : (this.el.querySelector('bce-icon')! as HTMLBceIconElement);
-    const tooltip = this.el.querySelector('div')!;
-    const container = this.el.closest('bce-root')!;
+      : (this.el.shadowRoot!.querySelector('bce-icon')! as HTMLBceIconElement);
+
+    const tooltip = this.el.shadowRoot!.querySelector('div')!;
 
     if (!reference) {
       console.warn(`[bce-tooltip] Target not found: ${this.target}`);
@@ -49,7 +49,7 @@ export class BceTooltip {
 
     const popper = new Popper(reference, tooltip, {
       placement: this.placement as Popper.Placement,
-      modifiers: { flip: { boundariesElement: container } }
+      positionFixed: true
     });
   }
 

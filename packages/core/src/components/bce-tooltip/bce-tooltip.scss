@@ -1,10 +1,11 @@
-bce-tooltip {
+:host {
   @include bce-color-default(dark);
   display: inline-block;
 
   > div {
     @include elevate(2);
     display: none;
+    margin: 2px;
     padding: 6px 16px;
     background-color: bce-color();
     color: bce-color-t();
