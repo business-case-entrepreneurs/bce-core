@@ -2,17 +2,16 @@
   @include bce-color-default(primary);
   position: relative;
   display: inline-block;
-  width: 36px;
-  height: 20px;
   margin: 2px 0;
-  cursor: pointer;
 
   > label {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    cursor: inherit;
+    width: 36px;
+    height: 20px;
+    cursor: pointer;
 
     // Visually hide input
     > input {
@@ -59,6 +58,31 @@
   }
 }
 
+// :host([block]) {
+//   display: block;
+//   width: 100%;
+//
+//   bce-label {
+//     width: calc(100% - 36px);
+//   }
+//
+//   > label {
+//     display: inline-flex;
+//   }
+// }
+
+:host([disabled]) > label {
+  cursor: default;
+
+  > div {
+    background-color: bce-color-l(disable);
+
+    &:after {
+      background-color: bce-color(disable);
+    }
+  }
+}
+
 :host([focus]) {
   outline: none;
 
@@ -80,14 +104,23 @@
   }
 }
 
-:host([disabled]) {
-  cursor: default;
+:host([label]) {
+  display: block;
+  margin: 20px 0;
+  height: 40px;
+  line-height: 40px;
 
-  > label > div {
-    background-color: bce-color-l(disable);
+  bce-label {
+    width: calc(100% - 36px);
+  }
 
-    &:after {
-      background-color: bce-color(disable);
+  > label {
+    display: inline-flex;
+  }
+
+  @include media-medium {
+    bce-label {
+      width: 25%;
     }
   }
 }

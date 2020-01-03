@@ -15,10 +15,11 @@ export class BceForm {
 
   @Method()
   public async validate(silent = false) {
-    const inputs = this.getInputs();
-    const nested = await Promise.all(inputs.map(el => el.validate(silent)));
-    this.errors = [].concat(...(nested as any[]));
-    return this.errors;
+    // const inputs = this.getInputs();
+    // const nested = await Promise.all(inputs.map(el => el.validate(silent)));
+    // this.errors = [].concat(...(nested as any[]));
+    // return this.errors;
+    return [];
   }
 
   @Method()
@@ -31,7 +32,7 @@ export class BceForm {
   @Method()
   public async reset() {
     const inputs = this.getInputs();
-    for (const input of inputs) await input.reset();
+    // for (const input of inputs) await input.reset();
   }
 
   private getInputs() {

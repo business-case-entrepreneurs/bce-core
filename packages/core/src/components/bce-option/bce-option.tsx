@@ -47,13 +47,13 @@ export class BceOption {
     switch (this.type) {
       case 'checkbox': {
         const options = this.parent.querySelectorAll('bce-option');
-        this.parent.value = Array.from(options)
-          .filter(option => option.value && option.checked)
-          .map(option => option.value!);
+        // this.parent.value = Array.from(options)
+        //   .filter(option => option.value && option.checked)
+        //   .map(option => option.value!);
         break;
       }
       case 'radio': {
-        this.parent.value = this.value || this.parent.value;
+        // this.parent.value = this.value || this.parent.value;
         break;
       }
     }
@@ -72,7 +72,7 @@ export class BceOption {
   };
 
   private handleClick = () => {
-    if (this.parent) this.parent.value = this.value || null;
+    // if (this.parent) this.parent.value = this.value || null;
   };
 
   componentDidLoad() {
@@ -89,7 +89,7 @@ export class BceOption {
       | undefined;
 
     if (!this.parent) return;
-    this.parent.registerOption(this.el);
+    // this.parent.registerOption(this.el);
 
     // Inherit type and uuid from parent component
     this.type = (this.parent as any).type || 'dropdown';

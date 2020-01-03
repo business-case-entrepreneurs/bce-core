@@ -6,13 +6,13 @@ type Validation = { valid: boolean; message: string };
 type ValidatorFunc = (
   value: any,
   arg: string | undefined,
-  el: HTMLBceInputElement
+  el: any
 ) => Promise<Validation>;
 
 interface TranslatorContext {
   readonly arg?: string;
   readonly default: string;
-  readonly el: HTMLBceInputElement;
+  readonly el: any;
   readonly meta?: any;
   readonly value: any;
 }
@@ -23,12 +23,7 @@ class Validator {
   public readonly rules = new Map<string, ValidatorFunc>();
   public translator?: Translator;
 
-  public validate(
-    rule: string,
-    value: any,
-    el: HTMLBceInputElement,
-    meta?: any
-  ) {
+  public validate(rule: string, value: any, el: any, meta?: any) {
     const rules = rule.split('|').map(r => {
       const [rule, arg] = r.split(':');
       return { rule, arg } as Rule;
@@ -37,12 +32,7 @@ class Validator {
     return this.exec(value, rules, el, meta);
   }
 
-  private async exec(
-    value: any,
-    rules: Rule[],
-    el: HTMLBceInputElement,
-    meta?: any
-  ) {
+  private async exec(value: any, rules: Rule[], el: any, meta?: any) {
     let errors: ValidatorError[] = [];
 
     for (const { rule, arg } of rules) {
@@ -56,7 +46,7 @@ class Validator {
   private async rule(
     value: any,
     rule: string,
-    el: HTMLBceInputElement,
+    el: any,
     arg?: string,
     meta?: any
   ) {
@@ -211,7 +201,7 @@ validator.rules.set('required', async value => {
   return { valid, message };
 });
 
-const getSize = (value: any, el: HTMLBceInputElement): number => {
+const getSize = (value: any, el: any): number => {
   switch (el.type) {
     case 'checkbox':
       return value.length;
@@ -224,10 +214,7 @@ const getSize = (value: any, el: HTMLBceInputElement): number => {
   }
 };
 
-const getRangeArg = (
-  arg: string | undefined,
-  el: HTMLBceInputElement
-): number => {
+const getRangeArg = (arg: string | undefined, el: any): number => {
   switch (el.type) {
     case 'date':
       return new Date(arg!).getTime();

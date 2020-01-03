@@ -13,10 +13,65 @@
   </head>
 
   <body>
-    <bce-root id="app">
+    <bce-root id="app" screen="small">
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
       <main>
+        <bce-switch value="true"></bce-switch>
+        <bce-switch value="true" color="secondary"></bce-switch>
+        <bce-switch value="true" color="tertiary"></bce-switch>
+
+        <br />
+        <bce-switch value="true" color="success"></bce-switch>
+        <bce-switch value="true" color="error"></bce-switch>
+        <bce-switch value="true" color="warning"></bce-switch>
+        <bce-switch value="true" color="info"></bce-switch>
+
+        <bce-switch
+          color="secondary"
+          label="Switch Label 1"
+          value="true"
+        ></bce-switch>
+        <bce-switch
+          color="tertiary"
+          label="Switch Label 2"
+          value="true"
+        ></bce-switch>
+
+        <bce-switch
+          color="secondary"
+          label="Switch Label A"
+          value="true"
+          block
+        ></bce-switch>
+        <bce-switch
+          color="tertiary"
+          label="Switch Label B"
+          value="true"
+          block
+        ></bce-switch>
+
+        <bce-input type="text" label="Regular Text"></bce-input>
+        <bce-input
+          type="textarea"
+          label="Textarea"
+          tooltip="Textarea with auto resize functionality..."
+        ></bce-input>
+
+        <bce-input type="text" value="Text"></bce-input>
+        <bce-input type="textarea" value="Textarea"></bce-input>
+
+        <!--
+        <bce-select type="radio"></bce-select>
+        <bce-select type="checkbox"></bce-select>
+        <bce-select type="dropdown"></bce-select>
+
+        <bce-select type="choice"></bce-select>
+        <bce-select type="filter"></bce-select>
+        <bce-select type="input"></bce-select>
+        -->
+
+        <!--
         <h2>BCE Switch</h2>
         <a
           href="https://material.io/components/selection-controls/#switches"
@@ -158,6 +213,7 @@
           <bce-button>Option B</bce-button>
           <bce-button>Option C</bce-button>
         </bce-fab>
+        -->
       </main>
     </bce-root>
 

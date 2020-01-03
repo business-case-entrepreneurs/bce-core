@@ -31,6 +31,8 @@ bce-root {
 
   /* Component specific colors */
   @include bce-color-define(rgba(100, 100, 100, 0.2) #616161, chip);
+
+  --bce-size-small: true;
 }
 
 bce-root {
