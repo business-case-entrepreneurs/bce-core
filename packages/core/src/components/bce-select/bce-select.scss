@@ -1,0 +1,38 @@
+:host {
+  @include bce-color-default(primary);
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 40px;
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: inherit;
+
+    legend {
+      display: none;
+    }
+  }
+}
+
+:host([center]) {
+  text-align: center;
+}
+
+:host([label]) {
+  bce-label {
+    flex: 1 0 25%;
+    height: 100%;
+    line-height: 40px;
+  }
+
+  fieldset {
+    flex: 1 0 75%;
+  }
+
+  @include media-medium {
+    flex-flow: row nowrap;
+  }
+}

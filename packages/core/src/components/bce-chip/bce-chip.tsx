@@ -1,6 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { Component, Element, h, Prop, Host } from '@stencil/core';
 import { faCheck, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { Component, Element, h, Prop, Host } from '@stencil/core';
 
 import { ChipDesign } from '../../models/chip-design';
 import { ChipType } from '../../models/chip-type';
@@ -9,7 +9,7 @@ import { UUID } from '../../utils/uuid';
 
 library.add(faCheck, faTimesCircle);
 
-const INPUT_TYPES: { [Type in ChipType]: string } = {
+const INPUT_TYPE_MAP: { [Type in ChipType]: string } = {
   action: 'button',
   choice: 'radio',
   filter: 'checkbox',
@@ -18,22 +18,22 @@ const INPUT_TYPES: { [Type in ChipType]: string } = {
 
 @Component({
   tag: 'bce-chip',
-  styleUrl: 'bce-chip.scss',
+  styleUrls: {
+    ['bce-select']: 'bce-chip.select.scss',
+    default: 'bce-chip.scss'
+  },
   shadow: true
 })
 export class BceChip {
   @Element()
-  private el!: HTMLBceOptionElement;
+  private el!: HTMLBceChipElement;
 
   // #region Custom properties
   @Prop({ reflect: true })
-  public type?: ChipType;
-
-  @Prop({ reflect: true })
   public design?: ChipDesign;
 
-  @Prop({ reflect: true })
-  public thumbnail?: string;
+  @Prop({ reflect: true, attribute: 'focus' })
+  public hasFocus?: boolean;
 
   @Prop({ reflect: true })
   public icon?: string;
@@ -41,44 +41,47 @@ export class BceChip {
   @Prop({ reflect: true })
   public removable?: boolean;
 
-  @Prop({ reflect: true, attribute: 'focus' })
-  public hasFocus?: boolean;
+  @Prop({ reflect: true })
+  public thumbnail?: string;
+
+  @Prop({ reflect: true })
+  public type?: ChipType;
   // #endregion
 
   // #region Forwarded to native input
   @Prop({ reflect: true })
-  public disabled = false;
+  public checked?: boolean;
+
+  @Prop({ reflect: true })
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
   public name?: string;
 
   @Prop({ reflect: true })
   public value?: string;
-
-  @Prop({ reflect: true })
-  public checked?: boolean;
   // #endregion
 
-  private id = UUID.v4();
+  private _id = UUID.v4();
 
   private handleBlur = () => {
     this.hasFocus = false;
   };
 
-  public handleClick = (event: Event) => {
+  public handleClick = () => {
     switch (this.type) {
       case 'choice':
-        const query = `bce-chip[type='${this.type}'][name='${this.name}']`;
-        const options = Array.from(document.querySelectorAll(query));
-        for (const option of options as HTMLBceOptionElement[])
-          option.checked = this.el === option ? !option.checked : false;
+        const query = this.name
+          ? `bce-chip[type='choice'][name='${this.name}']`
+          : "bce-chip[type='choice']";
+
+        const chips = Array.from(this.el.parentNode!.querySelectorAll(query));
+        for (const chip of chips as HTMLBceChipElement[])
+          chip.checked = this.el === chip ? !chip.checked : false;
         return;
 
       case 'filter':
         this.checked = !this.checked;
-        return;
-
-      default:
         return;
     }
   };
@@ -165,13 +168,13 @@ export class BceChip {
         {this.renderThumbnail()}
         {this.renderIcon()}
         <input
-          id={this.id}
-          type={this.type ? INPUT_TYPES[this.type] : 'button'}
+          id={this._id}
           checked={!!this.checked}
           name={this.name}
+          type={this.type ? INPUT_TYPE_MAP[this.type] : 'button'}
           onClick={this.ignoreClick}
         />
-        <label htmlFor={this.id} onClick={this.handleClick}>
+        <label htmlFor={this._id} onClick={this.handleClick}>
           <slot />
         </label>
         {this.renderRemove()}

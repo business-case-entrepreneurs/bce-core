@@ -1,39 +1,75 @@
 :host {
   @include bce-color-default(primary);
   position: relative;
-  display: block;
+  display: flex;
   margin: 20px 0;
   height: 48px;
 
-  > input,
-  > textarea {
-    width: 100%;
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+  }
+
+  input,
+  textarea {
+    flex: 1 0 100%;
     height: inherit;
-    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 13px 12px;
+    padding: 14px 12px;
     font-size: 0.9em;
     font-family: inherit;
     border: 1px solid bce-color-d(light);
     border-radius: 4px;
     box-sizing: border-box;
     outline: none;
+    transition: border-color 0.3s ease-in-out;
+    -webkit-appearance: none;
+
+    &[type='color'] {
+      padding: 10px;
+      background-color: bce-color-l(light);
+    }
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: 2px;
+    }
   }
 
-  > textarea {
+  textarea {
     resize: none;
     overflow-y: hidden;
+    padding: 10px 12px;
+  }
+
+  > bce-button {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &[data-hidden] {
+      display: none;
+    }
+  }
+}
+
+:host([focus]) {
+  input,
+  textarea {
+    border-color: bce-color();
   }
 }
 
 :host([label]) {
-  > input,
-  > textarea {
-    padding: 22px 12px 4px;
-  }
-
   bce-label {
     position: absolute;
-    margin: 14px 12px 6px;
+    margin: 15px 12px;
+    font-size: 0.9em;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
     &[data-hover] {
       margin: 7px 12px;
@@ -41,22 +77,12 @@
     }
   }
 
-  @include media-medium {
-    > input,
-    > textarea {
-      width: 75%;
-    }
+  input,
+  textarea {
+    padding: 22px 12px 4px;
 
-    bce-label {
-      position: relative;
-      display: inline-block;
-      margin: 0;
-      width: 25%;
-
-      &[data-hover] {
-        margin: 0;
-        font-size: 1em;
-      }
+    &[type='color'] {
+      padding: 24px 10px 8px;
     }
   }
 }
@@ -64,5 +90,49 @@
 @include media-medium {
   :host(:not([compact])) {
     height: 40px;
+
+    input {
+      padding: 12px;
+
+      &[type='color'] {
+        padding: 10px;
+      }
+    }
+
+    textarea {
+      padding: 10px 12px;
+    }
+  }
+
+  :host(:not([compact])[label]) {
+    bce-label {
+      flex: 0 0 25%;
+      position: initial;
+      margin: 0;
+      font-size: initial;
+      line-height: 40px;
+
+      &[data-hover] {
+        margin: 0;
+        font-size: initial;
+      }
+    }
+
+    input,
+    textarea {
+      flex: 1 0 75%;
+    }
+
+    input {
+      padding: 14px 12px;
+
+      &[type='color'] {
+        padding: 10px;
+      }
+    }
+
+    textarea {
+      padding: 10px 12px;
+    }
   }
 }

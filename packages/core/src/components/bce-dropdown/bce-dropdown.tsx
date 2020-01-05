@@ -40,7 +40,7 @@ export class BceDropdown {
   private filter: string = '';
 
   @State()
-  private options: HTMLBceOptionElement[] = [];
+  private options: any[] = [];
 
   private onInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
@@ -112,7 +112,7 @@ export class BceDropdown {
         data-active={this.hasFocus}
       />,
       <div data-active={this.hasFocus}>
-        {this.value && !this.filter && <bce-option value={null} />}
+        {this.value && !this.filter && <bce-option-old value={null} />}
         <slot />
       </div>
     ];

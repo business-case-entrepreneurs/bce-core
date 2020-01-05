@@ -6,9 +6,6 @@ import { Component, h, Prop } from '@stencil/core';
   shadow: true
 })
 export class Label {
-  @Prop({ reflect: true })
-  public for?: string;
-
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus = false;
 
@@ -17,7 +14,7 @@ export class Label {
 
   render() {
     return (
-      <label htmlFor={this.for}>
+      <label>
         <slot />
         {this.tooltip && [
           ' ',

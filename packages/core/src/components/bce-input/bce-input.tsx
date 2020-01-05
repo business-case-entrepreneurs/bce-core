@@ -1,18 +1,11 @@
-import { Component, Element, h, Prop, Host } from '@stencil/core';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 
-import { UUID } from '../../utils/uuid';
+import { InputType } from '../../models/input-type';
 
-export type InputType =
-  | 'color'
-  | 'date'
-  | 'email'
-  | 'number'
-  | 'password'
-  | 'search'
-  | 'tel'
-  | 'text'
-  | 'textarea'
-  | 'url';
+const ROW_SIZE = 19;
+library.add(faEye, faEyeSlash);
 
 @Component({
   tag: 'bce-input',
@@ -40,19 +33,29 @@ export class Input {
 
   // #region Forwarded to native input & textarea
   @Prop({ reflect: true })
+  public autocomplete?: string;
+
+  @Prop({ reflect: true })
   public disabled = false;
 
   @Prop()
-  public placeholder = '';
+  public placeholder?: string;
+
+  @Prop({ reflect: true })
+  public rows?: number;
 
   @Prop({ reflect: true })
   public type: InputType = 'text';
 
   @Prop({ mutable: true })
-  public value = '';
+  public value?: string;
   // #endregion
 
-  private _id: string = UUID.v4();
+  @State()
+  private showPassword = false;
+
+  @State()
+  private hasHover = false;
 
   private handleBlur = () => {
     this.hasFocus = false;
@@ -70,14 +73,27 @@ export class Input {
     this.resizeTextarea();
   };
 
+  private handleShowPassword = () => {
+    this.showPassword = !this.showPassword;
+
+    const query = this.type === 'textarea' ? 'textarea' : 'input';
+    this.el.shadowRoot!.querySelector(query)!.focus();
+  };
+
   private resizeTextarea = () => {
     if (this.type !== 'textarea') return;
 
-    const min = window.innerWidth < 1024 || this.compact ? 48 : 40;
-    // this.min || (window.innerWidth < 1024 || this.compact ? 48 : 40);
+    const lines = Math.max(
+      this.value ? this.value.split(/\r\n|\r|\n/).length : 0,
+      this.rows || 0
+    );
 
-    const { scrollHeight } = this.el.shadowRoot!.querySelector('textarea')!;
-    const height = min > scrollHeight ? min : scrollHeight;
+    const compact = this.compact || window.innerWidth < 1024;
+    const min = compact ? 48 : 40;
+    const padding = compact ? 10 + ROW_SIZE : ROW_SIZE;
+    const size = lines * ROW_SIZE + padding;
+    const height = Math.max(min, size);
+
     this.el.style.setProperty('height', height + 'px');
   };
 
@@ -88,6 +104,8 @@ export class Input {
 
   componentDidLoad() {
     this.resizeTextarea();
+    this.el.addEventListener('mouseenter', () => (this.hasHover = true));
+    this.el.addEventListener('mouseleave', () => (this.hasHover = false));
     window.addEventListener('resize', this.resizeTextarea);
   }
 
@@ -95,31 +113,46 @@ export class Input {
     window.removeEventListener('resize', this.resizeTextarea);
   }
 
-  render() {
-    const Input = this.type === 'textarea' ? 'textarea' : 'input';
+  renderIcon() {
+    if (this.type !== 'password') return;
 
     return (
-      <Host>
-        {this.label && (
-          <bce-label
-            for={this._id}
-            hasFocus={this.hasFocus}
-            tooltip={this.tooltip}
-            data-hover={this.hover}
-          >
-            {this.label}
-          </bce-label>
-        )}
-        <Input
-          type={this.type}
-          value={this.value}
-          placeholder={this.placeholder}
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
-          onInput={this.handleInput}
-          data-hover={this.hover}
-        />
-      </Host>
+      <bce-button
+        design="text"
+        icon={this.showPassword ? 'far:eye' : 'far:eye-slash'}
+        tabIndex={-1}
+        onClick={this.handleShowPassword}
+        data-hidden={!this.value || (!this.hasHover && !this.hasFocus)}
+      />
     );
+  }
+
+  render() {
+    const Input = this.type === 'textarea' ? 'textarea' : 'input';
+    const type = this.showPassword ? 'text' : this.type;
+
+    return [
+      this.label && (
+        <bce-label
+          hasFocus={this.hasFocus}
+          tooltip={this.tooltip}
+          data-hover={this.hover}
+        >
+          {this.label}
+        </bce-label>
+      ),
+      <Input
+        autocomplete={this.autocomplete}
+        placeholder={this.placeholder}
+        type={type}
+        value={this.value}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onInput={this.handleInput}
+        aria-label={this.label}
+        data-hover={this.hover}
+      />,
+      this.renderIcon()
+    ];
   }
 }

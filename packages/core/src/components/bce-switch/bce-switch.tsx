@@ -1,7 +1,5 @@
 import { Component, Element, h, Prop } from '@stencil/core';
 
-import { UUID } from '../../utils/uuid';
-
 @Component({
   tag: 'bce-switch',
   styleUrl: 'bce-switch.scss',
@@ -32,8 +30,6 @@ export class Switch {
   @Prop({ reflect: true, mutable: true })
   public value = false;
 
-  private _id: string = UUID.v4();
-
   private handleBlur = () => {
     this.hasFocus = false;
   };
@@ -55,17 +51,12 @@ export class Switch {
   render() {
     return [
       this.label && (
-        <bce-label
-          for={this._id}
-          hasFocus={this.hasFocus}
-          tooltip={this.tooltip}
-        >
+        <bce-label hasFocus={this.hasFocus} tooltip={this.tooltip}>
           {this.label}
         </bce-label>
       ),
       <label>
         <input
-          id={this._id}
           type="checkbox"
           checked={this.value}
           disabled={this.disabled}
@@ -73,6 +64,7 @@ export class Switch {
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onInput={this.ignoreInput}
+          aria-label={this.label}
         />
         <div data-on={this.value} data-off={!this.value} />
       </label>

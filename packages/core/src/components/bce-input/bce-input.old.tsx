@@ -11,7 +11,6 @@ import {
   Watch
 } from '@stencil/core';
 
-import { InputType, InputValue } from '../../models/input-type';
 import { Validation } from '../../models/validation';
 import { debounce } from '../../utils/debounce';
 import { UUID } from '../../utils/uuid';
@@ -34,10 +33,10 @@ export class BceInput {
   public color?: string;
 
   @Prop({ reflect: true })
-  public type: InputType = 'text';
+  public type: any = 'text';
 
   @Prop({ mutable: true })
-  public value: InputValue = '';
+  public value: any = '';
 
   @Prop()
   public placeholder = '';
@@ -256,7 +255,7 @@ export class BceInput {
   }
 
   @Watch('value')
-  public watchValue(value: InputValue) {
+  public watchValue(value: any) {
     if (!this._initialized) return;
 
     this.value = this.parseValue(value);
@@ -267,7 +266,7 @@ export class BceInput {
     this.el.dispatchEvent(event);
   }
 
-  private updateOptionValue(option: HTMLBceOptionElement) {
+  private updateOptionValue(option: any) {
     switch (this.type) {
       case 'checkbox': {
         const v = this.value as string[] | undefined;
@@ -282,7 +281,7 @@ export class BceInput {
     }
   }
 
-  private parseValue(value: InputValue): InputValue {
+  private parseValue(value: any): any {
     if (this.type === 'checkbox' && typeof value === 'string')
       return value ? JSON.parse(value) : [];
     if (this.type === 'dropdown' && typeof value === 'string')

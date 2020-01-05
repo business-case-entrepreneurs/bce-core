@@ -18,8 +18,8 @@ import { UUID } from '../../utils/uuid';
 @Component({
   tag: 'bce-button',
   styleUrls: {
+    ['bce-fab']: 'bce-button.fab.scss',
     default: 'bce-button.scss',
-    fab: 'bce-button.fab.scss',
     bucket: 'bce-button.bucket.scss'
   },
   shadow: true

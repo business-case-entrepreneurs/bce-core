@@ -1,16 +1,11 @@
 export type InputType =
-  | 'checkbox'
   | 'color'
-  | 'container'
   | 'date'
-  | 'dropdown'
-  | 'file'
+  | 'email'
   | 'number'
   | 'password'
-  | 'radio'
-  | 'slider'
-  | 'switch'
+  | 'search'
+  | 'tel'
   | 'text'
-  | 'textarea';
-
-export type InputValue = string | string[] | number | boolean | null;
+  | 'textarea'
+  | 'url';
