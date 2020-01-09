@@ -1,22 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-    "types": ["webpack-env", "@bcase/core"],
-    "jsx": "preserve",
-    "importHelpers": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true
+
+    "allowJs": true,
+    "jsx": "react",
+    "jsxFactory": "Preact.h",
+    "strict": true,
+    "moduleResolution": "node",
+    "types": ["@bcase/core", "@types/webpack-env"],
+    "esModuleInterop": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.tsx", "src/**/*.ts"]
 }

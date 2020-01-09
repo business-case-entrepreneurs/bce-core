@@ -1,4 +1,5 @@
 packages/*/.rpt2_cache/
+packages/*/build/
 packages/*/dist/
 packages/*/loader/
 packages/*/src/components.d.ts

@@ -118,7 +118,7 @@
     display: inline-flex;
   }
 
-  @include media-medium {
+  @include media-small {
     bce-label {
       width: 25%;
     }
