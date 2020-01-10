@@ -1,8 +1,17 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  State
+} from '@stencil/core';
 
 import { ChipType } from '../../models/chip-type';
 import { OptionType } from '../../models/option-type';
 import { SelectType } from '../../models/select-type';
+import { validator } from '../../utils/validator';
 
 const CHIP_TYPE_MAP: { [Type in SelectType]: ChipType } = {
   checkbox: 'filter',
@@ -43,6 +52,15 @@ export class Select {
   @Prop({ reflect: true })
   public type: SelectType = 'checkbox';
 
+  @Prop({ reflect: true })
+  public validation?: string;
+
+  @Prop({ mutable: true })
+  public value?: string | string[];
+
+  @State()
+  private error = '';
+
   private chips: HTMLBceChipElement[] = [];
   private options: HTMLBceOptionElement[] = [];
 
@@ -75,6 +93,23 @@ export class Select {
     }
   };
 
+  @Method()
+  public async reset() {}
+
+  @Method()
+  public async validate(silent = false) {
+    if (!this.validation) return [];
+
+    const label = this.label || '';
+    const name = this.name || '';
+    const meta = { label, name };
+
+    const errors = await validator.validate(this.validation, this.el, meta);
+    if (!silent) this.error = errors.length ? errors[0].message : '';
+
+    return errors;
+  }
+
   private attachEventHandlers(el: HTMLElement) {
     el.addEventListener('blur', this.handleBlur);
     el.addEventListener('focus', this.handleFocus);
@@ -92,16 +127,18 @@ export class Select {
     if (this.type === 'input')
       console.warn('[bce-select] The input type is unimplemented.');
 
-    return [
-      this.label && (
-        <bce-label hasFocus={this.hasFocus} tooltip={this.tooltip}>
-          {this.label}
-        </bce-label>
-      ),
-      <fieldset>
-        {this.label && <legend>{this.label}</legend>}
-        <slot />
-      </fieldset>
-    ];
+    return (
+      <Host>
+        {this.label && (
+          <bce-label hasFocus={this.hasFocus} tooltip={this.tooltip}>
+            {this.label}
+          </bce-label>
+        )}
+        <fieldset>
+          {this.label && <legend>{this.label}</legend>}
+          <slot />
+        </fieldset>
+      </Host>
+    );
   }
 }

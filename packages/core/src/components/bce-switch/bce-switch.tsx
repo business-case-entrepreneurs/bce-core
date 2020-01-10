@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import { Component, Element, h, Method, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bce-switch',
@@ -27,7 +27,10 @@ export class Switch {
   @Prop()
   public tooltip?: string;
 
-  @Prop({ reflect: true, mutable: true })
+  @Prop({ reflect: true })
+  public validation?: string;
+
+  @Prop({ mutable: true })
   public value = false;
 
   private handleBlur = () => {
@@ -47,6 +50,15 @@ export class Switch {
   private ignoreInput = (event: Event) => {
     event.cancelBubble = true;
   };
+
+  @Method()
+  public async reset() {}
+
+  @Method()
+  public async validate(silent = false) {
+    if (!this.validation) return [];
+    return [];
+  }
 
   render() {
     return [

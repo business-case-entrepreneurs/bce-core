@@ -236,12 +236,7 @@ export class BceInput {
     const name = this.name || '';
     const meta = { el: this.el };
 
-    const errors = await validator.validate(
-      this.validation,
-      this.value,
-      this.el,
-      meta
-    );
+    const errors = await validator.validate(this.validation, this.el, meta);
 
     if (!silent) this.error = errors.length ? errors[0].message : '';
     return errors.map(e => ({ label, name, ...e } as Validation));

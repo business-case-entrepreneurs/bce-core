@@ -17,7 +17,26 @@
       <bce-status-bar color="dark"></bce-status-bar>
       <bce-header color="dark"></bce-header>
 
-      <main></main>
+      <main>
+        <bce-form>
+          <bce-input
+            type="email"
+            label="Email"
+            validation="required|email"
+          ></bce-input>
+          <bce-input
+            type="password"
+            label="Password"
+            validation="required"
+          ></bce-input>
+          <bce-input
+            type="tel"
+            label="Phone"
+            validation="required|phone"
+          ></bce-input>
+          <bce-switch label="Active" validation="required"></bce-switch>
+        </bce-form>
+      </main>
     </bce-root>
 
     <script type="module" src="build/bce.esm.js"></script>

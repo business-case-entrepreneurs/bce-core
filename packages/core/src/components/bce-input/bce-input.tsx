@@ -1,8 +1,10 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Method, Prop, State } from '@stencil/core';
 
 import { InputType } from '../../models/input-type';
+import { debounce } from '../../utils/debounce';
+import { validator } from '../../utils/validator';
 
 const ROW_SIZE = 19;
 library.add(faEye, faEyeSlash);
@@ -28,8 +30,14 @@ export class Input {
   @Prop({ reflect: true })
   public label?: string;
 
+  @Prop({ reflect: true })
+  public name?: string;
+
   @Prop()
   public tooltip?: string;
+
+  @Prop({ reflect: true })
+  public validation?: string;
 
   // #region Forwarded to native input & textarea
   @Prop({ reflect: true })
@@ -57,6 +65,13 @@ export class Input {
   @State()
   private hasHover = false;
 
+  @State()
+  private error = '';
+
+  private _debounceValidate = debounce(this.validate.bind(this), 1000);
+  private _initialValue?: string = this.value;
+  private _resetting = false;
+
   private handleBlur = () => {
     this.hasFocus = false;
   };
@@ -68,9 +83,10 @@ export class Input {
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
-
-    event.cancelBubble = true;
     this.resizeTextarea();
+
+    if (this.error) this.validate();
+    else if (!this._resetting) this._debounceValidate();
   };
 
   private handleShowPassword = () => {
@@ -100,6 +116,27 @@ export class Input {
   private get hover() {
     if (this.type === 'color' || this.type === 'date') return true;
     return this.hasFocus || !!this.placeholder || !!this.value;
+  }
+
+  @Method()
+  public async reset() {
+    this._resetting = true;
+    this.value = this._initialValue;
+    this.error = '';
+  }
+
+  @Method()
+  public async validate(silent = false) {
+    if (!this.validation) return [];
+
+    const label = this.label || '';
+    const name = this.name || '';
+    const meta = { label, name };
+
+    const errors = await validator.validate(this.validation, this.el, meta);
+    if (!silent) this.error = errors.length ? errors[0].message : '';
+
+    return errors;
   }
 
   componentDidLoad() {
