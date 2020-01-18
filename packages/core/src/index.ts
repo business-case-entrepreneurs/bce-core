@@ -2,4 +2,5 @@ export * from './utils/debounce';
 export * from './utils/file';
 export * from './utils/ripple';
 export * from './utils/uuid';
+export * from './utils/scroll-spy';
 export * from './utils/validator';
