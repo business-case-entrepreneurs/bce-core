@@ -8,11 +8,24 @@
   color: bce-color-t();
 
   header {
+    box-sizing: border-box;
     @include elevate(4);
     position: fixed;
     width: inherit;
     height: inherit;
     background-color: inherit;
     color: inherit;
+  }
+
+  @include media-medium {
+    header {
+      padding: 0 calc((100vw - 930px) / 2);
+    }
+  }
+
+  @include media-large {
+    header {
+      padding: 0 calc((100vw - 1110px) / 2);
+    }
   }
 }

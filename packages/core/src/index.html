@@ -13,31 +13,25 @@
   </head>
 
   <body>
-    <bce-root id="app">
+    <bce-root2 id="app">
       <bce-status-bar color="dark"></bce-status-bar>
-      <bce-header color="dark"></bce-header>
+      <bce-header color="dark">
+        <span
+          style="padding:0 16px;height:100%;font-weight:bold;line-height:51px;letter-spacing:2px;user-select:none;"
+        >
+          LOGO
+        </span>
 
-      <main>
-        <bce-form>
-          <bce-input
-            type="email"
-            label="Email"
-            validation="required|email"
-          ></bce-input>
-          <bce-input
-            type="password"
-            label="Password"
-            validation="required"
-          ></bce-input>
-          <bce-input
-            type="tel"
-            label="Phone"
-            validation="required|phone"
-          ></bce-input>
-          <bce-switch label="Active" validation="required"></bce-switch>
-        </bce-form>
-      </main>
-    </bce-root>
+        <bce-nav>
+          <a href="/#section1">Section 1</a>
+          <a href="/#section2">Section 2</a>
+          <a href="/#section3">Section 3</a>
+          <a href="/#section4">Section 4</a>
+        </bce-nav>
+      </bce-header>
+
+      <main></main>
+    </bce-root2>
 
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>

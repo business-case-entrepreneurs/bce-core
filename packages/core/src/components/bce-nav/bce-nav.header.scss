@@ -1,0 +1,44 @@
+:host {
+  @include elevate(4, false);
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  padding-top: 56px;
+
+  bce-button {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+  }
+
+  nav {
+    display: flex;
+    height: 0;
+    flex-flow: column nowrap;
+    background-color: bce-color();
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+
+    &[data-active] {
+      height: auto;
+    }
+  }
+
+  @include media-medium {
+    @include elevate(0, false);
+    position: relative;
+    width: auto;
+    padding: 0 16px;
+    float: right;
+
+    bce-button {
+      display: none;
+    }
+
+    nav {
+      flex-flow: row nowrap;
+      height: auto;
+    }
+  }
+}

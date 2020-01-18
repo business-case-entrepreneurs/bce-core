@@ -61,8 +61,8 @@ export class Fab {
 
   componentWillLoad() {
     // Register FAB with bce-root
-    this.root = this.el.closest('bce-root') as HTMLBceRootElement;
-    if (this.root) this.root.registerFAB(true);
+    // this.root = this.el.closest('bce-root') as HTMLBceRootElement;
+    // if (this.root) this.root.registerFAB(true);
   }
 
   componentDidLoad() {
@@ -74,7 +74,7 @@ export class Fab {
   }
 
   componentDidUnload() {
-    if (this.root) this.root.registerFAB(false);
+    // if (this.root) this.root.registerFAB(false);
   }
 
   private initButton(button: HTMLBceButtonElement) {
