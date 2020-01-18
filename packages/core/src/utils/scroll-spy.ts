@@ -23,7 +23,7 @@ export class ScrollSpy {
 
   private get active() {
     const last = this.nodes[this.nodes.length - 1];
-    if (this.bottom && this.isVisible(last.section)) return last;
+    if (last && this.bottom && this.isVisible(last.section)) return last;
 
     for (let i = this.nodes.length - 1; i >= 0; i--)
       if (this.isVisible(this.nodes[i].section)) return this.nodes[i];
