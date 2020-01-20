@@ -1,4 +1,4 @@
-import { Component, Element, h, State, Method } from '@stencil/core';
+import { Component, Element, h, Prop, State, Method } from '@stencil/core';
 
 const NAV_ITEM = 56;
 
@@ -6,7 +6,8 @@ const NAV_ITEM = 56;
   tag: 'bce-nav',
   styleUrls: {
     'bce-header': 'bce-nav.header.scss',
-    default: 'bce-nav.header.scss'
+    'bce-side-bar': 'bce-nav.side-bar.scss',
+    default: 'bce-nav.side-bar.scss'
   },
   shadow: true
 })
@@ -14,8 +15,8 @@ export class Nav {
   @Element()
   private el!: HTMLBceNavElement;
 
-  @State()
-  private _active = false;
+  @Prop({ reflect: true, mutable: true })
+  public active = false;
 
   @State()
   private _height: number | null = null;
@@ -31,22 +32,21 @@ export class Nav {
 
     const nodes = slot.assignedNodes({ flatten: true });
     this._links = nodes.filter(node => node.nodeName === 'A').length;
-    this.toggle(this._active);
+    this.toggle(this.active);
   };
 
   @Method()
   public async toggle(active?: boolean) {
-    this._active = active != undefined ? active : !this._active;
+    this.active = active != undefined ? active : !this.active;
 
     // Animation logic
     if (this._timer) window.clearTimeout(this._timer);
 
-    // Reset
     const height = this._links * NAV_ITEM;
-    this._height = this._active ? 0 : height;
+    this._height = this.active ? 0 : height;
 
     await new Promise(res => setTimeout(res, 20));
-    this._height = this._active ? height : 0;
+    this._height = this.active ? height : 0;
     this._timer = window.setTimeout(() => (this._height = null), 300);
   }
 
@@ -63,13 +63,12 @@ export class Nav {
     const style = height ? { style: { height } } : {};
 
     return [
-      <bce-button
-        color="light"
-        design="text"
-        icon="square"
-        onClick={this.handleButton}
-      ></bce-button>,
-      <nav data-active={this._active} {...style}>
+      <button onClick={this.handleButton}>
+        <span />
+        <span />
+        <span />
+      </button>,
+      <nav {...style}>
         <slot />
       </nav>
     ];

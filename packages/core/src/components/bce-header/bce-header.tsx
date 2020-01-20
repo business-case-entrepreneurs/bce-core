@@ -9,6 +9,9 @@ export class BceHeader {
   @Prop({ reflect: true })
   public color?: string;
 
+  @Prop({ reflect: true })
+  public responsive?: boolean;
+
   render() {
     return (
       <header>

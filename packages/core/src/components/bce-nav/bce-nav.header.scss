@@ -1,15 +1,34 @@
 :host {
-  @include elevate(4, false);
   position: absolute;
   top: 0px;
   left: 0;
   width: 100%;
   padding-top: 56px;
 
-  bce-button {
+  button {
     position: absolute;
-    right: 16px;
-    top: 10px;
+    right: 0px;
+    top: 0px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    width: 56px;
+    height: 56px;
+    padding: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    span {
+      flex: 0 0 3px;
+      width: 24px;
+      background-color: bce-color-t();
+      border-radius: 3px;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 
   nav {
@@ -19,10 +38,6 @@
     background-color: bce-color();
     transition: height 0.3s ease-in-out;
     overflow: hidden;
-
-    &[data-active] {
-      height: auto;
-    }
   }
 
   @include media-medium {
@@ -32,7 +47,7 @@
     padding: 0 16px;
     float: right;
 
-    bce-button {
+    button {
       display: none;
     }
 
@@ -40,5 +55,13 @@
       flex-flow: row nowrap;
       height: auto;
     }
+  }
+}
+
+:host([active]) {
+  @include elevate(4, false);
+
+  nav {
+    height: auto;
   }
 }
