@@ -41,13 +41,16 @@ bce-root2 {
   }
 }
 
-bce-nav > a {
-  color: bce-color-t();
+bce-nav a {
   text-transform: uppercase;
-  text-decoration: none;
   height: 56px;
+  text-decoration: none;
   line-height: 56px;
   letter-spacing: 1px;
+}
+
+bce-header bce-nav a {
+  color: bce-color-t();
   padding: 0 16px;
 
   &.active {
@@ -55,15 +58,23 @@ bce-nav > a {
   }
 }
 
+bce-side-bar bce-nav a {
+  color: black;
+
+  &.active {
+    color: bce-color();
+  }
+}
+
 bce-root2 {
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
     'stat stat'
     'head head'
-    'main main';
+    'side main';
 
   bce-status-bar {
     grid-area: stat;
@@ -73,8 +84,16 @@ bce-root2 {
     grid-area: head;
   }
 
+  bce-side-bar {
+    grid-area: side;
+  }
+
   main {
     grid-area: main;
     background-color: bce-color(light);
   }
+}
+
+section {
+  height: 500px;
 }

@@ -14,6 +14,7 @@ const main = () => {
     if (isParentChild(el, 'bce-fab', 'bce-button')) return 'bce-fab';
     if (isParentChild(el, 'bce-select', 'bce-chip')) return 'bce-select';
     if (isParentChild(el, 'bce-header', 'bce-nav')) return 'bce-header';
+    if (isParentChild(el, 'bce-side-bar', 'bce-nav')) return 'bce-side-bar';
 
     return el.getAttribute('mode') || (root && root.mode) || 'default';
   });
