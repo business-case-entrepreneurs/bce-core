@@ -10,6 +10,16 @@
     "start": "preact build && preact serve",
     "test": "jest ./tests"
   },
+  "lint-staged": {
+    "*.{js,jsx,css,md,scss}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
   "eslintConfig": {
     "extends": "eslint-config-aerian"
   },
@@ -82,15 +92,5 @@
   "peerDependencies": {
     "prettier": ">1.0.0",
     "tslint": ">5.0.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,css,md,scss}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{ts,tsx}": [
-      "tslint --fix",
-      "git add"
-    ]
   }
 }
