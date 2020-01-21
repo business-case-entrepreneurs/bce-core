@@ -5,30 +5,10 @@
   width: 100%;
   padding-top: 56px;
 
-  button {
+  bce-nav-button {
     position: absolute;
     right: 0px;
     top: 0px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-    width: 56px;
-    height: 56px;
-    padding: 16px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-
-    span {
-      flex: 0 0 3px;
-      width: 24px;
-      background-color: bce-color-t();
-      border-radius: 3px;
-    }
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
   }
 
   nav {
@@ -47,7 +27,7 @@
     padding: 0 16px;
     float: right;
 
-    button {
+    bce-nav-button {
       display: none;
     }
 

@@ -63,11 +63,7 @@ export class Nav {
     const style = height ? { style: { height } } : {};
 
     return [
-      <button onClick={this.handleButton}>
-        <span />
-        <span />
-        <span />
-      </button>,
+      <bce-nav-button onClick={this.handleButton}></bce-nav-button>,
       <nav {...style}>
         <slot />
       </nav>
