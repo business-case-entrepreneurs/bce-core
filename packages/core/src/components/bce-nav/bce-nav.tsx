@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Method } from '@stencil/core';
 
-const NAV_ITEM = 56;
+const NAV_HEIGHT = 56;
 
 @Component({
   tag: 'bce-nav',
@@ -42,7 +42,7 @@ export class Nav {
     // Animation logic
     if (this._timer) window.clearTimeout(this._timer);
 
-    const height = this._links * NAV_ITEM;
+    const height = this._links * NAV_HEIGHT;
     this._height = this.active ? 0 : height;
 
     await new Promise(res => setTimeout(res, 20));
