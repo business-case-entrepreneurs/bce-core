@@ -3,8 +3,8 @@ import { sass } from '@stencil/sass';
 
 export const config: Config = {
   namespace: 'bce',
-  globalStyle: './src/index.scss',
-  globalScript: './src/global.ts',
+  globalStyle: './src/global/global.scss',
+  globalScript: './src/global/global.ts',
   devServer: {
     openBrowser: false
   },

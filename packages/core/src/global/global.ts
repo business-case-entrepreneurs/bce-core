@@ -1,6 +1,6 @@
 import { setMode } from '@stencil/core';
 
-import { ScrollSpy } from './utils/scroll-spy';
+import { ScrollSpy } from '../utils/scroll-spy';
 
 const main = () => {
   // Temporary
