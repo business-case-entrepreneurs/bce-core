@@ -1,9 +1,25 @@
-bce-header {
+:host {
   @include bce-color-default(primary);
-  @include elevate(4);
   position: relative;
   display: block;
+  width: 100%;
   height: 56px;
   background-color: bce-color();
   color: bce-color-t();
+
+  header {
+    @include elevate(4);
+    box-sizing: border-box;
+    position: fixed;
+    width: inherit;
+    height: inherit;
+    background-color: inherit;
+    color: inherit;
+  }
+}
+
+:host([responsive]) {
+  header {
+    @include fixed-width();
+  }
 }

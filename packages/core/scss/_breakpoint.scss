@@ -50,3 +50,13 @@ $breakpoint-xlarge: 1920px !default;
     @content;
   }
 }
+
+@mixin fixed-width() {
+  @include media-medium {
+    padding: 0 calc((100% - 930px) / 2);
+  }
+
+  @include media-large {
+    padding: 0 calc((100% - 1110px) / 2);
+  }
+}

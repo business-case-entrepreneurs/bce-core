@@ -1,10 +1,16 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
+@function bucket-shades($color, $font) {
+  @return (
+    l: lighten($color, 10%),
+    n: $color,
+    d: darken($color, 10%),
+    t: $font,
+    icon: grayscale(scale-color($color, $lightness: 90%))
+  );
 }
 
-bce-root2 {
+$_bce-color-shades-func: get-function(bucket-shades);
+
+bce-root {
   @include bce-color-default(primary);
 
   /* Primary and accent colors */
@@ -19,12 +25,25 @@ bce-root2 {
   @include bce-color-define(#3e8ebf #fff, info);
 
   /* Neutral colors */
-  @include bce-color-define(#24292e #fff, dark);
+  @include bce-color-define(#231f20 #fff, dark);
   @include bce-color-define(#f7f9f9 #000, light);
   @include bce-color-define(#cccccc #888, disable);
 
+  /* Component specific colors */
+  @include bce-color-define(rgba(100, 100, 100, 0.2) #616161, chip);
+
+  --bce-size-small: true;
+}
+
+bce-root {
+  position: relative;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  * {
+    box-sizing: border-box;
+  }
 
   a {
     @include bce-color-default(primary);
@@ -39,61 +58,8 @@ bce-root2 {
     background-color: bce-color();
     color: bce-color-t();
   }
-}
 
-bce-nav a {
-  text-transform: uppercase;
-  height: 56px;
-  text-decoration: none;
-  line-height: 56px;
-  letter-spacing: 1px;
-}
-
-bce-header bce-nav a {
-  color: bce-color-t();
-  padding: 0 16px;
-
-  &.active {
-    color: bce-color-l();
+  &[fab] bce-message {
+    right: 89px;
   }
-}
-
-bce-side-bar bce-nav a {
-  color: black;
-
-  &.active {
-    color: bce-color();
-  }
-}
-
-bce-root2 {
-  height: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto 1fr;
-  grid-template-areas:
-    'stat stat'
-    'head head'
-    'side main';
-
-  bce-status-bar {
-    grid-area: stat;
-  }
-
-  bce-header {
-    grid-area: head;
-  }
-
-  bce-side-bar {
-    grid-area: side;
-  }
-
-  main {
-    grid-area: main;
-    background-color: bce-color(light);
-  }
-}
-
-section {
-  height: 500px;
 }

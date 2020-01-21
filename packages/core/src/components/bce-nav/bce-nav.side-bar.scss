@@ -1,0 +1,13 @@
+:host {
+  position: relative;
+  display: block;
+
+  bce-button {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+}
