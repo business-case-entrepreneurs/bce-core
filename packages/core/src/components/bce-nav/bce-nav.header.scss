@@ -11,11 +11,14 @@
     top: 0px;
   }
 
+  bce-link {
+    background-color: bce-color();
+  }
+
   nav {
     display: flex;
     height: 0;
     flex-flow: column nowrap;
-    background-color: bce-color();
     transition: height 0.3s ease-in-out;
     overflow: hidden;
   }

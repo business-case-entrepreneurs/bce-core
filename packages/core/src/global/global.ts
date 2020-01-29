@@ -8,22 +8,29 @@ const main = () => {
   window.onload = () => spy.detect();
 
   setMode(el => {
-    const root = el.closest('bce-root');
-
     // Component specific mode's (e.g. bce-button within bce-fab)
-    if (isParentChild(el, 'bce-fab', 'bce-button')) return 'bce-fab';
-    if (isParentChild(el, 'bce-select', 'bce-chip')) return 'bce-select';
-    if (isParentChild(el, 'bce-header', 'bce-nav')) return 'bce-header';
-    if (isParentChild(el, 'bce-side-bar', 'bce-nav')) return 'bce-side-bar';
+    if (chain(el, 'bce-button', 'bce-fab')) return 'bce-fab';
+    if (chain(el, 'bce-chip', 'bce-select')) return 'bce-select';
+    if (chain(el, 'bce-link', 'bce-link')) return 'bce-link';
+    if (chain(el, 'bce-nav', 'bce-header')) return 'bce-header';
+    if (chain(el, 'bce-nav', 'bce-side-bar')) return 'bce-side-bar';
 
+    const root = el.closest('bce-root');
     return el.getAttribute('mode') || (root && root.mode) || 'default';
   });
 };
 
-const isParentChild = (el: HTMLElement, parent: string, child: string) => {
-  const elParent = el.parentElement && el.parentElement.tagName;
-  const elChild = el.tagName;
-  return elParent === parent.toUpperCase() && elChild === child.toUpperCase();
+const chain = (el: HTMLElement, child: string, ...parents: string[]) => {
+  if (el.tagName !== child.toUpperCase()) return false;
+
+  let cur = el;
+  for (const parent of parents) {
+    const par = cur.parentElement;
+    if (!par || par.tagName !== parent.toUpperCase()) return false;
+    cur = par;
+  }
+
+  return true;
 };
 
 export default main;

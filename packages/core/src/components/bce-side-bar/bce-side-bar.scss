@@ -1,18 +1,34 @@
 :host {
-  @include bce-color-default(dark);
+  @include bce-color-default(light);
+  @include elevate(4, false);
   position: relative;
   display: block;
   z-index: 3;
-  width: 256px;
+  width: 0;
   transition: width 0.3s ease-in-out;
+  overflow: auto;
 
   aside {
-    @include elevate(4, false);
     position: fixed;
+    background-color: bce-color();
+    overflow: auto;
     width: inherit;
-    height: 100%;
-    background-color: #eceff1;
-    overflow: hidden;
-    // transition: width 0.3s ease-in-out;
+    height: calc(100% - var(--bce-padding-top));
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.02);
+      pointer-events: none;
+    }
+  }
+
+  @include media-small {
+    width: 256px;
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Method } from '@stencil/core';
 
-const NAV_HEIGHT = 56;
+import { HEIGHT_HEADER } from '../../utils/constants';
 
 @Component({
   tag: 'bce-nav',
@@ -24,14 +24,12 @@ export class Nav {
   private _links = 0;
   private _timer = 0;
 
-  private handleButton = () => this.toggle();
-
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
 
     const nodes = slot.assignedNodes({ flatten: true });
-    this._links = nodes.filter(node => node.nodeName === 'A').length;
+    this._links = nodes.filter(node => node.nodeName === 'BCE-LINK').length;
     this.toggle(this.active);
   };
 
@@ -42,7 +40,7 @@ export class Nav {
     // Animation logic
     if (this._timer) window.clearTimeout(this._timer);
 
-    const height = this._links * NAV_HEIGHT;
+    const height = this._links * HEIGHT_HEADER;
     this._height = this.active ? 0 : height;
 
     await new Promise(res => setTimeout(res, 20));
@@ -63,7 +61,7 @@ export class Nav {
     const style = height ? { style: { height } } : {};
 
     return [
-      <bce-nav-button onClick={this.handleButton}></bce-nav-button>,
+      <bce-nav-button></bce-nav-button>,
       <nav {...style}>
         <slot />
       </nav>

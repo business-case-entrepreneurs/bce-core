@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, h, Host, Method, State } from '@stencil/core';
 
 @Component({
   tag: 'bce-side-bar',
@@ -6,17 +6,27 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
   shadow: true
 })
 export class SideBar {
-  @Element()
-  private el!: HTMLBceSideBarElement;
+  @State()
+  private _open?: boolean;
 
-  @Prop()
-  public collapsed?: boolean;
+  public get style() {
+    if (this._open == undefined) return {};
+    return this._open ? { width: '256px' } : { width: '0' };
+  }
+
+  @Method()
+  public async toggle(open?: boolean) {
+    if (open != undefined) return (this._open = open);
+
+    // prettier-ignore
+    return this._open = this._open == undefined && window.innerWidth >= 600
+      ? false
+      : !this._open;
+  }
 
   render() {
-    const style = this.collapsed ? { width: '0' } : {};
-
     return (
-      <Host style={style}>
+      <Host style={this.style}>
         <aside>
           <slot />
         </aside>

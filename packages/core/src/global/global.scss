@@ -5,12 +5,16 @@ body {
 }
 
 /* Temporary */
+main {
+  padding: 16px;
+}
+
 section {
   height: 500px;
 }
 
 /* bce-root */
-bce-root2 {
+bce-root {
   @include bce-color-default(primary);
 
   // Primary and accent colors
@@ -32,13 +36,22 @@ bce-root2 {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
+  a {
+    @include bce-color-default(primary);
+    color: bce-color();
+
+    &:hover {
+      color: bce-color-l();
+    }
+  }
+
   ::selection {
     background-color: bce-color();
     color: bce-color-t();
   }
 }
 
-bce-root2 {
+bce-root {
   height: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -63,40 +76,5 @@ bce-root2 {
   main {
     grid-area: main;
     background-color: bce-color(light);
-  }
-}
-
-/* a */
-bce-root2 a {
-  @include bce-color-default(primary);
-  color: bce-color();
-
-  &:hover {
-    color: bce-color-l();
-  }
-}
-
-bce-nav a {
-  text-transform: uppercase;
-  height: 56px;
-  text-decoration: none;
-  line-height: 56px;
-  letter-spacing: 1px;
-}
-
-bce-header bce-nav a {
-  color: bce-color-t();
-  padding: 0 16px;
-
-  &.active {
-    color: bce-color-l();
-  }
-}
-
-bce-side-bar bce-nav a {
-  color: black;
-
-  &.active {
-    color: bce-color();
   }
 }
