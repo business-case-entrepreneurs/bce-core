@@ -15,7 +15,7 @@
     width: inherit;
     height: calc(100% - var(--bce-padding-top));
 
-    &:before {
+    &:after {
       content: '';
       display: block;
       position: absolute;
