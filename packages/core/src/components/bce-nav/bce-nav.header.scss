@@ -4,19 +4,23 @@
   left: 0;
   width: 100%;
   padding-top: 56px;
+  pointer-events: none;
 
   bce-nav-button {
     position: absolute;
     right: 0px;
     top: 0px;
+    pointer-events: auto;
   }
 
   bce-link {
     background-color: bce-color();
+    pointer-events: auto;
   }
 
   nav {
     display: flex;
+    align-items: flex-start;
     height: 0;
     flex-flow: column nowrap;
     transition: height 0.3s ease-in-out;

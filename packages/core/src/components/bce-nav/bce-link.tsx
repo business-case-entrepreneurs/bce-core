@@ -10,7 +10,7 @@ library.add(faCaretDown);
 @Component({
   tag: 'bce-link',
   styleUrls: {
-    'bce-link': 'bce-link.scss',
+    'bce-link': 'bce-link:link.scss',
     default: 'bce-link.scss'
   },
   shadow: true
@@ -55,7 +55,10 @@ export class Link {
   private _height = 0;
   private _links = 0;
 
-  private handleClick = () => this.toggle();
+  private handleClick = () => {
+    // Toggle self
+    if (this._links) this.toggle();
+  };
 
   private handleMouseDown = (event: MouseEvent) => {
     ripple(event.target as Element, event);

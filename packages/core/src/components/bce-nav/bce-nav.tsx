@@ -37,6 +37,10 @@ export class Nav {
   public async toggle(active?: boolean) {
     this.active = active != undefined ? active : !this.active;
 
+    // Collapse nested links
+    const links = Array.from(this.el.querySelectorAll('bce-link'));
+    for (const link of links) link.toggle(false);
+
     // Animation logic
     if (this._timer) window.clearTimeout(this._timer);
 
