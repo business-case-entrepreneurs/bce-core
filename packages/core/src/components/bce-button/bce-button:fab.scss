@@ -10,10 +10,10 @@
   background-color: transparent;
   z-index: 6;
 
-  > button {
+  button {
     height: 35px;
 
-    > bce-icon {
+    bce-icon {
       @include elevate(2, false);
       left: auto;
       right: 0;
@@ -23,7 +23,7 @@
       border-radius: 50%;
     }
 
-    > span {
+    span {
       @include elevate(2, false);
       margin-right: 30px;
       padding: 5px 16px;

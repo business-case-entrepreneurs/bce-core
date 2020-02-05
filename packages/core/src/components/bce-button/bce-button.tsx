@@ -3,6 +3,7 @@ import {
   Element,
   Event,
   EventEmitter,
+  getMode,
   h,
   Host,
   Prop,
@@ -18,9 +19,9 @@ import { UUID } from '../../utils/uuid';
 @Component({
   tag: 'bce-button',
   styleUrls: {
-    ['bce-fab']: 'bce-button.fab.scss',
-    default: 'bce-button.scss',
-    bucket: 'bce-button.bucket.scss'
+    'bce-fab': 'bce-button:fab.scss',
+    bucket: 'bce-button:bucket.scss',
+    default: 'bce-button.scss'
   },
   shadow: true
 })
@@ -149,7 +150,19 @@ export class Button {
   }
 
   renderIcon() {
-    return <bce-icon raw={this.icon} spin={this.iconSpin} fixed-width />;
+    const mode = getMode(this);
+    const size = this.el.clientHeight + 'px';
+    const style =
+      mode === 'bce-fab' ? undefined : { width: size, height: size };
+
+    return (
+      <bce-icon
+        style={style}
+        raw={this.icon}
+        spin={this.iconSpin}
+        fixed-width
+      />
+    );
   }
 
   render() {
@@ -160,6 +173,7 @@ export class Button {
         onMouseDown={this.handleMouseDown}
       >
         <button
+          class={{ 'icon-only': this.slotEmpty }}
           disabled={this.disabled}
           form={this.form}
           formaction={this.formAction}
@@ -167,7 +181,6 @@ export class Button {
           formmethod={this.formMethod}
           formtarget={this.formTarget}
           type={this.formType}
-          data-icon-only={this.slotEmpty}
           onClick={this.handleClick}
         >
           {this.icon && this.renderIcon()}
