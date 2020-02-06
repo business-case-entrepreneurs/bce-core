@@ -1,4 +1,4 @@
-import { Component, h, Host, Method, State } from '@stencil/core';
+import { Component, h, Host, Method, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bce-side-bar',
@@ -6,22 +6,22 @@ import { Component, h, Host, Method, State } from '@stencil/core';
   shadow: true
 })
 export class SideBar {
-  @State()
-  private _open?: boolean;
+  @Prop({ reflect: true, mutable: true })
+  public open?: boolean;
 
   public get style() {
-    if (this._open == undefined) return {};
-    return this._open ? { width: '256px' } : { width: '0' };
+    if (this.open == undefined) return {};
+    return this.open ? { width: '256px' } : { width: '0' };
   }
 
   @Method()
   public async toggle(open?: boolean) {
-    if (open != undefined) return (this._open = open);
+    if (open != undefined) return (this.open = open);
 
     // prettier-ignore
-    return this._open = this._open == undefined && window.innerWidth >= 600
+    return this.open = this.open == undefined && window.innerWidth >= 600
       ? false
-      : !this._open;
+      : !this.open;
   }
 
   render() {

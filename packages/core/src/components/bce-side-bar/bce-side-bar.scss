@@ -3,10 +3,10 @@
   @include elevate(4, false);
   position: relative;
   display: block;
-  z-index: 3;
   width: 0;
   transition: width 0.3s ease-in-out;
   overflow: auto;
+  z-index: 3;
 
   aside {
     position: fixed;
@@ -14,18 +14,6 @@
     overflow: auto;
     width: inherit;
     height: calc(100% - var(--bce-padding-top));
-
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.02);
-      pointer-events: none;
-    }
   }
 
   @include media-small {
