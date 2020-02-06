@@ -9,7 +9,6 @@
 
   header {
     @include elevate(4);
-    box-sizing: border-box;
     position: fixed;
     width: inherit;
     height: inherit;
