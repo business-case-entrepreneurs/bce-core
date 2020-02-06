@@ -4,15 +4,6 @@ body {
   height: 100%;
 }
 
-/* Temporary */
-main {
-  padding: 16px;
-}
-
-section {
-  height: 500px;
-}
-
 /* bce-root */
 bce-root {
   @include bce-color-default(primary);
@@ -30,7 +21,7 @@ bce-root {
 
   // Neutral colors
   @include bce-color-define(#24292e #fff, dark);
-  @include bce-color-define(#f7f9f9 #000, light);
+  @include bce-color-define(#f9f9f9 #000, light);
   @include bce-color-define(#cccccc #888, disable);
 
   @include box-sizing();
@@ -77,5 +68,21 @@ bce-root {
   main {
     grid-area: main;
     background-color: bce-color-l(light);
+  }
+}
+
+section {
+  position: relative;
+  padding: 16px 16px 32px;
+
+  &:nth-child(even):before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.02);
   }
 }
