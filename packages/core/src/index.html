@@ -23,129 +23,167 @@
         >
           LOGO
         </a>
-
-        <bce-nav>
-          <bce-link icon="square" label="Home"></bce-link>
-          <bce-link icon="square" label="Support" active></bce-link>
-
-          <bce-link icon="square" label="Paddings">
-            <bce-link icon="square" label="Padding"></bce-link>
-            <bce-link icon="square" label="Padding"></bce-link>
-            <bce-link icon="square" label="Padding"></bce-link>
-          </bce-link>
-          <bce-link icon="square" label="Almost"></bce-link>
-          <bce-link icon="square" label="Last"></bce-link>
-        </bce-nav>
       </bce-header>
 
-      <bce-side-bar>
+      <bce-side-bar open="false">
         <bce-nav>
-          <bce-link icon="square" label="Home"></bce-link>
-          <bce-link icon="square" label="Support" active></bce-link>
-
-          <bce-link icon="square" label="Paddings">
-            <bce-link icon="square" label="Padding"></bce-link>
-            <bce-link icon="square" label="Padding"></bce-link>
-            <bce-link icon="square" label="Padding"></bce-link>
-          </bce-link>
-          <bce-link icon="square" label="Almost"></bce-link>
-          <bce-link icon="square" label="Last"></bce-link>
+          <bce-link href="/#" label="Home"></bce-link>
+          <bce-link href="/#buttons" label="Buttons"></bce-link>
+          <bce-link href="/#messages" label="Messages"></bce-link>
         </bce-nav>
       </bce-side-bar>
 
       <main>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          minima optio deleniti atque? Iste molestiae sunt quas, recusandae
-          dignissimos earum, optio, animi velit enim eos ea placeat beatae ipsa
-          quia.
-        </p>
-        <bce-input type="textarea" label="ABC"></bce-input>
+        <section id="buttons">
+          <h3>BCE Button</h3>
+
+          <h4>Contained</h4>
+          <bce-button>Primary</bce-button>
+          <bce-button color="secondary">Secondary</bce-button>
+          <bce-button color="tertiary">Tertiary</bce-button>
+          <bce-button icon="square">Icon</bce-button>
+          <bce-button disabled>Disabled</bce-button>
+          <bce-button icon="square"></bce-button>
+
+          <h4>Outline</h4>
+          <bce-button design="outline">Primary</bce-button>
+          <bce-button design="outline" color="secondary">
+            Secondary
+          </bce-button>
+          <bce-button design="outline" color="tertiary">
+            Tertiary
+          </bce-button>
+          <bce-button design="outline" icon="square">
+            Icon
+          </bce-button>
+          <bce-button design="outline" disabled>
+            Disabled
+          </bce-button>
+          <bce-button design="outline" icon="square"></bce-button>
+
+          <h4>Text</h4>
+          <bce-button design="text">Primary</bce-button>
+          <bce-button design="text" color="secondary">
+            Secondary
+          </bce-button>
+          <bce-button design="text" color="tertiary">
+            Tertiary
+          </bce-button>
+          <bce-button design="text" icon="square">
+            Icon
+          </bce-button>
+          <bce-button design="text" disabled>
+            Disabled
+          </bce-button>
+          <bce-button design="text" icon="square"></bce-button>
+
+          <h4>Block</h4>
+          <bce-button color="tertiary" block>
+            Contained
+          </bce-button>
+          <bce-button icon="square" block>
+            Contained + Icon
+          </bce-button>
+          <bce-button design="outline" color="tertiary" block>
+            Outline
+          </bce-button>
+          <bce-button design="outline" icon="square" block>
+            Outline + Icon
+          </bce-button>
+          <bce-button design="text" color="tertiary" block>
+            Text
+          </bce-button>
+          <bce-button design="text" icon="square" block>
+            Text + Icon
+          </bce-button>
+        </section>
+
+        <section id="messages">
+          <h3>BCE Message</h3>
+          <bce-button
+            design="text"
+            color="dark"
+            onclick="app.message('BCE Message')"
+          >
+            Message
+          </bce-button>
+          <br />
+
+          <bce-button
+            design="text"
+            color="primary"
+            onclick="app.message('Primary color', { color: 'primary' })"
+          >
+            Primary
+          </bce-button>
+          <bce-button
+            design="text"
+            color="secondary"
+            onclick="app.message('Secondary color', { color: 'secondary' })"
+          >
+            Secondary
+          </bce-button>
+          <bce-button
+            design="text"
+            color="tertiary"
+            onclick="app.message('Tertiary color', { color: 'tertiary' })"
+          >
+            Tertiary
+          </bce-button>
+          <br />
+
+          <bce-button
+            design="text"
+            color="success"
+            onclick="app.message('Success message', { color: 'success' })"
+          >
+            Success
+          </bce-button>
+          <bce-button
+            design="text"
+            color="error"
+            onclick="app.message('Error message', { color: 'error' })"
+          >
+            Error
+          </bce-button>
+          <bce-button
+            design="text"
+            color="warning"
+            onclick="app.message('Warning message', { color: 'warning' })"
+          >
+            Warning
+          </bce-button>
+          <bce-button
+            design="text"
+            color="info"
+            onclick="app.message('Info message', { color: 'info' })"
+          >
+            Info
+          </bce-button>
+
+          <h3>BCE Dialog</h3>
+          <bce-button color="primary">Alert</bce-button>
+          <bce-button color="secondary">Confirm</bce-button>
+        </section>
 
         <!--
-        <section>
+        <bce-dialog active>
+          <h3>Hello World!</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-            dolorum nihil facilis unde voluptas dolor hic? Harum nostrum quo
-            voluptatem sunt repellat velit consectetur officia modi, cupiditate
-            saepe earum nihil!
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat
+            atque, magnam odio consequuntur pariatur totam quis tenetur,
+            temporibus dolorem sapiente corrupti ex. Enim doloribus vitae fugiat
+            quia odio consectetur voluptates.
           </p>
-          <p>
-            Tenetur porro dolorem dolor, ea modi maxime odit odio itaque fugit
-            dolorum quis officiis eaque inventore commodi veritatis laborum
-            dicta nobis adipisci id minus incidunt? Placeat corrupti delectus
-            quidem consequuntur?
-          </p>
-          <p>
-            Nobis suscipit, quam error, repudiandae dolor magnam vitae autem
-            facere commodi facilis porro dolore sapiente ducimus esse sed
-            blanditiis nostrum quo nihil. Ea autem ratione sapiente fugiat,
-            suscipit doloremque nisi.
-          </p>
-        </section>
-        <section>
-          <p>
-            Veniam tempore ipsa omnis fuga eum, officiis dolore. Minus, omnis?
-            Dolores nemo laborum illo maiores itaque, maxime ex ea minima
-            perferendis eligendi et, sapiente nisi voluptatum totam harum. Sed,
-            nisi!
-          </p>
-          <p>
-            Tenetur obcaecati cumque, voluptatibus veniam magni sit sapiente?
-            Possimus ex vitae quasi? Distinctio assumenda eum voluptatem
-            officiis voluptatum rem libero, eveniet ducimus rerum ullam. Sed
-            dignissimos fugiat quibusdam saepe tenetur.
-          </p>
-          <p>
-            Autem maiores nisi ab eveniet unde voluptatibus nesciunt sit qui
-            odit iusto soluta eum commodi expedita dolore tempora, iste
-            voluptates perferendis dolorem, pariatur ex, deserunt consectetur
-            provident sunt! Velit, harum?
-          </p>
-        </section>
-        <section>
-          <p>
-            Totam perspiciatis tenetur itaque molestiae, reprehenderit,
-            consequuntur voluptates expedita voluptatem est quo quidem autem
-            aliquid, distinctio sunt iste velit pariatur doloremque. Voluptatem
-            possimus harum laboriosam ullam tenetur, pariatur voluptates sequi!
-          </p>
-          <p>
-            Aperiam perspiciatis aliquam nostrum eaque minus laborum maiores
-            nesciunt quasi magnam neque! Impedit, numquam tenetur, inventore at
-            tempore nulla recusandae voluptate cupiditate nihil dolorem sint
-            consequatur est. Tenetur, id dolor.
-          </p>
-          <p>
-            Voluptates sint amet et corrupti quos, suscipit minus in magnam quod
-            ipsum at reprehenderit provident est! Totam temporibus, voluptatibus
-            aliquid aperiam, velit rem possimus amet repudiandae cupiditate
-            eligendi corporis maiores?
-          </p>
-        </section>
-        <section>
-          <p>
-            Repellat minima modi et? At, quis dignissimos ipsam ut cum voluptas
-            sequi consequuntur maiores voluptatibus quas facilis alias
-            temporibus perferendis quam, tenetur voluptatum accusantium
-            voluptatem corporis. Quidem facere architecto unde.
-          </p>
-          <p>
-            Explicabo error magni eveniet optio consequatur deleniti nulla autem
-            molestiae quis id maxime aliquid nemo, obcaecati asperiores ex enim
-            rerum sunt tenetur sit distinctio incidunt quidem! Dolor ea quis
-            praesentium.
-          </p>
-          <p>
-            Voluptate deleniti quas quo, provident ab amet eos expedita cumque
-            nihil earum ipsa aliquam ad velit, aspernatur laboriosam, ipsam
-            numquam nisi! Suscipit praesentium, magni reprehenderit officiis
-            iste impedit id ullam?
-          </p>
-        </section>
+
+          <bce-button slot="action" design="text">Cancel</bce-button>
+          <bce-button slot="action" design="contained">Submit</bce-button>
+        </bce-dialog>
         -->
 
-        <bce-fab color="dark"><bce-button>Hello World!</bce-button></bce-fab>
+        <bce-fab color="dark">
+          <bce-button>Hello World!</bce-button>
+        </bce-fab>
       </main>
     </bce-root>
 

@@ -14,17 +14,17 @@ import { NativeEvent } from '../../utils/native-event';
 @Component({
   tag: 'bce-dialog',
   styleUrl: 'bce-dialog.scss',
-  shadow: false
+  shadow: true
 })
 export class BceDialog {
   @Element()
   private el!: HTMLBceDialogElement;
 
   @Prop({ reflect: true })
-  public active = false;
+  public active?: boolean;
 
   @Prop({ reflect: true })
-  public required = false;
+  public required?: boolean;
 
   @Prop()
   public errors: Validation[] = [];
@@ -64,11 +64,11 @@ export class BceDialog {
 
   render() {
     return [
-      <div data-backdrop onClick={this.handleClick} />,
+      <div class="backdrop" onClick={this.handleClick} />,
       <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
         <slot />
 
-        <div data-actions>
+        <div class="action-bar">
           <slot name="action" />
         </div>
       </bce-form>

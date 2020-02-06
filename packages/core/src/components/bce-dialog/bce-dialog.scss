@@ -1,24 +1,20 @@
-bce-dialog {
+:host {
   @include bce-color-default(light);
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  display: none;
   z-index: 64;
+  display: none;
 
-  &[active] {
-    display: block;
-  }
-
-  [data-backdrop] {
+  .backdrop {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
   }
 
-  > bce-form {
+  bce-form {
     @include elevate(24);
     position: fixed;
     top: 50%;
@@ -30,18 +26,15 @@ bce-dialog {
     border-radius: 4px;
     color: bce-color-t();
     background-color: bce-color();
+    pointer-events: auto;
 
-    h3 {
-      margin: 0;
-    }
-
-    p {
-      opacity: 0.75;
-    }
-
-    [data-actions] {
+    .action-bar {
       text-align: right;
       margin: 0 -16px -16px 0;
     }
   }
+}
+
+:host([active]) {
+  display: block;
 }
