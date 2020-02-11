@@ -20,6 +20,7 @@ import { UUID } from '../../utils/uuid';
   tag: 'bce-button',
   styleUrls: {
     'bce-fab': 'bce-button:fab.scss',
+    'bce-menu': 'bce-button:menu.scss',
     bucket: 'bce-button:bucket.scss',
     default: 'bce-button.scss'
   },

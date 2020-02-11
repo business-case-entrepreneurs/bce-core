@@ -1,72 +1,48 @@
-import { Component, Prop, Host, Listen, h } from '@stencil/core';
+import { Component, Element, Prop, h, Host, Method } from '@stencil/core';
+import Popper from 'popper.js';
 
 @Component({
   tag: 'bce-menu',
   styleUrl: 'bce-menu.scss',
-  shadow: false
+  shadow: true
 })
 export class BceMenu {
-  @Prop({ reflect: true })
-  public vertical: boolean = false;
+  @Element()
+  private el!: HTMLBceMenuElement;
 
   @Prop({ reflect: true })
-  public right: boolean = false;
+  public icon = 'fas:ellipsis-h';
 
   @Prop({ reflect: true })
-  public color?: string;
+  public placement = 'bottom-start';
 
-  @Prop({ reflect: true })
-  public toggleDesktop: boolean = false;
+  private _popper?: Popper;
 
-  @Prop({ reflect: true, mutable: true })
-  public active?: boolean = false;
+  @Method()
+  public async reattach() {
+    const reference = this.el.shadowRoot!.querySelector('.trigger')!;
+    const dropdown = this.el.shadowRoot!.querySelector('.dropdown')!;
 
-  @Listen('resize', { target: 'window' })
-  public handleResize() {
-    requestAnimationFrame(() => {
-      if (window.innerWidth < 1024) {
-        this.active = false;
-      } else if (window.innerWidth > 1024 && !this.toggleDesktop) {
-        this.active = true;
-      }
+    if (this._popper) this._popper.destroy();
+    this._popper = new Popper(reference, dropdown, {
+      placement: this.placement as Popper.Placement,
+      positionFixed: true
     });
   }
 
-  @Listen('toggle-menu', { target: 'window' })
-  public toggleMenu() {
-    this.active = !this.active;
+  componentDidLoad() {
+    this.reattach();
   }
 
-  public componentDidLoad() {
-    if (!this.toggleDesktop && window.innerWidth > 1024) {
-      this.active = true;
-    }
+  componentDidUnload() {
+    if (this._popper) this._popper.destroy();
   }
-
-  public close = () => {
-    this.active = false;
-  };
 
   render() {
     return (
-      <Host class={this.right ? 'right' : 'left'} active={this.active}>
-        {window.innerWidth < 1024 ? (
-          <bce-icon
-            onClick={this.close}
-            raw={'times-circle'}
-            pre={'fas'}
-            size={'3x'}
-          />
-        ) : (
-          ''
-        )}
-        <div
-          class={{
-            menu: true,
-            horizontal: !this.vertical,
-            vertical: this.vertical
-          }}
-        >
+      <Host>
+        <bce-icon class="trigger" raw={this.icon} fixed-width />
+        <div class="dropdown">
           <slot />
         </div>
       </Host>
