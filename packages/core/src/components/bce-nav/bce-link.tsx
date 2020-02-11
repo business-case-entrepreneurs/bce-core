@@ -28,10 +28,7 @@ export class Link {
   @Prop({ reflect: true })
   public icon?: string;
 
-  // #region Forwarded to native button
-  @Prop({ reflect: true })
-  public label?: string;
-
+  // #region Forwarded to native anchor
   @Prop({ reflect: true })
   public download?: boolean;
 
@@ -80,7 +77,10 @@ export class Link {
   }
 
   componentDidLoad() {
-    const slot = this.el.shadowRoot!.querySelector('slot');
+    const root = this.el.shadowRoot!;
+    const query = "slot[name='subsection']";
+    const slot = root.querySelector(query) as HTMLSlotElement;
+
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
       this.handleSlotChange(slot);
@@ -104,11 +104,14 @@ export class Link {
         onClick={this.handleClick}
       >
         {this.icon && <bce-icon raw={this.icon} fixed-width />}
-        <span>{this.label}</span>
+        <span>
+          <slot />
+        </span>
+
         {!!this._links && this.renderCaret()}
       </a>,
       <div style={{ height: `${this._height}px` }}>
-        <slot />
+        <slot name="subsection" />
       </div>
     ];
   }
