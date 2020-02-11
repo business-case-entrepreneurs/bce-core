@@ -10,6 +10,9 @@ export class BceMenu {
   @Element()
   private el!: HTMLBceMenuElement;
 
+  @Prop({ reflect: true, mutable: true })
+  public active?: boolean;
+
   @Prop({ reflect: true })
   public icon = 'fas:ellipsis-h';
 
@@ -17,6 +20,17 @@ export class BceMenu {
   public placement = 'bottom-start';
 
   private _popper?: Popper;
+
+  private handleBlur = async () => {
+    await new Promise(res => setTimeout(res, 200));
+    this.active = false;
+  };
+
+  private handleClick = (event: Event) => {
+    this.active = !this.active;
+    if (this._popper) this._popper.scheduleUpdate();
+    event.stopPropagation();
+  };
 
   @Method()
   public async reattach() {
@@ -40,9 +54,9 @@ export class BceMenu {
 
   render() {
     return (
-      <Host>
-        <bce-icon class="trigger" raw={this.icon} fixed-width />
-        <div class="dropdown">
+      <Host onClick={this.handleClick} onBlur={this.handleBlur}>
+        <bce-button class="trigger" design="text" icon={this.icon}></bce-button>
+        <div class="dropdown" data-active={this.active}>
           <slot />
         </div>
       </Host>

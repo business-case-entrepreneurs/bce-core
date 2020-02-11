@@ -3,16 +3,23 @@
   display: inline-block;
 
   .trigger {
+    @include bce-color-default(dark);
     cursor: pointer;
   }
 
   .dropdown {
     @include elevate(8);
-    display: block;
     background-color: bce-color();
     border-radius: 4px;
-    transition: opacity 0.3s ease-in-out;
-    // opacity: 0;
+    transition: opacity 150ms ease-in-out;
+    opacity: 0;
     max-width: 400px;
+    pointer-events: none;
+
+    &[data-active] {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 }
