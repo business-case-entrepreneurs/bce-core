@@ -78,8 +78,8 @@ export class Button {
   @Prop({ reflect: false, attribute: 'formtarget' })
   public formTarget?: string;
 
-  @Prop({ reflect: false, attribute: 'formtype' })
-  public formType: 'button' | 'reset' | 'submit' = 'button';
+  @Prop({ reflect: true })
+  public type: 'button' | 'reset' | 'submit' = 'button';
   // #endregion
 
   // #region Forwarded to native input[type='file']
@@ -181,7 +181,7 @@ export class Button {
           formenctype={this.formEnctype}
           formmethod={this.formMethod}
           formtarget={this.formTarget}
-          type={this.formType}
+          type={this.type}
           onClick={this.handleClick}
         >
           {this.icon && this.renderIcon()}

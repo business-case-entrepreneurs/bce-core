@@ -204,8 +204,8 @@
           </bce-button>
 
           <h3>BCE Dialog</h3>
-          <bce-button color="primary">Alert</bce-button>
-          <bce-button color="secondary">Confirm</bce-button>
+          <bce-button color="primary" onclick="alert()">Alert</bce-button>
+          <bce-button color="secondary" onclick="confirm()">Confirm</bce-button>
         </section>
         <section>
           <h3>BCE Menu</h3>
@@ -218,21 +218,6 @@
           </bce-menu>
         </section>
 
-        <!--
-        <bce-dialog active>
-          <h3>Hello World!</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat
-            atque, magnam odio consequuntur pariatur totam quis tenetur,
-            temporibus dolorem sapiente corrupti ex. Enim doloribus vitae fugiat
-            quia odio consectetur voluptates.
-          </p>
-
-          <bce-button slot="action" design="text">Cancel</bce-button>
-          <bce-button slot="action" design="contained">Submit</bce-button>
-        </bce-dialog>
-        -->
-
         <bce-fab color="dark">
           <bce-button>Hello World!</bce-button>
         </bce-fab>
@@ -241,5 +226,23 @@
 
     <script type="module" src="build/bce.esm.js"></script>
     <script nomodule src="build/bce.js"></script>
+
+    <script>
+      function alert() {
+        const title = 'Alert dialog';
+        const message = 'Lorem ipsum dolor sit amet!';
+        app.alert(title, message);
+      }
+
+      async function confirm() {
+        const title = 'Hello World!';
+        const message =
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat atque, magnam odio consequuntur pariatur totam quis tenetur, temporibus dolorem sapiente corrupti ex. Enim doloribus vitae fugiat quia odio consectetur voluptates.';
+
+        const options = { ok: 'Yes', cancel: 'Cancel' };
+        const answer = await app.confirm(title, message, options);
+        app.message('Answer: ' + answer);
+      }
+    </script>
   </body>
 </html>

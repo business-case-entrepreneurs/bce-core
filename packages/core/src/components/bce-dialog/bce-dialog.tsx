@@ -4,6 +4,7 @@ import {
   Event,
   EventEmitter,
   h,
+  Host,
   Method,
   Prop
 } from '@stencil/core';
@@ -32,7 +33,12 @@ export class BceDialog {
   @Event()
   private backdrop!: EventEmitter;
 
-  private handleClick = () => {
+  private handleClickHost = (event: MouseEvent) => {
+    const target = event.target as HTMLBceButtonElement;
+    if (target && target.type === 'submit') this.submit();
+  };
+
+  private handleClickBackdrop = () => {
     if (this.required) return;
     this.backdrop.emit();
     this.active = false;
@@ -53,25 +59,33 @@ export class BceDialog {
   }
 
   @Method()
+  public async hide() {
+    this.active = false;
+  }
+
+  @Method()
   public async show() {
     this.active = true;
   }
 
   @Method()
-  public async hide() {
-    this.active = false;
+  public async submit() {
+    const form = this.el.shadowRoot!.querySelector('bce-form');
+    if (form) form.submit();
   }
 
   render() {
-    return [
-      <div class="backdrop" onClick={this.handleClick} />,
-      <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
-        <slot />
+    return (
+      <Host onClick={this.handleClickHost}>
+        <div class="backdrop" onClick={this.handleClickBackdrop} />
+        <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
+          <slot />
 
-        <div class="action-bar">
-          <slot name="action" />
-        </div>
-      </bce-form>
-    ];
+          <div class="action-bar">
+            <slot name="action" />
+          </div>
+        </bce-form>
+      </Host>
+    );
   }
 }

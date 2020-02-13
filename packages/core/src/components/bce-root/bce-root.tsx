@@ -55,6 +55,86 @@ export class Root {
   };
 
   @Method()
+  public alert(title: string, message: string, options: AlertOptions = {}) {
+    const dialog = document.createElement('bce-dialog');
+    dialog.active = true;
+    dialog.required = options.required == undefined ? true : options.required;
+    dialog.innerHTML = `
+      <h3>${title}</h3>
+      <p>${message}</p>
+    `;
+
+    const action = document.createElement('bce-button');
+    action.design = 'text';
+    action.slot = 'action';
+    action.type = 'submit';
+    action.innerText = options.ok || 'Ok';
+    if (options.ok !== false) dialog.appendChild(action);
+
+    return this.execute<void>(
+      dialog,
+      res => {
+        dialog.addEventListener('submit', () => res());
+        dialog.addEventListener('backdrop', () => res());
+        dialog.addEventListener('close', () => res());
+      },
+      { display: true }
+    );
+  }
+
+  @Method()
+  public confirm(title: string, message: string, options: ConfirmOptions = {}) {
+    const dialog = document.createElement('bce-dialog');
+    dialog.active = true;
+    dialog.required = options.required == undefined ? true : options.required;
+    dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
+
+    const action2 = document.createElement('bce-button');
+    action2.slot = 'action';
+    action2.design = 'text';
+    action2.style.opacity = '0.7';
+    action2.innerText = options.cancel || 'Cancel';
+    dialog.appendChild(action2);
+
+    const action1 = document.createElement('bce-button');
+    action1.slot = 'action';
+    action1.innerText = options.ok || 'Ok';
+    if (options.ok !== false) dialog.appendChild(action1);
+
+    return this.execute<boolean>(
+      dialog,
+      res => {
+        dialog.addEventListener('backdrop', () => res(false));
+        action1.addEventListener('click', () => res(true));
+        action2.addEventListener('click', () => res(false));
+      },
+      { display: true }
+    );
+  }
+
+  @Method()
+  public execute<T>(
+    el: HTMLElement,
+    exec: Executor<T>,
+    options: ExecuteOptions = {}
+  ): Promise<T> {
+    const defaults: ExecuteOptions = { display: false };
+    options = Object.assign({}, defaults, options);
+
+    if (!options.display) el.style.display = 'none';
+
+    const result = new Promise<T>((res, rej) => {
+      const execution = exec(res, rej);
+      if (execution) res(execution);
+    });
+
+    this.el.appendChild(el);
+    result.then(() => this.el.removeChild(el));
+
+    return result;
+  }
+
+  @Method()
   public async message(text: string, options: Partial<MessageOptions> = {}) {
     if (!text) return;
 
@@ -123,3 +203,23 @@ export class Root {
     );
   }
 }
+
+export interface AlertOptions {
+  readonly required?: boolean;
+  readonly ok?: string | false;
+}
+
+export interface ConfirmOptions {
+  readonly required?: boolean;
+  readonly cancel?: string;
+  readonly ok?: string | false;
+}
+
+export interface ExecuteOptions {
+  readonly display?: boolean;
+}
+
+export type Executor<T> = (
+  resolve: (value?: T | PromiseLike<T>) => void,
+  reject: (reason?: any) => void
+) => Promise<any> | void;

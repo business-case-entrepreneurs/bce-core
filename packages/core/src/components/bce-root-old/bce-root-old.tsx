@@ -77,7 +77,7 @@ export class BceRoot {
     const action = document.createElement('bce-button');
     action.design = 'text';
     action.slot = 'action';
-    action.formType = 'submit';
+    action.type = 'submit';
     action.innerText = options.ok || 'Ok';
     if (options.ok !== false) dialog.appendChild(action);
 
