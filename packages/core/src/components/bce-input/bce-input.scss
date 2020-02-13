@@ -45,10 +45,11 @@
     padding: 10px 12px;
   }
 
-  > bce-button {
+  bce-button {
     position: absolute;
-    right: 6px;
+    right: 4px;
     top: 50%;
+    width: 36px;
     transform: translateY(-50%);
 
     &[data-hidden] {
@@ -101,6 +102,10 @@
 
     textarea {
       padding: 10px 12px;
+    }
+
+    bce-button {
+      right: 0px;
     }
   }
 
