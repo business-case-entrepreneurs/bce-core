@@ -37,9 +37,10 @@ export class BceForm {
 
   @Method()
   public async validate(silent = false) {
-    const tasks = this._inputs.map(el => el.validate(silent));
-    this.errors = [].concat(...((await Promise.all(tasks)) as any[]));
-    return this.errors;
+    // const tasks = this._inputs.map(el => el.validate(silent));
+    // this.errors = [].concat(...((await Promise.all(tasks)) as any[]));
+    // return this.errors;
+    return [];
   }
 
   private getInputs() {

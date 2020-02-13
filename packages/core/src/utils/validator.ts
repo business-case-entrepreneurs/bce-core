@@ -167,13 +167,13 @@ validator.rules.set('digits', async (value, args, meta) => {
 });
 
 validator.rules.set('email', async (value, args, meta) => {
-  if (typeof value !== 'string') {
+  if (typeof value !== 'undefined' && typeof value !== 'string') {
     const message = getUnsupportedMessage('email', meta);
     throw new Error(message);
   }
 
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const valid = re.test(value);
+  const valid = !value || re.test(value);
   const message = 'This is not a valid email.';
   return { valid, message };
 });

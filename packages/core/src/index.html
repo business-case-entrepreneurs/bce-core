@@ -25,7 +25,7 @@
         </a>
       </bce-header>
 
-      <bce-side-bar>
+      <bce-side-bar open="false">
         <bce-nav>
           <bce-link href="/#">Home</bce-link>
           <bce-link href="/#form">Form</bce-link>
@@ -101,6 +101,23 @@
 
         <section id="form">
           <h3>BCE Form</h3>
+
+          <bce-form>
+            <bce-input
+              type="email"
+              label="Email"
+              info="Use your email address"
+              tooltip="bce-tooltip"
+              autocomplete="email"
+              validation="required|email"
+            ></bce-input>
+            <bce-input
+              type="password"
+              label="Password"
+              tooltip="bce-tooltip"
+              autocomplete="current-password"
+            ></bce-input>
+          </bce-form>
         </section>
 
         <section id="messages">

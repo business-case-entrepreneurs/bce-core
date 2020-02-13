@@ -56,12 +56,60 @@
       display: none;
     }
   }
+
+  small {
+    position: absolute;
+    font-size: 12px;
+    bottom: -16px;
+    left: 12px;
+    width: 100%;
+    text-align: left;
+    transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:before {
+      content: '|';
+      position: absolute;
+      left: -6px;
+      font-weight: 100;
+    }
+  }
+}
+
+:host([disabled]) {
+  input,
+  textarea {
+    background-color: bce-color-l(disable);
+    color: bce-color-t(disable);
+  }
+
+  small {
+    color: bce-color(disable);
+  }
 }
 
 :host([focus]) {
   input,
   textarea {
     border-color: bce-color();
+  }
+
+  small {
+    color: bce-color();
+  }
+}
+
+:host([error]) {
+  bce-label {
+    color: bce-color(error);
+  }
+
+  input,
+  textarea {
+    border-color: bce-color(error);
+  }
+
+  small {
+    color: bce-color(error);
   }
 }
 
@@ -106,6 +154,10 @@
 
     bce-button {
       right: 0px;
+    }
+
+    small {
+      left: calc(25% + 12px);
     }
   }
 

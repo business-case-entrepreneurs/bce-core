@@ -3,8 +3,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { Component, Element, h, Method, Prop, State } from '@stencil/core';
 
 import { InputType } from '../../models/input-type';
-import { debounce } from '../../utils/debounce';
-import { validator } from '../../utils/validator';
+import { getInputCreator } from '../../utils/input-creator';
 
 const ROW_SIZE = 19;
 library.add(faEye, faEyeSlash);
@@ -24,8 +23,14 @@ export class Input {
   @Prop({ reflect: true })
   public compact?: boolean;
 
+  @Prop({ reflect: true })
+  public error?: boolean;
+
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus?: boolean;
+
+  @Prop({ reflect: true })
+  public info?: string;
 
   @Prop({ reflect: true })
   public label?: string;
@@ -65,15 +70,12 @@ export class Input {
   @State()
   private hasHover = false;
 
-  @State()
-  private error = '';
-
-  private _debounceValidate = debounce(this.validate.bind(this), 1000);
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
   private _initialValue?: string = this.value;
-  private _resetting = false;
 
   private handleBlur = () => {
     this.hasFocus = false;
+    this._inputCreator.validate();
   };
 
   private handleFocus = () => {
@@ -83,10 +85,9 @@ export class Input {
   private handleInput = (event: Event) => {
     const input = event.target as HTMLInputElement | undefined;
     if (input) this.value = input.value || '';
-    this.resizeTextarea();
 
-    if (this.error) this.validate();
-    else if (!this._resetting) this._debounceValidate();
+    this.resizeTextarea();
+    this._inputCreator.handleInput();
   };
 
   private handleShowPassword = () => {
@@ -120,23 +121,13 @@ export class Input {
 
   @Method()
   public async reset() {
-    this._resetting = true;
     this.value = this._initialValue;
-    this.error = '';
+    this._inputCreator.reset();
   }
 
   @Method()
-  public async validate(silent = false) {
-    if (!this.validation) return [];
-
-    const label = this.label || '';
-    const name = this.name || '';
-    const meta = { label, name };
-
-    const errors = await validator.validate(this.validation, this.el, meta);
-    if (!silent) this.error = errors.length ? errors[0].message : '';
-
-    return errors;
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
   }
 
   componentDidLoad() {
@@ -165,31 +156,26 @@ export class Input {
   }
 
   render() {
+    const InputCreator = this._inputCreator;
     const Input = this.type === 'textarea' ? 'textarea' : 'input';
     const type = this.showPassword ? 'text' : this.type;
 
-    return [
-      this.label && (
-        <bce-label
-          hasFocus={this.hasFocus}
-          tooltip={this.tooltip}
+    return (
+      <InputCreator>
+        <Input
+          autocomplete={this.autocomplete}
+          disabled={this.disabled}
+          placeholder={this.placeholder}
+          type={type}
+          value={this.value}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          onInput={this.handleInput}
+          aria-label={this.label}
           data-hover={this.hover}
-        >
-          {this.label}
-        </bce-label>
-      ),
-      <Input
-        autocomplete={this.autocomplete}
-        placeholder={this.placeholder}
-        type={type}
-        value={this.value}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onInput={this.handleInput}
-        aria-label={this.label}
-        data-hover={this.hover}
-      />,
-      this.renderIcon()
-    ];
+        />
+        {this.renderIcon()}
+      </InputCreator>
+    );
   }
 }

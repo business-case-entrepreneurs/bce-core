@@ -7,8 +7,20 @@
   pointer-events: none;
   text-align: left;
 
+  label {
+    pointer-events: auto;
+  }
+
   bce-tooltip {
     pointer-events: auto;
+  }
+}
+
+:host([disabled]) {
+  color: bce-color-t(disable);
+
+  bce-tooltip {
+    pointer-events: none;
   }
 }
 
