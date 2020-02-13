@@ -21,7 +21,7 @@
           href="/#"
           style="display:inline-flex;align-items:center;vertical-align:top;height:100%;padding:0 16px;letter-spacing:2px;text-decoration:none;font-weight:bold;"
         >
-          LOGO
+          BCE Technology
         </a>
       </bce-header>
 
@@ -106,7 +106,7 @@
             <bce-input
               type="email"
               label="Email"
-              info="Use your email address"
+              info="What's your email address?"
               tooltip="bce-tooltip"
               autocomplete="email"
               validation="required|email"
@@ -114,9 +114,29 @@
             <bce-input
               type="password"
               label="Password"
-              tooltip="bce-tooltip"
               autocomplete="current-password"
+              validation="required"
+              info="This should be a value only you know..."
             ></bce-input>
+            <bce-input
+              type="number"
+              label="OTP code"
+              info="The One Time Password code."
+              value="1234"
+              disabled
+            ></bce-input>
+          </bce-form>
+
+          <bce-form>
+            <bce-input
+              type="textarea"
+              label="Description"
+              placeholder="Placeholder Textarea"
+              rows="4"
+              info="Provide a description."
+            ></bce-input>
+
+            <bce-switch></bce-switch>
           </bce-form>
         </section>
 
