@@ -43,11 +43,11 @@ export class Select {
   @Prop({ mutable: true })
   public value?: SelectValue;
 
+  private _initialized = false;
+  private _initialValue?: SelectValue = this.value;
   private _inputCreator = getInputCreator(this, err => (this.error = !!err));
   private _options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
   private _value: string[] = [];
-  private _initialValue?: SelectValue = this.value;
-  private _initialized = false;
 
   private handleBlur = () => {
     this.hasFocus = false;

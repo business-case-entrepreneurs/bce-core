@@ -70,8 +70,8 @@ export class Input {
   @State()
   private hasHover = false;
 
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
   private _initialValue?: string = this.value;
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = () => {
     this.hasFocus = false;
