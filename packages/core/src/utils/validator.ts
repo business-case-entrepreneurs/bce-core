@@ -190,8 +190,9 @@ validator.rules.set('is', async (value, args) => {
   const check = args.length > 1 ? args : args[0];
 
   const valid = Array.isArray(check)
-    ? JSON.stringify(check) === JSON.stringify(value)
-    : check === '' + value;
+    ? (Array.isArray(value) && !value.length) ||
+      JSON.stringify(check) === JSON.stringify(value)
+    : check == undefined || check === '' + value;
 
   const message = `The value should be: "${check}".`;
   return { valid, message };
