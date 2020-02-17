@@ -1,10 +1,12 @@
+@import '../../styles/input-creator.scss';
+
 :host {
   @include bce-color-default(primary);
   position: relative;
   display: inline-block;
   margin: 2px 0;
 
-  > label {
+  label {
     position: relative;
     display: flex;
     align-items: center;
@@ -58,20 +60,7 @@
   }
 }
 
-// :host([block]) {
-//   display: block;
-//   width: 100%;
-//
-//   bce-label {
-//     width: calc(100% - 36px);
-//   }
-//
-//   > label {
-//     display: inline-flex;
-//   }
-// }
-
-:host([disabled]) > label {
+:host([disabled]) label {
   cursor: default;
 
   > div {
@@ -86,7 +75,7 @@
 :host([focus]) {
   outline: none;
 
-  > label > div {
+  label > div {
     &:after {
       width: 10px;
       height: 10px;
@@ -105,22 +94,30 @@
 }
 
 :host([label]) {
-  display: block;
+  display: flex;
+  align-items: center;
   margin: 20px 0;
   height: 40px;
-  line-height: 40px;
 
   bce-label {
-    width: calc(100% - 36px);
+    flex: 1 1 auto;
   }
 
-  > label {
-    display: inline-flex;
+  .slot-container {
+    margin: 0 12px;
   }
 
   @include media-small {
     bce-label {
-      width: 25%;
+      flex: 0 0 25%;
+    }
+
+    .slot-container {
+      order: 2;
+    }
+
+    label {
+      order: 1;
     }
   }
 }

@@ -155,6 +155,60 @@
               <bce-option value="y">Option Y</bce-option>
               <bce-option value="z">Option Z</bce-option>
             </bce-select>
+            <bce-select type="choice" label="bce-select[type='choice']" center>
+              <bce-chip value="amsterdam">Amsterdam</bce-chip>
+              <bce-chip value="arnhem">Arnhem</bce-chip>
+              <bce-chip value="delft">Delft</bce-chip>
+              <bce-chip value="groningen">Groningen</bce-chip>
+              <bce-chip value="the-hague">The Hague</bce-chip>
+              <bce-chip value="leiden">Leiden</bce-chip>
+              <bce-chip value="maastricht">Maastricht</bce-chip>
+              <bce-chip value="nijmegen">Nijmegen</bce-chip>
+              <bce-chip value="rotterdam">Rotterdam</bce-chip>
+              <bce-chip value="utrecht">Utrecht</bce-chip>
+              <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
+            </bce-select>
+            <bce-select
+              type="filter"
+              label="bce-select[type='filter']"
+              validation="is:the-hague,nijmegen"
+              center
+            >
+              <bce-chip value="amsterdam">Amsterdam</bce-chip>
+              <bce-chip value="arnhem">Arnhem</bce-chip>
+              <bce-chip value="delft">Delft</bce-chip>
+              <bce-chip value="groningen">Groningen</bce-chip>
+              <bce-chip value="the-hague">The Hague</bce-chip>
+              <bce-chip value="leiden">Leiden</bce-chip>
+              <bce-chip value="maastricht">Maastricht</bce-chip>
+              <bce-chip value="nijmegen">Nijmegen</bce-chip>
+              <bce-chip value="rotterdam">Rotterdam</bce-chip>
+              <bce-chip value="utrecht">Utrecht</bce-chip>
+              <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
+            </bce-select>
+          </bce-form>
+
+          <h4>Switch</h4>
+          <bce-form>
+            <bce-switch value="true" color="primary"></bce-switch>
+            <bce-switch value="true" color="secondary"></bce-switch>
+            <bce-switch value="true" color="tertiary"></bce-switch>
+            <br />
+            <bce-switch value="true" color="success"></bce-switch>
+            <bce-switch value="true" color="error"></bce-switch>
+            <bce-switch value="true" color="warning"></bce-switch>
+            <bce-switch value="true" color="info"></bce-switch>
+            <br />
+            <bce-switch value="true" color="dark"></bce-switch>
+            <bce-switch value="true" color="light"></bce-switch>
+            <br />
+
+            <bce-switch label="Regular"></bce-switch>
+            <bce-switch label="Slotted" info="Default slot">...</bce-switch>
+            <bce-switch label="Conditional" info="slot=true / slot=false"">
+              <span slot="true">True</span>
+              <span slot="false">False</span>
+            </bce-switch>
           </bce-form>
         </section>
 

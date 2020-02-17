@@ -11,7 +11,6 @@ const main = () => {
     // Component specific mode's (e.g. bce-button within bce-fab)
     if (chain(el, 'bce-button', 'bce-fab')) return 'bce-fab';
     if (chain(el, 'bce-button', 'bce-menu')) return 'bce-menu';
-    if (chain(el, 'bce-chip', 'bce-select')) return 'bce-select';
     if (chain(el, 'bce-link', 'bce-link')) return 'bce-link';
     if (chain(el, 'bce-nav', 'bce-header')) return 'bce-header';
     if (chain(el, 'bce-nav', 'bce-side-bar')) return 'bce-side-bar';
