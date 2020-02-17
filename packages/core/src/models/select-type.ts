@@ -1,1 +1,4 @@
-export type SelectType = 'checkbox' | 'input' | 'radio';
+import { ChipType } from './chip-type';
+import { OptionType } from './option-type';
+
+export type SelectType = ChipType | OptionType;

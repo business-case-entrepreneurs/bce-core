@@ -29,13 +29,13 @@
         <bce-nav>
           <bce-link href="/#">Home</bce-link>
           <bce-link href="/#form">Form</bce-link>
-          <bce-link href="/#buttons">Buttons</bce-link>
-          <bce-link href="/#messages">Messages</bce-link>
+          <bce-link href="/#button">Button</bce-link>
+          <bce-link href="/#message">Message</bce-link>
         </bce-nav>
       </bce-side-bar>
 
       <main>
-        <section id="buttons">
+        <section id="button">
           <h3>BCE Button</h3>
 
           <h4>Contained</h4>
@@ -102,6 +102,7 @@
         <section id="form">
           <h3>BCE Form</h3>
 
+          <h4>Input</h4>
           <bce-form>
             <bce-input
               type="email"
@@ -125,9 +126,6 @@
               value="1234"
               disabled
             ></bce-input>
-          </bce-form>
-
-          <bce-form>
             <bce-input
               type="textarea"
               label="Description"
@@ -135,12 +133,32 @@
               rows="4"
               info="Provide a description."
             ></bce-input>
+          </bce-form>
 
-            <bce-switch></bce-switch>
+          <h4>Select</h4>
+          <bce-form>
+            <bce-select
+              type="checkbox"
+              label="bce-select[type='checkbox']"
+              validation="required|min:2"
+            >
+              <bce-option value="a">Option A</bce-option>
+              <bce-option value="b">Option B</bce-option>
+              <bce-option value="c">Option C</bce-option>
+            </bce-select>
+            <bce-select
+              type="radio"
+              label="bce-select[type='radio']"
+              validation="is:z"
+            >
+              <bce-option value="x">Option X</bce-option>
+              <bce-option value="y">Option Y</bce-option>
+              <bce-option value="z">Option Z</bce-option>
+            </bce-select>
           </bce-form>
         </section>
 
-        <section id="messages">
+        <section id="message">
           <h3>BCE Message</h3>
           <bce-button
             design="text"

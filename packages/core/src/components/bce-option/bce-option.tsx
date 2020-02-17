@@ -42,7 +42,10 @@ export class Option {
     this.hasFocus = false;
   };
 
-  public handleClick = () => {
+  public handleClick = (event: Event) => {
+    event.preventDefault();
+    event.cancelBubble = true;
+
     switch (this.type) {
       case 'checkbox':
         this.checked = !this.checked;
@@ -53,7 +56,8 @@ export class Option {
           ? `bce-option[type='radio'][name='${this.name}']`
           : "bce-option[type='radio']";
 
-        const options = Array.from(this.el.parentNode!.querySelectorAll(query));
+        const p = this.el.parentNode;
+        const options = p ? Array.from(p.querySelectorAll(query)) : [];
         for (const option of options as HTMLBceOptionElement[])
           option.checked = this.el === option;
         return;
@@ -64,25 +68,28 @@ export class Option {
     this.hasFocus = true;
   };
 
-  private ignoreClick = (event: Event) => {
-    event.preventDefault();
+  private ignoreEvent = (event: Event) => {
     event.cancelBubble = true;
   };
 
   render() {
     return (
-      <Host onBlur={this.handleBlur} onFocus={this.handleFocus}>
+      <Host
+        onBlur={this.handleBlur}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+      >
         <input
           id={this._id}
           checked={!!this.checked}
           name={this.name}
           type={this.type}
-          onClick={this.ignoreClick}
+          onInput={this.ignoreEvent}
         />
         {this.type === 'checkbox' && this.checked && (
           <bce-icon raw="fas:check" fixed-width />
         )}
-        <label htmlFor={this._id} onClick={this.handleClick}>
+        <label htmlFor={this._id} onClick={this.ignoreEvent}>
           <slot />
         </label>
       </Host>

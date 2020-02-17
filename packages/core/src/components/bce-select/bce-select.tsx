@@ -1,29 +1,8 @@
-import {
-  Component,
-  Element,
-  h,
-  Host,
-  Method,
-  Prop,
-  State
-} from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
-import { ChipType } from '../../models/chip-type';
-import { OptionType } from '../../models/option-type';
 import { SelectType } from '../../models/select-type';
-import { validator } from '../../utils/validator';
-
-const CHIP_TYPE_MAP: { [Type in SelectType]: ChipType } = {
-  checkbox: 'filter',
-  input: 'input',
-  radio: 'choice'
-};
-
-const OPTION_TYPE_MAP: { [Type in SelectType]: OptionType } = {
-  checkbox: 'checkbox',
-  input: 'checkbox',
-  radio: 'radio'
-};
+import { SelectValue } from '../../models/select-value';
+import { getInputCreator } from '../../utils/input-creator';
 
 @Component({
   tag: 'bce-select',
@@ -37,8 +16,14 @@ export class Select {
   @Prop({ reflect: true })
   public center?: boolean;
 
+  @Prop({ reflect: true })
+  public error?: boolean;
+
   @Prop({ reflect: true, attribute: 'focus' })
   public hasFocus?: boolean;
+
+  @Prop({ reflect: true })
+  public info?: string;
 
   @Prop({ reflect: true })
   public label?: string;
@@ -56,13 +41,13 @@ export class Select {
   public validation?: string;
 
   @Prop({ mutable: true })
-  public value?: string | string[];
+  public value?: SelectValue;
 
-  @State()
-  private error = '';
-
-  private chips: HTMLBceChipElement[] = [];
-  private options: HTMLBceOptionElement[] = [];
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  private _options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
+  private _value: string[] = [];
+  private _initialValue?: SelectValue = this.value;
+  private _initialized = false;
 
   private handleBlur = () => {
     this.hasFocus = false;
@@ -72,73 +57,116 @@ export class Select {
     this.hasFocus = true;
   };
 
+  private handleClick = () => {
+    switch (this.type) {
+      case 'checkbox':
+      case 'filter':
+        this.value = this._options
+          .filter(option => !!option.value && !!option.checked)
+          .map(option => option.value!);
+        return;
+
+      case 'choice':
+      case 'radio':
+        const option = this._options.find(option => option.checked);
+        this.value = option ? option.value : null;
+        return;
+    }
+  };
+
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
 
-    const nodes = slot.assignedNodes();
-    this.chips = nodes.filter(n => n.nodeName === 'BCE-CHIP') as any;
-    this.options = nodes.filter(n => n.nodeName === 'BCE-OPTION') as any;
+    // Remove existing event listeners
+    for (const option of this._options) this.removeEventHandlers(option);
 
-    for (const chip of this.chips) {
-      chip.type = CHIP_TYPE_MAP[this.type];
-      chip.name = this.name;
-      this.attachEventHandlers(chip);
-    }
+    // Load new options
+    const filter = ['BCE-CHIP', 'BCE-OPTION'];
+    this._options = slot
+      .assignedNodes()
+      .filter(n => filter.indexOf(n.nodeName) >= 0) as any;
 
-    for (const option of this.options) {
-      option.type = OPTION_TYPE_MAP[this.type];
+    // Initialize options & attach event listeners
+    for (const option of this._options) {
+      option.type = this.type;
       option.name = this.name;
       this.attachEventHandlers(option);
     }
   };
 
-  @Method()
-  public async reset() {}
+  @Watch('value')
+  public watchValue(value?: SelectValue) {
+    if (this.type === 'checkbox' || this.type === 'filter') {
+      this._value = Array.isArray(value)
+        ? value
+        : (value && value.split(',').map(v => v.trim())) || [];
+    }
+
+    if (this._initialized) this._inputCreator.handleInput();
+
+    switch (this.type) {
+      case 'checkbox':
+      case 'filter':
+        for (const option of this._options)
+          option.checked = this._value.indexOf(option.value || '') >= 0;
+        return;
+
+      case 'choice':
+      case 'radio':
+        for (const option of this._options)
+          option.checked = this.value === option.value;
+        return;
+    }
+  }
 
   @Method()
-  public async validate(silent = false) {
-    if (!this.validation) return [];
+  public async reset() {
+    this.value = this._initialValue;
+    this._inputCreator.reset();
+  }
 
-    const label = this.label || '';
-    const name = this.name || '';
-    const meta = { label, name };
-
-    const errors = await validator.validate(this.validation, this.el, meta);
-    if (!silent) this.error = errors.length ? errors[0].message : '';
-
-    return errors;
+  @Method()
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
   }
 
   private attachEventHandlers(el: HTMLElement) {
     el.addEventListener('blur', this.handleBlur);
+    el.addEventListener('click', this.handleClick);
     el.addEventListener('focus', this.handleFocus);
   }
 
+  private removeEventHandlers(el: HTMLElement) {
+    el.removeEventListener('blur', this.handleBlur);
+    el.removeEventListener('click', this.handleClick);
+    el.removeEventListener('focus', this.handleFocus);
+  }
+
   componentDidLoad() {
+    this.watchValue(this.value);
+
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
       this.handleSlotChange(slot);
     }
+
+    this._initialized = true;
   }
 
   render() {
     if (this.type === 'input')
       console.warn('[bce-select] The input type is unimplemented.');
 
+    const InputCreator = this._inputCreator;
     return (
-      <Host>
-        {this.label && (
-          <bce-label hasFocus={this.hasFocus} tooltip={this.tooltip}>
-            {this.label}
-          </bce-label>
-        )}
+      <InputCreator>
         <fieldset>
           {this.label && <legend>{this.label}</legend>}
           <slot />
         </fieldset>
-      </Host>
+      </InputCreator>
     );
   }
 }
