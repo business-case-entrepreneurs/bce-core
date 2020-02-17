@@ -1,6 +1,5 @@
 export * from './utils/debounce';
 export * from './utils/file';
-export * from './utils/input-creator';
 export * from './utils/ripple';
 export * from './utils/scroll-spy';
 export * from './utils/uuid';

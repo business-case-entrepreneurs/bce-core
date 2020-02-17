@@ -4,6 +4,10 @@ packages/*/dist/
 packages/*/loader/
 packages/*/src/components.d.ts
 packages/*/www/
+
+packages/react/src/react-component-lib
+packages/react/src/components.ts
+
 node_modules/
 
 *.log

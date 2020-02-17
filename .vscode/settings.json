@@ -13,6 +13,7 @@
     "packages/*/.rpt2_cache": true,
     "packages/*/.stencil": true,
     "packages/*/babel.config.js": true,
+    "packages/*/build": false,
     "packages/*/dist": false,
     "packages/*/loader": false,
     "packages/*/tslint.json": true,

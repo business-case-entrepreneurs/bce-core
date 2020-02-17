@@ -1,4 +1,5 @@
 import { Config } from '@stencil/core';
+import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
 export const config: Config = {
@@ -11,7 +12,11 @@ export const config: Config = {
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [
     { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
-    { type: 'www', dir: './www', serviceWorker: null }
+    { type: 'www', dir: './www', serviceWorker: null },
+    reactOutputTarget({
+      componentCorePackage: '@bcase/core',
+      proxiesFile: '../react/src/components.ts'
+    })
   ],
   copy: [{ src: 'logo' }]
 };
