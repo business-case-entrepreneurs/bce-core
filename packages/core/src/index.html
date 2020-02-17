@@ -103,7 +103,7 @@
           <h3>BCE Form</h3>
 
           <h4>Input</h4>
-          <bce-form>
+          <bce-form onerror="app.message('Error')" onsubmit="app.message('Submit')">
             <bce-input
               type="email"
               label="Email"
@@ -133,6 +133,11 @@
               rows="4"
               info="Provide a description."
             ></bce-input>
+
+            <div style="text-align: right;">
+              <bce-button design="text" type="reset">Reset</bce-button>
+              <bce-button design="text" type="submit">Submit</bce-button>
+            </div>
           </bce-form>
 
           <h4>Select</h4>

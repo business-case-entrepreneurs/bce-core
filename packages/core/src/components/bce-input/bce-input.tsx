@@ -122,6 +122,7 @@ export class Input {
   @Method()
   public async reset() {
     this.value = this._initialValue;
+    this.showPassword = false;
     this._inputCreator.reset();
   }
 

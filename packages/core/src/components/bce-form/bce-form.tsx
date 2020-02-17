@@ -1,4 +1,4 @@
-import { Component, Element, h, Method, Prop } from '@stencil/core';
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
 
 import { FormInput, FORM_INPUTS } from '../../models/form-input';
 import { Validation } from '../../models/validation';
@@ -16,6 +16,14 @@ export class BceForm {
 
   private _inputs: FormInput[] = [];
 
+  private handleClick = (event: MouseEvent) => {
+    const target = event.target as HTMLBceButtonElement;
+    if (!target) return;
+
+    if (target.type === 'submit') this.submit();
+    else if (target.type === 'reset') this.reset();
+  };
+
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
@@ -24,8 +32,8 @@ export class BceForm {
 
   @Method()
   public async reset() {
-    const inputs = this.getInputs();
-    // for (const input of inputs) await input.reset();
+    const tasks = this._inputs.map(el => el.reset());
+    await Promise.all(tasks);
   }
 
   @Method()
@@ -37,14 +45,9 @@ export class BceForm {
 
   @Method()
   public async validate(silent = false) {
-    // const tasks = this._inputs.map(el => el.validate(silent));
-    // this.errors = [].concat(...((await Promise.all(tasks)) as any[]));
-    // return this.errors;
-    return [];
-  }
-
-  private getInputs() {
-    return Array.from(this.el.querySelectorAll('bce-input'));
+    const tasks = this._inputs.map(el => el.validate(silent));
+    this.errors = [].concat(...((await Promise.all(tasks)) as any[]));
+    return this.errors;
   }
 
   componentDidLoad() {
@@ -56,6 +59,10 @@ export class BceForm {
   }
 
   render() {
-    return <slot />;
+    return (
+      <Host onClick={this.handleClick}>
+        <slot />
+      </Host>
+    );
   }
 }
