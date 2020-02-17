@@ -135,6 +135,26 @@ export class Root {
   }
 
   @Method()
+  public async success(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'success', duration: 2, ...options });
+  }
+
+  @Method()
+  public async error(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'error', duration: 5, ...options });
+  }
+
+  @Method()
+  public async warning(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'warning', duration: 2, ...options });
+  }
+
+  @Method()
+  public async info(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'info', duration: 2, ...options });
+  }
+
+  @Method()
   public async message(text: string, options: Partial<MessageOptions> = {}) {
     if (!text) return;
 
