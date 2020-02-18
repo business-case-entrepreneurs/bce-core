@@ -1,4 +1,5 @@
 import {
+  BceButton,
   BceCode,
   BceHeader,
   BceNavButton,
@@ -39,6 +40,9 @@ class App extends React.Component {
         <main>
           <section>
             <BceCode content={this.code} language="html" />
+            <br />
+
+            <BceButton>Hello World!</BceButton>
           </section>
         </main>
       </BceRoot>
