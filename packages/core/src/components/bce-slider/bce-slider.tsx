@@ -1,44 +1,47 @@
-import { Component, Prop, Element, h } from "@stencil/core";
+import { Component, Prop, Element, h } from '@stencil/core';
 
 @Component({
-  tag: "bce-slider",
-  styleUrl: "bce-slider.scss",
-  shadow: false
+  tag: 'bce-slider',
+  styleUrl: 'bce-slider.scss',
+  shadow: true
 })
 export class BceSlider {
   @Element()
   private el!: HTMLElement;
 
   @Prop({ reflect: true })
-  public min: number = 0;
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
-  public max: number = 10;
+  public max?: number;
 
   @Prop({ reflect: true })
-  public step: number = 1;
-
-  // todo
-  @Prop({ reflect: true })
-  public disabled: boolean = false;
+  public min?: number;
 
   @Prop({ reflect: true })
-  public discrete: boolean = false;
-  // todo
+  public step?: number;
 
-  @Prop()
-  public value: any = null;
+  @Prop({ mutable: true })
+  public value?: number;
 
-  componentWillLoad() {
-    this.value = this.value || this.defaultValue();
-    this.setFillWidth(this.value);
+  public get _max() {
+    return this.max || 100;
+  }
+
+  public get _min() {
+    return this.min || 0;
+  }
+
+  public get _step() {
+    return this.step || 1;
   }
 
   private defaultValue = () => {
-    return this.max < this.min
-      ? this.min
-      : Math.round((this.max - this.min) / 2 + this.min);
+    return this._max < this._min
+      ? this._min
+      : Math.round((this._max - this._min) / 2 + this._min);
   };
+
   private handleChange = (event: any) => {
     const newValue = event.target.value;
     this.setFillWidth(newValue);
@@ -46,20 +49,26 @@ export class BceSlider {
   };
 
   public setFillWidth(newValue: number) {
-    const step = (100 / (this.max - this.min)) * this.step;
-    const width = newValue * step - step * this.min;
-    this.el.style.setProperty("--fill-width", `${width}%`);
+    const input = this.el.shadowRoot!.querySelector('input')!;
+    const step = (100 / (this._max - this._min)) * this._step;
+    const width = newValue * step - step * this._min;
+    input.style.setProperty('--fill-width', `${width}%`);
+  }
+
+  componentDidLoad() {
+    this.value = this.value || this.defaultValue();
+    this.setFillWidth(this.value);
   }
 
   render() {
     return [
       <input
-        onInput={this.handleChange}
+        max={this._max}
+        min={this._min}
+        step={this._step}
         type="range"
-        step={this.step}
-        min={this.min}
-        max={this.max}
         value={this.value}
+        onInput={this.handleChange}
       />
     ];
   }
