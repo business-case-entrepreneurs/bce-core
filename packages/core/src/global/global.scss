@@ -68,16 +68,18 @@ bce-root {
   height: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     'stat stat'
     'head head'
-    'side main';
+    'side main'
+    'side foot';
 
   bce-status-bar {
     grid-area: stat;
   }
 
+  header,
   bce-header {
     grid-area: head;
   }
@@ -89,6 +91,11 @@ bce-root {
   main {
     grid-area: main;
     background-color: bce-color-l(light);
+  }
+
+  footer,
+  bce-footer {
+    grid-area: foot;
   }
 }
 
