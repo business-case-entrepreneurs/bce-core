@@ -17,6 +17,5 @@ export const config: Config = {
       componentCorePackage: '@bcase/core',
       proxiesFile: '../react/src/components.ts'
     })
-  ],
-  copy: [{ src: 'logo' }]
+  ]
 };
