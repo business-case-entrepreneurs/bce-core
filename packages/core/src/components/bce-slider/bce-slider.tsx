@@ -1,4 +1,6 @@
-import { Component, Prop, Element, h } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
+
+import { getInputCreator } from '../../utils/input-creator';
 
 @Component({
   tag: 'bce-slider',
@@ -7,10 +9,25 @@ import { Component, Prop, Element, h } from '@stencil/core';
 })
 export class BceSlider {
   @Element()
-  private el!: HTMLElement;
+  private el!: HTMLBceSliderElement;
+
+  @Prop({ reflect: true })
+  public color?: string;
 
   @Prop({ reflect: true })
   public disabled?: boolean;
+
+  @Prop({ reflect: true })
+  public error?: boolean;
+
+  @Prop({ reflect: true, attribute: 'focus' })
+  public hasFocus?: boolean;
+
+  @Prop({ reflect: true })
+  public info?: string;
+
+  @Prop({ reflect: true })
+  public label?: string;
 
   @Prop({ reflect: true })
   public max?: number;
@@ -19,57 +36,88 @@ export class BceSlider {
   public min?: number;
 
   @Prop({ reflect: true })
+  public name?: string;
+
+  @Prop({ reflect: true })
   public step?: number;
+
+  @Prop()
+  public tooltip?: string;
+
+  @Prop({ reflect: true })
+  public validation?: string;
 
   @Prop({ mutable: true })
   public value?: number;
 
-  public get _max() {
-    return this.max || 100;
-  }
+  private _initialValue?: number = this.value;
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
 
-  public get _min() {
-    return this.min || 0;
-  }
-
-  public get _step() {
-    return this.step || 1;
-  }
-
-  private defaultValue = () => {
-    return this._max < this._min
-      ? this._min
-      : Math.round((this._max - this._min) / 2 + this._min);
+  private handleBlur = () => {
+    this.hasFocus = false;
+    this._inputCreator.validate();
   };
 
-  private handleChange = (event: any) => {
-    const newValue = event.target.value;
-    this.setFillWidth(newValue);
-    this.value = newValue;
+  private handleFocus = () => {
+    this.hasFocus = true;
   };
 
-  public setFillWidth(newValue: number) {
-    const input = this.el.shadowRoot!.querySelector('input')!;
-    const step = (100 / (this._max - this._min)) * this._step;
-    const width = newValue * step - step * this._min;
-    input.style.setProperty('--fill-width', `${width}%`);
+  private handleInput = (event: any) => {
+    const input = event.target as HTMLInputElement | undefined;
+    if (!input) return;
+
+    this.value = parseInt(input.value, 10);
+  };
+
+  @Method()
+  public async reset() {
+    this.value = this._initialValue;
+    this._inputCreator.reset();
+  }
+
+  @Method()
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
+  }
+
+  @Watch('value')
+  public watchValue() {
+    const min = this.min != undefined ? this.min : 0;
+    const max = this.max != undefined ? this.max : 100;
+    const step = this.step != undefined ? this.step : 1;
+    const value =
+      this.value != undefined ? this.value : Math.round((max - min) / 2 + min);
+
+    const s = (100 / (max - min)) * step;
+    const width = value * s - s * min;
+
+    this.el
+      .shadowRoot!.querySelector('input')!
+      .style.setProperty('--fill-width', `${width}%`);
   }
 
   componentDidLoad() {
-    this.value = this.value || this.defaultValue();
-    this.setFillWidth(this.value);
+    this.watchValue();
   }
 
   render() {
-    return [
-      <input
-        max={this._max}
-        min={this._min}
-        step={this._step}
-        type="range"
-        value={this.value}
-        onInput={this.handleChange}
-      />
-    ];
+    const InputCreator = this._inputCreator;
+
+    return (
+      <InputCreator>
+        <input
+          disabled={this.disabled}
+          max={this.max}
+          min={this.min}
+          step={this.step}
+          type="range"
+          value={this.value}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          onInput={this.handleInput}
+          aria-label={this.label}
+        />
+      </InputCreator>
+    );
   }
 }

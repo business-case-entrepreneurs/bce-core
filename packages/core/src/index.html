@@ -103,7 +103,10 @@
           <h3>BCE Form</h3>
 
           <h4>Input</h4>
-          <bce-form onerror="app.message('Error')" onsubmit="app.message('Submit')">
+          <bce-form
+            onerror="app.message('Error')"
+            onsubmit="app.message('Submit')"
+          >
             <bce-input
               type="email"
               label="Email"
@@ -210,7 +213,7 @@
 
             <bce-switch label="Regular"></bce-switch>
             <bce-switch label="Slotted" info="Default slot">...</bce-switch>
-            <bce-switch label="Conditional" info="slot=true / slot=false"">
+            <bce-switch label="Conditional" info="slot=true / slot=false">
               <span slot="true">True</span>
               <span slot="false">False</span>
             </bce-switch>
@@ -222,15 +225,22 @@
             <bce-slider color="secondary"></bce-slider>
             <bce-slider color="tertiary"></bce-slider>
             <br />
-            <bce-slider value="true" color="success"></bce-slider>
-            <bce-slider value="true" color="error"></bce-slider>
-            <bce-slider value="true" color="warning"></bce-slider>
-            <bce-slider value="true" color="info"></bce-slider>
+            <bce-slider color="success"></bce-slider>
+            <bce-slider color="error"></bce-slider>
+            <bce-slider color="warning"></bce-slider>
+            <bce-slider color="info"></bce-slider>
             <br />
-            <bce-slider value="true" color="dark"></bce-slider>
-            <bce-slider value="true" color="light"></bce-slider>
+            <bce-slider color="dark"></bce-slider>
+            <bce-slider color="light"></bce-slider>
             <br />
 
+            <bce-slider label="Regular"></bce-slider>
+            <bce-slider
+              label="Block"
+              min="0"
+              max="3"
+              info="min: 0 - max: 3 - step: 1"
+            ></bce-slider>
           </bce-form>
         </section>
 
