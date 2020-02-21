@@ -46,6 +46,7 @@ export class Switch {
 
   private handleBlur = () => {
     this.hasFocus = false;
+    this._inputCreator.validate();
   };
 
   private handleChange = (event: Event) => {
@@ -63,12 +64,14 @@ export class Switch {
   };
 
   @Method()
-  public async reset() {}
+  public async reset() {
+    this.value = this._initialValue;
+    this._inputCreator.reset();
+  }
 
   @Method()
-  public async validate(silent = false) {
-    if (!this.validation) return [];
-    return [];
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
   }
 
   render() {
