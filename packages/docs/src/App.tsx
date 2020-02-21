@@ -39,7 +39,7 @@ class App extends React.Component {
 
         <main>
           <section>
-            <BceCode content={this.code} language="html" />
+            <BceCode value={this.code} language="html" />
             <br />
 
             <BceButton>Hello World!</BceButton>

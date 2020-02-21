@@ -4,9 +4,9 @@ import CodeFlask from 'codeflask';
 @Component({
   tag: 'bce-code-editor',
   styleUrl: 'bce-code-editor.scss',
-  shadow: false
+  shadow: true
 })
-export class BceCodeEditor {
+export class CodeEditor {
   @Element()
   private el!: HTMLBceCodeEditorElement;
 
@@ -59,11 +59,13 @@ export class BceCodeEditor {
 
     // Reset
     const textarea = this.el.querySelector('textarea')!;
+    const container = this.el.querySelector('.codeflask')! as HTMLElement;
     textarea.style.setProperty('height', min + 'px');
 
     // Recalculate
     const height = min > textarea.scrollHeight ? min : textarea.scrollHeight;
     textarea.style.setProperty('height', height + 'px');
+    container.style.setProperty('height', height + 'px');
   }
 
   async componentDidLoad() {

@@ -33,16 +33,16 @@ export class Code {
   private el!: HTMLBceCodeElement;
 
   @Prop({ reflect: true })
-  public language: BceCodeLanguage = 'none';
-
-  @Prop()
-  public content: string | string[] = '';
+  public async?: boolean;
 
   @Prop({ reflect: true })
   public inline?: boolean;
 
   @Prop({ reflect: true })
-  public async?: boolean;
+  public language: BceCodeLanguage = 'none';
+
+  @Prop()
+  public value: string | string[] = '';
 
   componentDidLoad() {
     const query = this.inline ? 'code' : 'pre';
@@ -52,9 +52,9 @@ export class Code {
 
   render() {
     const classes = `language-${this.language}`;
-    const content = Array.isArray(this.content)
-      ? this.content.join('\n')
-      : this.content;
+    const content = Array.isArray(this.value)
+      ? this.value.join('\n')
+      : this.value;
 
     const code = <code class={classes}>{content}</code>;
     return this.inline ? code : <pre class={classes}>{code}</pre>;
