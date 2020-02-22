@@ -28,6 +28,9 @@ export class Link {
   @Prop({ reflect: true })
   public icon?: string;
 
+  @Prop()
+  public navigate?: (event: MouseEvent) => void;
+
   // #region Forwarded to native anchor
   @Prop({ reflect: true })
   public download?: boolean;
@@ -52,9 +55,21 @@ export class Link {
   private _height = 0;
   private _links = 0;
 
-  private handleClick = () => {
+  private handleClick = (event: MouseEvent) => {
     // Toggle self
     if (this._links) this.toggle();
+
+    // A custom navigate function can be passed and allows client-side routing
+    // without a page refresh.
+    if (
+      this.navigate &&
+      event.button === 0 &&
+      (!this.target || this.target === '_self') &&
+      !this.isModifiedEvent(event)
+    ) {
+      event.preventDefault();
+      this.navigate(event);
+    }
   };
 
   private handleMouseDown = (event: MouseEvent) => {
@@ -74,6 +89,10 @@ export class Link {
   public async toggle(active?: boolean) {
     this.active = active != undefined ? active : !this.active;
     this._height = this.active ? (this._links || 0) * HEIGHT_HEADER : 0;
+  }
+
+  private isModifiedEvent(event: MouseEvent) {
+    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
   }
 
   componentDidLoad() {
