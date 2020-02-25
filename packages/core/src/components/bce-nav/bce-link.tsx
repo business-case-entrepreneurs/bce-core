@@ -10,7 +10,7 @@ library.add(faCaretDown);
 @Component({
   tag: 'bce-link',
   styleUrls: {
-    'bce-link': 'bce-link:link.scss',
+    'bce-link': 'bce-link.link.scss',
     default: 'bce-link.scss'
   },
   shadow: true
