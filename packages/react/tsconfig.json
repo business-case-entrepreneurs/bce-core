@@ -7,7 +7,7 @@
     "resolveJsonModule": false,
     "esModuleInterop": true,
     "lib": ["dom", "es2015"],
-    "module": "system",
+    "module": "es2015",
     "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true,
