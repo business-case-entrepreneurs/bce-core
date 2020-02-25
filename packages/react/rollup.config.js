@@ -1,4 +1,4 @@
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 
 export default {
   input: 'src/index.ts',
@@ -16,6 +16,6 @@ export default {
       format: 'system'
     }
   ],
-  external: [],
+  external: ['@bcase/core/loader', 'react', 'react-dom'],
   plugins: [typescript()]
 };
