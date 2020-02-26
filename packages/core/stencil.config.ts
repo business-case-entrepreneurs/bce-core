@@ -12,6 +12,7 @@ export const config: Config = {
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [
     { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
+    { type: 'experimental-dist-module', dir: './dist-module' },
     { type: 'www', dir: './www', serviceWorker: null },
     reactOutputTarget({
       componentCorePackage: '@bcase/core',
