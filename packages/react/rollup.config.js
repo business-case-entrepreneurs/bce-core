@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
+import alias from 'rollup-plugin-alias';
 
 export default {
   input: 'src/index.ts',
@@ -16,6 +17,14 @@ export default {
       format: 'system'
     }
   ],
-  external: ['@bcase/core/loader', 'react', 'react-dom'],
-  plugins: [typescript()]
+  external: ['react', 'react-dom'],
+  plugins: [
+    alias({
+      resolve: ['ts'],
+      entries: {
+        '@bcase/core/loader': './loader.ts'
+      }
+    }),
+    typescript()
+  ]
 };
