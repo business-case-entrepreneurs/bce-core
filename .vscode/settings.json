@@ -6,6 +6,8 @@
     "**/CVS": true,
     "**/.DS_Store": true,
 
+    "**/dist": true,
+    "**/loader": true,
     "**/node_modules": true,
     "**/package-lock.json": true,
 
