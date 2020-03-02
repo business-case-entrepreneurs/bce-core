@@ -19,7 +19,10 @@
   "scripts": {
     "build": "stencil build --docs-json ./dist/docs.json",
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
-    "serve": "stencil build --watch --serve --docs-json ./dist/docs.json"
+    "serve": "stencil build --watch --serve --docs-json ./dist/docs.json",
+    "test": "stencil test --spec",
+    "test.watch": "stencil test --spec --watch",
+    "test.e2e": "stencil test --e2e"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
@@ -28,7 +31,10 @@
     "@stencil/core": "^1.8.8",
     "@stencil/react-output-target": "0.0.3",
     "@stencil/sass": "^1.1.1",
+    "@types/jest": "24.0.25",
     "codeflask": "^1.4.1",
+    "jest": "24.9.0",
+    "jest-cli": "24.9.0",
     "popper.js": "^1.16.0",
     "prismjs": "^1.17.1",
     "rimraf": "^3.0.0",
