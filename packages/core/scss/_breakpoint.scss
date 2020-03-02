@@ -51,12 +51,14 @@ $breakpoint-xlarge: 1920px !default;
   }
 }
 
-@mixin fixed-width() {
+@mixin fixed-width($padding: 0) {
+  padding: $padding;
+
   @include media-medium {
-    padding: 0 calc((100% - 930px) / 2);
+    padding: $padding calc((100% - 930px) / 2);
   }
 
   @include media-large {
-    padding: 0 calc((100% - 1110px) / 2);
+    padding: $padding calc((100% - 1110px) / 2);
   }
 }
