@@ -12,7 +12,7 @@ import { MessageOptions } from '../../models/message-options';
 import { injectCSS } from '../../utils/stylesheet';
 import { UUID } from '../../utils/uuid';
 
-/// unit: id, message, dialog, alert, confirm, execute, _fab,
+/// unit: id, message, execute, _fab,
 /// handleSlotChange direct child/grandchild change
 
 /// e2e: design, small
@@ -35,7 +35,7 @@ export class Root {
   @State()
   private _messageQueue: ({ text: string } & MessageOptions)[] = [];
 
-  private _messageTimer = 0;
+  public _messageTimer = 0;
   private _padding = 0;
 
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
