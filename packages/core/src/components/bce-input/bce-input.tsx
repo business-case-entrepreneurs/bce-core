@@ -8,6 +8,10 @@ import { getInputCreator } from '../../utils/input-creator';
 const ROW_SIZE = 19;
 library.add(faEye, faEyeSlash);
 
+/// unit: type, info, focus, event,
+
+/// e2e:
+
 @Component({
   tag: 'bce-input',
   styleUrl: 'bce-input.scss',

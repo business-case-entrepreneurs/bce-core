@@ -7,6 +7,10 @@ import { ChipType } from '../../models/chip-type';
 import { ripple } from '../../utils/ripple';
 import { UUID } from '../../utils/uuid';
 
+/// unit: icon, focus, removable, thumbnail, icon + thumbnail, type(click event), renderThumbnail(url, kleur)
+
+/// e2e: design, small
+
 library.add(faCheck, faTimesCircle);
 
 const INPUT_TYPE_MAP: { [Type in ChipType]: string } = {

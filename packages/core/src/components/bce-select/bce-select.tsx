@@ -4,6 +4,8 @@ import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
 import { getInputCreator } from '../../utils/input-creator';
 
+/// unit: type, info, focus, event,
+
 @Component({
   tag: 'bce-select',
   styleUrl: 'bce-select.scss',

@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 
+/// unit tooltip, focus
 @Component({
   tag: 'bce-label',
   styleUrl: 'bce-label.scss',

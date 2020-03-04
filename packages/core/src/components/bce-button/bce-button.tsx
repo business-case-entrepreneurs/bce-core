@@ -16,6 +16,10 @@ import { NativeEvent } from '../../utils/native-event';
 import { ripple } from '../../utils/ripple';
 import { UUID } from '../../utils/uuid';
 
+/// unit: icon(and icon only), icospin, focus, upload, accept multiple
+
+/// e2e: design, small
+
 @Component({
   tag: 'bce-button',
   styleUrls: {

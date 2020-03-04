@@ -12,6 +12,8 @@ import {
 import { Validation } from '../../models/validation';
 import { NativeEvent } from '../../utils/native-event';
 
+/// unit active required
+
 @Component({
   tag: 'bce-dialog',
   styleUrl: 'bce-dialog.scss',

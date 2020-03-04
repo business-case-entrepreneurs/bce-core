@@ -2,6 +2,7 @@ import { Component, Element, h, Method, Prop } from '@stencil/core';
 
 import { getInputCreator } from '../../utils/input-creator';
 
+/// chip
 @Component({
   tag: 'bce-switch',
   styleUrl: 'bce-switch.scss',

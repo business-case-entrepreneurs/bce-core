@@ -1,5 +1,8 @@
 import { Component, h, Host, Method, Prop } from '@stencil/core';
 
+//todo robin: rick helpen!!!!!!
+/// unit: open. normal hidden large screen not.
+
 @Component({
   tag: 'bce-side-bar',
   styleUrl: 'bce-side-bar.scss',

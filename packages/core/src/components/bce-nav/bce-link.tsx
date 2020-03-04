@@ -7,6 +7,7 @@ import { ripple } from '../../utils/ripple';
 
 library.add(faCaretDown);
 
+/// unit: active, icon,
 @Component({
   tag: 'bce-link',
   styleUrls: {

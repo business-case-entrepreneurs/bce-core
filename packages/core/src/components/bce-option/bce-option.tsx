@@ -7,6 +7,10 @@ import { UUID } from '../../utils/uuid';
 
 library.add(faCheck);
 
+/// unit: icon, focus, type(click event),
+
+/// e2e: design
+
 @Component({
   tag: 'bce-option',
   styleUrl: 'bce-option.scss',

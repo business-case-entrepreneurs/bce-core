@@ -1,6 +1,7 @@
 import { Component, Element, Prop, h, Host, Method } from '@stencil/core';
 import Popper from 'popper.js';
 
+/// active, icon
 @Component({
   tag: 'bce-menu',
   styleUrl: 'bce-menu.scss',

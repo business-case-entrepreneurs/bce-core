@@ -3,6 +3,10 @@ import { Component, Element, h, Prop, Watch } from '@stencil/core';
 import { Icon } from '../bce-icon/bce-icon';
 import { ripple } from '../../utils/ripple';
 
+/// unit: icon, info, active, backdrop(fab only)
+
+/// e2e: design
+
 @Component({
   tag: 'bce-fab',
   styleUrl: 'bce-fab.scss',

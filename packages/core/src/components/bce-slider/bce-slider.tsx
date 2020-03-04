@@ -2,6 +2,7 @@ import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { getInputCreator } from '../../utils/input-creator';
 
+/// same as chip
 @Component({
   tag: 'bce-slider',
   styleUrl: 'bce-slider.scss',

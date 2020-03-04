@@ -12,6 +12,11 @@ import { MessageOptions } from '../../models/message-options';
 import { injectCSS } from '../../utils/stylesheet';
 import { UUID } from '../../utils/uuid';
 
+/// unit: id, message, dialog, alert, confirm, execute, _fab,
+/// handleSlotChange direct child/grandchild change
+
+/// e2e: design, small
+
 @Component({
   tag: 'bce-root',
   styleUrl: 'bce-root.scss',
@@ -25,7 +30,7 @@ export class Root {
   public mode?: 'default' | 'bucket';
 
   @State()
-  private _fab = false;
+  public _fab = false;
 
   @State()
   private _messageQueue: ({ text: string } & MessageOptions)[] = [];
