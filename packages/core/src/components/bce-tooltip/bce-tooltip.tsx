@@ -5,7 +5,6 @@ import Popper from 'popper.js';
 
 library.add(faInfoCircle);
 
-sam;
 @Component({
   tag: 'bce-tooltip',
   styleUrl: 'bce-tooltip.scss',
