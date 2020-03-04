@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing bce-root bce-root should render message 1`] = `
+<bce-root id="bce-root">
+  <mock:shadow-root>
+    <slot></slot>
+    <bce-message color="dark">
+      test
+    </bce-message>
+  </mock:shadow-root>
+</bce-root>
+`;
+
+exports[`Testing bce-root render bce-root bce-root with unique id 1`] = `
+<bce-root id="bce-root">
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</bce-root>
+`;
