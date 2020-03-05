@@ -27,7 +27,6 @@ export class Fab {
   @Prop({ reflect: true, mutable: true })
   public active = false;
 
-  private root?: HTMLBceRootElement;
   private buttons: HTMLBceButtonElement[] = [];
 
   private handleClick = () => {
@@ -59,22 +58,12 @@ export class Fab {
     for (const button of this.buttons) this.propagateState(button);
   }
 
-  componentWillLoad() {
-    // Register FAB with bce-root
-    // this.root = this.el.closest('bce-root') as HTMLBceRootElement;
-    // if (this.root) this.root.registerFAB(true);
-  }
-
   componentDidLoad() {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
       this.handleSlotChange(slot);
     }
-  }
-
-  componentDidUnload() {
-    // if (this.root) this.root.registerFAB(false);
   }
 
   private initButton(button: HTMLBceButtonElement) {
