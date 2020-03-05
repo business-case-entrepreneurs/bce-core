@@ -38,14 +38,9 @@ export class Fab {
     ripple(event.target as Element, event);
   };
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
-    this.buttons = slot
-      .assignedNodes({ flatten: true })
-      .filter(node => node.nodeName === 'BCE-BUTTON') as any;
-
+  private handleSlotChange = () => {
+    const children = Array.from(this.el.childNodes);
+    this.buttons = children.filter(n => n.nodeName === 'BCE-BUTTON') as any;
     for (const button of this.buttons) this.initButton(button);
   };
 
@@ -62,7 +57,7 @@ export class Fab {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
   }
 
