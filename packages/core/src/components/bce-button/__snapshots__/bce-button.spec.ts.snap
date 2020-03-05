@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing bce-button render bce-button 1`] = `
+<bce-button type="button">
+  <mock:shadow-root>
+    <button class="icon-only" type="button">
+      <span>
+        <slot></slot>
+      </span>
+    </button>
+  </mock:shadow-root>
+</bce-button>
+`;
