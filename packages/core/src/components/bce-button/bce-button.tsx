@@ -121,12 +121,8 @@ export class Button {
     ripple(this.el.shadowRoot!.querySelector('button')!, event);
   };
 
-  private handleSlotChange = (event: NativeEvent | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
-    const nodes = slot.assignedNodes({ flatten: true });
-    this.slotEmpty = !nodes.length;
+  private handleSlotChange = () => {
+    this.slotEmpty = !this.el.childNodes.length;
   };
 
   private handleUpload = (event: NativeEvent) => {
@@ -146,7 +142,7 @@ export class Button {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
   }
 
