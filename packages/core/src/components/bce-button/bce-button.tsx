@@ -174,7 +174,7 @@ export class Button {
         onMouseDown={this.handleMouseDown}
       >
         <button
-          class={{ 'icon-only': this.slotEmpty }}
+          class={{ 'icon-only': this.slotEmpty && !!this.icon }}
           disabled={this.disabled}
           form={this.form}
           formaction={this.formAction}
