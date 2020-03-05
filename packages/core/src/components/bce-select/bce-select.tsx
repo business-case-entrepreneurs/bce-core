@@ -3,9 +3,7 @@ import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
 import { getInputCreator } from '../../utils/input-creator';
-
 /// unit: type, info, focus, event,
-
 @Component({
   tag: 'bce-select',
   styleUrl: 'bce-select.scss',
@@ -84,10 +82,10 @@ export class Select {
     for (const option of this._options) this.removeEventHandlers(option);
 
     // Load new options
-    const filter = ['BCE-CHIP', 'BCE-OPTION'];
-    this._options = slot
-      .assignedNodes()
-      .filter(n => filter.indexOf(n.nodeName) >= 0) as any;
+    const children = Array.from(this.el.childNodes);
+    this._options = children.filter(
+      n => ['BCE-CHIP', 'BCE-OPTION'].indexOf(n.nodeName) >= 0
+    ) as any;
 
     // Initialize options & attach event listeners
     for (const option of this._options) {

@@ -2,11 +2,9 @@ import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { Icon } from '../bce-icon/bce-icon';
 import { ripple } from '../../utils/ripple';
-
 /// unit: icon, info, active, backdrop(fab only)
 
 /// e2e: design
-
 @Component({
   tag: 'bce-fab',
   styleUrl: 'bce-fab.scss',
@@ -31,7 +29,6 @@ export class Fab {
   @Prop({ reflect: true, mutable: true })
   public active = false;
 
-  private root?: HTMLBceRootElement;
   private buttons: HTMLBceButtonElement[] = [];
 
   private handleClick = () => {
@@ -43,14 +40,9 @@ export class Fab {
     ripple(event.target as Element, event);
   };
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
-    this.buttons = slot
-      .assignedNodes({ flatten: true })
-      .filter(node => node.nodeName === 'BCE-BUTTON') as any;
-
+  private handleSlotChange = () => {
+    const children = Array.from(this.el.childNodes);
+    this.buttons = children.filter(n => n.nodeName === 'BCE-BUTTON') as any;
     for (const button of this.buttons) this.initButton(button);
   };
 
@@ -63,22 +55,12 @@ export class Fab {
     for (const button of this.buttons) this.propagateState(button);
   }
 
-  componentWillLoad() {
-    // Register FAB with bce-root
-    // this.root = this.el.closest('bce-root') as HTMLBceRootElement;
-    // if (this.root) this.root.registerFAB(true);
-  }
-
   componentDidLoad() {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
-  }
-
-  componentDidUnload() {
-    // if (this.root) this.root.registerFAB(false);
   }
 
   private initButton(button: HTMLBceButtonElement) {

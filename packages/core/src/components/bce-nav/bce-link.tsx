@@ -77,11 +77,8 @@ export class Link {
     ripple(event.target as Element, event);
   };
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
-    const nodes = slot.assignedNodes({ flatten: true });
+  private handleSlotChange = () => {
+    const nodes = Array.from(this.el.childNodes);
     this._links = nodes.filter(node => node.nodeName === 'BCE-LINK').length;
     if (this._links) this.toggle(!!this.active);
   };
@@ -103,7 +100,7 @@ export class Link {
 
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
   }
 

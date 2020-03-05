@@ -126,7 +126,7 @@ export class Button {
   };
 
   private handleSlotChange = () => {
-    this.slotEmpty = !this.el.childNodes.length;
+    this.slotEmpty = !!this.icon && !this.el.childNodes.length;
   };
 
   private handleUpload = (event: NativeEvent) => {
