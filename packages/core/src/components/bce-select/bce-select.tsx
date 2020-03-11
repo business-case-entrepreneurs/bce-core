@@ -1,8 +1,8 @@
 import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
+import { getInputCreator } from '../bce-input-creator/input-creator';
 import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
-import { getInputCreator } from '../../utils/input-creator';
 
 @Component({
   tag: 'bce-select',

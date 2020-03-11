@@ -1,6 +1,6 @@
 import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
-import { getInputCreator } from '../../utils/input-creator';
+import { getInputCreator } from '../bce-input-creator/input-creator';
 
 @Component({
   tag: 'bce-slider',

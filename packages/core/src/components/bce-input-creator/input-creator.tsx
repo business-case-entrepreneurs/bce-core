@@ -1,8 +1,8 @@
 import { FunctionalComponent, h } from '@stencil/core';
 
-import { debounce } from './debounce';
-import { validator, ValidatorError } from './validator';
-import { FormInput } from '../models/form-input';
+import { FormInput } from '../../models/form-input';
+import { debounce } from '../../utils/debounce';
+import { validator, ValidatorError } from '../../utils/validator';
 
 interface Props {
   el: FormInput;

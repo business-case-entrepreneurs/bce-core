@@ -2,8 +2,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { Component, Element, h, Method, Prop, State } from '@stencil/core';
 
+import { getInputCreator } from '../bce-input-creator/input-creator';
 import { InputType } from '../../models/input-type';
-import { getInputCreator } from '../../utils/input-creator';
 
 const ROW_SIZE = 19;
 library.add(faEye, faEyeSlash);
