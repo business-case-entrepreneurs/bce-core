@@ -38,7 +38,7 @@
   }
 }
 
-:host([active]) [data-backdrop] {
+:host([active]) .backdrop {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -65,5 +65,40 @@
     font-size: 12px;
     text-transform: none;
     pointer-events: auto;
+  }
+}
+
+:host([inline]) {
+  position: relative;
+  margin: 0;
+  z-index: 1;
+
+  > button {
+    order: -1;
+    align-self: stretch;
+    margin: 10px auto;
+    width: 50px;
+    height: 50px;
+  }
+
+  .container {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .backdrop {
+    display: none;
+  }
+}
+
+:host([inline][active]) .container {
+  display: flex;
+
+  @include media-medium {
+    text-align: center;
+    display: block;
   }
 }

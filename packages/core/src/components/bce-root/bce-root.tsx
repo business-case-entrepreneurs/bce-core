@@ -37,7 +37,7 @@ export class Root {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
 
-    this._fab = !!this.el.querySelector('bce-fab');
+    this._fab = !!this.el.querySelector('bce-fab:not([inline]');
     const header = this.el.querySelector('bce-header') ? 56 : 0;
     const status = this.el.querySelector('bce-status-bar') ? 20 : 0;
     const padding = header + status;

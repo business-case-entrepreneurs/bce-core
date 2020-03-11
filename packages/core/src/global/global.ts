@@ -21,13 +21,12 @@ const main = () => {
 };
 
 const chain = (el: HTMLElement, child: string, ...parents: string[]) => {
-  if (el.tagName !== child.toUpperCase()) return false;
+  if (!el.matches(child)) return false;
 
-  let cur = el;
   for (const parent of parents) {
-    const par = cur.parentElement;
-    if (!par || par.tagName !== parent.toUpperCase()) return false;
-    cur = par;
+    const cur = el.parentElement;
+    if (!cur || !cur.matches(parent)) return false;
+    el = cur;
   }
 
   return true;

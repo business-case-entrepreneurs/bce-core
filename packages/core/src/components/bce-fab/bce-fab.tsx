@@ -12,8 +12,14 @@ export class Fab {
   @Element()
   private el!: HTMLBceFabElement;
 
+  @Prop({ reflect: true, mutable: true })
+  public active?: boolean;
+
   @Prop({ reflect: true })
   public color?: string;
+
+  @Prop({ reflect: true })
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
   public icon: string = Icon.DEFAULT_ICON.iconName;
@@ -22,10 +28,7 @@ export class Fab {
   public info: string = '';
 
   @Prop({ reflect: true })
-  public disabled = false;
-
-  @Prop({ reflect: true, mutable: true })
-  public active = false;
+  public inline?: boolean;
 
   private buttons: HTMLBceButtonElement[] = [];
 
@@ -49,7 +52,8 @@ export class Fab {
   };
 
   @Watch('active')
-  public watchActive() {
+  @Watch('inline')
+  public watch() {
     for (const button of this.buttons) this.propagateState(button);
   }
 
@@ -82,11 +86,14 @@ export class Fab {
   private propagateState(button: HTMLBceButtonElement) {
     if (!this.active) button.dataset.inactive = '';
     else delete button.dataset.inactive;
+
+    if (this.inline) button.dataset.inline = '';
+    else delete button.dataset.inline;
   }
 
   render() {
     return [
-      <slot />,
+      !this.inline && <slot />,
       this.info && (
         <div data-info>
           <bce-button
@@ -113,7 +120,12 @@ export class Fab {
           fixed-width
         />
       </button>,
-      <div data-backdrop onClick={this.handleClick} />
+      this.inline && (
+        <div class="container">
+          <slot />
+        </div>
+      ),
+      <div class="backdrop" onClick={this.handleClick} />
     ];
   }
 }

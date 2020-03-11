@@ -6,18 +6,19 @@
 
 :host([icon]) {
   @include elevate(0, false);
+  height: 40px;
   margin: 0 10px 10px 0;
   background-color: transparent;
   z-index: 6;
 
   button {
-    height: 35px;
-
     bce-icon {
       @include elevate(2, false);
       left: auto;
       right: 0;
+      top: 2px;
       width: 35px;
+      height: 35px;
       background-color: bce-color();
       color: bce-color-t();
       border-radius: 50%;
@@ -25,7 +26,7 @@
 
     span {
       @include elevate(2, false);
-      margin-right: 30px;
+      margin: 0 30px 0 0;
       padding: 5px 16px;
       background-color: bce-color(light);
       color: bce-color-t(light);
@@ -41,4 +42,45 @@
 
 :host([data-inactive]) {
   display: none;
+}
+
+:host([data-inline]) {
+  flex: 0 0 50%;
+  margin: 0;
+
+  button {
+    padding: 0;
+
+    span {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0 40px 0 5px;
+    }
+  }
+
+  @include media-medium {
+    button {
+      span {
+        margin: 0 5px 0 40px;
+      }
+
+      bce-icon {
+        left: 0;
+        right: auto;
+      }
+    }
+  }
+}
+
+:host([data-inline]:nth-child(odd)) button {
+  span {
+    margin: 0 5px 0 40px;
+  }
+
+  bce-icon {
+    left: 0;
+    right: auto;
+  }
 }
