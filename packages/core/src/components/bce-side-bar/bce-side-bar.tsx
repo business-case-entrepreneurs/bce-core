@@ -27,7 +27,7 @@ export class SideBar {
   render() {
     return (
       <Host style={this.style}>
-        <aside>
+        <aside style={this.style}>
           <slot />
         </aside>
       </Host>

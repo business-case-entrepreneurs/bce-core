@@ -33,8 +33,8 @@
 
   <body>
     <bce-root id="app">
-      <bce-status-bar color="dark"></bce-status-bar>
-      <bce-header color="dark">
+      <bce-status-bar slot="header" color="dark"></bce-status-bar>
+      <bce-header slot="header" color="dark">
         <bce-nav-button></bce-nav-button>
         <a
           href="/#"
@@ -44,7 +44,7 @@
         </a>
       </bce-header>
 
-      <bce-side-bar open="false">
+      <bce-side-bar slot="left">
         <bce-nav>
           <bce-link href="/#">Home</bce-link>
           <bce-link href="/#form">Form</bce-link>
@@ -345,6 +345,7 @@
           <bce-button color="primary" onclick="alert()">Alert</bce-button>
           <bce-button color="secondary" onclick="confirm()">Confirm</bce-button>
         </section>
+
         <section>
           <h3>BCE Code</h3>
           <bce-code

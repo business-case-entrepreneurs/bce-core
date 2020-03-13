@@ -9,7 +9,6 @@ import {
 } from '@stencil/core';
 
 import { MessageOptions } from '../../models/message-options';
-import { injectCSS } from '../../utils/stylesheet';
 import { UUID } from '../../utils/uuid';
 
 @Component({
@@ -33,25 +32,8 @@ export class Root {
   private _messageTimer = 0;
   private _padding = 0;
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
+  private handleSlotChange = () => {
     this._fab = !!this.el.querySelector('bce-fab:not([inline]');
-    const header = this.el.querySelector('bce-header') ? 56 : 0;
-    const status = this.el.querySelector('bce-status-bar') ? 20 : 0;
-    const padding = header + status;
-
-    if (this._padding !== padding) {
-      this._padding = padding;
-
-      const { id } = this.el;
-      injectCSS(id, [
-        `bce-root#${id} {`,
-        `  --bce-padding-top: ${padding}px;`,
-        '}'
-      ]);
-    }
   };
 
   @Method()
@@ -193,7 +175,7 @@ export class Root {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
 
     if (!this.el.id) this.el.id = UUID.v4();
@@ -217,7 +199,23 @@ export class Root {
   render() {
     return (
       <Host>
-        <slot />
+        <div class="header">
+          <slot name="header" />
+        </div>
+        <div class="container">
+          <div class="left">
+            <slot name="left" />
+          </div>
+          <div class="content">
+            <div class="main">
+              <slot />
+            </div>
+            <slot name="footer" />
+          </div>
+          <div class="right">
+            <slot name="right" />
+          </div>
+        </div>
         {this.renderMessage()}
       </Host>
     );
