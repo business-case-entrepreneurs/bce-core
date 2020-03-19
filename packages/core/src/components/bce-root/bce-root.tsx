@@ -1,4 +1,9 @@
 import {
+  IconDefinition,
+  IconPack,
+  library as iconLibrary
+} from '@fortawesome/fontawesome-svg-core';
+import {
   Component,
   Element,
   h,
@@ -148,6 +153,11 @@ export class Root {
     const color = options.color || 'dark';
     this._messageQueue = [...this._messageQueue, { text, color, duration }];
     this.messageCheck();
+  }
+
+  @Method()
+  public async addIcon(...definitions: (IconDefinition | IconPack)[]) {
+    iconLibrary.add(...definitions);
   }
 
   private messageCheck() {
