@@ -30,15 +30,15 @@ class App extends React.Component {
   render() {
     return (
       <BceRoot className="app">
-        <BceStatusBar />
-        <BceHeader>
+        <BceStatusBar slot="header" />
+        <BceHeader slot="header">
           <BceNavButton />
         </BceHeader>
 
-        <BceSideBar open={false} />
+        <BceSideBar slot="left" open={false} />
 
         <main>
-          <section>
+          <section style={{ padding: 16 }}>
             <BceCode value={this.code} language="html" />
             <br />
 

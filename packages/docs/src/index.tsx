@@ -1,14 +1,15 @@
 import '@bcase/core/dist/bce/bce.css';
 
+import { applyPolyfills, defineCustomElements } from '@bcase/core/loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const parent = document.createElement('div');
-ReactDOM.render(<App />, parent, () => {
-  document.getElementById('app')?.replaceWith(...Array.from(parent.childNodes));
-});
+applyPolyfills().then(() => defineCustomElements(window));
+
+const app = document.getElementById('app');
+ReactDOM.render(<App />, app);
 
 serviceWorker.unregister();
