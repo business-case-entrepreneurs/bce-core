@@ -1,4 +1,12 @@
-import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Listen,
+  Method,
+  Prop,
+  Watch
+} from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { SelectType } from '../../models/select-type';
@@ -120,6 +128,15 @@ export class Select {
     }
   }
 
+  @Listen('bce-core:chip')
+  @Listen('bce-core:option')
+  public handleChip(event: CustomEvent) {
+    const dispatch = !equal(this.value || null, event.detail || null);
+
+    this.value = event.detail;
+    if (dispatch) this.el.dispatchEvent(new Event('input'));
+  }
+
   @Method()
   public async reset() {
     this.value = this._initialValue;
@@ -170,3 +187,11 @@ export class Select {
     );
   }
 }
+
+const equal = (a: SelectValue, b: SelectValue) => {
+  if (typeof a !== typeof b) return false;
+  if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+  if (a.length != b.length) return false;
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+  return true;
+};

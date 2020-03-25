@@ -1,8 +1,17 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { Component, Element, h, Prop, Host } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Prop,
+  Host
+} from '@stencil/core';
 
 import { OptionType } from '../../models/option-type';
+import { SelectValue } from '../../models/select-value';
 import { UUID } from '../../utils/uuid';
 
 library.add(faCheck);
@@ -36,6 +45,9 @@ export class Option {
   public value?: string;
   // #endregion
 
+  @Event({ eventName: 'bce-core:option' })
+  private onOption!: EventEmitter<SelectValue>;
+
   private _id = UUID.v4();
 
   private handleBlur = () => {
@@ -46,20 +58,26 @@ export class Option {
     event.preventDefault();
     event.cancelBubble = true;
 
+    const query = this.name
+      ? `bce-option[type='${this.type}'][name='${this.name}']`
+      : `bce-option[type='${this.type}']`;
+
+    const elements = this.el.parentNode?.querySelectorAll(query);
+    const options = Array.from(elements || []) as HTMLBceOptionElement[];
+
     switch (this.type) {
       case 'checkbox':
         this.checked = !this.checked;
+
+        const value: SelectValue = options
+          .filter(c => !!c.checked)
+          .map(c => c.value!);
+        this.onOption.emit(value);
         return;
 
       case 'radio':
-        const query = this.name
-          ? `bce-option[type='radio'][name='${this.name}']`
-          : "bce-option[type='radio']";
-
-        const p = this.el.parentNode;
-        const options = p ? Array.from(p.querySelectorAll(query)) : [];
-        for (const option of options as HTMLBceOptionElement[])
-          option.checked = this.el === option;
+        for (const option of options) option.checked = this.el === option;
+        this.onOption.emit(this.value!);
         return;
     }
   };

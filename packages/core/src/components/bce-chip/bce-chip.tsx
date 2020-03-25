@@ -1,9 +1,18 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { Component, Element, h, Prop, Host } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Prop,
+  Host
+} from '@stencil/core';
 
 import { ChipDesign } from '../../models/chip-design';
 import { ChipType } from '../../models/chip-type';
+import { SelectValue } from '../../models/select-value';
 import { ripple } from '../../utils/ripple';
 import { UUID } from '../../utils/uuid';
 
@@ -61,6 +70,9 @@ export class BceChip {
   public value?: string;
   // #endregion
 
+  @Event({ eventName: 'bce-core:chip' })
+  private onChip!: EventEmitter<SelectValue>;
+
   private _id = UUID.v4();
 
   private handleBlur = () => {
@@ -68,19 +80,28 @@ export class BceChip {
   };
 
   public handleClick = () => {
+    const query = this.name
+      ? `bce-chip[type='${this.type}'][name='${this.name}']`
+      : `bce-chip[type='${this.type}']`;
+
+    const elements = this.el.parentNode!.querySelectorAll(query);
+    const chips = Array.from(elements) as HTMLBceChipElement[];
+
     switch (this.type) {
       case 'choice':
-        const query = this.name
-          ? `bce-chip[type='choice'][name='${this.name}']`
-          : "bce-chip[type='choice']";
-
-        const chips = Array.from(this.el.parentNode!.querySelectorAll(query));
-        for (const chip of chips as HTMLBceChipElement[])
+        for (const chip of chips)
           chip.checked = this.el === chip ? !chip.checked : false;
+
+        this.onChip.emit(this.checked ? this.value! : null);
         return;
 
       case 'filter':
         this.checked = !this.checked;
+
+        const value: SelectValue = chips
+          .filter(c => !!c.checked)
+          .map(c => c.value!);
+        this.onChip.emit(value);
         return;
     }
   };
@@ -171,6 +192,7 @@ export class BceChip {
           checked={!!this.checked}
           name={this.name}
           type={this.type ? INPUT_TYPE_MAP[this.type] : 'button'}
+          value={this.value}
           onClick={this.ignoreClick}
         />
         <label htmlFor={this._id} onClick={this.handleClick}>
