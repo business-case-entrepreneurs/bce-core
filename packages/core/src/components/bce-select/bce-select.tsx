@@ -132,9 +132,12 @@ export class Select {
   @Listen('bce-core:option')
   public handleChip(event: CustomEvent) {
     const dispatch = !equal(this.value || null, event.detail || null);
-
     this.value = event.detail;
-    if (dispatch) this.el.dispatchEvent(new Event('input'));
+
+    if (dispatch) {
+      const e = new Event('input', { bubbles: true, cancelable: true });
+      this.el.dispatchEvent(e);
+    }
   }
 
   @Method()
