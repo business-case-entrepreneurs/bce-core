@@ -1,4 +1,5 @@
 import { FormInput } from '../models/form-input';
+import { isEmail } from './is-email';
 
 type Metadata = { el: FormInput; tag: string; [custom: string]: any };
 
@@ -172,8 +173,7 @@ validator.rules.set('email', async (value, args, meta) => {
     throw new Error(message);
   }
 
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const valid = !value || re.test(value);
+  const valid = !value || isEmail(value);
   const message = 'This is not a valid email.';
   return { valid, message };
 });
