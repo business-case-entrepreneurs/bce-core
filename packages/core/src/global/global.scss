@@ -4,8 +4,7 @@ body {
   height: 100%;
 }
 
-/* bce-root */
-bce-root {
+:root {
   @include bce-color-default(primary);
 
   // Primary and accent colors
@@ -26,7 +25,10 @@ bce-root {
 
   // Component specific colors
   @include bce-color-define(rgba(100, 100, 100, 0.2) #616161, chip);
+}
 
+/* bce-root */
+bce-root {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
