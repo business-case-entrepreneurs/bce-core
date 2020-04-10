@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   Component,
   Element,
@@ -11,6 +13,8 @@ import {
 
 import { Validation } from '../../models/validation';
 import { NativeEvent } from '../../utils/native-event';
+
+library.add(faTimes);
 
 @Component({
   tag: 'bce-dialog',
@@ -26,6 +30,9 @@ export class BceDialog {
 
   @Prop({ reflect: true })
   public required?: boolean;
+
+  @Prop({ reflect: true })
+  public closeButton?: boolean;
 
   @Prop()
   public errors: Validation[] = [];
@@ -79,6 +86,17 @@ export class BceDialog {
       <Host onClick={this.handleClickHost}>
         <div class="backdrop" onClick={this.handleClickBackdrop} />
         <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
+          <div class="action-header">
+            {this.closeButton && !this.required && (
+              <bce-button
+                class="close-button"
+                icon="fas:times"
+                design="text"
+                onClick={this.handleClickBackdrop}
+              />
+            )}
+          </div>
+
           <slot />
 
           <div class="action-bar">

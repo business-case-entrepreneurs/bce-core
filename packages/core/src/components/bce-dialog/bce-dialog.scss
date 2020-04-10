@@ -28,6 +28,16 @@
     background-color: bce-color();
     pointer-events: auto;
 
+    .action-header {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+
+      bce-button {
+        @include bce-color-default(dark);
+      }
+    }
+
     .action-bar {
       text-align: right;
       margin: 0 -16px -16px 0;
