@@ -6,6 +6,8 @@
     "experimentalDecorators": true,
     "resolveJsonModule": false,
     "esModuleInterop": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "lib": ["dom", "es2015"],
     "module": "es2015",
     "moduleResolution": "node",

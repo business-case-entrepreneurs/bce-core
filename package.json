@@ -26,10 +26,10 @@
     }
   },
   "devDependencies": {
-    "commitizen": "^4.0.3",
+    "commitizen": "^4.0.4",
     "cz-customizable": "^6.2.0",
-    "lerna": "^3.19.0",
+    "lerna": "^3.20.2",
     "prettier": "^1.19.1",
-    "sort-package-json": "^1.31.0"
+    "sort-package-json": "^1.42.1"
   }
 }

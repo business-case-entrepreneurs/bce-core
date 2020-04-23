@@ -120,9 +120,9 @@ export class BceChip {
     event.cancelBubble = true;
   };
 
-  private isColor(color?: string): boolean {
+  private isColor(color = ''): boolean {
     const s = new Option().style;
-    s.color = color || null;
+    s.color = color;
     return !!s.color;
   }
 
