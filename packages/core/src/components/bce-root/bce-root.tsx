@@ -35,7 +35,6 @@ export class Root {
   private _messageQueue: ({ text: string } & MessageOptions)[] = [];
 
   private _messageTimer = 0;
-  private _padding = 0;
 
   private handleSlotChange = () => {
     this._fab = !!this.el.querySelector('bce-fab:not([inline]');
@@ -209,23 +208,7 @@ export class Root {
   render() {
     return (
       <Host>
-        <div class="header">
-          <slot name="header" />
-        </div>
-        <div class="container">
-          <div class="left">
-            <slot name="left" />
-          </div>
-          <div class="content">
-            <div class="main">
-              <slot />
-            </div>
-            <slot name="footer" />
-          </div>
-          <div class="right">
-            <slot name="right" />
-          </div>
-        </div>
+        <slot />
         {this.renderMessage()}
       </Host>
     );

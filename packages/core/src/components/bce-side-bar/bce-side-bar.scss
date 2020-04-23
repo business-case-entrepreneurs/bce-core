@@ -6,15 +6,16 @@
   width: 0;
   height: 100%;
   transition: width 0.3s ease-in-out;
-  overflow: auto;
+  overflow: hidden;
   z-index: 3;
 
   aside {
     position: fixed;
+    top: 0;
+    bottom: 0;
+    width: inherit;
     background-color: bce-color();
     overflow: auto;
-    width: inherit;
-    height: 100%;
     transition: width 0.3s ease-in-out;
   }
 

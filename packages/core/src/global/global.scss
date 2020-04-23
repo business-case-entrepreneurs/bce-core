@@ -27,8 +27,16 @@ body {
   @include bce-color-define(rgba(100, 100, 100, 0.2) #616161, chip);
 }
 
-/* bce-root */
 bce-root {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    'status status status'
+    'header header header'
+    'l-side  main  r-side'
+    'l-side footer r-side';
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
@@ -41,9 +49,33 @@ bce-root {
     }
   }
 
+  bce-status-bar {
+    grid-area: status;
+  }
+
+  header,
+  bce-header {
+    grid-area: header;
+  }
+
+  bce-side-bar[position='left'] {
+    grid-area: l-side;
+  }
+
+  bce-side-bar[position='right'] {
+    grid-area: r-side;
+  }
+
   main {
+    grid-area: main;
     width: 100%;
     height: 100%;
+    background-color: bce-color-l(light);
+  }
+
+  footer,
+  bce-footer {
+    grid-area: footer;
   }
 
   ::selection {
@@ -52,7 +84,6 @@ bce-root {
   }
 }
 
-/* bce-dialog */
 bce-dialog {
   > :first-child {
     margin-top: 8px;
@@ -63,7 +94,6 @@ bce-dialog {
   }
 }
 
-/* bce-code-editor */
 bce-code-editor {
   .codeflask {
     position: relative;
@@ -85,21 +115,21 @@ bce-code-editor {
     overflow: hidden;
   }
 
+  &[focus] {
+    .codeflask__textarea {
+      border: 1px solid bce-color();
+    }
+  }
+
+  &[disabled] {
+    .codeflask {
+      background: bce-color(disable);
+    }
+  }
+
   @include media-medium {
     .codeflask__textarea {
       height: 40px;
     }
-  }
-}
-
-bce-code-editor[focus] {
-  .codeflask__textarea {
-    border: 1px solid bce-color();
-  }
-}
-
-bce-code-editor[disabled] {
-  .codeflask {
-    background: bce-color(disable);
   }
 }
