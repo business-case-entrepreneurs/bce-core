@@ -1,5 +1,5 @@
+import { createPopper, Instance, Placement } from '@popperjs/core';
 import { Component, Element, Prop, h, Host, Method } from '@stencil/core';
-import Popper from 'popper.js';
 
 @Component({
   tag: 'bce-menu',
@@ -19,7 +19,7 @@ export class BceMenu {
   @Prop({ reflect: true })
   public placement = 'bottom-start';
 
-  private _popper?: Popper;
+  private _popper?: Instance;
 
   private handleBlur = async () => {
     await new Promise(res => setTimeout(res, 200));
@@ -28,7 +28,7 @@ export class BceMenu {
 
   private handleClick = (event: Event) => {
     this.active = !this.active;
-    if (this._popper) this._popper.scheduleUpdate();
+    if (this._popper) this._popper.update();
     event.stopPropagation();
   };
 
@@ -38,9 +38,9 @@ export class BceMenu {
     const dropdown = this.el.shadowRoot!.querySelector('.dropdown')!;
 
     if (this._popper) this._popper.destroy();
-    this._popper = new Popper(reference, dropdown, {
-      placement: this.placement as Popper.Placement,
-      positionFixed: true
+    this._popper = createPopper(reference, dropdown as HTMLElement, {
+      placement: this.placement as Placement,
+      strategy: 'fixed'
     });
   }
 

@@ -1,3 +1,4 @@
+import { createPopper } from '@popperjs/core';
 import {
   Component,
   Element,
@@ -7,7 +8,6 @@ import {
   State,
   Watch
 } from '@stencil/core';
-import Popper from 'popper.js';
 
 @Component({
   tag: 'bce-dropdown',
@@ -88,9 +88,9 @@ export class BceDropdown {
     const container = this.el.closest('bce-root')!;
 
     // Initialize positioning engine
-    new Popper(reference, dropdown, {
+    createPopper(reference, dropdown, {
       placement: 'bottom-start',
-      modifiers: { preventOverflow: { boundariesElement: container } }
+      modifiers: [{ name: 'preventOverflow', options: { boundary: container } }]
     });
   }
 

@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { createPopper, Placement } from '@popperjs/core';
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import Popper from 'popper.js';
 
 library.add(faInfoCircle);
 
@@ -38,18 +38,15 @@ export class Tooltip {
       return;
     }
 
-    reference.addEventListener('mouseenter', () => {
-      this.active = true;
-      popper.scheduleUpdate();
-    });
+    for (const event of ['mouseenter', 'focus'])
+      reference.addEventListener(event, () => (this.active = true));
 
-    reference.addEventListener('mouseleave', () => {
-      this.active = false;
-    });
+    for (const event of ['mouseleave', 'blur'])
+      reference.addEventListener(event, () => (this.active = false));
 
-    const popper = new Popper(reference, tooltip, {
-      placement: this.placement as Popper.Placement,
-      positionFixed: true
+    createPopper(reference, tooltip, {
+      placement: this.placement as Placement,
+      strategy: 'fixed'
     });
   }
 
