@@ -22,6 +22,7 @@
     "packages/*/src/types.d.ts": true,
 
     ".gitignore": true,
-    "package-lock.json": true
+    "package-lock.json": true,
+    "prettier.config.js": true
   }
 }

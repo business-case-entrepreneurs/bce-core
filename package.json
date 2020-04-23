@@ -14,6 +14,7 @@
     "clean": "lerna run clean",
     "deploy:alpha": "npm run build && lerna publish --no-git-reset --canary --preid alpha --dist-tag alpha --yes",
     "postinstall": "lerna bootstrap && npm run sort",
+    "prettier": "prettier --config config/prettier.config.js --ignore-path config/.prettierignore --check '**'",
     "serve": "lerna run serve --parallel --stream",
     "sort": "sort-package-json && lerna exec sort-package-json"
   },
@@ -29,7 +30,7 @@
     "commitizen": "^4.0.4",
     "cz-customizable": "^6.2.0",
     "lerna": "^3.20.2",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.5",
     "sort-package-json": "^1.42.1"
   }
 }
