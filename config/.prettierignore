@@ -1,0 +1,17 @@
+.stencil/
+build/
+dist/
+loader/
+node_modules/
+www/
+
+../packages/core/src/components.d.ts
+../packages/docs/public
+../packages/react/src/react-component-lib/
+../packages/react/src/components.ts
+
+.gitignore
+.prettierignore
+lerna.json
+package.json
+package-lock.json

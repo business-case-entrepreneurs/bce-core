@@ -1,72 +1,62 @@
-import { Component, Prop, Host, Listen, h } from '@stencil/core';
+import { createPopper, Instance, Placement } from '@popperjs/core';
+import { Component, Element, Prop, h, Host, Method } from '@stencil/core';
 
 @Component({
   tag: 'bce-menu',
   styleUrl: 'bce-menu.scss',
-  shadow: false
+  shadow: true
 })
 export class BceMenu {
-  @Prop({ reflect: true })
-  public vertical: boolean = false;
-
-  @Prop({ reflect: true })
-  public right: boolean = false;
-
-  @Prop({ reflect: true })
-  public color?: string;
-
-  @Prop({ reflect: true })
-  public toggleDesktop: boolean = false;
+  @Element()
+  private el!: HTMLBceMenuElement;
 
   @Prop({ reflect: true, mutable: true })
-  public active?: boolean = false;
+  public active?: boolean;
 
-  @Listen('resize', { target: 'window' })
-  public handleResize() {
-    requestAnimationFrame(() => {
-      if (window.innerWidth < 1024) {
-        this.active = false;
-      } else if (window.innerWidth > 1024 && !this.toggleDesktop) {
-        this.active = true;
-      }
-    });
-  }
+  @Prop({ reflect: true })
+  public icon = 'fas:ellipsis-h';
 
-  @Listen('toggle-menu', { target: 'window' })
-  public toggleMenu() {
-    this.active = !this.active;
-  }
+  @Prop({ reflect: true })
+  public placement = 'bottom-start';
 
-  public componentDidLoad() {
-    if (!this.toggleDesktop && window.innerWidth > 1024) {
-      this.active = true;
-    }
-  }
+  private _popper?: Instance;
 
-  public close = () => {
+  private handleBlur = async () => {
+    await new Promise(res => setTimeout(res, 200));
     this.active = false;
   };
 
+  private handleClick = (event: Event) => {
+    this.active = !this.active;
+    if (this._popper) this._popper.update();
+    event.stopPropagation();
+  };
+
+  @Method()
+  public async reattach() {
+    const reference = this.el.shadowRoot!.querySelector('.trigger')!;
+    const dropdown = this.el.shadowRoot!.querySelector('.dropdown')!;
+
+    if (this._popper) this._popper.destroy();
+    this._popper = createPopper(reference, dropdown as HTMLElement, {
+      placement: this.placement as Placement,
+      strategy: 'fixed'
+    });
+  }
+
+  componentDidLoad() {
+    this.reattach();
+  }
+
+  componentDidUnload() {
+    if (this._popper) this._popper.destroy();
+  }
+
   render() {
     return (
-      <Host class={this.right ? 'right' : 'left'} active={this.active}>
-        {window.innerWidth < 1024 ? (
-          <bce-icon
-            onClick={this.close}
-            raw={'times-circle'}
-            pre={'fas'}
-            size={'3x'}
-          />
-        ) : (
-          ''
-        )}
-        <div
-          class={{
-            menu: true,
-            horizontal: !this.vertical,
-            vertical: this.vertical
-          }}
-        >
+      <Host onClick={this.handleClick} onBlur={this.handleBlur}>
+        <bce-button class="trigger" design="text" icon={this.icon}></bce-button>
+        <div class="dropdown" data-active={this.active}>
           <slot />
         </div>
       </Host>

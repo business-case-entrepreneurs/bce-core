@@ -1,136 +1,117 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Prop,
+  Host
+} from '@stencil/core';
+
+import { OptionType } from '../../models/option-type';
+import { SelectValue } from '../../models/select-value';
+import { UUID } from '../../utils/uuid';
+
+library.add(faCheck);
 
 @Component({
   tag: 'bce-option',
   styleUrl: 'bce-option.scss',
-  shadow: false
+  shadow: true
 })
-export class BceOption {
+export class Option {
   @Element()
   private el!: HTMLBceOptionElement;
 
+  @Prop({ reflect: true, attribute: 'focus' })
+  public hasFocus?: boolean;
+
+  // #region Forwarded to native input
   @Prop({ reflect: true })
-  public value?: string | null;
+  public checked?: boolean;
 
   @Prop({ reflect: true })
-  public type: 'checkbox' | 'dropdown' | 'radio' = 'dropdown';
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
-  public checked: boolean = false;
+  public name?: string;
 
-  @Prop({ reflect: false })
-  public filter?: string;
+  @Prop({ reflect: true })
+  public type: OptionType = 'checkbox';
 
-  @Prop()
-  public uuid?: string;
+  @Prop({ reflect: true })
+  public value?: string;
+  // #endregion
 
-  private parent?: HTMLBceDropdownElement | HTMLBceInputElement;
+  @Event({ eventName: 'bce-core:option' })
+  private onOption!: EventEmitter<SelectValue>;
 
-  private ignoreInput = (event: Event) => (event.cancelBubble = true);
+  private _id = UUID.v4();
 
-  private handleInput = (event: Event) => {
-    const input = event.target as HTMLInputElement | undefined;
-    if (!input) return;
+  private handleBlur = () => {
+    this.hasFocus = false;
+  };
 
-    // Reset all radio button checked attributes
-    if (this.type === 'radio' && this.parent) {
-      this.parent
-        .querySelectorAll('bce-option')
-        .forEach(option => (option.checked = false));
-    }
-
-    this.checked = input.checked;
+  public handleClick = (event: Event) => {
+    event.preventDefault();
     event.cancelBubble = true;
 
-    // Set value on parent
-    if (!this.parent) return;
-    switch (this.type) {
-      case 'checkbox': {
-        const options = this.parent.querySelectorAll('bce-option');
-        this.parent.value = Array.from(options)
-          .filter(option => option.value && option.checked)
-          .map(option => option.value!);
-        break;
-      }
-      case 'radio': {
-        this.parent.value = this.value || this.parent.value;
-        break;
-      }
-    }
-  };
+    const query = this.name
+      ? `bce-option[type='${this.type}'][name='${this.name}']`
+      : `bce-option[type='${this.type}']`;
 
-  private handleFocus = (event: FocusEvent) => {
-    if (event.bubbles) return;
-    const e = new FocusEvent(event.type, { ...event, bubbles: true });
-    this.el.dispatchEvent(e);
-  };
-
-  private handleBlur = (event: FocusEvent) => {
-    if (event.bubbles) return;
-    const e = new FocusEvent(event.type, { ...event, bubbles: true });
-    this.el.dispatchEvent(e);
-  };
-
-  private handleClick = () => {
-    if (this.parent) this.parent.value = this.value || null;
-  };
-
-  componentDidLoad() {
-    // Register bce-option within supported parent element
-    const parents = [
-      'bce-dropdown',
-      'bce-input[type="checkbox"]',
-      'bce-input[type="radio"]'
-    ].join(',');
-
-    this.parent = (this.el.closest(parents) || undefined) as
-      | HTMLBceDropdownElement
-      | HTMLBceInputElement
-      | undefined;
-
-    if (!this.parent) return;
-    this.parent.registerOption(this.el);
-
-    // Inherit type and uuid from parent component
-    this.type = (this.parent as any).type || 'dropdown';
-    this.uuid = (this.parent as any).uuid;
-  }
-
-  render() {
-    const filter = this.filter
-      ? this.el.innerText.toLowerCase().indexOf(this.filter.toLowerCase()) < 0
-      : false;
+    const elements = this.el.parentNode?.querySelectorAll(query);
+    const options = Array.from(elements || []) as HTMLBceOptionElement[];
 
     switch (this.type) {
       case 'checkbox':
-      case 'radio':
-        return (
-          <label>
-            <input
-              type={this.type}
-              name={this.uuid}
-              checked={this.checked}
-              onInput={this.ignoreInput}
-              onClick={this.handleInput}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
-            />
-            <slot />
-          </label>
-        );
-      case 'dropdown':
-        return (
-          <Host
-            filter={filter ? this.filter : false}
-            onClick={this.handleClick}
-          >
-            <slot />
-          </Host>
-        );
+        this.checked = !this.checked;
 
-      default:
-        console.warn(`[bce-option] Unsupported type: ${this.type}`);
-        return null;
+        const value: SelectValue = options
+          .filter(c => !!c.checked)
+          .map(c => c.value!);
+        this.onOption.emit(value);
+        return;
+
+      case 'dropdown':
+      case 'radio':
+        for (const option of options) option.checked = this.el === option;
+        this.onOption.emit(this.value!);
+        return;
     }
+  };
+
+  private handleFocus = () => {
+    this.hasFocus = true;
+  };
+
+  private ignoreEvent = (event: Event) => {
+    event.cancelBubble = true;
+  };
+
+  render() {
+    return (
+      <Host
+        onBlur={this.handleBlur}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+      >
+        <input
+          id={this._id}
+          checked={!!this.checked}
+          name={this.name}
+          type={this.type === 'dropdown' ? 'checkbox' : this.type}
+          onInput={this.ignoreEvent}
+        />
+        {this.type === 'checkbox' && this.checked && (
+          <bce-icon raw="fas:check" fixed-width />
+        )}
+        <label htmlFor={this._id} onClick={this.ignoreEvent}>
+          <slot />
+        </label>
+      </Host>
+    );
   }
 }

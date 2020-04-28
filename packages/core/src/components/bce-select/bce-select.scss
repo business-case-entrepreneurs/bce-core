@@ -1,0 +1,77 @@
+@import '../../../scss/input-creator.scss';
+
+:host {
+  @include bce-color-default(primary);
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 20px 0;
+  min-height: 40px;
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: inherit;
+
+    legend {
+      display: none;
+    }
+  }
+}
+
+:host([center]) {
+  text-align: center;
+}
+
+:host([error]) {
+  @include bce-color-default(error);
+}
+
+:host([label]) {
+  bce-label {
+    flex: 1 0 25%;
+    height: 100%;
+    line-height: 40px;
+  }
+
+  fieldset {
+    flex: 1 0 75%;
+  }
+
+  @include media-medium {
+    flex-flow: row nowrap;
+  }
+}
+
+:host([type='dropdown']) {
+  bce-input {
+    margin: 0;
+    cursor: pointer;
+
+    &[data-active] {
+      cursor: initial;
+    }
+  }
+
+  bce-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+  }
+
+  .dropdown {
+    @include elevate(2, false);
+    display: none;
+    font-size: 0.9em;
+    border-radius: 4px;
+    background-color: bce-color-l(light);
+    z-index: 3;
+
+    &[data-active] {
+      display: block;
+      max-height: 300px;
+    }
+  }
+}

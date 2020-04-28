@@ -1,6 +1,7 @@
 :host {
   @include bce-color-default(dark);
   @include elevate(6);
+
   position: fixed;
   left: 16px;
   right: 16px;
@@ -23,4 +24,8 @@
       bottom: 19px;
     }
   }
+}
+
+:host([fab]) {
+  right: 89px;
 }

@@ -1,36 +1,38 @@
 {
   "name": "@bcase/core",
-  "version": "0.0.31",
+  "version": "0.0.33",
   "description": "",
   "license": "UNLICENSED",
   "author": {
-    "name": "BCE Solutions",
+    "name": "BCE Technology",
     "email": "solutions@bcase.nl"
   },
+  "main": "dist/index.js",
+  "unpkg": "dist/bce/bce.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/types.d.ts",
   "files": [
     "dist",
     "loader",
     "scss"
   ],
-  "main": "dist/index.js",
-  "unpkg": "dist/bce/bce.js",
-  "module": "dist/index.mjs",
-  "types": "dist/types/types.d.ts",
   "scripts": {
     "build": "stencil build --docs-json ./dist/docs.json",
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
     "serve": "stencil build --watch --serve --docs-json ./dist/docs.json"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.26",
-    "@fortawesome/free-regular-svg-icons": "^5.12.0",
-    "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "@stencil/core": "^1.8.2",
-    "@stencil/sass": "^1.1.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@popperjs/core": "^2.3.3",
+    "@stencil/core": "~1.9.2",
+    "@stencil/react-output-target": "0.0.6",
+    "@stencil/sass": "^1.3.1",
     "codeflask": "^1.4.1",
-    "popper.js": "^1.16.0",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4"
+    "prismjs": "^1.20.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
   },
   "publishConfig": {
     "access": "public"

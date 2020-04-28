@@ -1,0 +1,54 @@
+:host {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  padding-top: 56px;
+  pointer-events: none;
+
+  bce-nav-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    pointer-events: auto;
+  }
+
+  bce-link {
+    background-color: bce-color();
+    pointer-events: auto;
+  }
+
+  nav {
+    display: flex;
+    align-items: flex-start;
+    height: 0;
+    flex-flow: column nowrap;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+  }
+
+  @include media-medium {
+    @include elevate(0, false);
+    position: relative;
+    width: auto;
+    padding: 0 16px;
+    float: right;
+
+    bce-nav-button {
+      display: none;
+    }
+
+    nav {
+      flex-flow: row nowrap;
+      height: auto;
+    }
+  }
+}
+
+:host([active]) {
+  @include elevate(4, false);
+
+  nav {
+    height: auto;
+  }
+}

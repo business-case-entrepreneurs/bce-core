@@ -1,0 +1,47 @@
+:host {
+  small {
+    position: absolute;
+    font-size: 12px;
+    bottom: -16px;
+    left: 12px;
+    text-align: left;
+    transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:before {
+      content: '|';
+      position: absolute;
+      left: -6px;
+      font-weight: 100;
+    }
+  }
+}
+
+:host([disabled]) {
+  small {
+    color: bce-color(disable);
+  }
+}
+
+:host([focus]) {
+  small {
+    color: bce-color();
+  }
+}
+
+:host([error]) {
+  bce-label {
+    color: bce-color(error);
+  }
+
+  small {
+    color: bce-color(error);
+  }
+}
+
+@include media-medium {
+  :host(:not([compact])) {
+    small {
+      left: calc(25% + 12px);
+    }
+  }
+}

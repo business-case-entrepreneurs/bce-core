@@ -5,7 +5,7 @@ export const ripple = (el: Element, event: MouseEvent) => {
   ripple.x = event.clientX - rect.left;
   ripple.y = event.clientY - rect.top;
 
-  // Append ripple to button & remove after 500ms
+  // Append ripple to el & remove after 500ms
   el.appendChild(ripple);
   setTimeout(() => ripple.parentElement!.removeChild(ripple), 500);
 };

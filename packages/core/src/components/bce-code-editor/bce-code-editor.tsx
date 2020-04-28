@@ -1,31 +1,61 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 import CodeFlask from 'codeflask';
+
+import { getInputCreator } from '../bce-input-creator/input-creator';
 
 @Component({
   tag: 'bce-code-editor',
   styleUrl: 'bce-code-editor.scss',
-  shadow: false
+  shadow: true
 })
-export class BceCodeEditor {
+export class CodeEditor {
   @Element()
   private el!: HTMLBceCodeEditorElement;
 
-  @Prop()
-  public value = '';
-
   @Prop({ reflect: true })
-  public lineNumbers = false;
+  public compact = false;
 
   @Prop({ reflect: true })
   public disabled = false;
 
   @Prop({ reflect: true })
-  public compact = false;
+  public error?: boolean;
 
   @Prop({ attribute: 'focus', reflect: true, mutable: true })
   public hasFocus = false;
 
-  private editor?: any;
+  @Prop({ reflect: true })
+  public info?: string;
+
+  @Prop({ reflect: true })
+  public label?: string;
+
+  @Prop({ reflect: true })
+  public lineNumbers = false;
+
+  @Prop({ reflect: true })
+  public name?: string;
+
+  @Prop()
+  public tooltip?: string;
+
+  @Prop({ reflect: true })
+  public validation?: string;
+
+  @Prop({ mutable: true })
+  public value?: string;
+
+  private _editor?: any;
+  private _initialValue?: string = this.value;
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+
+  private handleBlur = (event: FocusEvent) => {
+    this.hasFocus = false;
+    this._inputCreator.validate();
+
+    const e = new FocusEvent(event.type, { ...event, bubbles: true });
+    this.el.dispatchEvent(e);
+  };
 
   private handleFocus = (event: FocusEvent) => {
     this.hasFocus = true;
@@ -34,24 +64,28 @@ export class BceCodeEditor {
     this.el.dispatchEvent(e);
   };
 
-  private handleBlur = (event: FocusEvent) => {
-    this.hasFocus = false;
-
-    const e = new FocusEvent(event.type, { ...event, bubbles: true });
-    this.el.dispatchEvent(e);
-  };
-
   @Watch('value')
-  private watchValue(value: string) {
-    if (this.editor) this.editor.updateCode(value);
+  private watchValue(value?: string) {
+    if (this._editor) this._editor.updateCode(value);
   }
 
   @Watch('disabled')
   private watchDisabled(value: boolean) {
-    if (!this.editor) return;
+    if (!this._editor) return;
 
-    if (value) this.editor.enableReadonlyMode();
-    else this.editor.disableReadonlyMode();
+    if (value) this._editor.enableReadonlyMode();
+    else this._editor.disableReadonlyMode();
+  }
+
+  @Method()
+  public async reset() {
+    this.value = this._initialValue;
+    this._inputCreator.reset();
+  }
+
+  @Method()
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
   }
 
   private resize() {
@@ -59,15 +93,17 @@ export class BceCodeEditor {
 
     // Reset
     const textarea = this.el.querySelector('textarea')!;
+    const container = this.el.querySelector('.codeflask')! as HTMLElement;
     textarea.style.setProperty('height', min + 'px');
 
     // Recalculate
     const height = min > textarea.scrollHeight ? min : textarea.scrollHeight;
     textarea.style.setProperty('height', height + 'px');
+    container.style.setProperty('height', height + 'px');
   }
 
   async componentDidLoad() {
-    this.editor = new CodeFlask(this.el, {
+    this._editor = new CodeFlask(this.el, {
       language: 'js',
       lineNumbers: this.lineNumbers,
       readonly: this.disabled
@@ -76,7 +112,7 @@ export class BceCodeEditor {
     this.watchValue(this.value);
     this.watchDisabled(this.disabled);
 
-    this.editor.onUpdate((code: string) => {
+    this._editor.onUpdate((code: string) => {
       this.resize();
       this.value = code;
       this.el.dispatchEvent(new Event('input'));
@@ -90,6 +126,11 @@ export class BceCodeEditor {
   }
 
   render() {
-    return <slot />;
+    const InputCreator = this._inputCreator;
+    return (
+      <InputCreator>
+        <slot />
+      </InputCreator>
+    );
   }
 }

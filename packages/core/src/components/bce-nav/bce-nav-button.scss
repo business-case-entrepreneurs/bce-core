@@ -1,0 +1,35 @@
+:host {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  border: none;
+  overflow: hidden;
+
+  bce-ripple {
+    background-color: bce-color-t();
+  }
+
+  button {
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    display: inline-flex;
+    width: inherit;
+    height: inherit;
+    padding: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    span {
+      flex: 0 0 3px;
+      width: 24px;
+      background-color: bce-color-t();
+      border-radius: 3px;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}

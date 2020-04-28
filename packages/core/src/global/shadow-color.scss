@@ -1,0 +1,7 @@
+$colors: primary secondary tertiary success error warning info dark light;
+
+@each $color in $colors {
+  :host([color='#{$color}']) {
+    @include bce-color-default($color);
+  }
+}

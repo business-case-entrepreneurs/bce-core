@@ -1,0 +1,29 @@
+:host {
+  @include bce-color-inherit();
+  position: relative;
+  display: inline-block;
+  transition: margin 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease-in-out;
+  pointer-events: none;
+  text-align: left;
+
+  label {
+    pointer-events: auto;
+  }
+
+  bce-tooltip {
+    pointer-events: auto;
+  }
+}
+
+:host([disabled]) {
+  color: bce-color-t(disable);
+
+  bce-tooltip {
+    pointer-events: none;
+  }
+}
+
+:host([focus]) {
+  color: bce-color();
+}

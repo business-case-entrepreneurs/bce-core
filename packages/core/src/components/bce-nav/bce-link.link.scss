@@ -1,0 +1,5 @@
+@import './bce-link.scss';
+
+:host(:last-child) a {
+  border-radius: 0 0 5px 5px;
+}

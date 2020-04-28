@@ -1,42 +1,6 @@
-bce-code-editor {
+@import '../../../scss/input-creator.scss';
+
+:host {
   position: relative;
   display: block;
-
-  .codeflask {
-    position: relative;
-    background: transparent;
-  }
-
-  .codeflask__textarea {
-    position: static;
-    height: 48px;
-    background-color: bce-color-l(light);
-    border: 1px solid bce-color-d(light);
-    border-radius: 4px;
-    transition: border-color 0.3s ease-in-out;
-  }
-
-  .codeflask__flatten {
-    box-sizing: border-box;
-    padding: 8px 10px;
-    overflow: hidden;
-  }
-
-  @include media-medium {
-    .codeflask__textarea {
-      height: 40px;
-    }
-  }
-}
-
-bce-code-editor[focus] {
-  .codeflask__textarea {
-    border: 1px solid bce-color();
-  }
-}
-
-bce-code-editor[disabled] {
-  .codeflask {
-    background: bce-color(disable);
-  }
 }

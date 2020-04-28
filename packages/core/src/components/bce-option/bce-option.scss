@@ -1,86 +1,88 @@
-bce-option {
-  // No default color defined, the default color is inherited from the parent.
+:host {
   position: relative;
-  display: block;
-
-  &[filter]:not([filter='']) {
-    display: none;
-  }
+  display: flex;
 }
 
-bce-option[type='dropdown'] {
-  padding: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: bce-color-l();
-    color: bce-color-t();
-  }
-}
-
-bce-option[type='checkbox'],
-bce-option[type='radio'] {
+:host([type='checkbox']),
+:host([type='radio']) {
+  min-height: 32px;
   font-size: 0.9em;
 
-  label {
-    display: flex;
-    align-items: center;
-  }
-
   input {
-    position: relative;
-    -webkit-appearance: none;
-    appearance: none;
+    flex: 0 0 20px;
     margin: 6px 10px 6px 3px;
     width: 20px;
     height: 20px;
-    border-style: solid;
     border: 1px solid bce-color-d(light);
     background-color: bce-color-l(light);
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
   }
 
-  &[checked] {
-    input {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  label {
+    display: inline-block;
+    line-height: 32px;
+    height: 100%;
   }
 }
 
-bce-option[type='checkbox'] {
-  input {
-    border-radius: 3px;
-  }
+:host([type='checkbox']) input {
+  border-radius: 3px;
+}
 
-  &[checked] input {
+:host([type='checkbox'][checked]) {
+  input {
     background-color: bce-color();
     border-color: bce-color();
+  }
 
-    &:after {
-      content: '\2713';
-      font-weight: bold;
-      color: bce-color-t();
-      font-size: 1.4em;
-    }
+  bce-icon {
+    position: absolute;
+    color: bce-color-t();
+    margin: 0 0 0 5px;
+    line-height: 33px;
+    font-size: 13px;
+    pointer-events: none;
   }
 }
 
-bce-option[type='radio'] {
+:host([type='dropdown']) {
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  // Visually hide input
   input {
-    border-radius: 50%;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
   }
+}
 
-  &[checked] input {
-    border-width: 2px;
-    border-color: bce-color();
+:host([type='dropdown']:hover) {
+  background-color: bce-color-l();
+  color: bce-color-t();
+}
 
-    &:after {
-      content: '';
-      width: 12px;
-      height: 12px;
-      background-color: bce-color();
-      border-radius: 50%;
-    }
+:host([type='radio']) input {
+  border-radius: 50%;
+}
+
+:host([type='radio'][checked]) input {
+  border-width: 2px;
+  border-color: bce-color();
+
+  &:after {
+    position: absolute;
+    content: '';
+    margin: 2px;
+    width: 12px;
+    height: 12px;
+    line-height: 32px;
+    background-color: bce-color();
+    border-radius: 50%;
   }
 }

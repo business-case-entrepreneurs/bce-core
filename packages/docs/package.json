@@ -1,29 +1,45 @@
 {
   "name": "@bcase/docs",
-  "version": "0.0.31",
+  "version": "0.0.33",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "clean": "rimraf dist",
-    "serve": "vue-cli-service serve"
+    "build": "react-scripts build",
+    "clean": "rimraf build",
+    "eject": "react-scripts eject",
+    "serve": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10",
-    "vue-class-component": "^7.0.2",
-    "vue-property-decorator": "^8.1.0",
-    "vue-router": "^3.0.3"
+    "@bcase/core": "^0.0.33",
+    "@bcase/core-react": "^0.0.33",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
+    "@testing-library/user-event": "^10.0.2",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.13.2",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "@bcase/core": "^0.0.31",
-    "@bcase/core-vue": "^0.0.31",
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-typescript": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
-    "node-sass": "^4.9.0",
-    "rimraf": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "typescript": "^3.4.3",
-    "vue-template-compiler": "^2.6.10"
+    "rimraf": "^3.0.2"
   }
 }

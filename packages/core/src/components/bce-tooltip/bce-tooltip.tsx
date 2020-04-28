@@ -1,16 +1,16 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { createPopper, Placement } from '@popperjs/core';
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import Popper from 'popper.js';
 
 library.add(faInfoCircle);
 
 @Component({
   tag: 'bce-tooltip',
   styleUrl: 'bce-tooltip.scss',
-  shadow: false
+  shadow: true
 })
-export class BceTooltip {
+export class Tooltip {
   @Element()
   private el!: HTMLBceTooltipElement;
 
@@ -18,7 +18,7 @@ export class BceTooltip {
   public placement = 'bottom';
 
   @Prop({ reflect: true })
-  public target = '';
+  public target?: string;
 
   @Prop({ reflect: true })
   public icon = 'fas:info-circle';
@@ -29,27 +29,24 @@ export class BceTooltip {
   componentDidLoad() {
     const reference = this.target
       ? (document.querySelector(this.target) as HTMLElement)
-      : (this.el.querySelector('bce-icon')! as HTMLBceIconElement);
-    const tooltip = this.el.querySelector('div')!;
-    const container = this.el.closest('bce-root')!;
+      : (this.el.shadowRoot!.querySelector('bce-icon')! as HTMLBceIconElement);
+
+    const tooltip = this.el.shadowRoot!.querySelector('div')!;
 
     if (!reference) {
       console.warn(`[bce-tooltip] Target not found: ${this.target}`);
       return;
     }
 
-    reference.addEventListener('mouseenter', () => {
-      this.active = true;
-      popper.scheduleUpdate();
-    });
+    for (const event of ['mouseenter', 'focus'])
+      reference.addEventListener(event, () => (this.active = true));
 
-    reference.addEventListener('mouseleave', () => {
-      this.active = false;
-    });
+    for (const event of ['mouseleave', 'blur'])
+      reference.addEventListener(event, () => (this.active = false));
 
-    const popper = new Popper(reference, tooltip, {
-      placement: this.placement as Popper.Placement,
-      modifiers: { flip: { boundariesElement: container } }
+    createPopper(reference, tooltip, {
+      placement: this.placement as Placement,
+      strategy: 'fixed'
     });
   }
 

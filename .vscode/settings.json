@@ -9,16 +9,20 @@
     "**/node_modules": true,
     "**/package-lock.json": true,
 
+    "packages/*/.babelrc": true,
     "packages/*/.rpt2_cache": true,
     "packages/*/.stencil": true,
     "packages/*/babel.config.js": true,
+    "packages/*/build": false,
     "packages/*/dist": false,
     "packages/*/loader": false,
+    "packages/*/tslint.json": true,
     "packages/*/www": true,
     "packages/*/src/components.d.ts": true,
     "packages/*/src/types.d.ts": true,
 
     ".gitignore": true,
-    "package-lock.json": true
+    "package-lock.json": true,
+    "prettier.config.js": true
   }
 }

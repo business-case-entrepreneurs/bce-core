@@ -1,57 +1,44 @@
-import { Component, Element, h, Host, Method, State } from '@stencil/core';
+import {
+  IconDefinition,
+  IconPack,
+  library as iconLibrary
+} from '@fortawesome/fontawesome-svg-core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  State
+} from '@stencil/core';
+
+import { MessageOptions } from '../../models/message-options';
+import { UUID } from '../../utils/uuid';
 
 @Component({
   tag: 'bce-root',
   styleUrl: 'bce-root.scss',
-  shadow: false
+  shadow: true
 })
-export class BceRoot {
+export class Root {
   @Element()
   private el!: HTMLBceRootElement;
 
+  @Prop({ reflect: true })
+  public mode?: 'default' | 'bucket';
+
   @State()
-  private registeredFAB = false;
+  private _fab = false;
 
-  private messageCurrent = false;
-  private messageQueue: MessageOptions[] = [];
+  @State()
+  private _messageQueue: ({ text: string } & MessageOptions)[] = [];
 
-  @Method()
-  public async registerFAB(register: boolean) {
-    this.registeredFAB = register;
-  }
+  private _messageTimer = 0;
 
-  @Method()
-  public async success(text: string, duration = 2) {
-    return this.message(text, duration, 'success');
-  }
-
-  @Method()
-  public async error(text: string, duration = 5) {
-    return this.message(text, duration, 'error');
-  }
-
-  @Method()
-  public async warning(text: string, duration = 2) {
-    return this.message(text, duration, 'warning');
-  }
-
-  @Method()
-  public async info(text: string, duration = 2) {
-    return this.message(text, duration, 'info');
-  }
-
-  @Method()
-  public async message(text: string, duration = 2, color = 'dark') {
-    if (!text) return;
-
-    // Messages have a minimum duration of 1 second and a maximum of 10 seconds
-    duration = duration < 1 ? 1 : duration;
-    duration = duration > 10 ? 10 : duration;
-
-    // Either render or queue the message
-    if (!this.messageCurrent) this.renderMessage({ text, duration, color });
-    else this.messageQueue.push({ text, duration, color });
-  }
+  private handleSlotChange = () => {
+    this._fab = !!this.el.querySelector('bce-fab:not([inline]');
+  };
 
   @Method()
   public alert(title: string, message: string, options: AlertOptions = {}) {
@@ -64,9 +51,9 @@ export class BceRoot {
     `;
 
     const action = document.createElement('bce-button');
-    action.type = 'text';
+    action.design = 'text';
     action.slot = 'action';
-    action.submit = true;
+    action.type = 'submit';
     action.innerText = options.ok || 'Ok';
     if (options.ok !== false) dialog.appendChild(action);
 
@@ -90,7 +77,7 @@ export class BceRoot {
 
     const action2 = document.createElement('bce-button');
     action2.slot = 'action';
-    action2.color = 'light';
+    action2.design = 'text';
     action2.style.opacity = '0.7';
     action2.innerText = options.cancel || 'Cancel';
     dialog.appendChild(action2);
@@ -133,42 +120,99 @@ export class BceRoot {
     return result;
   }
 
-  private renderMessage({ text, duration, color }: MessageOptions) {
-    this.messageCurrent = true;
+  @Method()
+  public async success(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'success', duration: 2, ...options });
+  }
 
-    // Create and append message
-    const message = document.createElement('bce-message');
-    message.innerText = text;
-    message.color = color;
-    this.el.appendChild(message);
+  @Method()
+  public async error(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'error', duration: 5, ...options });
+  }
 
-    const onRemove = () => {
-      // Remove current message
-      this.el.removeChild(message);
+  @Method()
+  public async warning(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'warning', duration: 2, ...options });
+  }
 
-      // Render next message if one is queued
-      const next = this.messageQueue.shift();
-      if (next) this.renderMessage(next);
-      else this.messageCurrent = false;
-    };
+  @Method()
+  public async info(text: string, options: Partial<MessageOptions> = {}) {
+    return this.message(text, { color: 'info', duration: 2, ...options });
+  }
 
-    // Remove message after the specified amount of time
-    setTimeout(onRemove, duration * 1000);
+  @Method()
+  public async message(text: string, options: Partial<MessageOptions> = {}) {
+    if (!text) return;
+
+    // Messages have a minimum duration of 1 second and a maximum of 10 seconds
+    let duration = options.duration || 2;
+    duration = duration < 1 ? 1 : duration;
+    duration = duration > 10 ? 10 : duration;
+
+    const color = options.color || 'dark';
+    this._messageQueue = [...this._messageQueue, { text, color, duration }];
+    this.messageCheck();
+  }
+
+  @Method()
+  public async addIcon(...definitions: (IconDefinition | IconPack)[]) {
+    iconLibrary.add(...definitions);
+  }
+
+  private messageCheck() {
+    // Skip if there is no message or already displaying a message
+    const [message] = this._messageQueue;
+    if (!message || !!this._messageTimer) return;
+
+    // Remove message after specified duration
+    this._messageTimer = window.setTimeout(
+      () => this.messageTimeout(),
+      message.duration * 1000
+    );
+  }
+
+  private messageTimeout() {
+    // Remove current message from queue
+    this._messageQueue = this._messageQueue.slice(1);
+
+    // Clear timer & check remaining queue
+    this._messageTimer = 0;
+    this.messageCheck();
+  }
+
+  componentDidLoad() {
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    if (slot) {
+      slot.addEventListener('slotchange', this.handleSlotChange);
+      this.handleSlotChange();
+    }
+
+    if (!this.el.id) this.el.id = UUID.v4();
+  }
+
+  renderMessage() {
+    const [message] = this._messageQueue;
+    if (!message) return;
+
+    return (
+      <bce-message
+        key={this._messageTimer}
+        color={message.color}
+        fab={this._fab}
+      >
+        {message.text}
+      </bce-message>
+    );
   }
 
   render() {
     return (
-      <Host fab={this.registeredFAB}>
+      <Host>
         <slot />
+        {this.renderMessage()}
       </Host>
     );
   }
-}
-
-interface MessageOptions {
-  readonly text: string;
-  readonly duration: number;
-  readonly color: string;
 }
 
 export interface AlertOptions {

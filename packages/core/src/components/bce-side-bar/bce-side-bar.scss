@@ -1,0 +1,25 @@
+:host {
+  @include bce-color-default(light);
+  @include elevate(4, false);
+  position: relative;
+  display: block;
+  width: 0;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 3;
+
+  aside {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: inherit;
+    background-color: bce-color();
+    overflow: auto;
+    transition: width 0.3s ease-in-out;
+  }
+
+  @include media-small {
+    width: 256px;
+  }
+}

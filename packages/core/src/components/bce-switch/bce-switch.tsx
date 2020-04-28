@@ -1,80 +1,102 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, Element, h, Method, Prop } from '@stencil/core';
+
+import { getInputCreator } from '../bce-input-creator/input-creator';
 
 @Component({
   tag: 'bce-switch',
   styleUrl: 'bce-switch.scss',
-  shadow: false
+  shadow: true
 })
-export class BceSwitch {
+export class Switch {
   @Element()
-  private el!: HTMLElement;
+  private el!: HTMLBceSwitchElement;
 
   @Prop({ reflect: true })
   public color?: string;
 
-  @Prop({ mutable: true })
-  public value = false;
+  @Prop({ reflect: true })
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
-  public disabled = false;
+  public error?: boolean;
 
-  @Prop({ attribute: 'focus', reflect: true, mutable: true })
-  public hasFocus = false;
+  @Prop({ reflect: true, attribute: 'focus' })
+  public hasFocus?: boolean;
 
-  private handleClick = (event: Event) => {
-    const target = event.target as HTMLBceSwitchElement | undefined;
-    const input = target && target.querySelector('input');
-    if (input) input.click();
+  @Prop({ reflect: true })
+  public info?: string;
+
+  @Prop({ reflect: true })
+  public label?: string;
+
+  @Prop({ reflect: true })
+  public name?: string;
+
+  @Prop()
+  public tooltip?: string;
+
+  @Prop({ reflect: true })
+  public validation?: string;
+
+  @Prop({ mutable: true })
+  public value?: boolean;
+
+  private _initialValue?: boolean = this.value;
+  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+
+  private handleBlur = () => {
+    this.hasFocus = false;
+    this._inputCreator.validate();
   };
 
   private handleChange = (event: Event) => {
-    const input = event.target as HTMLInputElement | undefined;
+    const input = event.target as HTMLInputElement | null;
     if (input) this.value = input.checked;
     this.el.dispatchEvent(new Event('input', event));
   };
 
-  private handleInput = (event: Event) => {
+  private handleFocus = () => {
+    this.hasFocus = true;
+  };
+
+  private ignoreInput = (event: Event) => {
     event.cancelBubble = true;
   };
 
-  private handleFocus = (event: FocusEvent) => {
-    this.hasFocus = true;
+  @Method()
+  public async reset() {
+    this.value = this._initialValue;
+    this._inputCreator.reset();
+  }
 
-    if (!event.bubbles) {
-      const e = new FocusEvent(event.type, { ...event, bubbles: true });
-      this.el.dispatchEvent(e);
-    }
-  };
-
-  private handleBlur = (event: FocusEvent) => {
-    this.hasFocus = false;
-
-    if (!event.bubbles) {
-      const e = new FocusEvent(event.type, { ...event, bubbles: true });
-      this.el.dispatchEvent(e);
-    }
-  };
+  @Method()
+  public validate(silent = false) {
+    return this._inputCreator.validate(silent);
+  }
 
   render() {
+    const InputCreator = this._inputCreator;
+
     return (
-      <Host
-        tabIndex={this.disabled ? undefined : 0}
-        onClick={this.handleClick}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-      >
+      <InputCreator>
+        <div class="slot-container">
+          <slot />
+          <slot name={'' + !!this.value} />
+        </div>
         <label>
           <input
             type="checkbox"
-            tabIndex={-1}
             checked={this.value}
             disabled={this.disabled}
+            onBlur={this.handleBlur}
             onChange={this.handleChange}
-            onInput={this.handleInput}
+            onFocus={this.handleFocus}
+            onInput={this.ignoreInput}
+            aria-label={this.label}
           />
           <div data-on={this.value} data-off={!this.value} />
         </label>
-      </Host>
+      </InputCreator>
     );
   }
 }

@@ -1,0 +1,54 @@
+:host {
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: pointer;
+
+  bce-ripple {
+    background-color: bce-color(primary);
+  }
+
+  a {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0 16px;
+    color: bce-color-t();
+    line-height: 56px;
+    text-decoration: none;
+    user-select: none;
+    overflow: hidden;
+    background-color: bce-color();
+
+    &:hover {
+      color: bce-color-l(primary);
+    }
+
+    bce-icon {
+      padding: 0 10px 0 0;
+      pointer-events: none;
+
+      &[data-toggle] {
+        padding: 0 0 0 10px;
+        float: right;
+      }
+    }
+
+    span {
+      flex: 1 1 auto;
+    }
+  }
+
+  > div {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+}
+
+:host(.active) a {
+  color: bce-color-l(primary);
+}

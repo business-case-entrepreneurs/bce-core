@@ -1,0 +1,88 @@
+@import './bce-button.scss';
+
+:host {
+  @include bce-color-default(primary);
+  @include elevate(0);
+  border-radius: 0;
+
+  button:after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0.25;
+    border-radius: 0 0 0 0;
+  }
+}
+
+:host([focus]) {
+  @include elevate(0);
+}
+
+:host([icon]) button {
+  span {
+    padding-left: 36px;
+  }
+
+  bce-icon {
+    color: bce-color();
+    background-color: bce-color(null, 'icon');
+  }
+
+  &[data-icon-only] bce-icon {
+    background-color: bce-color();
+    color: bce-color-t();
+  }
+}
+
+:host([icon][disabled]) button bce-icon {
+  color: bce-color-d(disable);
+  background-color: bce-color(disable, 'icon');
+}
+
+// :host([icon]:not([design='text']):not([design='outline'])) button {
+//   bce-icon {
+//     left: auto;
+//     right: 0;
+//   }
+//
+//   span {
+//     padding-left: 0;
+//     padding-right: 36px;
+//   }
+// }
+
+:host([design='outline']) button,
+:host([design='text']) button {
+  bce-icon {
+    background-color: transparent;
+  }
+
+  &:after {
+    display: none;
+  }
+}
+
+:host([design='outline'][icon]) button,
+:host([design='text'][icon]) button {
+  span {
+    padding-left: 22px;
+  }
+
+  &[data-icon-only] bce-icon {
+    background-color: transparent;
+    color: bce-color();
+  }
+}
+
+:host([design='outline'][disabled]) button bce-icon,
+:host([design='text'][disabled]) button bce-icon {
+  background-color: transparent;
+}
+
+:host([design='text']) {
+  border-radius: 4px;
+}

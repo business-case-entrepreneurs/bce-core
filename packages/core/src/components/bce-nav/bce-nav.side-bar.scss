@@ -1,0 +1,15 @@
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  bce-nav-button {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+}

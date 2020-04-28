@@ -21,6 +21,13 @@ $_bce-color-shades-func: get-function(_bce-color-shades-default) !default;
   }
 }
 
+@mixin bce-color-inherit() {
+  $shades: map-keys(call($_bce-color-shades-func, #000, #000));
+  @each $key in $shades {
+    --bce-color-#{$key}: inherit;
+  }
+}
+
 @mixin bce-color-define($colors, $name, $shades-func: _bce-color-shades-noop) {
   // Parse arguments
   $color: nth($colors, 1);
@@ -29,7 +36,7 @@ $_bce-color-shades-func: get-function(_bce-color-shades-default) !default;
   @if length($colors) > 1 {
     $color-text: nth($colors, 2);
   }
-    
+
   // Parse shades
   $global-shades: call($_bce-color-shades-func, $color, $color-text);
   $custom-shades: call(get-function($shades-func), $color, $color-text);
@@ -37,7 +44,7 @@ $_bce-color-shades-func: get-function(_bce-color-shades-default) !default;
   // Define shades
   @include bce-color-define-shades($name, $global-shades);
   @include bce-color-define-shades($name, $custom-shades);
-  
+
   // Define color attribute modifiers
   *[color='#{$name}'] {
     @include bce-color-default($name);
