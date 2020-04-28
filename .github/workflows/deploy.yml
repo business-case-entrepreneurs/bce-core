@@ -85,12 +85,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: docs
-          path: packages/docs/dist
+          name: core
+          path: packages/core/dist
 
       - uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.GH_TOKEN }}
           BASE_BRANCH: master
           BRANCH: gh-pages
-          FOLDER: packages/docs/dist
+          FOLDER: packages/core/dist
