@@ -43,3 +43,35 @@
     flex-flow: row nowrap;
   }
 }
+
+:host([type='dropdown']) {
+  bce-input {
+    margin: 0;
+    cursor: pointer;
+
+    &[data-active] {
+      cursor: initial;
+    }
+  }
+
+  bce-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+  }
+
+  .dropdown {
+    @include elevate(2, false);
+    display: none;
+    font-size: 0.9em;
+    border-radius: 4px;
+    background-color: bce-color-l(light);
+    z-index: 3;
+
+    &[data-active] {
+      display: block;
+      max-height: 300px;
+    }
+  }
+}

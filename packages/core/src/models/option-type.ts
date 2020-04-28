@@ -1,1 +1,1 @@
-export type OptionType = 'checkbox' | 'radio';
+export type OptionType = 'checkbox' | 'dropdown' | 'radio';

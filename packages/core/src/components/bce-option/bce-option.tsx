@@ -75,6 +75,7 @@ export class Option {
         this.onOption.emit(value);
         return;
 
+      case 'dropdown':
       case 'radio':
         for (const option of options) option.checked = this.el === option;
         this.onOption.emit(this.value!);
@@ -101,7 +102,7 @@ export class Option {
           id={this._id}
           checked={!!this.checked}
           name={this.name}
-          type={this.type}
+          type={this.type === 'dropdown' ? 'checkbox' : this.type}
           onInput={this.ignoreEvent}
         />
         {this.type === 'checkbox' && this.checked && (

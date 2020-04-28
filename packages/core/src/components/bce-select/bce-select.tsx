@@ -1,3 +1,6 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { createPopper } from '@popperjs/core';
 import {
   Component,
   Element,
@@ -5,12 +8,15 @@ import {
   Listen,
   Method,
   Prop,
+  State,
   Watch
 } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
+
+library.add(faAngleDown);
 
 @Component({
   tag: 'bce-select',
@@ -51,18 +57,18 @@ export class Select {
   @Prop({ mutable: true })
   public value?: SelectValue;
 
+  @State()
+  private _open = false;
+
   private _initialized = false;
   private _initialValue?: SelectValue = this.value;
   private _inputCreator = getInputCreator(this, err => (this.error = !!err));
   private _options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
-  private _value: string[] = [];
 
-  private handleBlur = () => {
+  private handleBlur = async () => {
     this.hasFocus = false;
-  };
-
-  private handleFocus = () => {
-    this.hasFocus = true;
+    await new Promise(res => setTimeout(res, 200));
+    this._open = this._options.some(o => o.hasFocus);
   };
 
   private handleClick = () => {
@@ -80,6 +86,33 @@ export class Select {
         this.value = option ? option.value : null;
         return;
     }
+  };
+
+  private handleDropdownClick = () => {
+    // this._open = !this._open;
+  };
+
+  private handleFilter = (event: Event) => {
+    const value = (event.target as HTMLBceInputElement).value || '';
+    const filter = value.toLowerCase().trim();
+
+    for (const option of this._options) {
+      const check1 = option.innerText.toLowerCase();
+      const check2 = option.value?.toLowerCase();
+
+      const visible =
+        check1.indexOf(filter) >= 0 ||
+        (check2 ? check2.indexOf(filter) >= 0 : false);
+
+      option.style.display = visible ? '' : 'none';
+    }
+
+    event.stopPropagation();
+  };
+
+  private handleFocus = () => {
+    this.hasFocus = true;
+    this._open = true;
   };
 
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
@@ -105,19 +138,17 @@ export class Select {
 
   @Watch('value')
   public watchValue(value?: SelectValue) {
-    if (this.type === 'checkbox' || this.type === 'filter') {
-      this._value = Array.isArray(value)
-        ? value
-        : (value && value.split(',').map(v => v.trim())) || [];
-    }
-
     if (this._initialized) this._inputCreator.handleInput();
 
     switch (this.type) {
       case 'checkbox':
       case 'filter':
+        const values = Array.isArray(value)
+          ? value
+          : (value && value.split(',').map(v => v.trim())) || [];
+
         for (const option of this._options)
-          option.checked = this._value.indexOf(option.value || '') >= 0;
+          option.checked = values.indexOf(option.value || '') >= 0;
         return;
 
       case 'choice':
@@ -133,6 +164,13 @@ export class Select {
   public handleChip(event: CustomEvent) {
     const dispatch = !equal(this.value || null, event.detail || null);
     this.value = event.detail;
+
+    if (this.type === 'dropdown') {
+      const option = this._options.find(o => o.value === this.value);
+      const input = this.el.shadowRoot!.querySelector('bce-input')!;
+      input.value = option?.innerText || '';
+      this._open = false;
+    }
 
     if (dispatch) {
       const e = new Event('input', { bubbles: true, cancelable: true });
@@ -166,6 +204,29 @@ export class Select {
   componentDidLoad() {
     this.watchValue(this.value);
 
+    if (this.type === 'dropdown') {
+      const root = this.el.shadowRoot!;
+      const reference = root.querySelector('.trigger') as HTMLBceInputElement;
+      const dropdown = root.querySelector('.dropdown') as HTMLDivElement;
+
+      // Create popper.js dropdown
+      createPopper(reference, dropdown, {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+        modifiers: [{ name: 'offset', options: { offset: [0, 2] } }]
+      });
+
+      // Patch popper.js fixed position
+      new (window as any).ResizeObserver(() => {
+        const { x, width } = reference.getBoundingClientRect();
+        const match = dropdown.style.transform.match(/^translate3d\((\d+)px/);
+        const offset = match ? parseFloat(match[1]) : 0;
+
+        dropdown.style.left = `${x - offset}px`;
+        dropdown.style.width = width + 'px';
+      }).observe(reference);
+    }
+
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
@@ -175,11 +236,34 @@ export class Select {
     this._initialized = true;
   }
 
-  render() {
-    if (this.type === 'input')
-      console.warn('[bce-select] The input type is unimplemented.');
-
+  renderDropdown() {
     const InputCreator = this._inputCreator;
+
+    return (
+      <InputCreator>
+        <bce-input
+          class="trigger"
+          data-active={this._open}
+          onBlur={this.handleBlur}
+          onClick={this.handleDropdownClick}
+          onFocus={this.handleFocus}
+          onInput={this.handleFilter}
+        />
+        <bce-icon pre="fas" name="angle-down" fixed-width />
+        <div
+          class="dropdown"
+          aria-expanded={this._open}
+          data-active={this._open}
+        >
+          <slot />
+        </div>
+      </InputCreator>
+    );
+  }
+
+  renderFieldset() {
+    const InputCreator = this._inputCreator;
+
     return (
       <InputCreator>
         <fieldset>
@@ -188,6 +272,23 @@ export class Select {
         </fieldset>
       </InputCreator>
     );
+  }
+
+  render() {
+    if (this.type === 'input')
+      console.warn('[bce-select] The input type is unimplemented.');
+
+    switch (this.type) {
+      case 'action':
+      case 'checkbox':
+      case 'choice':
+      case 'filter':
+      case 'input':
+        return this.renderFieldset();
+
+      case 'dropdown':
+        return this.renderDropdown();
+    }
   }
 }
 
