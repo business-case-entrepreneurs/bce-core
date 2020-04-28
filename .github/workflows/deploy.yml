@@ -31,13 +31,13 @@ jobs:
 
       - uses: actions/upload-artifact@v1
         with:
-          name: core-vue
-          path: packages/core-vue
+          name: docs
+          path: packages/docs/dist
 
       - uses: actions/upload-artifact@v1
         with:
-          name: docs
-          path: packages/docs/dist
+          name: react
+          path: packages/react/dist
 
   deploy-npm:
     name: Deploy npm packages
@@ -62,8 +62,8 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: core-vue
-          path: packages/core-vue
+          name: react
+          path: packages/react/dist
 
       - run: npm install
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
