@@ -11,7 +11,7 @@ import {
 } from '@stencil/core';
 
 import { ButtonDesign } from '../../models/button-design';
-import { File } from '../../utils/file';
+import { BceFile } from '../../utils/bce-file';
 import { NativeEvent } from '../../utils/native-event';
 import { ripple } from '../../utils/ripple';
 import { UUID } from '../../utils/uuid';
@@ -91,7 +91,7 @@ export class Button {
   // #endregion
 
   @Event({ eventName: 'file' })
-  private onFile!: EventEmitter<File[]>;
+  private onFile!: EventEmitter<BceFile[]>;
 
   @State()
   private slotEmpty = false;
@@ -131,7 +131,7 @@ export class Button {
 
     // Extract required data and generate id
     const files = Array.from(input.files).map(file => {
-      return new File(UUID.v4(), file.name, file);
+      return new BceFile(UUID.v4(), file.name, file);
     });
 
     // Dispatch custom event
