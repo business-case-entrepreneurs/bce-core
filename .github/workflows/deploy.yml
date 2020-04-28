@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: docs
-          path: packages/docs/build
+          path: packages/core/www
 
       - uses: actions/upload-artifact@v1
         with:
@@ -85,12 +85,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: core
-          path: packages/core/dist
+          name: docs
+          path: packages/core/www
 
       - uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.GH_TOKEN }}
           BASE_BRANCH: master
           BRANCH: gh-pages
-          FOLDER: packages/core/dist
+          FOLDER: packages/core/www
