@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: docs
-          path: packages/docs/dist
+          path: packages/docs/build
 
       - uses: actions/upload-artifact@v1
         with:
