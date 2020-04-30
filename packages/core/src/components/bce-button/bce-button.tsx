@@ -94,7 +94,7 @@ export class Button {
   private onFile!: EventEmitter<BceFile[]>;
 
   @State()
-  private slotEmpty = false;
+  private _iconOnly = false;
 
   private handleBlur = () => {
     this.hasFocus = false;
@@ -122,7 +122,7 @@ export class Button {
   };
 
   private handleSlotChange = () => {
-    this.slotEmpty = !!this.icon && !this.el.childNodes.length;
+    this._iconOnly = !!this.icon && !this.el.childNodes.length;
   };
 
   private handleUpload = (event: NativeEvent) => {
@@ -138,12 +138,13 @@ export class Button {
     this.onFile.emit(files);
   };
 
+  componentWillLoad() {
+    this.handleSlotChange();
+  }
+
   componentDidLoad() {
     const slot = this.el.shadowRoot!.querySelector('slot');
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange();
-    }
+    slot?.addEventListener('slotchange', this.handleSlotChange);
   }
 
   renderIcon() {
@@ -170,7 +171,7 @@ export class Button {
         onMouseDown={this.handleMouseDown}
       >
         <button
-          class={{ 'icon-only': this.slotEmpty }}
+          class={{ 'icon-only': this._iconOnly }}
           disabled={this.disabled}
           form={this.form}
           formaction={this.formAction}

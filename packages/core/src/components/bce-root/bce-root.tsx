@@ -34,7 +34,7 @@ export class Root {
   @State()
   private _messageQueue: ({ text: string } & MessageOptions)[] = [];
 
-  private _messageTimer = 0;
+  #messageTimer = 0;
 
   private handleSlotChange = () => {
     this._fab = !!this.el.querySelector('bce-fab:not([inline]');
@@ -162,10 +162,10 @@ export class Root {
   private messageCheck() {
     // Skip if there is no message or already displaying a message
     const [message] = this._messageQueue;
-    if (!message || !!this._messageTimer) return;
+    if (!message || !!this.#messageTimer) return;
 
     // Remove message after specified duration
-    this._messageTimer = window.setTimeout(
+    this.#messageTimer = window.setTimeout(
       () => this.messageTimeout(),
       message.duration * 1000
     );
@@ -176,18 +176,18 @@ export class Root {
     this._messageQueue = this._messageQueue.slice(1);
 
     // Clear timer & check remaining queue
-    this._messageTimer = 0;
+    this.#messageTimer = 0;
     this.messageCheck();
+  }
+
+  componentWillLoad() {
+    this.handleSlotChange();
+    if (!this.el.id) this.el.id = UUID.v4();
   }
 
   componentDidLoad() {
     const slot = this.el.shadowRoot!.querySelector('slot');
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange();
-    }
-
-    if (!this.el.id) this.el.id = UUID.v4();
+    slot?.addEventListener('slotchange', this.handleSlotChange);
   }
 
   renderMessage() {
@@ -196,7 +196,7 @@ export class Root {
 
     return (
       <bce-message
-        key={this._messageTimer}
+        key={this.#messageTimer}
         color={message.color}
         fab={this._fab}
       >
