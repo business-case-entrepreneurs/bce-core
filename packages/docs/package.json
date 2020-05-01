@@ -6,7 +6,7 @@
     "build": "react-scripts build",
     "clean": "rimraf build",
     "eject": "react-scripts eject",
-    "serve": "react-scripts start",
+    "serve": "cross-env BROWSER=none react-scripts start",
     "test": "react-scripts test"
   },
   "browserslist": {
@@ -40,6 +40,7 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "rimraf": "^3.0.2"
   }
 }
