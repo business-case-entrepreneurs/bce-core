@@ -153,7 +153,6 @@ export class Upload {
 
   private handleUpload = (event: Event) => {
     const input = event.target as HTMLInputElement | null;
-    console.log('HANDLE_UPLOAD', input, input && input.files);
     if (!input || !input.files) return;
 
     this.upload(input.files);
@@ -180,6 +179,10 @@ export class Upload {
     this.upload([file]);
   };
 
+  private ignoreEvent = (event: Event) => {
+    event.stopPropagation();
+  };
+
   private triggerUpload = () => {
     if (!this.multiple && this.list.length) return;
 
@@ -199,8 +202,7 @@ export class Upload {
     if (!queue) return;
 
     await this.dequeue(id, !!ref.url && queue.url !== ref.url);
-    const value = { ...queue, ...ref };
-    this.value = [...this.value, value];
+    this.updateValue([...this.value, { ...queue, ...ref }]);
   }
 
   @Method()
@@ -209,7 +211,7 @@ export class Upload {
     if (!value) return;
 
     URL.revokeObjectURL(value.url);
-    this.value = this.value.filter(v => v.id !== id);
+    this.updateValue(this.value.filter(v => v.id !== id));
     this.onDelete.emit(value);
   }
 
@@ -243,7 +245,8 @@ export class Upload {
       : filename || value.name;
 
     // Update value
-    this.value = [...this.value.filter(v => v.id !== id), { ...value, name }];
+    const filtered = this.value.filter(v => v.id !== id);
+    this.updateValue([...filtered, { ...value, name }]);
     this.onRename.emit({ file: value, name });
   }
 
@@ -294,6 +297,11 @@ export class Upload {
 
   private toFile(blob: Blob, name: string) {
     return new BceFile(UUID.v4(), name, blob);
+  }
+
+  private updateValue(value: BceFileRef[]) {
+    this.value = value.sort((a, b) => a.name.localeCompare(b.name));
+    this.el.dispatchEvent(new globalThis.Event('input'));
   }
 
   renderPreview() {
@@ -365,6 +373,7 @@ export class Upload {
           type="file"
           accept={this.accept}
           multiple={this.multiple}
+          onInput={this.ignoreEvent}
           onChange={this.handleUpload}
           tabIndex={-1}
         />
