@@ -1,6 +1,7 @@
 import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
+import { ValidatorError } from '../../utils/validator';
 
 @Component({
   tag: 'bce-slider',
@@ -76,7 +77,7 @@ export class BceSlider {
   }
 
   @Method()
-  public validate(silent = false) {
+  public async validate(silent = false): Promise<ValidatorError[]> {
     return this._inputCreator.validate(silent);
   }
 

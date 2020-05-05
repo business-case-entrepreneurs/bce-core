@@ -4,6 +4,7 @@ import { Component, Element, h, Method, Prop, State } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { InputType } from '../../models/input-type';
+import { ValidatorError } from '../../utils/validator';
 
 const ROW_SIZE = 19;
 library.add(faEye, faEyeSlash);
@@ -127,7 +128,7 @@ export class Input {
   }
 
   @Method()
-  public validate(silent = false) {
+  public async validate(silent = false): Promise<ValidatorError[]> {
     return this._inputCreator.validate(silent);
   }
 

@@ -15,6 +15,7 @@ import {
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
+import { ValidatorError } from '../../utils/validator';
 
 library.add(faAngleDown);
 
@@ -185,7 +186,7 @@ export class Select {
   }
 
   @Method()
-  public validate(silent = false) {
+  public async validate(silent = false): Promise<ValidatorError[]> {
     return this._inputCreator.validate(silent);
   }
 
