@@ -6,17 +6,10 @@ import {
   IconPrefix,
   library
 } from '@fortawesome/fontawesome-svg-core';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
-import {
-  faBars,
-  faEllipsisH,
-  faCaretDown,
-  faTimesCircle
-} from '@fortawesome/free-solid-svg-icons';
+import * as FAS from '@fortawesome/free-regular-svg-icons';
 import { Component, h, Prop, Watch } from '@stencil/core';
 
-// These icons are added by default
-library.add(faSquare, faBars, faEllipsisH, faCaretDown, faTimesCircle);
+library.add(FAS.faSquare);
 
 @Component({
   tag: 'bce-icon',
@@ -80,7 +73,10 @@ export class Icon {
   }
 
   render() {
-    const definition: IconLookup = { prefix: this.pre, iconName: this.name };
+    const definition: IconLookup = {
+      prefix: this.pre,
+      iconName: this.name
+    };
     const i = icon(definition, { classes: this.classes });
 
     if (!i) {

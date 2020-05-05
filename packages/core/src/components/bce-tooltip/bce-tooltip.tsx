@@ -14,21 +14,24 @@ export class Tooltip {
   @Element()
   private el!: HTMLBceTooltipElement;
 
+  @Prop()
+  public container = document as ParentNode;
+
   @Prop({ reflect: true })
-  public placement = 'bottom';
+  public placement?: string;
 
   @Prop({ reflect: true })
   public target?: string;
 
   @Prop({ reflect: true })
-  public icon = 'fas:info-circle';
+  public icon?: string;
 
   @State()
   private active = false;
 
   componentDidLoad() {
     const reference = this.target
-      ? (document.querySelector(this.target) as HTMLElement)
+      ? (this.container.querySelector(this.target) as HTMLElement)
       : (this.el.shadowRoot!.querySelector('bce-icon')! as HTMLBceIconElement);
 
     const tooltip = this.el.shadowRoot!.querySelector('div')!;
@@ -45,14 +48,17 @@ export class Tooltip {
       reference.addEventListener(event, () => (this.active = false));
 
     createPopper(reference, tooltip, {
-      placement: this.placement as Placement,
-      strategy: 'fixed'
+      placement: (this.placement || 'bottom') as Placement,
+      strategy: 'fixed',
+      modifiers: [{ name: 'offset', options: { offset: [0, 2] } }]
     });
   }
 
   render() {
+    const icon = this.icon || 'fas:info-circle';
+
     return [
-      !this.target && <bce-icon raw={this.icon} fixed-width></bce-icon>,
+      !this.target && <bce-icon raw={icon} fixed-width />,
       <div data-active={this.active}>
         <slot />
       </div>

@@ -287,6 +287,14 @@
           </bce-form>
         </section>
 
+        <section id="upload">
+          <h3>File Upload</h3>
+          <bce-button upload>Simple button</bce-button>
+          <bce-upload label="Images" accept="image/*" multiple></bce-upload>
+          <bce-upload label="Videos" accept="video/*" multiple></bce-upload>
+          <bce-upload label="Anything" multiple></bce-upload>
+        </section>
+
         <section id="message">
           <h3>BCE Message</h3>
           <bce-button
@@ -389,6 +397,22 @@
     <script nomodule src="build/bce.js"></script>
 
     <script>
+      document
+        .querySelector('#upload bce-button[upload]')
+        .addEventListener('file', event => onFile(event.details));
+
+      const uploads = document.querySelectorAll('#upload bce-upload');
+      for (const el of uploads) {
+        el.addEventListener('upload', async e => {
+          console.log('upload', e.detail);
+          await new Promise(res => setTimeout(res, 5000));
+          for (const file of e.detail) el.complete(file.id);
+        });
+
+        for (const event of ['cancel', 'delete', 'rename'])
+          el.addEventListener(event, e => console.log(event, e.detail));
+      }
+
       function alert() {
         const title = 'Alert dialog';
         const message = 'Lorem ipsum dolor sit amet!';

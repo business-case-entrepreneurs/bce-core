@@ -1,0 +1,87 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  audio {
+    padding: 0 10px;
+    z-index: 1;
+
+    &.loading {
+      opacity: 0.5;
+    }
+  }
+
+  img,
+  video {
+    max-height: 100%;
+  }
+
+  .unknown {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: calc(150px - 32px);
+    height: calc(100% - 32px);
+    margin: 8px 0;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    bce-icon {
+      font-size: 64px;
+      margin: 16px;
+    }
+
+    .filename {
+      width: 100%;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    text-align: right;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    &.loading,
+    &:hover {
+      opacity: 1;
+    }
+
+    bce-button {
+      @include bce-color-default(light);
+    }
+
+    bce-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.8em;
+    }
+
+    .filename {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+}

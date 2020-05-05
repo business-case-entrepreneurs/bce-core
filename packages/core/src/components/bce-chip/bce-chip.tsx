@@ -142,13 +142,6 @@ export class BceChip {
   renderIcon() {
     let icon = this.icon;
     switch (this.type) {
-      case 'choice':
-        if (this.icon) {
-          const warning = `[bce-chip] ${this.type} type has no support for icons.`;
-          console.warn(warning);
-        }
-        break;
-
       case 'filter':
         icon = this.checked ? icon || 'fas:check' : '';
         break;

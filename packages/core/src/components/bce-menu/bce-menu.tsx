@@ -1,5 +1,9 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { createPopper, Instance, Placement } from '@popperjs/core';
 import { Component, Element, Prop, h, Host, Method } from '@stencil/core';
+
+library.add(FAS.faEllipsisH);
 
 @Component({
   tag: 'bce-menu',
