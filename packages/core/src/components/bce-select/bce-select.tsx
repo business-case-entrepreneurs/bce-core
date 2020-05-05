@@ -207,7 +207,8 @@ export class Select {
 
     if (this.type === 'dropdown') {
       const root = this.el.shadowRoot!;
-      const reference = root.querySelector('.trigger') as HTMLBceInputElement;
+      const ref = '.trigger bce-input';
+      const reference = root.querySelector(ref) as HTMLBceInputElement;
       const dropdown = root.querySelector('.dropdown') as HTMLDivElement;
 
       // Create popper.js dropdown
@@ -242,15 +243,16 @@ export class Select {
 
     return (
       <InputCreator>
-        <bce-input
-          class="trigger"
-          data-active={this._open}
-          onBlur={this.handleBlur}
-          onClick={this.handleDropdownClick}
-          onFocus={this.handleFocus}
-          onInput={this.handleFilter}
-        />
-        <bce-icon pre="fas" name="angle-down" fixed-width />
+        <div class="trigger">
+          <bce-input
+            data-active={this._open}
+            onBlur={this.handleBlur}
+            onClick={this.handleDropdownClick}
+            onFocus={this.handleFocus}
+            onInput={this.handleFilter}
+          />
+          <bce-icon pre="fas" name="angle-down" fixed-width />
+        </div>
         <div
           class="dropdown"
           aria-expanded={this._open}

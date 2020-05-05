@@ -30,13 +30,13 @@
 
 :host([label]) {
   bce-label {
-    flex: 1 0 25%;
+    flex: 0 0 25%;
     height: 100%;
     line-height: 40px;
   }
 
   fieldset {
-    flex: 1 0 75%;
+    flex: 0 0 75%;
   }
 
   @include media-medium {
@@ -45,20 +45,25 @@
 }
 
 :host([type='dropdown']) {
-  bce-input {
-    margin: 0;
-    cursor: pointer;
+  .trigger {
+    position: relative;
+    flex: 1 0 75%;
 
-    &[data-active] {
-      cursor: initial;
+    bce-input {
+      margin: 0;
+      cursor: pointer;
+
+      &[data-active] {
+        cursor: initial;
+      }
     }
-  }
 
-  bce-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 12px;
+    bce-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 12px;
+    }
   }
 
   .dropdown {
@@ -67,6 +72,8 @@
     font-size: 0.9em;
     border-radius: 4px;
     background-color: bce-color-l(light);
+    overflow-x: hidden;
+    overflow-y: auto;
     z-index: 3;
 
     &[data-active] {
