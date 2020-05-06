@@ -48,6 +48,12 @@ export class Upload {
   private el!: HTMLBceUploadElement;
 
   @Prop({ reflect: true })
+  public active?: boolean;
+
+  @Prop({ reflect: true })
+  public dialog?: boolean;
+
+  @Prop({ reflect: true })
   public error?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
@@ -354,30 +360,45 @@ export class Upload {
         </bce-chip>
         <bce-chip icon="bce:unsplash" value="unsplash">
           Unsplash
-        </bce-chip>
-        */}
+        </bce-chip> */}
       </bce-select>
     );
   }
 
-  render() {
-    const InputCreator = this._inputCreator;
-
+  renderContainer() {
     return (
-      <InputCreator>
-        <div class="container">
-          {this.renderDropzone()}
-          {this.renderOptions()}
-        </div>
-        <input
-          type="file"
-          accept={this.accept}
-          multiple={this.multiple}
-          onInput={this.ignoreEvent}
-          onChange={this.handleUpload}
-          tabIndex={-1}
-        />
-      </InputCreator>
+      <div class="container">
+        {this.renderDropzone()}
+        {this.renderOptions()}
+      </div>
     );
+  }
+
+  renderDialog() {
+    return (
+      <bce-dialog active={this.active} close-button>
+        <h3>File Upload</h3>
+        {this.renderContainer()}
+      </bce-dialog>
+    );
+  }
+
+  renderRegular() {
+    const InputCreator = this._inputCreator;
+    return <InputCreator>{this.renderContainer()}</InputCreator>;
+  }
+
+  render() {
+    return [
+      !this.dialog ? this.renderRegular() : this.renderDialog(),
+      <input
+        type="file"
+        accept={this.accept}
+        multiple={this.multiple}
+        onInput={this.ignoreEvent}
+        onChange={this.handleUpload}
+        tabIndex={-1}
+      />
+    ];
   }
 }
