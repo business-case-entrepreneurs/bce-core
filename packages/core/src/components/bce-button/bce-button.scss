@@ -1,7 +1,7 @@
 :host {
   @include bce-color-default(primary);
   @include box-sizing();
-  @include elevate(2);
+  @include elevate(2, false);
   position: relative;
   display: inline-block;
   height: 36px;
@@ -68,7 +68,7 @@
 }
 
 :host([disabled]) {
-  @include elevate(0);
+  @include elevate(0, false);
   color: bce-color-t(disable);
   background-color: bce-color(disable);
   opacity: 0.5;
@@ -80,7 +80,7 @@
 }
 
 :host([focus]) {
-  @include elevate(4);
+  @include elevate(4, false);
   outline: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-tap-highlight-color: transparent;
@@ -136,7 +136,7 @@
 
 :host([design='outline']),
 :host([design='text']) {
-  @include elevate(0);
+  @include elevate(0, false);
   background-color: transparent;
   color: bce-color();
 
@@ -166,16 +166,5 @@
   > bce-icon {
     top: 2px;
     position: relative;
-  }
-}
-
-:host([upload]) {
-  // Visually hide input
-  > input[type='file'] {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
   }
 }
