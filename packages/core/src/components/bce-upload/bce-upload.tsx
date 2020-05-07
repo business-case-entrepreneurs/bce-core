@@ -101,7 +101,11 @@ export class Upload {
   private onRename!: EventEmitter<{ file: BceFileRef; name: string }>;
 
   @Event({ eventName: 'upload' })
-  private onUpload!: EventEmitter<BceFile[]>;
+  private onUpload!: EventEmitter<{
+    cancel: HTMLBceUploadElement['cancel'];
+    complete: HTMLBceUploadElement['complete'];
+    files: BceFile[];
+  }>;
 
   @State()
   private _highlight = false;
@@ -282,7 +286,14 @@ export class Upload {
 
     const filtered = (await Promise.all(tasks)).filter(Boolean) as BceFile[];
     const upload = this.multiple ? filtered : filtered.slice(0, 1);
-    if (upload.length) this.onUpload.emit(upload);
+    if (!upload.length) return;
+
+    this.onUpload.emit({
+      files: upload,
+      cancel: this.cancel.bind(this),
+      complete: this.complete.bind(this)
+    });
+
     for (const file of upload) this.enqueue(file);
   }
 
