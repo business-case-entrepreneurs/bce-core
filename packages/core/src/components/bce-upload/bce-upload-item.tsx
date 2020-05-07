@@ -148,7 +148,7 @@ export class UploadItem {
 
   renderFile() {
     const ref = this.value;
-    const classes = { loading: !!this.loading };
+    const classes = { file: true, loading: !!this.loading };
     const controls = { ...{ controls: true, controlsList: 'nodownload' } };
 
     switch (this.type) {
