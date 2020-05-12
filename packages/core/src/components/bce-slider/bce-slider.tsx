@@ -13,6 +13,9 @@ export class BceSlider {
   private el!: HTMLBceSliderElement;
 
   @Prop({ reflect: true })
+  public block?: boolean;
+
+  @Prop({ reflect: true })
   public color?: string;
 
   @Prop({ reflect: true })
