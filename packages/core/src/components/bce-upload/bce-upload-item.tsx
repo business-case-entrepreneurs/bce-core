@@ -175,7 +175,7 @@ export class UploadItem {
       case 'audio':
         return (
           <audio
-            key={ref.id}
+            key={ref.url}
             class={classes}
             {...controls}
             onClick={this.ignoreEvent}
@@ -184,11 +184,11 @@ export class UploadItem {
           </audio>
         );
       case 'image':
-        return <img key={ref.id} class={classes} src={ref.url} />;
+        return <img key={ref.url} class={classes} src={ref.url} />;
       case 'video':
         return (
           <video
-            key={ref.id}
+            key={ref.url}
             class={classes}
             muted={this._muted}
             preload="auto"
@@ -200,7 +200,7 @@ export class UploadItem {
       case 'unknown':
       default:
         return (
-          <div key={ref.id} class={{ ...classes, unknown: true }}>
+          <div key={ref.url} class={{ ...classes, unknown: true }}>
             <bce-icon pre="fas" name="file-contract" />
             <code class="filename">{this.value.name}</code>
           </div>
