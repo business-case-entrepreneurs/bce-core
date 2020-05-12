@@ -117,7 +117,6 @@ export class Select {
   };
 
   private handleSlotChange = () => {
-    console.log(this.el);
     // Remove existing event listeners
     for (const option of this._options) this.removeEventHandlers(option);
 
