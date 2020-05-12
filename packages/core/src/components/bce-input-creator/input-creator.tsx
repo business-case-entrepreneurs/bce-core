@@ -33,7 +33,7 @@ export const getInputCreator = <T extends any>(
     const props = getProps();
 
     return [
-      props.label && (
+      props.label != undefined && (
         <bce-label
           disabled={props.disabled}
           hasFocus={props.hasFocus}
