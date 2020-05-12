@@ -2,7 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { Component, Element, h, Prop, State } from '@stencil/core';
 
-import { BceFileRef } from '../../utils/bce-file';
+import { FileRef } from '../../models/file-ref';
 
 library.add(
   FAS.faDownload,
@@ -38,7 +38,7 @@ export class UploadItem {
   private el!: HTMLBceUploadItemElement;
 
   @Prop()
-  public value!: BceFileRef;
+  public value!: FileRef;
 
   @Prop({ reflect: true })
   public loading?: boolean;

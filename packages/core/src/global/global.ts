@@ -1,11 +1,18 @@
 import { setMode } from '@stencil/core';
 
-// import { ScrollSpy } from '../utils/scroll-spy';
+import { UUID } from '../utils/uuid';
+import { FileManager } from '../utils/file-manager';
+
+const bce: BCE = {
+  file: FileManager.inMemory(),
+  generateId: () => UUID.v4(),
+
+  FileManager
+};
 
 const main = () => {
-  // Temporary
-  // const spy = new ScrollSpy('bce-nav > a');
-  // window.onload = () => spy.detect();
+  // Setup global config
+  window.BCE = window.BCE || bce;
 
   setMode(el => {
     // Component specific mode's (e.g. bce-button within bce-fab)

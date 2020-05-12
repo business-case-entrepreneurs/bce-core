@@ -33,11 +33,3 @@ export class BceFile {
     }
   }
 }
-
-export interface BceFileRef {
-  readonly id: string;
-  readonly name: string;
-  readonly type: string;
-  readonly hash: string;
-  readonly url: string;
-}

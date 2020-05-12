@@ -3,18 +3,18 @@ import * as FAS from '@fortawesome/free-solid-svg-icons';
 import {
   Component,
   Element,
-  Event,
-  EventEmitter,
   h,
   Method,
   Prop,
-  State
+  State,
+  Watch
 } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
-import { BceFile, BceFileRef } from '../../utils/bce-file';
+import { FileRef } from '../../models/file-ref';
+import { FileManager } from '../../utils/file-manager';
+import { BceFile } from '../../utils/bce-file';
 import { ripple } from '../../utils/ripple';
-import { UUID } from '../../utils/uuid';
 
 // const UNSPLASH: IconDefinition = {
 //   prefix: 'bce' as any,
@@ -78,7 +78,7 @@ export class Upload {
   public validation?: string;
 
   @Prop({ mutable: true })
-  public value: BceFileRef[] = [];
+  public value: string[] = [];
 
   @Prop({ reflect: true })
   public width?: string;
@@ -91,30 +91,15 @@ export class Upload {
   public multiple = false;
   // #endregion
 
-  @Event({ eventName: 'cancel' })
-  private onCancel!: EventEmitter<string>;
-
-  @Event({ eventName: 'delete' })
-  private onDelete!: EventEmitter<BceFileRef>;
-
-  @Event({ eventName: 'rename' })
-  private onRename!: EventEmitter<{ file: BceFileRef; name: string }>;
-
-  @Event({ eventName: 'upload' })
-  private onUpload!: EventEmitter<{
-    cancel: HTMLBceUploadElement['cancel'];
-    complete: HTMLBceUploadElement['complete'];
-    files: BceFile[];
-  }>;
-
   @State()
   private _highlight = false;
 
   @State()
-  private _queue: BceFileRef[] = [];
+  private data: FileManager.Data = {};
 
-  private _initialValue?: BceFileRef[] = this.value;
+  private _initialValue?: string[] = this.value;
   private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  private _server = window.BCE.file;
 
   private get fileIcon() {
     switch (this.accept) {
@@ -130,10 +115,14 @@ export class Upload {
   }
 
   public get list() {
-    const value = this.value.map(file => ({ ...file, loading: false }));
-    const queue = this._queue.map(file => ({ ...file, loading: true }));
-    return [...value, ...queue].sort((a, b) => a.name.localeCompare(b.name));
+    const files = this.value.map(id => this.data[id]).filter(Boolean);
+    return files.sort((a, b) => a.file.name.localeCompare(b.file.name));
   }
+
+  private handleData = (data: FileManager.Data) => {
+    console.log(this.el);
+    this.data = data;
+  };
 
   private handleDragEnter = (event: DragEvent) => {
     this._highlight = true;
@@ -202,32 +191,18 @@ export class Upload {
 
   @Method()
   public async cancel(id: string) {
-    await this.dequeue(id);
-    this.onCancel.emit(id);
-  }
-
-  @Method()
-  public async complete(id: string, ref: Partial<BceFileRef> = {}) {
-    const queue = this._queue.find(v => v.id === id);
-    if (!queue) return;
-
-    await this.dequeue(id, !!ref.url && queue.url !== ref.url);
-    this.updateValue([...this.value, { ...queue, ...ref }]);
+    return this._server.cancel(id);
   }
 
   @Method()
   public async delete(id: string) {
-    const value = this.value.find(v => v.id === id);
-    if (!value) return;
-
-    URL.revokeObjectURL(value.url);
-    this.updateValue(this.value.filter(v => v.id !== id));
-    this.onDelete.emit(value);
+    this.updateValue(this.value.filter(v => v !== id));
+    return this._server.delete(id);
   }
 
   @Method()
   public async download(id: string) {
-    const value = this.value.find(v => v.id === id);
+    const value = this.data[id].file;
     if (!value) return;
 
     const a = document.createElement('a');
@@ -241,7 +216,7 @@ export class Upload {
 
   @Method()
   public async rename(id: string, filename?: string) {
-    const value = this.value.find(v => v.id === id);
+    const value = this.data[id].file;
     if (!value || value.name === filename) return;
 
     // Extract extension
@@ -254,10 +229,7 @@ export class Upload {
       ? (filename?.replace(regex, '') || value.name) + ext
       : filename || value.name;
 
-    // Update value
-    const filtered = this.value.filter(v => v.id !== id);
-    this.updateValue([...filtered, { ...value, name }]);
-    this.onRename.emit({ file: value, name });
+    return this._server.rename(id, name);
   }
 
   @Method()
@@ -273,7 +245,7 @@ export class Upload {
     const tasks = converted.map(async file => {
       // Remove duplicates by comparing file hashes
       const hash = await file.hash();
-      if (this.list.find(v => v.hash === hash)) return undefined;
+      if (this.list.find(v => v.file.hash === hash)) return undefined;
 
       // Remove files with incorrect types
       const accept = this.accept || '*';
@@ -288,47 +260,48 @@ export class Upload {
     const upload = this.multiple ? filtered : filtered.slice(0, 1);
     if (!upload.length) return;
 
-    this.onUpload.emit({
-      files: upload,
-      cancel: this.cancel.bind(this),
-      complete: this.complete.bind(this)
-    });
-
-    for (const file of upload) this.enqueue(file);
+    this.updateValue([...this.value, ...upload.map(u => u.id)], false);
+    const uploads = upload.map(file => this._server.upload(file));
+    return Promise.all(uploads) as Promise<FileRef[]>;
   }
 
-  private async dequeue(id: string, revoke = true) {
-    const queue = this._queue.find(v => v.id === id);
-    if (!queue) return;
-
-    if (revoke) URL.revokeObjectURL(queue.url);
-    this._queue = this._queue.filter(v => v.id !== id);
-  }
-
-  private async enqueue(file: BceFile) {
-    const { id, name, type } = file;
-    const hash = await file.hash();
-    const url = URL.createObjectURL(file.blob);
-    this._queue = [...this._queue, { hash, id, name, type, url }];
+  @Watch('value')
+  public watchValue(value: string[]) {
+    this._server.subscribe(this.handleData, value);
   }
 
   private toFile(blob: Blob, name: string) {
-    return new BceFile(UUID.v4(), name, blob);
+    const id = window.BCE.generateId();
+    return new BceFile(id, name, blob);
   }
 
-  private updateValue(value: BceFileRef[]) {
-    this.value = value.sort((a, b) => a.name.localeCompare(b.name));
+  private updateValue(value: string[], sort = true) {
+    this.value = sort
+      ? value
+          .map(id => this.data[id].file)
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map(ref => ref.id)
+      : value;
+
     this.el.dispatchEvent(new globalThis.Event('input'));
   }
 
+  componentWillLoad() {
+    this.watchValue(this.value);
+  }
+
+  componentDidUnload() {
+    this._server.unsubscribe(this.handleData);
+  }
+
   renderPreview() {
-    return this.list.map(file => (
-      <bce-upload-item value={file} loading={file.loading} />
+    return this.list.map(item => (
+      <bce-upload-item value={item.file} loading={item.progress < 1} />
     ));
   }
 
   renderDropzone() {
-    const preview = !!this.value.length || !!this._queue.length;
+    const preview = !!this.value.length;
     const classes = { dropzone: true, highlight: this._highlight };
 
     return (
