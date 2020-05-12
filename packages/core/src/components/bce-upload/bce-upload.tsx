@@ -120,7 +120,6 @@ export class Upload {
   }
 
   private handleData = (data: FileManager.Data) => {
-    console.log(this.el);
     this.data = data;
   };
 
@@ -278,7 +277,7 @@ export class Upload {
   private updateValue(value: string[], sort = true) {
     this.value = sort
       ? value
-          .map(id => this.data[id].file)
+          .map(id => this.data[id]?.file || { id, name: '' })
           .sort((a, b) => a.name.localeCompare(b.name))
           .map(ref => ref.id)
       : value;
