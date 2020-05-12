@@ -39,7 +39,7 @@
 }
 
 @include media-medium {
-  :host(:not([compact])) {
+  :host(:not([compact])[label]) {
     small {
       left: calc(25% + 12px);
     }
