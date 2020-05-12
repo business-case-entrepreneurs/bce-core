@@ -106,6 +106,7 @@ export class FileManager implements FileServer {
 
   public subscribe(observer: FileManager.Observer, filter?: string[]) {
     this.#observer.set(observer, filter);
+    observer(this.getDataObject(filter));
     return () => this.unsubscribe(observer);
   }
 
