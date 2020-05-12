@@ -116,10 +116,8 @@ export class Select {
     this._open = true;
   };
 
-  private handleSlotChange = (event: Event | HTMLSlotElement) => {
-    const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
-    if (!slot || slot.tagName !== 'SLOT') return;
-
+  private handleSlotChange = () => {
+    console.log(this.el);
     // Remove existing event listeners
     for (const option of this._options) this.removeEventHandlers(option);
 
@@ -212,7 +210,7 @@ export class Select {
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.handleSlotChange();
     }
 
     if (this.type === 'dropdown') {
@@ -292,6 +290,7 @@ export class Select {
       case 'choice':
       case 'filter':
       case 'input':
+      case 'radio':
         return this.renderFieldset();
 
       case 'dropdown':
