@@ -1,5 +1,7 @@
 import { FileManager } from './utils/file-manager';
 
+export * from './models/file-ref';
+export * from './models/file-server';
 export * from './utils/bce-file';
 export * from './utils/debounce';
 export * from './utils/is-email';
