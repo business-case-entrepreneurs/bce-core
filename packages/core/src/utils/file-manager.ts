@@ -74,6 +74,10 @@ export class FileManager implements FileServer {
     this.#serverUpload = handlers.upload;
   }
 
+  public get(id: string): FileRef | undefined {
+    return this.#data.get(id);
+  }
+
   public setFiles(files: FileRef[]) {
     const data = new Map<string, FileRef>();
     for (const file of files) {
