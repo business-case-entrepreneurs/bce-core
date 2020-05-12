@@ -167,9 +167,7 @@ export class Select {
     this.value = event.detail;
 
     if (this.type === 'dropdown') {
-      const option = this._options.find(o => o.value === this.value);
-      const input = this.el.shadowRoot!.querySelector('bce-input')!;
-      input.value = option?.innerText || '';
+      this.updateDropdown();
       this._open = false;
     }
 
@@ -202,8 +200,20 @@ export class Select {
     el.removeEventListener('focus', this.handleFocus);
   }
 
+  private updateDropdown() {
+    const option = this._options.find(o => o.value === this.value);
+    const input = this.el.shadowRoot!.querySelector('bce-input')!;
+    input.value = option?.innerText || '';
+  }
+
   componentDidLoad() {
     this.watchValue(this.value);
+
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    if (slot) {
+      slot.addEventListener('slotchange', this.handleSlotChange);
+      this.handleSlotChange(slot);
+    }
 
     if (this.type === 'dropdown') {
       const root = this.el.shadowRoot!;
@@ -227,12 +237,7 @@ export class Select {
         dropdown.style.left = `${x - offset}px`;
         dropdown.style.width = width + 'px';
       }).observe(reference);
-    }
-
-    const slot = this.el.shadowRoot!.querySelector('slot');
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange(slot);
+      this.updateDropdown();
     }
 
     this._initialized = true;
