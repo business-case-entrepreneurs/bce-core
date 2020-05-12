@@ -1,4 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
+import * as FAR from '@fortawesome/free-regular-svg-icons';
 import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { Component, Element, h, Prop, State } from '@stencil/core';
 
@@ -7,6 +8,7 @@ import { FileRef } from '../../models/file-ref';
 library.add(
   FAS.faDownload,
   FAS.faEdit,
+  FAR.faFile,
   FAS.faFileContract,
   FAS.faPause,
   FAS.faPlay,
@@ -38,7 +40,7 @@ export class UploadItem {
   private el!: HTMLBceUploadItemElement;
 
   @Prop()
-  public value!: FileRef;
+  public value!: FileRef | string;
 
   @Prop({ reflect: true })
   public loading?: boolean;
@@ -49,7 +51,12 @@ export class UploadItem {
   @State()
   public _playing = false;
 
+  private get id() {
+    return typeof this.value === 'string' ? this.value : this.value.id;
+  }
+
   private get type() {
+    if (typeof this.value === 'string') return 'missing';
     for (const option of ['audio', 'image', 'video'])
       if (this.value.type.startsWith(option)) return option;
     return 'unknown';
@@ -62,14 +69,15 @@ export class UploadItem {
 
     switch (action) {
       case 'cancel':
-        return upload.cancel(this.value.id);
+        return upload.cancel(this.id);
       case 'delete':
-        return upload.delete(this.value.id);
+        return upload.delete(this.id);
       case 'download':
-        return upload.download(this.value.id);
+        return upload.download(this.id);
       case 'edit':
+        if (typeof this.value === 'string') return;
         const name = window.prompt('', this.value.name);
-        return upload.rename(this.value.id, name || this.value.name);
+        return upload.rename(this.id, name || this.value.name);
       case 'mute':
         return (this._muted = true);
       case 'pause':
@@ -120,6 +128,9 @@ export class UploadItem {
       default:
         return this.renderAction('edit', 'download', 'delete');
 
+      case 'missing':
+        return this.renderAction('delete');
+
       case 'video':
         return this.renderAction(
           'edit',
@@ -140,17 +151,26 @@ export class UploadItem {
         {this.loading && <bce-icon raw="fas:spinner" spin />}
         {/* <code class="filename">{this.value.name}</code> */}
         <bce-tooltip container={this.el.shadowRoot!} target=".overlay">
-          {this.value.name}
+          {typeof this.value === 'string' ? this.value : this.value.name}
         </bce-tooltip>
       </div>
     );
   }
 
   renderFile() {
-    const ref = this.value;
     const classes = { file: true, loading: !!this.loading };
     const controls = { ...{ controls: true, controlsList: 'nodownload' } };
 
+    if (typeof this.value === 'string') {
+      return (
+        <div key={this.value} class={{ ...classes, missing: true }}>
+          <bce-icon pre="far" name="file" />
+          <code class="filename">ERROR 404</code>
+        </div>
+      );
+    }
+
+    const ref = this.value;
     switch (this.type) {
       case 'audio':
         return (

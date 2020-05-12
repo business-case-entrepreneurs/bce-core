@@ -114,10 +114,6 @@ export class Upload {
     }
   }
 
-  public get list() {
-    return this.value.map(id => this.data[id]).filter(Boolean);
-  }
-
   private handleData = (data: FileManager.Data) => {
     this.data = data;
   };
@@ -243,7 +239,8 @@ export class Upload {
     const tasks = converted.map(async file => {
       // Remove duplicates by comparing file hashes
       const hash = await file.hash();
-      if (this.list.find(v => v.file.hash === hash)) return undefined;
+      const list = this.value.map(id => this.data[id]).filter(Boolean);
+      if (list.find(v => v && v.file.hash === hash)) return undefined;
 
       // Remove files with incorrect types
       const accept = this.accept || '*';
@@ -293,9 +290,11 @@ export class Upload {
   }
 
   renderPreview() {
-    return this.list.map(item => (
-      <bce-upload-item value={item.file} loading={item.progress < 1} />
-    ));
+    return this.value.map(id => {
+      const item = this.data[id];
+      const { file = id, progress = 1 } = item || {};
+      return <bce-upload-item value={file} loading={progress < 1} />;
+    });
   }
 
   renderDropzone() {
