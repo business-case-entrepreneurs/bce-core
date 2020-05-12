@@ -115,8 +115,7 @@ export class Upload {
   }
 
   public get list() {
-    const files = this.value.map(id => this.data[id]).filter(Boolean);
-    return files.sort((a, b) => a.file.name.localeCompare(b.file.name));
+    return this.value.map(id => this.data[id]).filter(Boolean);
   }
 
   private handleData = (data: FileManager.Data) => {
@@ -182,7 +181,7 @@ export class Upload {
   };
 
   private triggerUpload = () => {
-    if (!this.multiple && this.list.length) return;
+    if (!this.multiple && this.value.length) return;
 
     const input = this.el.shadowRoot!.querySelector('input');
     if (input) input.click();
@@ -233,7 +232,7 @@ export class Upload {
 
   @Method()
   public async upload(files: BceFile[] | FileList) {
-    if (!this.multiple && this.list.length) return;
+    if (!this.multiple && this.value.length) return;
 
     // Ensure input is a BceFile array
     const converted = Array.isArray(files)
@@ -324,7 +323,7 @@ export class Upload {
   }
 
   renderOptions() {
-    if (!this.multiple && this.list.length) return;
+    if (!this.multiple && this.value.length) return;
 
     return (
       <bce-select type="action">
