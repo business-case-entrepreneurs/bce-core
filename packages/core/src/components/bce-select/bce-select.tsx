@@ -204,13 +204,13 @@ export class Select {
   }
 
   componentDidLoad() {
-    this.watchValue(this.value);
-
     const slot = this.el.shadowRoot!.querySelector('slot');
     if (slot) {
       slot.addEventListener('slotchange', this.handleSlotChange);
       this.handleSlotChange();
     }
+
+    this.watchValue(this.value);
 
     if (this.type === 'dropdown') {
       const root = this.el.shadowRoot!;

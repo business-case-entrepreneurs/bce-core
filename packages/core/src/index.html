@@ -191,6 +191,7 @@
             <bce-select
               type="checkbox"
               label="bce-select[type='checkbox']"
+              value="a,b"
               validation="required|min:2"
             >
               <bce-option value="a">Option A</bce-option>
@@ -200,13 +201,19 @@
             <bce-select
               type="radio"
               label="bce-select[type='radio']"
+              value="z"
               validation="is:z"
             >
               <bce-option value="x">Option X</bce-option>
               <bce-option value="y">Option Y</bce-option>
               <bce-option value="z">Option Z</bce-option>
             </bce-select>
-            <bce-select type="choice" label="bce-select[type='choice']" center>
+            <bce-select
+              type="choice"
+              label="bce-select[type='choice']"
+              value="groningen"
+              center
+            >
               <bce-chip value="amsterdam">Amsterdam</bce-chip>
               <bce-chip value="arnhem">Arnhem</bce-chip>
               <bce-chip value="delft">Delft</bce-chip>
@@ -223,6 +230,7 @@
               type="filter"
               label="bce-select[type='filter']"
               validation="is:the-hague,nijmegen"
+              value="the-hague,nijmegen"
               center
             >
               <bce-chip value="amsterdam">Amsterdam</bce-chip>
