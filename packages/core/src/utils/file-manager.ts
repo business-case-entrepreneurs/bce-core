@@ -78,6 +78,17 @@ export class FileManager implements FileServer {
     return this.#data.get(id);
   }
 
+  public getIds() {
+    // const files = [...this.#data.keys(), ...this.#queue.keys()];
+    const files: string[] = [];
+
+    // Using simple loops for compatibility
+    this.#data.forEach((_, key) => files.push(key));
+    this.#queue.forEach((_, key) => files.push(key));
+
+    return Array.from(new Set(files));
+  }
+
   public setFiles(files: FileRef[]) {
     const data = new Map<string, FileRef>();
     for (const file of files) {
@@ -85,7 +96,7 @@ export class FileManager implements FileServer {
       data.set(file.id, file);
     }
 
-    const ids = Array.from(new Set(...this.#data.keys(), ...data.keys()));
+    const ids = this.getIds();
     const changes = ids.filter(id => {
       const prev = this.#data.get(id);
       const next = data.get(id);
@@ -122,8 +133,7 @@ export class FileManager implements FileServer {
   }
 
   private getDataObject(filter?: string[]) {
-    const files = [...this.#data.keys(), ...this.#queue.keys()];
-
+    const files = this.getIds();
     return files.reduce<FileManager.Data>((acc, id) => {
       if (filter && filter.indexOf(id) < 0) return acc;
 
