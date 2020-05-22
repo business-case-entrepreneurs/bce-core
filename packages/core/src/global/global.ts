@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { setMode } from '@stencil/core';
 
 import { UUID } from '../utils/uuid';
@@ -13,6 +15,23 @@ const bce: BCE = {
 const main = () => {
   // Setup global config
   window.BCE = window.BCE || bce;
+
+  // Temporary
+  library.add(
+    FAS.faHome,
+    FAS.faChartLine,
+    FAS.faUsers,
+    FAS.faBuilding,
+    FAS.faUserPlus,
+    FAS.faUserTag,
+    FAS.faCreditCard,
+    FAS.faTools,
+    FAS.faUserCircle,
+    FAS.faCity,
+    FAS.faFileInvoice,
+    FAS.faShapes,
+    FAS.faCog
+  );
 
   setMode(el => {
     // Component specific mode's (e.g. bce-button within bce-fab)

@@ -10,30 +10,28 @@ export class SideBar {
   private el!: HTMLBceSideBarElement;
 
   @Prop({ reflect: true, mutable: true })
-  public open?: boolean;
+  public state?: 'closed' | 'open';
 
   @Prop({ reflect: true })
   public position: 'left' | 'right' = 'left';
 
-  public get style() {
-    if (this.open == undefined) return {};
-    return this.open ? { width: '256px' } : { width: '0' };
-  }
-
   @Method()
   public async toggle(open?: boolean) {
-    if (open != undefined) return (this.open = open);
+    if (open != undefined) return (this.state = open ? 'open' : 'closed');
 
-    // prettier-ignore
-    return this.open = this.open == undefined && window.innerWidth >= 600
-      ? false
-      : !this.open;
+    const isOpen =
+      this.state == undefined && window.innerWidth >= 600
+        ? false
+        : this.state !== 'open';
+
+    return (this.state = isOpen ? 'open' : 'closed');
   }
 
   componentDidLoad() {
     const observer = new MutationObserver(() => {
-      const aside = this.el.shadowRoot!.querySelector('aside')!;
-      aside.style.top = this.el.offsetTop + 'px';
+      const root = this.el.shadowRoot!;
+      const fixed = root.querySelector('.fixed')! as HTMLDivElement;
+      fixed.style.top = this.el.offsetTop + 'px';
     });
 
     observer.observe(this.el.parentElement!, {
@@ -45,10 +43,10 @@ export class SideBar {
 
   render() {
     return (
-      <Host style={this.style}>
-        <aside style={this.style}>
+      <Host role="complementary">
+        <div class="fixed">
           <slot />
-        </aside>
+        </div>
       </Host>
     );
   }

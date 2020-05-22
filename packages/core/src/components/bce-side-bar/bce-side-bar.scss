@@ -1,7 +1,6 @@
 :host {
   @include bce-color-default(light);
-  @include elevate(4, false);
-  position: relative;
+  position: absolute;
   display: block;
   width: 0;
   height: 100%;
@@ -9,17 +8,55 @@
   overflow: hidden;
   z-index: 3;
 
-  aside {
+  .fixed {
+    @include elevate(4, false);
     position: fixed;
     top: 0;
     bottom: 0;
-    width: inherit;
+    width: 0;
     background-color: bce-color();
-    overflow: auto;
     transition: width 0.3s ease-in-out;
+    overflow: auto;
+  }
+
+  @include media-small {
+    position: relative;
+    width: 256px;
+
+    .fixed {
+      width: 256px;
+    }
+  }
+}
+
+:host([position='left']) .fixed {
+  left: 0;
+}
+
+:host([position='right']) .fixed {
+  right: 0;
+}
+
+:host([state='closed']) {
+  width: 0;
+
+  .fixed {
+    width: 0;
+  }
+}
+
+:host([state='open']) {
+  width: 100%;
+
+  .fixed {
+    width: 100%;
   }
 
   @include media-small {
     width: 256px;
+
+    .fixed {
+      width: 256px;
+    }
   }
 }

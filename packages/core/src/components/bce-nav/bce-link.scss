@@ -12,6 +12,8 @@
   }
 
   a {
+    @include elevate(1, false);
+    position: relative;
     display: flex;
     flex-flow: row nowrap;
     padding: 0 16px;
@@ -20,7 +22,6 @@
     text-decoration: none;
     user-select: none;
     overflow: hidden;
-    background-color: bce-color();
 
     &:hover {
       color: bce-color-l(primary);
@@ -47,8 +48,4 @@
     overflow: hidden;
     transition: height 0.3s ease-in-out;
   }
-}
-
-:host(.active) a {
-  color: bce-color-l(primary);
 }

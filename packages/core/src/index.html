@@ -53,12 +53,37 @@
         </a>
       </bce-header>
 
-      <bce-side-bar>
+      <bce-side-bar position="left">
         <bce-nav>
-          <bce-link href="/#">Home</bce-link>
-          <bce-link href="/#form">Form</bce-link>
-          <bce-link href="/#button">Button</bce-link>
-          <bce-link href="/#message">Message</bce-link>
+          <bce-link icon="fas:home">Home</bce-link>
+          <bce-link icon="fas:chart-line">Dashboard</bce-link>
+          <bce-link icon="fas:users">Respondents</bce-link>
+          <bce-link icon="fas:building">
+            Organization
+
+            <bce-link slot="subsection" icon="fas:user-plus">Users</bce-link>
+            <bce-link slot="subsection" icon="fas:user-tag">Roles</bce-link>
+            <bce-link slot="subsection" icon="fas:credit-card">
+              Billing
+            </bce-link>
+          </bce-link>
+          <bce-link icon="fas:tools">
+            Admin
+
+            <bce-link slot="subsection" icon="fas:user-circle">
+              Accounts
+            </bce-link>
+            <bce-link slot="subsection" icon="fas:city">
+              Organizations
+            </bce-link>
+            <bce-link slot="subsection" icon="fas:file-invoice">
+              Invoices
+            </bce-link>
+            <bce-link slot="subsection" icon="fas:shapes">
+              Module Editor
+            </bce-link>
+          </bce-link>
+          <bce-link icon="fas:cog">Settings</bce-link>
         </bce-nav>
       </bce-side-bar>
 

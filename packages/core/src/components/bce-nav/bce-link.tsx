@@ -19,9 +19,6 @@ export class Link {
   @Element()
   private el!: HTMLBceLinkElement;
 
-  @Prop({ reflect: true, mutable: true })
-  public active?: boolean;
-
   @Prop({ reflect: true })
   public color?: string;
 
@@ -30,6 +27,9 @@ export class Link {
 
   @Prop()
   public navigate?: (event: MouseEvent) => void;
+
+  @Prop({ reflect: true, mutable: true })
+  public open?: boolean;
 
   // #region Forwarded to native anchor
   @Prop({ reflect: true })
@@ -79,13 +79,13 @@ export class Link {
   private handleSlotChange = () => {
     const nodes = Array.from(this.el.childNodes);
     this._links = nodes.filter(node => node.nodeName === 'BCE-LINK').length;
-    if (this._links) this.toggle(!!this.active);
+    if (this._links) this.toggle(!!this.open);
   };
 
   @Method()
   public async toggle(active?: boolean) {
-    this.active = active != undefined ? active : !this.active;
-    this._height = this.active ? (this._links || 0) * HEIGHT_HEADER : 0;
+    this.open = active != undefined ? active : !this.open;
+    this._height = this.open ? (this._links || 0) * HEIGHT_HEADER : 0;
   }
 
   private isModifiedEvent(event: MouseEvent) {
