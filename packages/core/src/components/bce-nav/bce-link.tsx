@@ -73,7 +73,7 @@ export class Link {
   };
 
   private handleMouseDown = (event: MouseEvent) => {
-    ripple(event.target as Element, event);
+    ripple(this.el.shadowRoot!.querySelector('a')!, event);
   };
 
   private handleSlotChange = () => {
@@ -92,15 +92,15 @@ export class Link {
     return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
   }
 
+  componentWillLoad() {
+    this.handleSlotChange();
+  }
+
   componentDidLoad() {
     const root = this.el.shadowRoot!;
     const query = "slot[name='subsection']";
     const slot = root.querySelector(query) as HTMLSlotElement;
-
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange();
-    }
+    slot?.addEventListener('slotchange', this.handleSlotChange);
   }
 
   renderCaret() {
