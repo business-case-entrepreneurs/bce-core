@@ -116,7 +116,9 @@ export class CodeEditor {
     this._editor.onUpdate((code: string) => {
       this.resize();
       this.value = code;
-      this.el.dispatchEvent(new Event('input'));
+
+      const event = new Event('input', { bubbles: true, composed: true });
+      this.el.dispatchEvent(event);
     });
 
     const textarea = this.el.querySelector('textarea')!;

@@ -39,8 +39,10 @@ export class BceForm {
   @Method()
   public async submit() {
     const errors = await this.validate();
-    if (!errors.length) this.el.dispatchEvent(new Event('submit'));
-    else this.el.dispatchEvent(new Event('error'));
+
+    const type = !errors.length ? 'submit' : 'error';
+    const event = new Event(type, { bubbles: true, composed: true });
+    this.el.dispatchEvent(event);
   }
 
   @Method()

@@ -169,7 +169,7 @@ export class Select {
     }
 
     if (dispatch) {
-      const e = new Event('input', { bubbles: true, cancelable: true });
+      const e = new Event('input', { bubbles: true, composed: true });
       this.el.dispatchEvent(e);
     }
   }

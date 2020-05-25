@@ -53,7 +53,9 @@ export class Switch {
   private handleChange = (event: Event) => {
     const input = event.target as HTMLInputElement | null;
     if (input) this.value = input.checked;
-    this.el.dispatchEvent(new Event('input', event));
+
+    const e = new Event('input', { bubbles: true, composed: true });
+    this.el.dispatchEvent(e);
   };
 
   private handleFocus = () => {

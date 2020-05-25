@@ -12,7 +12,6 @@ import {
 } from '@stencil/core';
 
 import { Validation } from '../../models/validation';
-import { NativeEvent } from '../../utils/native-event';
 
 library.add(faTimes);
 
@@ -54,15 +53,16 @@ export class BceDialog {
   private handleForm = (event: Event) => {
     const target = event.target as HTMLBceFormElement;
     this.errors = target.errors;
-    this.el.dispatchEvent(new NativeEvent(event.type));
-
     if (!this.errors.length) this.active = false;
   };
 
   @Method()
   public async close() {
     this.active = false;
-    this.el.dispatchEvent(new NativeEvent('close'));
+
+    const { Event } = globalThis;
+    const event = new Event('close', { bubbles: true, composed: true });
+    this.el.dispatchEvent(event);
   }
 
   @Method()
