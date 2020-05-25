@@ -36,6 +36,9 @@ export class Button {
   public icon?: string;
 
   @Prop({ reflect: true })
+  public iconPosition?: 'left' | 'right';
+
+  @Prop({ reflect: true })
   public iconSpin?: boolean;
 
   @Prop({ reflect: true })
@@ -75,6 +78,20 @@ export class Button {
 
   @Prop({ reflect: true })
   public type: 'button' | 'reset' | 'submit' = 'button';
+  // #endregion
+
+  // #region a11y forwarding
+  @Prop({ reflect: false })
+  public a11yAriaExpanded?: boolean;
+
+  @Prop({ reflect: false })
+  public a11yAriaHaspopup?: boolean;
+
+  @Prop({ reflect: false })
+  public a11yRole?: string;
+
+  @Prop({ reflect: false })
+  public a11yTabIndex?: number;
   // #endregion
 
   @State()
@@ -137,7 +154,11 @@ export class Button {
           formenctype={this.formEnctype}
           formmethod={this.formMethod}
           formtarget={this.formTarget}
+          role={this.a11yRole}
+          tabIndex={this.a11yTabIndex}
           type={this.type}
+          aria-expanded={this.a11yAriaExpanded}
+          aria-haspopup={this.a11yAriaHaspopup}
         >
           {this.icon && this.renderIcon()}
           <span>

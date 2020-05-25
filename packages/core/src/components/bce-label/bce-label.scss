@@ -17,7 +17,7 @@
 }
 
 :host([disabled]) {
-  color: bce-color-t(disable);
+  color: bce-color-on(surface, 3);
 
   bce-tooltip {
     pointer-events: none;

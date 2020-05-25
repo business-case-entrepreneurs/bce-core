@@ -1,5 +1,6 @@
 :host {
-  @include bce-color-default(light);
+  @include bce-color-default(surface);
+  @include elevate(4, false);
   position: absolute;
   display: block;
   width: 0;
@@ -8,13 +9,16 @@
   overflow: hidden;
   z-index: 3;
 
-  .fixed {
-    @include elevate(4, false);
+  .container {
     position: fixed;
     top: 0;
     bottom: 0;
     width: 0;
-    background-color: bce-color();
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    background-color: bce-color(surface);
+    color: bce-color-on(surface);
     transition: width 0.3s ease-in-out;
     overflow: auto;
   }
@@ -23,39 +27,39 @@
     position: relative;
     width: 256px;
 
-    .fixed {
+    .container {
       width: 256px;
     }
   }
 }
 
-:host([position='left']) .fixed {
+:host([position='left']) .container {
   left: 0;
 }
 
-:host([position='right']) .fixed {
+:host([position='right']) .container {
   right: 0;
 }
 
 :host([state='closed']) {
   width: 0;
 
-  .fixed {
+  .container {
     width: 0;
   }
 }
 
 :host([state='open']) {
-  width: 100%;
+  width: 100vw;
 
-  .fixed {
-    width: 100%;
+  .container {
+    width: 100vw;
   }
 
   @include media-small {
     width: 256px;
 
-    .fixed {
+    .container {
       width: 256px;
     }
   }

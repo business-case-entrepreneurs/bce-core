@@ -4,15 +4,16 @@
   display: block;
   width: 100%;
   height: 20px;
+  background-color: bce-color(700);
+  color: bce-color(400);
   z-index: 20;
-  color: bce-color();
 
-  > svg {
+  svg {
     position: fixed;
     top: 0;
     width: 100%;
     height: inherit;
     transform: scale(-1, 1);
-    background-color: bce-color-d();
+    background-color: inherit;
   }
 }

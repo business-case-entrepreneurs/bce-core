@@ -1,9 +1,10 @@
 :host {
   position: relative;
   display: block;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  border: 1px solid bce-color-d(light);
-  background-color: #f9f9f9;
+  font-family: Fira Code, Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
+    monospace;
+  border: 1px solid bce-color-on(surface, 4);
+  background-color: bce-color(surface);
   border-radius: 4px;
   overflow: hidden;
 
@@ -12,7 +13,7 @@
    */
   pre[class*='language-'],
   code[class*='language-'] {
-    color: #24292e;
+    color: bce-color-on(surface, 2);
     font-size: 13px;
     text-shadow: none;
     font-family: inherit;
@@ -47,13 +48,13 @@
     padding: 1em;
     margin: 0;
     overflow: auto;
-    background: #f9f9f9;
+    background: bce-color(surface, 1);
   }
   :not(pre) > code[class*='language-'] {
     padding: 0.1em 0.3em;
     border-radius: 0.3em;
-    color: #d73a49;
-    background: #f9f9f9;
+    color: bce-color(error, 400);
+    background: bce-color(surface);
   }
 
   /*********************************************************
@@ -66,10 +67,10 @@
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: #6a737d;
+    color: bce-color-on(surface, 3);
   }
   .token.punctuation {
-    color: #24292e;
+    color: bce-color-on(surface, 2);
   }
   .token.property,
   .token.tag,
@@ -78,7 +79,7 @@
   .token.constant,
   .token.symbol,
   .token.deleted {
-    color: #005cc5;
+    color: bce-color(primary);
   }
   .token.selector,
   .token.attr-name,
@@ -86,28 +87,28 @@
   .token.char,
   .token.builtin,
   .token.inserted {
-    color: #22863a;
+    color: bce-color(warning);
   }
   .token.operator,
   .token.entity,
   .token.url,
   .language-css .token.string,
   .style .token.string {
-    color: #d73a49;
-    background: #f9f9f9;
+    color: bce-color(error, 400);
+    background: bce-color(surface);
   }
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-    color: #d73a49;
+    color: bce-color(error, 400);
   }
   .token.function {
-    color: #6f42c1;
+    color: bce-color(primary, 400);
   }
   .token.regex,
   .token.important,
   .token.variable {
-    color: #22863a;
+    color: bce-color(warning);
   }
   .token.important,
   .token.bold {

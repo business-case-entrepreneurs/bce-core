@@ -6,9 +6,10 @@
     left: 12px;
     text-align: left;
     transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    color: bce-color-on(surface, 2);
 
     &:before {
-      content: '|';
+      content: '';
       position: absolute;
       left: -6px;
       font-weight: 100;
@@ -18,13 +19,13 @@
 
 :host([disabled]) {
   small {
-    color: bce-color(disable);
+    color: bce-color-on(surface, 3);
   }
 }
 
 :host([focus]) {
   small {
-    color: bce-color();
+    color: bce-color-on(surface, 1);
   }
 }
 

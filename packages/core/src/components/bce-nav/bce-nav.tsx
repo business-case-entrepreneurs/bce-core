@@ -1,4 +1,12 @@
-import { Component, Element, h, Prop, State, Method } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Prop,
+  State,
+  Method
+} from '@stencil/core';
 
 import { HEIGHT_HEADER } from '../../utils/constants';
 
@@ -27,6 +35,10 @@ export class Nav {
   private handleSlotChange = () => {
     const nodes = Array.from(this.el.childNodes);
     this.#links = nodes.filter(node => node.nodeName === 'BCE-LINK').length;
+
+    const links = Array.from(this.el.querySelectorAll('bce-link'));
+    if (!links.some(l => l.tab)) links[0] && (links[0].tab = true);
+
     this.toggle(this.active);
   };
 
@@ -62,11 +74,13 @@ export class Nav {
     const height = this._height != null ? `${this._height}px` : undefined;
     const style = height ? { style: { height } } : {};
 
-    return [
-      <bce-nav-button></bce-nav-button>,
-      <nav {...style}>
-        <slot />
-      </nav>
-    ];
+    return (
+      <Host role="navigation">
+        <bce-nav-button></bce-nav-button>
+        <ul role="menubar" {...style}>
+          <slot />
+        </ul>
+      </Host>
+    );
   }
 }

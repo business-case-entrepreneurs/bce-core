@@ -5,9 +5,7 @@
   position: relative;
   display: inline-block;
   height: 36px;
-  margin: 0 2px;
-  background-color: bce-color();
-  color: bce-color-t();
+  margin: 2px;
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
@@ -19,7 +17,7 @@
   cursor: pointer;
 
   bce-ripple {
-    background-color: bce-color-t();
+    background-color: bce-color-on();
   }
 
   button {
@@ -31,34 +29,19 @@
     font-size: inherit;
     letter-spacing: inherit;
     text-transform: inherit;
-    background-color: transparent;
-    color: inherit;
+    background-color: bce-color();
+    color: bce-color-on();
     border: none;
     appearance: none;
     cursor: inherit;
 
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      pointer-events: none;
-      background-color: bce-color-t();
-      opacity: 0;
-    }
-
-    &:hover:before {
-      opacity: 0.1;
+    &:hover {
+      background-color: bce-color(400);
     }
 
     &:focus {
       outline: none;
-
-      &:before {
-        opacity: 0.2;
-      }
+      background-color: bce-color(300);
     }
   }
 }
@@ -69,13 +52,14 @@
 
 :host([disabled]) {
   @include elevate(0, false);
-  color: bce-color-t(disable);
-  background-color: bce-color(disable);
   opacity: 0.5;
   cursor: default;
 
-  button:before {
-    display: none;
+  button,
+  button:hover,
+  button:focus {
+    background-color: bce-color();
+    color: bce-color-on(3);
   }
 }
 
@@ -114,6 +98,18 @@
   }
 }
 
+:host([icon][icon-position='right']) {
+  span {
+    padding-left: 0;
+    padding-right: 24px;
+  }
+
+  bce-icon {
+    left: auto;
+    right: 0;
+  }
+}
+
 :host([small]) {
   height: 28px;
 
@@ -127,7 +123,7 @@
 }
 
 :host([design='outline']) {
-  border: 1px solid bce-color-d(light);
+  border: 1px solid bce-color-on(surface, 4);
 
   button {
     padding: 0 11px;
@@ -137,21 +133,46 @@
 :host([design='outline']),
 :host([design='text']) {
   @include elevate(0, false);
-  background-color: transparent;
-  color: bce-color();
 
   bce-ripple {
     background-color: bce-color();
   }
 
-  button:before {
-    background-color: bce-color();
+  button {
+    background-color: transparent;
+    color: bce-color();
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      background-color: bce-color();
+      opacity: 0;
+    }
+
+    &:hover:before {
+      opacity: 0.2;
+    }
+
+    &:focus:before {
+      opacity: 0.3;
+    }
   }
 }
 
 :host([design='outline'][disabled]),
 :host([design='text'][disabled]) {
-  color: bce-color-t(disable);
+  button,
+  button:before,
+  button:hover,
+  button:focus {
+    background-color: transparent;
+    color: bce-color-on(surface, 3);
+  }
 }
 
 :host([design='outline'][small]) button {

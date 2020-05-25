@@ -5,4 +5,8 @@
   @include elevate(0);
   display: flex;
   margin: 0;
+
+  button {
+    text-align: left;
+  }
 }

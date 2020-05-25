@@ -1,4 +1,4 @@
-$colors: primary secondary tertiary success error warning info dark light;
+$colors: primary secondary success error warning;
 
 @each $color in $colors {
   :host([color='#{$color}']) {

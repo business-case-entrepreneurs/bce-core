@@ -1,6 +1,7 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { Icon } from '../bce-icon/bce-icon';
+import { MenuControl } from '../../utils/menu-control';
 import { ripple } from '../../utils/ripple';
 
 @Component({
@@ -30,11 +31,13 @@ export class Fab {
   @Prop({ reflect: true })
   public inline?: boolean;
 
-  private buttons: HTMLBceButtonElement[] = [];
+  #items: HTMLBceButtonElement[] = [];
+  #menu!: MenuControl;
 
-  private handleClick = () => {
-    if (this.buttons.length) this.active = !this.active;
-  };
+  private get trigger(): HTMLBceButtonElement {
+    const root = this.el.shadowRoot!;
+    return root.querySelector('.trigger') as HTMLBceButtonElement;
+  }
 
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
@@ -42,9 +45,9 @@ export class Fab {
   };
 
   private handleSlotChange = () => {
-    const children = Array.from(this.el.childNodes);
-    this.buttons = children.filter(n => n.nodeName === 'BCE-BUTTON') as any;
-    for (const button of this.buttons) this.initButton(button);
+    this.#items = Array.from(this.el.querySelectorAll('bce-button'));
+    this.#menu.setItems(this.#items);
+    for (const item of this.#items) this.initButton(item);
   };
 
   private disableClick = (event: MouseEvent) => {
@@ -54,15 +57,30 @@ export class Fab {
   @Watch('active')
   @Watch('inline')
   public watch() {
-    for (const button of this.buttons) this.propagateState(button);
+    for (const button of this.#items) this.propagateState(button);
+  }
+
+  @Method()
+  public async next() {
+    return this.#menu.next();
+  }
+
+  @Method()
+  public async prev() {
+    return this.#menu.prev();
+  }
+
+  @Method()
+  public async toggle(active = !this.active) {
+    if (this.#items.length) this.active = active;
   }
 
   componentDidLoad() {
+    this.#menu = new MenuControl(this.el, this.trigger, this.toggle.bind(this));
+
     const slot = this.el.shadowRoot!.querySelector('slot');
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange();
-    }
+    slot?.addEventListener('slotchange', this.handleSlotChange);
+    this.handleSlotChange();
   }
 
   private initButton(button: HTMLBceButtonElement) {
@@ -73,14 +91,6 @@ export class Fab {
 
     // Ensure that there is always an icon
     button.icon = button.icon || Icon.DEFAULT_ICON.iconName;
-
-    // Deactivate the FAB overlay whenever one of the options is pressed. Call
-    // the original onclick handler afterwards.
-    const { onclick } = button;
-    button.onclick = event => {
-      this.active = false;
-      if (onclick) onclick.apply(button, [event]);
-    };
   }
 
   private propagateState(button: HTMLBceButtonElement) {
@@ -91,27 +101,37 @@ export class Fab {
     else delete button.dataset.inline;
   }
 
+  renderMenu() {
+    return (
+      <div role="menu">
+        <slot />
+      </div>
+    );
+  }
+
   render() {
     return [
-      !this.inline && <slot />,
-      this.info && (
-        <div data-info>
-          <bce-button
-            design={this.active ? 'text' : 'contained'}
-            color={this.color}
-            disabled={this.disabled}
-            onClick={this.handleClick}
-            onMouseDown={this.handleMouseDown}
-            small
-          >
-            {this.info}
-          </bce-button>
-        </div>
-      ),
+      !this.inline && this.renderMenu(),
+      // this.info && (
+      //   <div data-info>
+      //     <bce-button
+      //       design={this.active ? 'text' : 'contained'}
+      //       color={this.color}
+      //       disabled={this.disabled}
+      //       onClick={this.handleClick}
+      //       onMouseDown={this.handleMouseDown}
+      //       small
+      //     >
+      //       {this.info}
+      //     </bce-button>
+      //   </div>
+      // ),
       <button
+        class="trigger"
         disabled={this.disabled}
-        onClick={this.handleClick}
         onMouseDown={this.handleMouseDown}
+        aria-haspopup={true}
+        aria-expanded={this.active}
       >
         <bce-icon
           raw={this.icon}
@@ -120,12 +140,8 @@ export class Fab {
           fixed-width
         />
       </button>,
-      this.inline && (
-        <div class="container">
-          <slot />
-        </div>
-      ),
-      <div class="backdrop" onClick={this.handleClick} />
+      this.inline && this.renderMenu(),
+      <div class="backdrop" onClick={() => this.toggle(false)} />
     ];
   }
 }

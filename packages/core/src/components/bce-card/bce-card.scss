@@ -1,10 +1,11 @@
-bce-card {
-  @include bce-color-default(light);
+:host {
+  @include bce-color-default(surface);
   @include elevate(1);
   position: relative;
   display: block;
   margin-bottom: 0.5rem;
   padding: 1rem;
   border-radius: 4px;
-  background-color: bce-color-l();
+  background-color: bce-color(surface);
+  color: bce-color-on(surface);
 }

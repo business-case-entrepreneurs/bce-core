@@ -27,7 +27,12 @@ export class BceLogo {
     const { colors, paths } = this;
 
     return (
-      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        focusable="false"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
+      >
         {paths.map((d, i) => {
           const x = i < this.paths.length / 2 ? 0 : 1;
           const y = i % (this.paths.length / 2);

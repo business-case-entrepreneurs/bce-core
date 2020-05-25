@@ -2,8 +2,8 @@
   @include bce-color-default(primary);
   position: relative;
   display: inline-block;
-  background-color: bce-color(chip);
-  color: bce-color-t(chip);
+  background-color: bce-color(ghost);
+  color: bce-color-on(ghost);
   height: 32px;
   font-size: 14px;
   margin: 2px 0;
@@ -69,7 +69,7 @@
 }
 
 :host([checked]) {
-  color: bce-color-t();
+  color: bce-color-on();
   background-color: bce-color();
 }
 

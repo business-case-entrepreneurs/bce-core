@@ -1,81 +1,159 @@
-@function _bce-color-shades-default($color, $font) {
-  @return (
-    l: lighten($color, 10%),
-    n: $color,
-    d: darken($color, 10%),
-    t: $font
-  );
+/// Private
+$_bce-shade-ac: '300' '400' '500' '600' '700';
+$_bce-shade-sf: '000' '001' '002' '003' '004' '006' '008' '016' '024';
+$_bce-shade-on: 'on1' 'on2' 'on3' 'on4';
+
+@function _bce-color-rgba($c, $opacity) {
+  @return unquote('rgba(#{red($c)}, #{green($c)}, #{blue($c)}, #{$opacity})');
 }
 
-@function _bce-color-shades-noop($color, $font) {
-  @return ();
+@function _bce-color-var($name, $shade) {
+  @if ($shade != null) {
+    $shade: str-slice('000#{$shade}', -3);
+  } @else if ($name != background and $name != surface) {
+    $shade: '500';
+  }
+
+  @if ($name != null) {
+    $name: -#{$name};
+  }
+
+  @return --bce-c#{$shade}#{$name};
 }
 
-$_bce-color-shades-default: 'n' !default;
-$_bce-color-shades-func: get-function(_bce-color-shades-default) !default;
+@function _bce-color-multiply($color1, $color2) {
+  $r: (red($color1) * red($color2) / 255);
+  $g: (green($color1) * green($color2) / 255);
+  $b: (blue($color1) * blue($color2) / 255);
+  @return rgb($r, $g, $b);
+}
 
-@mixin bce-color-default($name) {
-  $shades: map-keys(call($_bce-color-shades-func, #000, #000));
-  @each $key in $shades {
-    --bce-color-#{$key}: #{bce-color($name, $key)};
+@mixin _bce-color-shade($name, $shade, $color) {
+  #{_bce-color-var($name, $shade)}: #{$color};
+}
+
+@mixin _bce-color-define-on($name, $color) {
+  @include _bce-color-shade($name, on1, _bce-color-rgba($color, 87%));
+  @include _bce-color-shade($name, on2, _bce-color-rgba($color, 60%));
+  @include _bce-color-shade($name, on3, _bce-color-rgba($color, 38%));
+  @include _bce-color-shade($name, on4, _bce-color-rgba($color, 10%));
+}
+
+/// Public
+@mixin bce-color-define-background($colors) {
+  $c1: nth($colors, 1);
+  $c2: nth($colors, 2);
+
+  @include _bce-color-shade(background, 000, $c1);
+  @include _bce-color-define-on(background, $c2);
+  @include _bce-color-shade(background, null, bce-color(background, 000));
+}
+
+@mixin bce-color-define-surface($colors, $mix: #fff) {
+  $c1: nth($colors, 1);
+  $c2: nth($colors, 2);
+
+  @include _bce-color-shade(surface, 000, $c1);
+  @include _bce-color-shade(surface, 001, mix($c1, $mix, 95%));
+  @include _bce-color-shade(surface, 002, mix($c1, $mix, 93%));
+  @include _bce-color-shade(surface, 003, mix($c1, $mix, 92%));
+  @include _bce-color-shade(surface, 004, mix($c1, $mix, 91%));
+  @include _bce-color-shade(surface, 006, mix($c1, $mix, 89%));
+  @include _bce-color-shade(surface, 008, mix($c1, $mix, 88%));
+  @include _bce-color-shade(surface, 016, mix($c1, $mix, 85%));
+  @include _bce-color-shade(surface, 024, mix($c1, $mix, 84%));
+  @include _bce-color-define-on(surface, $c2);
+  @include _bce-color-shade(surface, null, bce-color(surface, 000));
+
+  *[color='surface'] {
+    @include bce-color-default(surface);
   }
 }
 
-@mixin bce-color-inherit() {
-  $shades: map-keys(call($_bce-color-shades-func, #000, #000));
-  @each $key in $shades {
-    --bce-color-#{$key}: inherit;
-  }
-}
+@mixin bce-color-define-accent($colors, $name) {
+  $c1: nth($colors, 1);
+  $c2: #fff;
 
-@mixin bce-color-define($colors, $name, $shades-func: _bce-color-shades-noop) {
-  // Parse arguments
-  $color: nth($colors, 1);
-  $color-text: #fff;
-
-  @if length($colors) > 1 {
-    $color-text: nth($colors, 2);
+  @if (length($colors) > 1) {
+    $c2: nth($colors, 2);
   }
 
-  // Parse shades
-  $global-shades: call($_bce-color-shades-func, $color, $color-text);
-  $custom-shades: call(get-function($shades-func), $color, $color-text);
+  $mix-l: #fff;
+  $mix-d: _bce-color-multiply($c1, $c1);
 
-  // Define shades
-  @include bce-color-define-shades($name, $global-shades);
-  @include bce-color-define-shades($name, $custom-shades);
+  // @include _bce-color-shade($name, 050, mix($c1, $mix-l, 12%));
+  // @include _bce-color-shade($name, 100, mix($c1, $mix-l, 30%));
+  // @include _bce-color-shade($name, 200, mix($c1, $mix-l, 50%));
+  @include _bce-color-shade($name, 300, mix($c1, $mix-l, 70%));
+  @include _bce-color-shade($name, 400, mix($c1, $mix-l, 85%));
+  @include _bce-color-shade($name, 500, $c1);
+  @include _bce-color-shade($name, 600, mix($c1, $mix-d, 87%));
+  @include _bce-color-shade($name, 700, mix($c1, $mix-d, 70%));
+  // @include _bce-color-shade($name, 800, mix($c1, $mix-d, 54%));
+  // @include _bce-color-shade($name, 900, mix($c1, $mix-d, 24%));
+  @include _bce-color-define-on($name, $c2);
 
-  // Define color attribute modifiers
   *[color='#{$name}'] {
     @include bce-color-default($name);
   }
 }
 
-@mixin bce-color-define-shades($name, $shades) {
-  @each $key, $shade in $shades {
-    --bce-color-#{$name}-#{$key}: #{$shade};
+@mixin bce-color-default($name) {
+  $map: $_bce-shade-ac;
+
+  @if $name == surface {
+    $map: ();
+  }
+
+  @each $shade in join($map, $_bce-shade-on) {
+    @include _bce-color-shade(null, $shade, bce-color($name, $shade));
   }
 }
 
-@function bce-color($name: null, $shade: $_bce-color-shades-default) {
-  // Construct var base
-  $var-base: --bce-color;
-  @if $name {
-    $var-base: --bce-color-#{$name};
+@mixin bce-color-default-on($name) {
+  @for $i from 1 through length($_bce-shade-ac) {
+    $shade: nth($_bce-shade-ac, $i);
+
+    @if $i <= 2 {
+      @include _bce-color-shade(null, $shade, bce-color($name, 'on3'));
+    } @else if $i <= 4 {
+      @include _bce-color-shade(null, $shade, bce-color($name, 'on2'));
+    } @else {
+      @include _bce-color-shade(null, $shade, bce-color($name, 'on1'));
+    }
+  }
+}
+
+@mixin bce-color-inherit($map: join($_bce-shade-ac, $_bce-shade-on)) {
+  @each $shade in $map {
+    #{_bce-color-var(null, $shade)}: inherit;
+  }
+}
+
+@function bce-color($arg1: null, $arg2: null) {
+  $name: $arg1;
+  $shade: $arg2;
+
+  @if (type-of($arg1) == 'number') {
+    $name: null;
+    $shade: $arg1;
   }
 
-  // Return css variable
-  @return unquote('var(#{$var-base}-#{$shade})');
+  @return unquote('var(#{_bce-color-var($name, $shade)})');
 }
 
-@function bce-color-t($name: null) {
-  @return bce-color($name, 't');
-}
+@function bce-color-on($arg1: null, $arg2: null) {
+  $name: $arg1;
+  $shade: $arg2;
 
-@function bce-color-l($name: null) {
-  @return bce-color($name, 'l');
-}
+  @if (type-of($arg1) == 'number') {
+    $name: null;
+    $shade: $arg1;
+  }
 
-@function bce-color-d($name: null) {
-  @return bce-color($name, 'd');
+  @if ($shade == null) {
+    $shade: 1;
+  }
+
+  @return bce-color($name, on#{$shade});
 }

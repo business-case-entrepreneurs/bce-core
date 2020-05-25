@@ -8,10 +8,11 @@
   @include elevate(0, false);
   height: 40px;
   margin: 0 10px 10px 0;
-  background-color: transparent;
   z-index: 6;
 
   button {
+    background-color: transparent;
+
     bce-icon {
       @include elevate(2, false);
       left: auto;
@@ -20,7 +21,7 @@
       width: 35px;
       height: 35px;
       background-color: bce-color();
-      color: bce-color-t();
+      color: bce-color-on();
       border-radius: 50%;
     }
 
@@ -28,14 +29,31 @@
       @include elevate(2, false);
       margin: 0 30px 0 0;
       padding: 5px 16px;
-      background-color: bce-color(light);
-      color: bce-color-t(light);
+      background-color: bce-color(surface);
+      color: bce-color-on(surface);
       text-transform: none;
       border-radius: 34px;
     }
 
-    &:before {
-      display: none;
+    &:hover {
+      bce-icon {
+        background-color: bce-color(400);
+      }
+
+      span {
+        background-color: bce-color(surface, 6);
+      }
+    }
+
+    &:focus {
+      bce-icon {
+        outline: none;
+        background-color: bce-color(300);
+      }
+
+      span {
+        background-color: bce-color(surface, 8);
+      }
     }
   }
 }

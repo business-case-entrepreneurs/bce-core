@@ -7,7 +7,7 @@
   overflow: hidden;
 
   bce-ripple {
-    background-color: bce-color-t();
+    background-color: bce-color-on();
   }
 
   button {
@@ -24,12 +24,17 @@
     span {
       flex: 0 0 3px;
       width: 24px;
-      background-color: bce-color-t();
+      background-color: bce-color-on();
       border-radius: 3px;
+      pointer-events: none;
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: bce-color(600);
+    }
+
+    &:focus {
+      background-color: bce-color(700);
     }
   }
 }

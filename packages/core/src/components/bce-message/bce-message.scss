@@ -1,15 +1,14 @@
 :host {
   @include bce-color-default(dark);
   @include elevate(6);
-
   position: fixed;
   left: 16px;
   right: 16px;
   bottom: 19px;
   display: block;
   max-width: 600px;
-  background-color: bce-color();
-  color: bce-color-t();
+  background-color: bce-color(600);
+  color: bce-color-on();
   font-size: 14px;
   border-radius: 4px;
   padding: 16px;

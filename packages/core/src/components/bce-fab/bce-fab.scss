@@ -10,31 +10,40 @@
   z-index: 6;
 
   bce-ripple {
-    background-color: bce-color-t();
+    background-color: bce-color-on();
   }
 
-  > button {
+  .trigger {
     @include elevate(6);
     position: relative;
     padding: 0;
     width: 56px;
     height: 56px;
     background-color: bce-color();
-    color: bce-color-t();
+    color: bce-color-on();
     border: none;
     border-radius: 50%;
     appearance: none;
     overflow: hidden;
     cursor: pointer;
 
-    > bce-icon {
+    bce-icon {
       pointer-events: none;
     }
 
-    &:focus {
-      border: none;
-      outline: none;
+    &:hover {
+      background-color: bce-color(400);
     }
+
+    &:focus {
+      outline: none;
+      background-color: bce-color(300);
+    }
+  }
+
+  [role='menu'] {
+    display: flex;
+    flex-flow: column nowrap;
   }
 }
 
@@ -44,8 +53,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: bce-color(dark);
-  opacity: 0.8;
+  background-color: #000;
+  opacity: 0.6;
 }
 
 :host([info]) [data-info] {
@@ -73,7 +82,8 @@
   margin: 0;
   z-index: 1;
 
-  > button {
+  .trigger {
+    @include elevate(2);
     order: -1;
     align-self: stretch;
     margin: 10px auto;
@@ -81,7 +91,7 @@
     height: 50px;
   }
 
-  .container {
+  [role='menu'] {
     flex-flow: row wrap;
     justify-content: space-between;
     width: 100%;
@@ -94,9 +104,7 @@
   }
 }
 
-:host([inline][active]) .container {
-  display: flex;
-
+:host([inline][active]) [role='menu'] {
   @include media-medium {
     text-align: center;
     display: block;

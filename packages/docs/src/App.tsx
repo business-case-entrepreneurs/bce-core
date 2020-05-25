@@ -35,7 +35,7 @@ class App extends React.Component {
           <BceNavButton />
         </BceHeader>
 
-        <BceSideBar slot="left" open={false} />
+        <BceSideBar slot="left" />
 
         <main>
           <section style={{ padding: 16 }}>

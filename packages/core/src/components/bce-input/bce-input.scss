@@ -19,7 +19,9 @@
     padding: 14px 12px;
     font-size: 0.9em;
     font-family: inherit;
-    border: 1px solid bce-color-d(light);
+    background-color: bce-color(surface);
+    color: bce-color-on(surface);
+    border: 1px solid bce-color-on(surface, 4);
     border-radius: 4px;
     box-sizing: border-box;
     outline: none;
@@ -29,7 +31,6 @@
 
     &[type='color'] {
       padding: 10px;
-      background-color: bce-color-l(light);
     }
 
     &::-webkit-color-swatch-wrapper {
@@ -53,7 +54,7 @@
     right: 4px;
     top: 50%;
     width: 36px;
-    transform: translateY(-50%);
+    transform: translateY(-55%);
 
     &[data-hidden] {
       display: none;
@@ -64,8 +65,9 @@
 :host([disabled]) {
   input,
   textarea {
-    background-color: bce-color-l(disable);
-    color: bce-color-t(disable);
+    background-color: bce-color-on(surface, 4);
+    color: bce-color-on(surface, 3);
+    border-color: bce-color-on(surface, 4);
   }
 }
 

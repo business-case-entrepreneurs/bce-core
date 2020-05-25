@@ -1,5 +1,5 @@
 :host {
-  @include bce-color-default(light);
+  @include bce-color-default(surface);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -11,7 +11,7 @@
   .backdrop {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   bce-form {
@@ -24,8 +24,8 @@
     max-width: 560px;
     transform: translate(-50%, -50%);
     border-radius: 4px;
-    color: bce-color-t();
-    background-color: bce-color();
+    background-color: bce-color(surface);
+    color: bce-color-on(surface);
     pointer-events: auto;
 
     .action-header {
@@ -47,4 +47,9 @@
 
 :host([active]) {
   display: block;
+}
+
+// Currently only works in Chrome
+:host-context([color-scheme='dark']) bce-form bce-button {
+  @include bce-color-default(light);
 }

@@ -1,12 +1,35 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
+import * as FAR from '@fortawesome/free-regular-svg-icons';
 import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { setMode } from '@stencil/core';
 
 import { UUID } from '../utils/uuid';
 import { FileManager } from '../utils/file-manager';
 
+const setColorScheme = (scheme: string) => {
+  if (scheme === 'dark' || scheme === 'light') {
+    localStorage.setItem('bce-color-scheme', scheme);
+    document.documentElement.setAttribute('color-scheme', scheme);
+  } else {
+    localStorage.removeItem('bce-color-scheme');
+    const match = window.matchMedia('(prefers-color-scheme: dark)');
+    handleMediaQuery(match);
+  }
+};
+
+const handleMediaQuery = (event: MediaQueryList | MediaQueryListEvent) => {
+  switch (event.media) {
+    case '(prefers-color-scheme: dark)':
+      const preference = localStorage.getItem('bce-color-scheme');
+      const color = preference || (event.matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('color-scheme', color);
+      break;
+  }
+};
+
 const bce: BCE = {
   file: FileManager.inMemory(),
+  setColorScheme,
   generateId: () => UUID.v4(),
 
   FileManager
@@ -16,8 +39,16 @@ const main = () => {
   // Setup global config
   window.BCE = window.BCE || bce;
 
+  // Detect preferred color scheme
+  const match = window.matchMedia('(prefers-color-scheme: dark)');
+  match.addEventListener
+    ? match.addEventListener('change', handleMediaQuery)
+    : match.addListener(handleMediaQuery);
+  handleMediaQuery(match);
+
   // Temporary
   library.add(
+    // Nav
     FAS.faHome,
     FAS.faChartLine,
     FAS.faUsers,
@@ -30,7 +61,11 @@ const main = () => {
     FAS.faCity,
     FAS.faFileInvoice,
     FAS.faShapes,
-    FAS.faCog
+    FAS.faCog,
+    // Color scheme
+    FAS.faStarHalfAlt,
+    FAR.faStar,
+    FAS.faStar
   );
 
   setMode(el => {

@@ -1,4 +1,4 @@
 export interface MessageOptions {
-  color: string;
+  color?: string;
   duration: number;
 }

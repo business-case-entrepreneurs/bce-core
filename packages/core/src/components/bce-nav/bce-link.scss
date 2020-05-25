@@ -12,19 +12,30 @@
   }
 
   a {
-    @include elevate(1, false);
     position: relative;
     display: flex;
     flex-flow: row nowrap;
-    padding: 0 16px;
-    color: bce-color-t();
+    padding: 0 20px;
+    color: bce-color-on();
     line-height: 56px;
     text-decoration: none;
     user-select: none;
     overflow: hidden;
 
     &:hover {
-      color: bce-color-l(primary);
+      color: bce-color(primary, 300);
+    }
+
+    &:focus:before {
+      position: absolute;
+      display: block;
+      left: 0;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+      border-left: 6px solid bce-color(primary);
     }
 
     bce-icon {
@@ -42,10 +53,13 @@
     }
   }
 
-  > div {
+  ul[role='menu'] {
     display: flex;
     flex-flow: column nowrap;
-    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
     transition: height 0.3s ease-in-out;
+    overflow: hidden;
   }
 }

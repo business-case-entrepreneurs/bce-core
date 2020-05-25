@@ -1,0 +1,27 @@
+@import '../../../scss/input-creator.scss';
+
+:host {
+  position: relative;
+  display: block;
+}
+
+:host([label]) {
+  bce-label {
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+
+  @include media-medium {
+    bce-label {
+      display: inline-flex;
+      vertical-align: top;
+      width: 25%;
+    }
+
+    .container {
+      display: inline-block;
+      width: 75%;
+    }
+  }
+}

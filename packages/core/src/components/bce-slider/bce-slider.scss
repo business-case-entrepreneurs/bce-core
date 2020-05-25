@@ -15,7 +15,7 @@
     background: linear-gradient(
       to right,
       bce-color() var(--fill-width, 50%),
-      bce-color-d(light) 0
+      bce-color(ghost) 0
     );
 
     &::-webkit-slider-thumb {

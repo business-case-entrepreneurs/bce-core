@@ -9,14 +9,17 @@
   pointer-events: none;
   opacity: 0.5;
   font-size: 0;
+  transform: translate(-50%, -50%);
 
   @keyframes ripple {
     from {
-      transform: scale(1);
+      width: 2px;
+      height: 2px;
     }
     to {
       opacity: 0;
-      transform: scale(200);
+      width: 200px;
+      height: 200px;
     }
   }
 }

@@ -12,433 +12,466 @@
     <link rel="stylesheet" href="build/bce.css" />
 
     <style>
-      section {
-        position: relative;
-        padding: 16px 16px 32px;
-      }
-
-      section:nth-child(even):before {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
+      html,
+      body {
         width: 100%;
         height: 100%;
-        content: '';
-        background-color: rgba(0, 0, 0, 0.02);
-        pointer-events: none;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        vertical-align: top;
+        height: 100%;
+        padding: 0 16px;
+        letter-spacing: 2px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      main {
+        padding: 16px;
       }
     </style>
   </head>
 
   <body>
     <bce-root id="app">
-      <bce-status-bar color="dark"></bce-status-bar>
-      <bce-header color="dark">
+      <bce-status-bar></bce-status-bar>
+      <bce-header>
         <bce-nav-button></bce-nav-button>
-        <a
-          href="/#"
-          style="
-            display: inline-flex;
-            align-items: center;
-            vertical-align: top;
-            height: 100%;
-            padding: 0 16px;
-            letter-spacing: 2px;
-            text-decoration: none;
-            font-weight: bold;
-          "
-        >
+
+        <a class="logo" href="/#" tabindex="-1">
           BCE Technology
         </a>
       </bce-header>
 
-      <bce-side-bar position="left">
+      <bce-side-bar>
         <bce-nav>
-          <bce-link icon="fas:home">Home</bce-link>
-          <bce-link icon="fas:chart-line">Dashboard</bce-link>
-          <bce-link icon="fas:users">Respondents</bce-link>
+          <bce-link icon="fas:home" href="/#">Home</bce-link>
+          <bce-link icon="fas:chart-line" href="/#dashboard">
+            Dashboard
+          </bce-link>
+          <bce-link icon="fas:users" href="/#respondents">Respondents</bce-link>
           <bce-link icon="fas:building">
             Organization
 
-            <bce-link slot="subsection" icon="fas:user-plus">Users</bce-link>
-            <bce-link slot="subsection" icon="fas:user-tag">Roles</bce-link>
-            <bce-link slot="subsection" icon="fas:credit-card">
+            <bce-link slot="menu" icon="fas:user-plus" href="/#org/users">
+              Users
+            </bce-link>
+            <bce-link slot="menu" icon="fas:user-tag" href="/#org/roles">
+              Roles
+            </bce-link>
+            <bce-link slot="menu" icon="fas:credit-card" href="/#org/billing">
               Billing
             </bce-link>
           </bce-link>
           <bce-link icon="fas:tools">
             Admin
 
-            <bce-link slot="subsection" icon="fas:user-circle">
+            <bce-link
+              slot="menu"
+              icon="fas:user-circle"
+              href="/#admin/accounts"
+            >
               Accounts
             </bce-link>
-            <bce-link slot="subsection" icon="fas:city">
+            <bce-link slot="menu" icon="fas:city" href="/#admin/organizations">
               Organizations
             </bce-link>
-            <bce-link slot="subsection" icon="fas:file-invoice">
+            <bce-link
+              slot="menu"
+              icon="fas:file-invoice"
+              href="/#admin/invoices"
+            >
               Invoices
             </bce-link>
-            <bce-link slot="subsection" icon="fas:shapes">
+            <bce-link slot="menu" icon="fas:shapes" href="/#admin/editor">
               Module Editor
             </bce-link>
           </bce-link>
-          <bce-link icon="fas:cog">Settings</bce-link>
+          <bce-link icon="fas:cog" href="/#settings">Settings</bce-link>
         </bce-nav>
+
+        <div style="flex: 1 0 auto;"></div>
+
+        <bce-menu
+          color="dark"
+          icon="fas:star-half-alt"
+          label="Color Theme"
+          placement="top"
+        >
+          <bce-button
+            icon="fas:star-half-alt"
+            onclick="BCE.setColorScheme('auto')"
+          >
+            Auto
+          </bce-button>
+          <bce-button icon="far:star" onclick="BCE.setColorScheme('light')">
+            Light
+          </bce-button>
+          <bce-button icon="fas:star" onclick="BCE.setColorScheme('dark')">
+            Dark
+          </bce-button>
+        </bce-menu>
       </bce-side-bar>
 
       <main>
-        <section id="button">
+        <bce-card>
           <h3>BCE Button</h3>
 
-          <h4>Contained</h4>
-          <bce-button>Primary</bce-button>
-          <bce-button color="secondary">Secondary</bce-button>
-          <bce-button color="tertiary">Tertiary</bce-button>
-          <bce-button icon="square">Icon</bce-button>
-          <bce-button disabled>Disabled</bce-button>
-          <bce-button icon="square"></bce-button>
+          <section>
+            <h4>Contained</h4>
 
-          <h4>Outline</h4>
-          <bce-button design="outline">Primary</bce-button>
-          <bce-button design="outline" color="secondary">
-            Secondary
-          </bce-button>
-          <bce-button design="outline" color="tertiary">
-            Tertiary
-          </bce-button>
-          <bce-button design="outline" icon="square">
-            Icon
-          </bce-button>
-          <bce-button design="outline" disabled>
-            Disabled
-          </bce-button>
-          <bce-button design="outline" icon="square"></bce-button>
+            <bce-button>Primary</bce-button>
+            <bce-button color="secondary">Secondary</bce-button>
+            <bce-button icon="square">Icon</bce-button>
+            <bce-button color="secondary" icon="square"></bce-button>
+            <bce-button disabled>Disabled</bce-button>
+            <br />
+            <bce-button color="light">Light</bce-button>
+            <bce-button color="dark">Dark</bce-button>
+          </section>
 
-          <h4>Text</h4>
-          <bce-button design="text">Primary</bce-button>
-          <bce-button design="text" color="secondary">
-            Secondary
-          </bce-button>
-          <bce-button design="text" color="tertiary">
-            Tertiary
-          </bce-button>
-          <bce-button design="text" icon="square">
-            Icon
-          </bce-button>
-          <bce-button design="text" disabled>
-            Disabled
-          </bce-button>
-          <bce-button design="text" icon="square"></bce-button>
+          <section>
+            <h4>Outline</h4>
 
-          <h4>Block</h4>
-          <bce-button color="tertiary" block>
-            Contained
-          </bce-button>
-          <bce-button icon="square" block>
-            Contained + Icon
-          </bce-button>
-          <bce-button design="outline" color="tertiary" block>
-            Outline
-          </bce-button>
-          <bce-button design="outline" icon="square" block>
-            Outline + Icon
-          </bce-button>
-          <bce-button design="text" color="tertiary" block>
-            Text
-          </bce-button>
-          <bce-button design="text" icon="square" block>
-            Text + Icon
-          </bce-button>
+            <bce-button design="outline">Primary</bce-button>
+            <bce-button color="secondary" design="outline">
+              Secondary
+            </bce-button>
+            <bce-button design="outline" icon="square">
+              Icon
+            </bce-button>
+            <bce-button
+              color="secondary"
+              design="outline"
+              icon="square"
+            ></bce-button>
+            <bce-button design="outline" disabled>
+              Disabled
+            </bce-button>
+          </section>
 
-          <h4>Floating Action Button</h4>
-          <bce-fab color="dark" inline>
-            <bce-button>Audio</bce-button>
-            <bce-button>Checkbox</bce-button>
-            <bce-button>Header</bce-button>
-            <bce-button>Icon</bce-button>
-            <bce-button>Image</bce-button>
-            <bce-button>Input</bce-button>
-            <bce-button>Matrix</bce-button>
-            <bce-button>Radio</bce-button>
-            <bce-button>Slider</bce-button>
-            <bce-button>Text</bce-button>
-            <bce-button>Video</bce-button>
-          </bce-fab>
-        </section>
+          <section>
+            <h4>Text</h4>
 
-        <section id="form">
+            <bce-button design="text">Primary</bce-button>
+            <bce-button color="secondary" design="text">
+              Secondary
+            </bce-button>
+            <bce-button design="text" icon="square">
+              Icon
+            </bce-button>
+            <bce-button
+              color="secondary"
+              design="text"
+              icon="square"
+            ></bce-button>
+            <bce-button design="text" disabled>
+              Disabled
+            </bce-button>
+          </section>
+
+          <section>
+            <h4>Floating Action Button</h4>
+
+            <bce-fab color="dark" inline>
+              <bce-button onclick="print('Audio')">Audio</bce-button>
+              <bce-button onclick="print('Checkbox')">Checkbox</bce-button>
+              <bce-button onclick="print('Header')">Header</bce-button>
+              <bce-button onclick="print('Icon')">Icon</bce-button>
+              <bce-button onclick="print('Image')">Image</bce-button>
+              <bce-button onclick="print('Input')">Input</bce-button>
+              <bce-button onclick="print('Matrix')">Matrix</bce-button>
+              <bce-button onclick="print('Radio')">Radio</bce-button>
+              <bce-button onclick="print('Slider')">Slider</bce-button>
+              <bce-button onclick="print('Text')">Text</bce-button>
+              <bce-button onclick="print('Video')">Video</bce-button>
+            </bce-fab>
+          </section>
+        </bce-card>
+
+        <bce-card>
           <h3>BCE Form</h3>
 
-          <h4>Input</h4>
-          <bce-form
-            onerror="app.message('Error')"
-            onsubmit="app.message('Submit')"
-          >
-            <bce-input
-              type="email"
-              label="Email"
-              info="What's your email address?"
-              tooltip="bce-tooltip"
-              autocomplete="email"
-              validation="required|email"
-            ></bce-input>
-            <bce-input
-              type="password"
-              label="Password"
-              autocomplete="current-password"
-              validation="required"
-              info="This should be a value only you know..."
-            ></bce-input>
-            <bce-input
-              type="number"
-              label="OTP code"
-              info="The One Time Password code."
-              value="1234"
-              disabled
-            ></bce-input>
-            <bce-input
-              type="textarea"
-              label="Description"
-              placeholder="Placeholder Textarea"
-              rows="4"
-              info="Provide a description."
-            ></bce-input>
+          <section>
+            <h4>Input</h4>
 
-            <div style="text-align: right;">
-              <bce-button design="text" type="reset">Reset</bce-button>
-              <bce-button design="text" type="submit">Submit</bce-button>
-            </div>
-          </bce-form>
-
-          <h4>Select</h4>
-          <bce-form>
-            <bce-select
-              type="checkbox"
-              label="bce-select[type='checkbox']"
-              value="a,b"
-              validation="required|min:2"
+            <bce-form
+              onerror="app.message('Error')"
+              onsubmit="app.message('Submit')"
             >
-              <bce-option value="a">Option A</bce-option>
-              <bce-option value="b">Option B</bce-option>
-              <bce-option value="c">Option C</bce-option>
-            </bce-select>
-            <bce-select
-              type="radio"
-              label="bce-select[type='radio']"
-              value="z"
-              validation="is:z"
-            >
-              <bce-option value="x">Option X</bce-option>
-              <bce-option value="y">Option Y</bce-option>
-              <bce-option value="z">Option Z</bce-option>
-            </bce-select>
-            <bce-select
-              type="choice"
-              label="bce-select[type='choice']"
-              value="groningen"
-              center
-            >
-              <bce-chip value="amsterdam">Amsterdam</bce-chip>
-              <bce-chip value="arnhem">Arnhem</bce-chip>
-              <bce-chip value="delft">Delft</bce-chip>
-              <bce-chip value="groningen">Groningen</bce-chip>
-              <bce-chip value="the-hague">The Hague</bce-chip>
-              <bce-chip value="leiden">Leiden</bce-chip>
-              <bce-chip value="maastricht">Maastricht</bce-chip>
-              <bce-chip value="nijmegen">Nijmegen</bce-chip>
-              <bce-chip value="rotterdam">Rotterdam</bce-chip>
-              <bce-chip value="utrecht">Utrecht</bce-chip>
-              <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
-            </bce-select>
-            <bce-select
-              type="filter"
-              label="bce-select[type='filter']"
-              validation="is:the-hague,nijmegen"
-              value="the-hague,nijmegen"
-              center
-            >
-              <bce-chip value="amsterdam">Amsterdam</bce-chip>
-              <bce-chip value="arnhem">Arnhem</bce-chip>
-              <bce-chip value="delft">Delft</bce-chip>
-              <bce-chip value="groningen">Groningen</bce-chip>
-              <bce-chip value="the-hague">The Hague</bce-chip>
-              <bce-chip value="leiden">Leiden</bce-chip>
-              <bce-chip value="maastricht">Maastricht</bce-chip>
-              <bce-chip value="nijmegen">Nijmegen</bce-chip>
-              <bce-chip value="rotterdam">Rotterdam</bce-chip>
-              <bce-chip value="utrecht">Utrecht</bce-chip>
-              <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
-            </bce-select>
-            <bce-select
-              type="dropdown"
-              label="bce-select[type='dropdown']"
-              value="leiden"
-            >
-              <bce-option value="amsterdam">Amsterdam</bce-option>
-              <bce-option value="arnhem">Arnhem</bce-option>
-              <bce-option value="delft">Delft</bce-option>
-              <bce-option value="groningen">Groningen</bce-option>
-              <bce-option value="the-hague">The Hague</bce-option>
-              <bce-option value="leiden">Leiden</bce-option>
-              <bce-option value="maastricht">Maastricht</bce-option>
-              <bce-option value="nijmegen">Nijmegen</bce-option>
-              <bce-option value="rotterdam">Rotterdam</bce-option>
-              <bce-option value="utrecht">Utrecht</bce-option>
-              <bce-option value="leeuwarden">Leeuwarden</bce-option>
-            </bce-select>
-          </bce-form>
+              <bce-input
+                type="email"
+                label="Email"
+                info="What's your email address?"
+                tooltip="bce-tooltip"
+                autocomplete="email"
+                validation="required|email"
+              ></bce-input>
+              <bce-input
+                type="password"
+                label="Password"
+                autocomplete="current-password"
+                validation="required"
+                info="This should be a value only you know..."
+              ></bce-input>
+              <bce-input
+                type="number"
+                label="OTP code"
+                info="The One Time Password code."
+                value="1234"
+                disabled
+              ></bce-input>
+              <bce-input
+                type="textarea"
+                label="Description"
+                placeholder="Placeholder Textarea"
+                rows="4"
+                info="Provide a description."
+              ></bce-input>
+              <bce-color label="Color" value="#215475 #ffffff"></bce-color>
 
-          <h4>Switch</h4>
-          <bce-form>
-            <bce-switch value="true" color="primary"></bce-switch>
-            <bce-switch value="true" color="secondary"></bce-switch>
-            <bce-switch value="true" color="tertiary"></bce-switch>
-            <br />
-            <bce-switch value="true" color="success"></bce-switch>
-            <bce-switch value="true" color="error"></bce-switch>
-            <bce-switch value="true" color="warning"></bce-switch>
-            <bce-switch value="true" color="info"></bce-switch>
-            <br />
-            <bce-switch value="true" color="dark"></bce-switch>
-            <bce-switch value="true" color="light"></bce-switch>
-            <br />
+              <div style="text-align: right;">
+                <bce-button design="text" type="reset">Reset</bce-button>
+                <bce-button design="text" type="submit">Submit</bce-button>
+              </div>
+            </bce-form>
+          </section>
 
-            <bce-switch label="Regular"></bce-switch>
-            <bce-switch label="Slotted" info="Default slot">...</bce-switch>
-            <bce-switch label="Conditional" info="slot=true / slot=false">
-              <span slot="true">True</span>
-              <span slot="false">False</span>
-            </bce-switch>
-          </bce-form>
+          <section>
+            <h4>Select</h4>
 
-          <h4>Slider</h4>
-          <bce-form>
-            <bce-slider color="primary"></bce-slider>
-            <bce-slider color="secondary"></bce-slider>
-            <bce-slider color="tertiary"></bce-slider>
-            <br />
-            <bce-slider color="success"></bce-slider>
-            <bce-slider color="error"></bce-slider>
-            <bce-slider color="warning"></bce-slider>
-            <bce-slider color="info"></bce-slider>
-            <br />
-            <bce-slider color="dark"></bce-slider>
-            <bce-slider color="light"></bce-slider>
-            <br />
+            <bce-form>
+              <bce-select
+                type="checkbox"
+                label="bce-select[type='checkbox']"
+                value="a,b"
+                validation="required|min:2"
+              >
+                <bce-option value="a">Option A</bce-option>
+                <bce-option value="b">Option B</bce-option>
+                <bce-option value="c">Option C</bce-option>
+              </bce-select>
+              <bce-select
+                type="radio"
+                label="bce-select[type='radio']"
+                value="z"
+                validation="is:z"
+              >
+                <bce-option value="x">Option X</bce-option>
+                <bce-option value="y">Option Y</bce-option>
+                <bce-option value="z">Option Z</bce-option>
+              </bce-select>
+              <bce-select
+                type="choice"
+                label="bce-select[type='choice']"
+                value="groningen"
+                center
+              >
+                <bce-chip value="amsterdam">Amsterdam</bce-chip>
+                <bce-chip value="arnhem">Arnhem</bce-chip>
+                <bce-chip value="delft">Delft</bce-chip>
+                <bce-chip value="groningen">Groningen</bce-chip>
+                <bce-chip value="the-hague">The Hague</bce-chip>
+                <bce-chip value="leiden">Leiden</bce-chip>
+                <bce-chip value="maastricht">Maastricht</bce-chip>
+                <bce-chip value="nijmegen">Nijmegen</bce-chip>
+                <bce-chip value="rotterdam">Rotterdam</bce-chip>
+                <bce-chip value="utrecht">Utrecht</bce-chip>
+                <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
+              </bce-select>
+              <bce-select
+                type="filter"
+                label="bce-select[type='filter']"
+                validation="is:the-hague,nijmegen"
+                value="the-hague,nijmegen"
+                center
+              >
+                <bce-chip value="amsterdam">Amsterdam</bce-chip>
+                <bce-chip value="arnhem">Arnhem</bce-chip>
+                <bce-chip value="delft">Delft</bce-chip>
+                <bce-chip value="groningen">Groningen</bce-chip>
+                <bce-chip value="the-hague">The Hague</bce-chip>
+                <bce-chip value="leiden">Leiden</bce-chip>
+                <bce-chip value="maastricht">Maastricht</bce-chip>
+                <bce-chip value="nijmegen">Nijmegen</bce-chip>
+                <bce-chip value="rotterdam">Rotterdam</bce-chip>
+                <bce-chip value="utrecht">Utrecht</bce-chip>
+                <bce-chip value="leeuwarden">Leeuwarden</bce-chip>
+              </bce-select>
+              <bce-select
+                type="dropdown"
+                label="bce-select[type='dropdown']"
+                value="leiden"
+              >
+                <bce-option value="amsterdam">Amsterdam</bce-option>
+                <bce-option value="arnhem">Arnhem</bce-option>
+                <bce-option value="delft">Delft</bce-option>
+                <bce-option value="groningen">Groningen</bce-option>
+                <bce-option value="the-hague">The Hague</bce-option>
+                <bce-option value="leiden">Leiden</bce-option>
+                <bce-option value="maastricht">Maastricht</bce-option>
+                <bce-option value="nijmegen">Nijmegen</bce-option>
+                <bce-option value="rotterdam">Rotterdam</bce-option>
+                <bce-option value="utrecht">Utrecht</bce-option>
+                <bce-option value="leeuwarden">Leeuwarden</bce-option>
+              </bce-select>
+            </bce-form>
+          </section>
 
-            <bce-slider label="Regular"></bce-slider>
-            <bce-slider
-              label="Block"
-              min="0"
-              max="3"
-              info="min: 0 - max: 3 - step: 1"
-            ></bce-slider>
-          </bce-form>
-        </section>
+          <section>
+            <h4>Switch</h4>
 
-        <section id="upload">
+            <bce-form>
+              <bce-switch value="true" color="primary"></bce-switch>
+              <bce-switch value="true" color="secondary"></bce-switch>
+              <br />
+              <bce-switch value="true" color="success"></bce-switch>
+              <bce-switch value="true" color="error"></bce-switch>
+              <bce-switch value="true" color="warning"></bce-switch>
+              <br />
+
+              <bce-switch label="Regular"></bce-switch>
+              <bce-switch label="Slotted" info="Default slot">...</bce-switch>
+              <bce-switch label="Conditional" info="slot=true / slot=false">
+                <span slot="true">True</span>
+                <span slot="false">False</span>
+              </bce-switch>
+            </bce-form>
+          </section>
+
+          <section>
+            <h4>Slider</h4>
+
+            <bce-form>
+              <bce-slider color="primary"></bce-slider>
+              <bce-slider color="secondary"></bce-slider>
+              <br />
+              <bce-slider color="success"></bce-slider>
+              <bce-slider color="error"></bce-slider>
+              <bce-slider color="warning"></bce-slider>
+              <br />
+
+              <bce-slider label="Regular"></bce-slider>
+              <bce-slider
+                label="Block"
+                min="0"
+                max="3"
+                info="min: 0 - max: 3 - step: 1"
+              ></bce-slider>
+            </bce-form>
+          </section>
+        </bce-card>
+
+        <bce-card>
           <h3>File Upload</h3>
+          <p>
+            There is no file manager attached to this preview. By default the
+            upload component will fake a server upload.
+          </p>
+
           <bce-upload label="Audio" accept="audio/*" multiple></bce-upload>
           <bce-upload label="Images" accept="image/*" multiple></bce-upload>
           <bce-upload label="Videos" accept="video/*" multiple></bce-upload>
           <bce-upload label="Anything" multiple></bce-upload>
-        </section>
+        </bce-card>
 
-        <section id="message">
+        <bce-card id="message">
           <h3>BCE Message</h3>
+
           <bce-button
-            design="text"
             color="dark"
-            onclick="app.message('BCE Message')"
+            design="text"
+            onclick="app.message('Default Message')"
           >
             Message
           </bce-button>
           <br />
-
           <bce-button
-            design="text"
             color="primary"
+            design="text"
             onclick="app.message('Primary color', { color: 'primary' })"
           >
             Primary
           </bce-button>
           <bce-button
-            design="text"
             color="secondary"
+            design="text"
             onclick="app.message('Secondary color', { color: 'secondary' })"
           >
             Secondary
           </bce-button>
-          <bce-button
-            design="text"
-            color="tertiary"
-            onclick="app.message('Tertiary color', { color: 'tertiary' })"
-          >
-            Tertiary
-          </bce-button>
           <br />
 
           <bce-button
-            design="text"
             color="success"
+            design="text"
             onclick="app.message('Success message', { color: 'success' })"
           >
             Success
           </bce-button>
           <bce-button
-            design="text"
             color="error"
+            design="text"
             onclick="app.message('Error message', { color: 'error' })"
           >
             Error
           </bce-button>
           <bce-button
-            design="text"
             color="warning"
+            design="text"
             onclick="app.message('Warning message', { color: 'warning' })"
           >
             Warning
           </bce-button>
-          <bce-button
-            design="text"
-            color="info"
-            onclick="app.message('Info message', { color: 'info' })"
-          >
-            Info
-          </bce-button>
 
           <h3>BCE Dialog</h3>
-          <bce-button color="primary" onclick="alert()">Alert</bce-button>
-          <bce-button color="secondary" onclick="confirm()">Confirm</bce-button>
-        </section>
+          <bce-button design="text" onclick="alert()">Alert</bce-button>
+          <bce-button design="text" onclick="confirm()">Confirm</bce-button>
+          <bce-button design="text" disabled>Prompt</bce-button>
+        </bce-card>
 
-        <section>
+        <bce-card>
           <h3>BCE Code</h3>
-          <bce-code
-            value="console.log('Hello World!');"
-            language="js"
-          ></bce-code>
 
-          <h3>BCE Code Editor</h3>
-          <bce-code-editor
-            value="console.log('Hello World!');"
-            language="js"
-          ></bce-code-editor>
-        </section>
-        <section>
-          <h3>BCE Menu</h3>
+          <section>
+            <h4>Code Viewer</h4>
 
-          <bce-menu color="dark">
-            <bce-button icon="square">Action 1</bce-button>
-            <bce-button icon="square">Action 2</bce-button>
-            <bce-button icon="square">Action 3</bce-button>
-            <bce-button icon="square">Action 4</bce-button>
+            <bce-code
+              value="console.log('Hello World!');"
+              language="js"
+            ></bce-code>
+          </section>
+
+          <section>
+            <h4>Code Editor</h4>
+
+            <bce-code-editor
+              value="console.log('Hello World!');"
+              language="js"
+            ></bce-code-editor>
+          </section>
+        </bce-card>
+
+        <bce-card>
+          <h4>BCE Menu</h4>
+
+          <bce-menu>
+            <bce-button icon="square" onclick="print(1)">Action 1</bce-button>
+            <bce-button icon="square" onclick="print(2)">Action 2</bce-button>
+            <bce-button icon="square" onclick="print(3)">Action 3</bce-button>
+            <bce-button icon="square" onclick="print(4)">Action 4</bce-button>
           </bce-menu>
-        </section>
+        </bce-card>
 
-        <bce-fab color="dark">
-          <bce-button>Hello World!</bce-button>
+        <bce-fab color="primary">
+          <bce-button onclick="print('Lorem ipsum?')">Lorem ipsum?</bce-button>
+          <bce-button onclick="print('Hello World!')">Hello World!</bce-button>
         </bce-fab>
       </main>
     </bce-root>
@@ -447,12 +480,8 @@
     <script nomodule src="build/bce.js"></script>
 
     <script>
-      const uploads = document.querySelectorAll('#upload bce-upload');
-      for (const el of uploads) {
-        el.addEventListener('upload', async e => {
-          await new Promise(res => setTimeout(res, 5000));
-          for (const file of e.detail.files) e.detail.complete(file.id);
-        });
+      function print(msg) {
+        app.message(msg);
       }
 
       function alert() {

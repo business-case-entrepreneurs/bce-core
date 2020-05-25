@@ -41,7 +41,7 @@
       }
 
       &[data-off] {
-        background-color: bce-color-d(light);
+        background-color: bce-color(light, 700);
 
         &:after {
           left: 0;
@@ -50,7 +50,7 @@
       }
 
       &[data-on] {
-        background-color: bce-color-l();
+        background-color: bce-color(400);
 
         &:after {
           background-color: bce-color();
@@ -64,10 +64,11 @@
   cursor: default;
 
   > div {
-    background-color: bce-color-l(disable);
+    background-color: bce-color-on(surface, 4);
+    opacity: 0.6;
 
     &:after {
-      background-color: bce-color(disable);
+      background-color: bce-color-on(surface, 3);
     }
   }
 }
@@ -82,12 +83,12 @@
     }
 
     &[data-off]:after {
-      background-color: bce-color-d(light);
-      border: 5px solid bce-color(light);
+      background-color: bce-color(ghost);
+      border: 5px solid bce-color-on(surface, 2);
     }
 
     &[data-on]:after {
-      background-color: bce-color-l();
+      background-color: bce-color(400);
       border: 5px solid bce-color();
     }
   }
@@ -105,6 +106,7 @@
 
   .slot-container {
     margin: 0 12px;
+    color: bce-color-on(surface, 2);
   }
 
   @include media-small {

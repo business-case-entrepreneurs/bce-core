@@ -30,8 +30,9 @@ export class SideBar {
   componentDidLoad() {
     const observer = new MutationObserver(() => {
       const root = this.el.shadowRoot!;
-      const fixed = root.querySelector('.fixed')! as HTMLDivElement;
-      fixed.style.top = this.el.offsetTop + 'px';
+      const container = root.querySelector('.container')! as HTMLDivElement;
+      container.style.top = this.el.offsetTop + 'px';
+      // container.style.height = this.el.offsetHeight + 'px';
     });
 
     observer.observe(this.el.parentElement!, {
@@ -44,7 +45,7 @@ export class SideBar {
   render() {
     return (
       <Host role="complementary">
-        <div class="fixed">
+        <div class="container">
           <slot />
         </div>
       </Host>

@@ -1,7 +1,8 @@
 @import './bce-link.scss';
 
 :host a {
-  background-color: rgba(255, 255, 255, 0.05);
+  @include elevate(2, false);
+  background-color: bce-color(surface);
 }
 
 // :host(:last-child) a {

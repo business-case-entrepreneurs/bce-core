@@ -51,7 +51,7 @@ export class Root {
     `;
 
     const action = document.createElement('bce-button');
-    action.design = 'text';
+    action.design = 'outline';
     action.slot = 'action';
     action.type = 'submit';
     action.innerText = options.ok || 'Ok';
@@ -78,12 +78,12 @@ export class Root {
     const action2 = document.createElement('bce-button');
     action2.slot = 'action';
     action2.design = 'text';
-    action2.style.opacity = '0.7';
     action2.innerText = options.cancel || 'Cancel';
     dialog.appendChild(action2);
 
     const action1 = document.createElement('bce-button');
     action1.slot = 'action';
+    action1.design = 'outline';
     action1.innerText = options.ok || 'Ok';
     if (options.ok !== false) dialog.appendChild(action1);
 
@@ -149,7 +149,7 @@ export class Root {
     duration = duration < 1 ? 1 : duration;
     duration = duration > 10 ? 10 : duration;
 
-    const color = options.color || 'dark';
+    const color = options.color;
     this._messageQueue = [...this._messageQueue, { text, color, duration }];
     this.messageCheck();
   }

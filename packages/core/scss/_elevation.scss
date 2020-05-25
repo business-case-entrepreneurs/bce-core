@@ -1,11 +1,8 @@
 /* prettier-ignore */
-@mixin elevate($dp: 1, $z-index: true, $transition: false) {
-  @if $z-index {
-    z-index: $dp;
-  }
-  @if $transition {
-    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
-  }
+@mixin elevate($dp: 1, $z-index: true, $transition: false, $surface: true) {
+  @if $surface    { #{_bce-color-var(surface, null)}: #{bce-color(surface, $dp)}; }
+  @if $transition { transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1); }
+  @if $z-index    { z-index: $dp; }
 
   @if $dp == 0 {
     box-shadow: none;

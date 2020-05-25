@@ -3,11 +3,12 @@
   display: inline-block;
 
   .trigger {
-    @include bce-color-default(dark);
+    @include bce-color-default-on(surface);
     cursor: pointer;
+    text-transform: none;
   }
 
-  .dropdown {
+  [role='menu'] {
     @include elevate(8);
     background-color: bce-color();
     border-radius: 4px;
