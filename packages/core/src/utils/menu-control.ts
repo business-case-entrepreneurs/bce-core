@@ -12,7 +12,11 @@ export class MenuControl {
   #trigger: AnyButton;
 
   private handleClickDocument = (event: MouseEvent) => {
-    if (!this.#parent.contains(event.target as Node)) this.toggle(false);
+    const parent = this.#parent;
+    if (parent.contains(event.target as Node)) return;
+    if ('path' in event && (event as any).path.indexOf(parent) >= 0) return;
+
+    this.toggle(false);
   };
 
   private handleClickTrigger = () => {
