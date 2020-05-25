@@ -1,6 +1,6 @@
 {
   "name": "@bcase/core-react",
-  "version": "0.0.34",
+  "version": "0.1.0",
   "description": "React specific wrapper for @bcase/core",
   "license": "UNLICENSED",
   "author": {
@@ -19,7 +19,7 @@
     "clean": "rimraf dist src/react-component-lib src/components.ts"
   },
   "devDependencies": {
-    "@bcase/core": "^0.0.34",
+    "@bcase/core": "^0.1.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "react": "^16.13.1",
