@@ -5,11 +5,15 @@ import { Validation } from '../../models/validation';
 
 @Component({
   tag: 'bce-form',
+  styleUrl: 'bce-form.scss',
   shadow: true
 })
 export class BceForm {
   @Element()
   private el!: HTMLBceFormElement;
+
+  @Prop({ reflect: true })
+  public design?: 'card';
 
   @Prop()
   public errors: Validation[] = [];
