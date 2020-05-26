@@ -52,6 +52,12 @@ export class Input {
   @Prop({ reflect: true })
   public disabled = false;
 
+  @Prop({ reflect: true })
+  public max?: number;
+
+  @Prop({ reflect: true })
+  public min?: number;
+
   @Prop()
   public placeholder?: string;
 
@@ -167,6 +173,8 @@ export class Input {
         <Input
           autocomplete={this.autocomplete}
           disabled={this.disabled}
+          max={this.max}
+          min={this.min}
           placeholder={this.placeholder}
           type={type}
           value={this.value}
