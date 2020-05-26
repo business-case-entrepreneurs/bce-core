@@ -500,5 +500,13 @@
         app.message('Answer: ' + answer);
       }
     </script>
+
+    <script type="module">
+      import { library } from '/static/fa-core.js';
+      import { far } from '/static/fa-far.js';
+      import { fas } from '/static/fa-fas.js';
+
+      library.add(far, fas);
+    </script>
   </body>
 </html>

@@ -1,6 +1,3 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
-import * as FAR from '@fortawesome/free-regular-svg-icons';
-import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { setMode } from '@stencil/core';
 
 import { UUID } from '../utils/uuid';
@@ -14,16 +11,6 @@ const setColorScheme = (scheme: string) => {
     localStorage.removeItem('bce-color-scheme');
     const match = window.matchMedia('(prefers-color-scheme: dark)');
     handleMediaQuery(match);
-  }
-};
-
-const handleMediaQuery = (event: MediaQueryList | MediaQueryListEvent) => {
-  switch (event.media) {
-    case '(prefers-color-scheme: dark)':
-      const preference = localStorage.getItem('bce-color-scheme');
-      const color = preference || (event.matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('color-scheme', color);
-      break;
   }
 };
 
@@ -45,28 +32,6 @@ const main = () => {
     ? match.addEventListener('change', handleMediaQuery)
     : match.addListener(handleMediaQuery);
   handleMediaQuery(match);
-
-  // Temporary
-  library.add(
-    // Nav
-    FAS.faHome,
-    FAS.faChartLine,
-    FAS.faUsers,
-    FAS.faBuilding,
-    FAS.faUserPlus,
-    FAS.faUserTag,
-    FAS.faCreditCard,
-    FAS.faTools,
-    FAS.faUserCircle,
-    FAS.faCity,
-    FAS.faFileInvoice,
-    FAS.faShapes,
-    FAS.faCog,
-    // Color scheme
-    FAS.faStarHalfAlt,
-    FAR.faStar,
-    FAS.faStar
-  );
 
   setMode(el => {
     // Component specific mode's (e.g. bce-button within bce-fab)
@@ -91,6 +56,16 @@ const chain = (el: HTMLElement, child: string, ...parents: string[]) => {
   }
 
   return true;
+};
+
+const handleMediaQuery = (event: MediaQueryList | MediaQueryListEvent) => {
+  switch (event.media) {
+    case '(prefers-color-scheme: dark)':
+      const preference = localStorage.getItem('bce-color-scheme');
+      const color = preference || (event.matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('color-scheme', color);
+      break;
+  }
 };
 
 export default main;

@@ -12,7 +12,26 @@ export const config: Config = {
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [
     { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
-    { type: 'www', dir: './www', serviceWorker: null },
+    {
+      type: 'www',
+      dir: './www',
+      copy: [
+        {
+          src: '../node_modules/@fortawesome/fontawesome-svg-core/index.es.js',
+          dest: 'static/fa-core.js'
+        },
+        {
+          src:
+            '../node_modules/@fortawesome/free-regular-svg-icons/index.es.js',
+          dest: 'static/fa-far.js'
+        },
+        {
+          src: '../node_modules/@fortawesome/free-solid-svg-icons/index.es.js',
+          dest: 'static/fa-fas.js'
+        }
+      ],
+      serviceWorker: null
+    },
     reactOutputTarget({
       componentCorePackage: '@bcase/core',
       proxiesFile: '../react/src/components.ts'
