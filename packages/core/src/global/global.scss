@@ -16,14 +16,14 @@ body {
 
 [color-scheme='light'] {
   @include bce-color-define-background(#fff #000);
-  @include bce-color-define-surface(#f9f9f9 #000);
+  @include bce-color-define-surface(#f9f9f9 #000, #999);
   @include bce-color-define-accent(#eee #000, light);
   @include bce-color-define-accent(#24292e #fff, dark);
 }
 
 [color-scheme='dark'] {
   @include bce-color-define-background(#000 #fff);
-  @include bce-color-define-surface(#121212 #fff);
+  @include bce-color-define-surface(#121212 #fff, #fff);
   @include bce-color-define-accent(#555 #fff, light);
   @include bce-color-define-accent(#2b2b2b #fff, dark);
 }
@@ -46,7 +46,7 @@ bce-root {
     grid-area: status;
   }
 
-  header,
+  > header,
   bce-header {
     grid-area: header;
   }
@@ -65,7 +65,7 @@ bce-root {
     overflow: auto;
   }
 
-  footer,
+  > footer,
   bce-footer {
     grid-area: footer;
   }
