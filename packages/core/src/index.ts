@@ -1,5 +1,7 @@
+import { ColorScheme } from './models/color-scheme';
 import { FileManager } from './utils/file-manager';
 
+export * from './models/color-scheme';
 export * from './models/file-ref';
 export * from './models/file-server';
 export * from './utils/bce-file';
@@ -18,7 +20,8 @@ declare global {
   interface BCE {
     file: FileManager;
     generateId: () => string;
-    setColorScheme: (scheme: 'auto' | 'dark' | 'light') => void;
+    getColorScheme: () => ColorScheme;
+    setColorScheme: (scheme: ColorScheme) => void;
     FileManager: typeof FileManager;
   }
 

@@ -2,21 +2,12 @@ import { setMode } from '@stencil/core';
 
 import { UUID } from '../utils/uuid';
 import { FileManager } from '../utils/file-manager';
-
-const setColorScheme = (scheme: string) => {
-  if (scheme === 'dark' || scheme === 'light') {
-    localStorage.setItem('bce-color-scheme', scheme);
-    document.documentElement.setAttribute('color-scheme', scheme);
-  } else {
-    localStorage.removeItem('bce-color-scheme');
-    const match = window.matchMedia('(prefers-color-scheme: dark)');
-    handleMediaQuery(match);
-  }
-};
+import * as color from '../utils/color-scheme';
 
 const bce: BCE = {
   file: FileManager.inMemory(),
-  setColorScheme,
+  getColorScheme: color.getColorScheme,
+  setColorScheme: color.setColorScheme,
   generateId: () => UUID.v4(),
 
   FileManager
@@ -25,13 +16,7 @@ const bce: BCE = {
 const main = () => {
   // Setup global config
   window.BCE = window.BCE || bce;
-
-  // Detect preferred color scheme
-  const match = window.matchMedia('(prefers-color-scheme: dark)');
-  match.addEventListener
-    ? match.addEventListener('change', handleMediaQuery)
-    : match.addListener(handleMediaQuery);
-  handleMediaQuery(match);
+  color.initColorScheme();
 
   setMode(el => {
     // Component specific mode's (e.g. bce-button within bce-fab)
@@ -56,16 +41,6 @@ const chain = (el: HTMLElement, child: string, ...parents: string[]) => {
   }
 
   return true;
-};
-
-const handleMediaQuery = (event: MediaQueryList | MediaQueryListEvent) => {
-  switch (event.media) {
-    case '(prefers-color-scheme: dark)':
-      const preference = localStorage.getItem('bce-color-scheme');
-      const color = preference || (event.matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('color-scheme', color);
-      break;
-  }
 };
 
 export default main;
