@@ -99,6 +99,7 @@
         <div style="flex: 1 0 auto;"></div>
 
         <bce-menu
+          id="color-scheme"
           color="dark"
           icon="fas:star-half-alt"
           label="Color Theme"
@@ -106,14 +107,20 @@
         >
           <bce-button
             icon="fas:star-half-alt"
-            onclick="BCE.setColorScheme('auto')"
+            onclick="BCE.setColorScheme('auto'); updateColorIcon()"
           >
             Auto
           </bce-button>
-          <bce-button icon="far:star" onclick="BCE.setColorScheme('light')">
+          <bce-button
+            icon="far:star"
+            onclick="BCE.setColorScheme('light'); updateColorIcon()"
+          >
             Light
           </bce-button>
-          <bce-button icon="fas:star" onclick="BCE.setColorScheme('dark')">
+          <bce-button
+            icon="fas:star"
+            onclick="BCE.setColorScheme('dark'); updateColorIcon()"
+          >
             Dark
           </bce-button>
         </bce-menu>
@@ -480,6 +487,10 @@
     <script nomodule src="build/bce.js"></script>
 
     <script>
+      window.onload = () => {
+        updateColorIcon();
+      };
+
       function print(msg) {
         app.message(msg);
       }
@@ -498,6 +509,22 @@
         const options = { ok: 'Yes', cancel: 'Cancel' };
         const answer = await app.confirm(title, message, options);
         app.message('Answer: ' + answer);
+      }
+
+      function getColorIcon(color) {
+        switch (color) {
+          case 'auto':
+            return 'fas:star-half-alt';
+          case 'dark':
+            return 'fas:star';
+          case 'light':
+            return 'far:star';
+        }
+      }
+
+      function updateColorIcon() {
+        const el = document.querySelector('#color-scheme');
+        el.icon = getColorIcon(BCE.getColorScheme());
       }
     </script>
 
