@@ -83,6 +83,10 @@ export class Fab {
     this.handleSlotChange();
   }
 
+  componentDidUnload() {
+    this.#menu.dispose();
+  }
+
   private initButton(button: HTMLBceButtonElement) {
     this.propagateState(button);
 
