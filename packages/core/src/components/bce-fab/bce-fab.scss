@@ -57,23 +57,33 @@
   opacity: 0.6;
 }
 
-:host([info]) [data-info] {
-  position: fixed;
-  right: 88px;
-  bottom: 16px;
-  left: 16px;
-  height: 56px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  pointer-events: none;
+:host([label]) .trigger {
+  .label {
+    position: fixed;
+    right: 88px;
+    bottom: 16px;
+    left: 16px;
+    height: 56px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    pointer-events: none;
+    visibility: hidden;
 
-  > bce-button {
-    @include bce-color-inherit();
-    display: block;
-    font-size: 12px;
-    text-transform: none;
-    pointer-events: auto;
+    span {
+      @include bce-color-default(dark);
+      @include elevate(6);
+      background-color: bce-color();
+      color: bce-color-on();
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+  }
+
+  &:hover .label,
+  &:focus .label,
+  &[aria-expanded] .label {
+    visibility: visible;
   }
 }
 

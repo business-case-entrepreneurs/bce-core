@@ -26,10 +26,10 @@ export class Fab {
   public icon: string = Icon.DEFAULT_ICON.iconName;
 
   @Prop({ reflect: true })
-  public info: string = '';
+  public inline?: boolean;
 
   @Prop({ reflect: true })
-  public inline?: boolean;
+  public label?: string;
 
   #items: HTMLBceButtonElement[] = [];
   #menu!: MenuControl;
@@ -116,33 +116,20 @@ export class Fab {
   render() {
     return [
       !this.inline && this.renderMenu(),
-      // this.info && (
-      //   <div data-info>
-      //     <bce-button
-      //       design={this.active ? 'text' : 'contained'}
-      //       color={this.color}
-      //       disabled={this.disabled}
-      //       onClick={this.handleClick}
-      //       onMouseDown={this.handleMouseDown}
-      //       small
-      //     >
-      //       {this.info}
-      //     </bce-button>
-      //   </div>
-      // ),
       <button
-        class="trigger"
-        disabled={this.disabled}
-        onMouseDown={this.handleMouseDown}
         aria-haspopup={true}
         aria-expanded={this.active}
+        class="trigger"
+        disabled={this.disabled}
+        onClick={this.disableClick}
+        onMouseDown={this.handleMouseDown}
       >
-        <bce-icon
-          raw={this.icon}
-          size="lg"
-          onClick={this.disableClick}
-          fixed-width
-        />
+        {this.label && (
+          <div class="label">
+            <span>{this.label}</span>
+          </div>
+        )}
+        <bce-icon raw={this.icon} size="lg" fixed-width />
       </button>,
       this.inline && this.renderMenu(),
       <div class="backdrop" onClick={() => this.toggle(false)} />
