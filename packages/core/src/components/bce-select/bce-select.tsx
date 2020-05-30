@@ -69,7 +69,7 @@ export class Select {
   private handleBlur = async () => {
     this.hasFocus = false;
     await new Promise(res => setTimeout(res, 200));
-    this._open = this._options.some(o => o.hasFocus);
+    // this._open = this._options.some(o => o.hasFocus);
   };
 
   private handleClick = () => {
