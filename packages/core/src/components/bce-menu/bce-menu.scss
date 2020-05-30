@@ -10,6 +10,7 @@
 
   [role='menu'] {
     @include elevate(8);
+    position: absolute;
     background-color: bce-color();
     border-radius: 4px;
     transition: opacity 150ms ease-in-out;
