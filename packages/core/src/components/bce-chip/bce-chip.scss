@@ -1,5 +1,4 @@
 :host {
-  @include bce-color-default(primary);
   position: relative;
   display: inline-block;
   background-color: bce-color(ghost);
@@ -68,9 +67,27 @@
   }
 }
 
+:host(:focus-within) {
+  background-color: bce-color(ghost, 300);
+  color: bce-color-on(surface);
+}
+
+:host(:hover) {
+  background-color: bce-color(ghost, 400);
+  color: bce-color-on(surface);
+}
+
 :host([checked]) {
   color: bce-color-on();
   background-color: bce-color();
+}
+
+:host([checked]:focus-within) {
+  background-color: bce-color(300);
+}
+
+:host([checked]:hover) {
+  background-color: bce-color(400);
 }
 
 :host([thumbnail][icon]) [data-icon],

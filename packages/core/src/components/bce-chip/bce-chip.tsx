@@ -40,9 +40,6 @@ export class BceChip {
   @Prop({ reflect: true })
   public design?: ChipDesign;
 
-  @Prop({ reflect: true, attribute: 'focus' })
-  public hasFocus?: boolean;
-
   @Prop({ reflect: true })
   public icon?: string;
 
@@ -75,10 +72,6 @@ export class BceChip {
 
   private _id = UUID.v4();
 
-  private handleBlur = () => {
-    this.hasFocus = false;
-  };
-
   public handleClick = () => {
     const query = this.name
       ? `bce-chip[type='${this.type}'][name='${this.name}']`
@@ -104,10 +97,6 @@ export class BceChip {
         this.onChip.emit(value);
         return;
     }
-  };
-
-  private handleFocus = () => {
-    this.hasFocus = true;
   };
 
   private handleMouseDown = (event: MouseEvent) => {
@@ -173,11 +162,7 @@ export class BceChip {
       console.warn('[bce-chip] The outline design is unimplemented.');
 
     return (
-      <Host
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onMouseDown={this.handleMouseDown}
-      >
+      <Host onMouseDown={this.handleMouseDown}>
         {this.renderThumbnail()}
         {this.renderIcon()}
         <input
