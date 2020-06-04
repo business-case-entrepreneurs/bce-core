@@ -46,7 +46,9 @@ export class InputContainer {
     const InputCreator = this._inputCreator;
     return (
       <InputCreator>
-        <slot />
+        <div class="container">
+          <slot />
+        </div>
       </InputCreator>
     );
   }
