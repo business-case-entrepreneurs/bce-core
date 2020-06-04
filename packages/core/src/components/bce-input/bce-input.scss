@@ -19,7 +19,7 @@
     padding: 14px 12px;
     font-size: 0.9em;
     font-family: inherit;
-    background-color: bce-color(surface);
+    background-color: bce-color(surface, 0);
     color: bce-color-on(surface);
     border: 1px solid bce-color-on(surface, 4);
     border-radius: 4px;
@@ -65,7 +65,7 @@
 :host([disabled]) {
   input,
   textarea {
-    background-color: bce-color-on(surface, 4);
+    background-color: bce-color(surface);
     color: bce-color-on(surface, 3);
     border-color: bce-color-on(surface, 4);
   }
