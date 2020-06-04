@@ -6,13 +6,12 @@ import {
   Event,
   EventEmitter,
   h,
-  Prop,
-  Host
+  Host,
+  Prop
 } from '@stencil/core';
 
 import { OptionType } from '../../models/option-type';
 import { SelectValue } from '../../models/select-value';
-import { UUID } from '../../utils/uuid';
 
 library.add(faCheck);
 
@@ -48,7 +47,7 @@ export class Option {
   @Event({ eventName: 'bce-core:option' })
   private onOption!: EventEmitter<SelectValue>;
 
-  private _id = UUID.v4();
+  #id = window.BCE.generateId();
 
   private handleBlur = () => {
     this.hasFocus = false;
@@ -99,7 +98,7 @@ export class Option {
         onFocus={this.handleFocus}
       >
         <input
-          id={this._id}
+          id={this.#id}
           checked={!!this.checked}
           name={this.name}
           type={this.type === 'dropdown' ? 'checkbox' : this.type}
@@ -108,7 +107,7 @@ export class Option {
         {this.type === 'checkbox' && this.checked && (
           <bce-icon raw="fas:check" fixed-width />
         )}
-        <label htmlFor={this._id} onClick={this.ignoreEvent}>
+        <label htmlFor={this.#id} onClick={this.ignoreEvent}>
           <slot />
         </label>
       </Host>
