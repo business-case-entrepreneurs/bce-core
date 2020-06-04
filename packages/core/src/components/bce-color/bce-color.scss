@@ -10,7 +10,7 @@
   .container {
     position: relative;
     width: 100%;
-    background-color: bce-color(surface, 0);
+    background-color: bce-color(surface);
     border: 1px solid bce-color-on(surface, 4);
     border-radius: 4px;
     transition: border-color 0.3s ease-in-out;
