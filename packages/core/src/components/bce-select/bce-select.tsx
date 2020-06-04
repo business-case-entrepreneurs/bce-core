@@ -157,6 +157,11 @@ export class Select {
     }
   }
 
+  @Watch('validation')
+  public watchValidation() {
+    this.validate();
+  }
+
   @Listen('bce-core:chip')
   @Listen('bce-core:option')
   public handleChip(event: CustomEvent) {

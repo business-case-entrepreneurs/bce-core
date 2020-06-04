@@ -1,4 +1,4 @@
-import { Component, Element, h, Method, Prop } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { ValidatorError } from '../../utils/validator';
@@ -75,6 +75,11 @@ export class Switch {
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
     return this._inputCreator.validate(silent);
+  }
+
+  @Watch('validation')
+  public watchValidation() {
+    this.validate();
   }
 
   render() {

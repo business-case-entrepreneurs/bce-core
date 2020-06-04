@@ -1,6 +1,14 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { Component, Element, h, Method, Prop, State } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Method,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { InputType } from '../../models/input-type';
@@ -136,6 +144,11 @@ export class Input {
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
     return this._inputCreator.validate(silent);
+  }
+
+  @Watch('validation')
+  public watchValidation() {
+    this.validate();
   }
 
   componentDidLoad() {

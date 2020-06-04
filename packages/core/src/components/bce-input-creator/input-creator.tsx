@@ -64,25 +64,26 @@ export const getInputCreator = <T extends any>(
     else _debounceValidate();
   };
 
-  const reset = () => {
-    error = '';
-    if (onerror) onerror(error);
-  };
+  const reset = () => updateError([]);
 
   const validate = async (silent = false) => {
     const props = getProps();
-    if (!props.validation) return [];
+    if (!props.validation) return updateError([]);
 
     const label = props.label || '';
     const name = props.name || '';
     const meta = { label, name };
 
     const errors = await validator.validate(props.validation, props.el, meta);
-    if (!silent && onerror) {
-      error = errors.length ? errors[0].message : '';
-      onerror(error);
-    }
+    return updateError(errors, silent);
+  };
 
+  const updateError = <T extends ValidatorError[]>(
+    errors: T,
+    silent = false
+  ): T => {
+    error = errors.length ? errors[0].message : '';
+    if (!silent && onerror) onerror(error);
     return errors;
   };
 

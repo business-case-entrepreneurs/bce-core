@@ -96,6 +96,11 @@ export class Color {
     return this._inputCreator.validate(silent);
   }
 
+  @Watch('validation')
+  public watchValidation() {
+    this.validate();
+  }
+
   render() {
     const InputCreator = this._inputCreator;
     const [v1, v2] = this.value ? this.value.split(' ') : [];
