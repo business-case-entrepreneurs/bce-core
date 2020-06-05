@@ -14,6 +14,8 @@ import {
 } from '@stencil/core';
 
 import { MessageOptions } from '../../models/message-options';
+import { getColorShade, setColorShade } from '../../utils/color';
+import { throttle } from '../../utils/throttle';
 import { UUID } from '../../utils/uuid';
 
 @Component({
@@ -35,10 +37,18 @@ export class Root {
   private _messageQueue: ({ text: string } & MessageOptions)[] = [];
 
   #messageTimer = 0;
+  #setColorShade = throttle(setColorShade, 200, { ensureLast: true });
 
   private handleSlotChange = () => {
     this._fab = !!this.el.querySelector('bce-fab:not([inline]');
   };
+
+  @Method()
+  public async accent(name: string, colors?: string, mix?: string) {
+    return colors
+      ? this.#setColorShade(this.el, name, colors, mix)
+      : getColorShade(this.el, name);
+  }
 
   @Method()
   public alert(title: string, message: string, options: AlertOptions = {}) {

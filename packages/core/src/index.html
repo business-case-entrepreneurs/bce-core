@@ -107,19 +107,19 @@
         >
           <bce-button
             icon="fas:star-half-alt"
-            onclick="BCE.setColorScheme('auto'); updateColorIcon()"
+            onclick="BCE.setColorScheme('auto'); updateColorSchemeIcon()"
           >
             Auto
           </bce-button>
           <bce-button
             icon="far:star"
-            onclick="BCE.setColorScheme('light'); updateColorIcon()"
+            onclick="BCE.setColorScheme('light'); updateColorSchemeIcon()"
           >
             Light
           </bce-button>
           <bce-button
             icon="fas:star"
-            onclick="BCE.setColorScheme('dark'); updateColorIcon()"
+            onclick="BCE.setColorScheme('dark'); updateColorSchemeIcon()"
           >
             Dark
           </bce-button>
@@ -127,6 +127,11 @@
       </bce-side-bar>
 
       <main>
+        <bce-card>
+          <bce-color id="color-primary" label="Primary"></bce-color>
+          <bce-color id="color-secondary" label="Secondary"></bce-color>
+        </bce-card>
+
         <bce-card>
           <h3>BCE Button</h3>
 
@@ -241,7 +246,6 @@
                 rows="4"
                 info="Provide a description."
               ></bce-input>
-              <bce-color label="Color" value="#215475 #ffffff"></bce-color>
 
               <div style="text-align: right;">
                 <bce-button design="text" type="reset">Reset</bce-button>
@@ -488,7 +492,9 @@
 
     <script>
       window.onload = () => {
-        updateColorIcon();
+        updateColorSchemeIcon();
+        setupColorPicker('primary');
+        setupColorPicker('secondary');
       };
 
       function print(msg) {
@@ -511,7 +517,13 @@
         app.message('Answer: ' + answer);
       }
 
-      function getColorIcon(color) {
+      async function setupColorPicker(name) {
+        const input = document.querySelector('#color-' + name);
+        input.value = await app.accent(name);
+        input.addEventListener('input', e => app.accent(name, e.target.value));
+      }
+
+      function getColorSchemeIcon(color) {
         switch (color) {
           case 'auto':
             return 'fas:star-half-alt';
@@ -522,9 +534,9 @@
         }
       }
 
-      function updateColorIcon() {
+      function updateColorSchemeIcon() {
         const el = document.querySelector('#color-scheme');
-        el.icon = getColorIcon(BCE.getColorScheme());
+        el.icon = getColorSchemeIcon(BCE.getColorScheme());
       }
     </script>
 

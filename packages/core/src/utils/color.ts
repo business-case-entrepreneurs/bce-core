@@ -22,6 +22,27 @@ export const colorShade = (color1: string, color2 = '#fff', mix = '#fff') => {
   };
 };
 
+export const getColorShade = (el: HTMLElement, name: string): string => {
+  const style = getComputedStyle(el);
+  const color1 = style.getPropertyValue(`--bce-c500-${name}`);
+  const color2 = style.getPropertyValue(`--bce-con1-${name}`);
+  return `${color1} ${rgbaToHex({ ...parseRgba(color2)!, a: 1 })}`;
+};
+
+export const setColorShade = (
+  el: HTMLElement,
+  name: string,
+  colors: string,
+  mix?: string
+) => {
+  const [color1, color2] = colors.split(' ');
+  const shades = colorShade(color1, color2, mix);
+  for (const shade of Object.keys(shades || {})) {
+    const color = (shades as any)[shade];
+    el.style.setProperty(`--bce-${shade}-${name}`, color);
+  }
+};
+
 const parseColor = (color: string): RGBA | null => {
   return color.startsWith('#') ? parseHex(color) : parseRgba(color);
 };
@@ -47,7 +68,7 @@ const parseHex = (hex: string): RGBA | null => {
 };
 
 const parseRgba = (rgba: string): RGBA | null => {
-  const regex = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d\.]+))?\)$/;
+  const regex = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d\.]+)(%)?)?\)$/;
   const match = rgba.match(regex);
   if (!match) return null;
 
@@ -55,7 +76,7 @@ const parseRgba = (rgba: string): RGBA | null => {
     r: parseInt(match[1], 10),
     g: parseInt(match[2], 10),
     b: parseInt(match[3], 10),
-    a: parseFloat(match[4])
+    a: match[5] !== '%' ? parseFloat(match[4]) : parseInt(match[4], 10) / 100
   };
 };
 
