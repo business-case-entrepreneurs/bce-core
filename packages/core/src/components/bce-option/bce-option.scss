@@ -42,6 +42,10 @@
       border-radius: 6px;
       z-index: -1;
     }
+
+    &[data-empty]:before {
+      right: 5px;
+    }
   }
 }
 

@@ -7,7 +7,8 @@ import {
   EventEmitter,
   h,
   Host,
-  Prop
+  Prop,
+  State
 } from '@stencil/core';
 
 import { OptionType } from '../../models/option-type';
@@ -46,6 +47,9 @@ export class Option {
 
   @Event({ eventName: 'bce-core:option' })
   private onOption!: EventEmitter<SelectValue>;
+
+  @State()
+  private _hasLabel = false;
 
   #id = window.BCE.generateId();
 
@@ -86,9 +90,22 @@ export class Option {
     this.hasFocus = true;
   };
 
+  private handleSlotChange = () => {
+    this._hasLabel = !!this.el.childNodes.length;
+  };
+
   private ignoreEvent = (event: Event) => {
     event.cancelBubble = true;
   };
+
+  componentWillLoad() {
+    this.handleSlotChange();
+  }
+
+  componentDidLoad() {
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    slot?.addEventListener('slotchange', this.handleSlotChange);
+  }
 
   render() {
     return (
@@ -107,7 +124,11 @@ export class Option {
         {this.type === 'checkbox' && this.checked && (
           <bce-icon raw="fas:check" fixed-width />
         )}
-        <label htmlFor={this.#id} onClick={this.ignoreEvent}>
+        <label
+          htmlFor={this.#id}
+          onClick={this.ignoreEvent}
+          data-empty={!this._hasLabel}
+        >
           <slot />
         </label>
       </Host>
