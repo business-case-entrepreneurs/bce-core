@@ -32,6 +32,9 @@ export class Select {
   public center?: boolean;
 
   @Prop({ reflect: true })
+  public design?: 'matrix';
+
+  @Prop({ reflect: true })
   public error?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
@@ -273,13 +276,14 @@ export class Select {
 
   renderFieldset() {
     const InputCreator = this._inputCreator;
+    const radio = this.type === 'choice' || this.type === 'radio';
+    const role = radio ? 'radiogroup' : 'group';
 
     return (
       <InputCreator>
-        <fieldset>
-          {this.label && <legend>{this.label}</legend>}
+        <div class="fieldset" role={role} aria-label={this.label}>
           <slot />
-        </fieldset>
+        </div>
       </InputCreator>
     );
   }

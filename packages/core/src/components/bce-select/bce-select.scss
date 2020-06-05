@@ -7,17 +7,6 @@
   flex-flow: column nowrap;
   margin: 20px 0;
   min-height: 40px;
-
-  fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    text-align: inherit;
-
-    legend {
-      display: none;
-    }
-  }
 }
 
 :host([center]) {
@@ -35,7 +24,7 @@
     line-height: 40px;
   }
 
-  fieldset {
+  .fieldset {
     flex: 0 0 75%;
   }
 
@@ -80,5 +69,14 @@
       display: block;
       max-height: 300px;
     }
+  }
+}
+
+:host([design='matrix']) {
+  margin: 0;
+
+  .fieldset {
+    display: flex;
+    justify-content: space-between;
   }
 }
