@@ -24,8 +24,8 @@ export const colorShade = (color1: string, color2 = '#fff', mix = '#fff') => {
 
 export const getColorShade = (el: HTMLElement, name: string): string => {
   const style = getComputedStyle(el);
-  const color1 = style.getPropertyValue(`--bce-c500-${name}`);
-  const color2 = style.getPropertyValue(`--bce-con1-${name}`);
+  const color1 = style.getPropertyValue(`--bce-c500-${name}`).trim();
+  const color2 = style.getPropertyValue(`--bce-con1-${name}`).trim();
   return `${color1} ${rgbaToHex({ ...parseRgba(color2)!, a: 1 })}`;
 };
 
