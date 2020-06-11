@@ -53,8 +53,8 @@
       display: inline-flex;
       width: 200px;
       height: 10px;
-      // background-color: bce-color(surface);
       border-radius: 4px;
+      pointer-events: none;
 
       div {
         @include elevate(1);
