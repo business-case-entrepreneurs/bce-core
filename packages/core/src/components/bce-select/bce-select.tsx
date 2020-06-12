@@ -49,6 +49,9 @@ export class Select {
   @Prop({ reflect: true })
   public name?: string;
 
+  @Prop({ reflect: true })
+  public placeholder?: string;
+
   @Prop()
   public tooltip?: string;
 
@@ -255,6 +258,7 @@ export class Select {
       <InputCreator>
         <div class="trigger">
           <bce-input
+            placeholder={this.placeholder}
             data-active={this._open}
             onBlur={this.handleBlur}
             onClick={this.handleDropdownClick}
