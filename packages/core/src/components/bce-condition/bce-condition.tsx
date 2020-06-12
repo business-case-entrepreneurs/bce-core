@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Element, h, Prop } from '@stencil/core';
 
 import {
   ConditionGroup,
@@ -15,13 +15,12 @@ import {
   shadow: true
 })
 export class Condition {
+  @Element()
+  private el!: HTMLBceConditionElement;
+
   @Prop()
   public template: ConditionTemplate[] = [
-    {
-      name: 'date',
-      label: 'Date',
-      input: 'date'
-    }
+    { name: 'date', label: 'Date', input: 'date' }
   ];
 
   @Prop()
@@ -34,27 +33,31 @@ export class Condition {
 
   private handleAddCondition = () => {
     const condition = [...this.value.condition, this.createRow()];
-    this.value = { ...this.value, condition };
+    const update = { ...this.value, condition };
+    this.set(update);
   };
 
   // private handleAddGroup = () => {
   //   const condition = [...this.value.condition, this.createGroup()];
-  //   this.value = { ...this.value, condition };
+  //   const update = { ...this.value, condition };
+  //   this.set(update);
   // };
 
   private handleRemoveCondition = (_: Event, path: number[]) => {
-    this.value = this.remove(path, this.value);
+    const update = this.remove(path, this.value);
+    this.set(update);
   };
 
   private handleInput = (event: Event, path: number[], name: string) => {
     const select = event.target as HTMLBceSelectElement;
     const value = (select.value as any) || '';
-    this.value = this.update(path, { [name]: value }, this.value);
+    const update = this.update(path, { [name]: value }, this.value);
+    this.set(update);
   };
 
-  private createGroup(): ConditionGroup {
-    return { match: 'and', condition: [this.createRow()] };
-  }
+  // private createGroup(): ConditionGroup {
+  //   return { match: 'and', condition: [this.createRow()] };
+  // }
 
   private createRow(): ConditionRow {
     return {
@@ -63,6 +66,23 @@ export class Condition {
       check: '',
       value: ''
     };
+  }
+
+  private remove(path: number[], current: ConditionGroup): ConditionGroup {
+    if (!path.length) return current;
+
+    const index = path[0];
+    const next = current.condition[index];
+    const condition = [...current.condition];
+    if (path.length === 1 || !this.isGroup(next)) condition.splice(index, 1);
+    else condition[index] = this.remove(path.slice(1), next);
+    return { ...current, condition };
+  }
+
+  public set(value: ConditionGroup) {
+    this.value = value;
+    const event = new Event('input', { bubbles: true, composed: true });
+    this.el.dispatchEvent(event);
   }
 
   private update<T extends ConditionGroup | ConditionRow>(
@@ -76,17 +96,6 @@ export class Condition {
     const next = current.condition[index];
     const condition = [...current.condition];
     condition[index] = this.update(path.slice(1), value, next);
-    return { ...current, condition };
-  }
-
-  private remove(path: number[], current: ConditionGroup): ConditionGroup {
-    if (!path.length) return current;
-
-    const index = path[0];
-    const next = current.condition[index];
-    const condition = [...current.condition];
-    if (path.length === 1 || !this.isGroup(next)) condition.splice(index, 1);
-    else condition[index] = this.remove(path.slice(1), next);
     return { ...current, condition };
   }
 
