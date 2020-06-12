@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+
+  ul {
+    padding-left: 0;
+
+    header {
+      display: flex;
+      align-items: center;
+
+      bce-select {
+        width: 80px;
+      }
+
+      p {
+        margin: 0 10px;
+      }
+    }
+
+    ul {
+      padding-left: 82px;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  ul.multiple {
+    li {
+      margin-left: 82px;
+    }
+
+    footer {
+      margin-left: 82px;
+    }
+  }
+
+  bce-input,
+  bce-select {
+    margin: 2px;
+  }
+}

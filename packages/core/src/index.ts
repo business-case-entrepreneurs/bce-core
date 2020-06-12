@@ -2,6 +2,7 @@ import { ColorScheme } from './models/color-scheme';
 import { FileManager } from './utils/file-manager';
 
 export * from './models/color-scheme';
+export * from './models/condition';
 export * from './models/file-ref';
 export * from './models/file-server';
 export * from './utils/bce-file';
