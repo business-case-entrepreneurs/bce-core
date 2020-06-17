@@ -76,7 +76,11 @@ export class Fab {
   }
 
   componentDidLoad() {
-    this.#menu = new MenuControl(this.el, this.trigger, this.toggle.bind(this));
+    this.#menu = new MenuControl({
+      parent: this.el,
+      trigger: this.trigger,
+      onToggle: this.toggle.bind(this)
+    });
 
     const slot = this.el.shadowRoot!.querySelector('slot');
     slot?.addEventListener('slotchange', this.handleSlotChange);
@@ -117,12 +121,12 @@ export class Fab {
     return [
       !this.inline && this.renderMenu(),
       <button
-        aria-haspopup={true}
-        aria-expanded={this.active}
         class="trigger"
         disabled={this.disabled}
         onClick={this.disableClick}
         onMouseDown={this.handleMouseDown}
+        aria-haspopup="menu"
+        aria-expanded={this.active}
       >
         {this.label && (
           <div class="label">

@@ -1,6 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { createPopper } from '@popperjs/core';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { createPopper, Instance } from '@popperjs/core';
 import {
   Component,
   Element,
@@ -8,7 +8,6 @@ import {
   Listen,
   Method,
   Prop,
-  State,
   Watch
 } from '@stencil/core';
 
@@ -16,8 +15,9 @@ import { getInputCreator } from '../bce-input-creator/input-creator';
 import { SelectType } from '../../models/select-type';
 import { SelectValue } from '../../models/select-value';
 import { ValidatorError } from '../../utils/validator';
+import { MenuControl } from '../../utils/menu-control';
 
-library.add(faAngleDown);
+library.add(faAngleDown, faAngleUp);
 
 @Component({
   tag: 'bce-select',
@@ -27,6 +27,9 @@ library.add(faAngleDown);
 export class Select {
   @Element()
   private el!: HTMLBceSelectElement;
+
+  @Prop({ reflect: true, mutable: true })
+  public active?: boolean;
 
   @Prop({ reflect: true })
   public center?: boolean;
@@ -64,46 +67,36 @@ export class Select {
   @Prop({ mutable: true })
   public value?: SelectValue;
 
-  @State()
-  private _open = false;
-
-  private _initialized = false;
-  private _initialValue?: SelectValue = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
-  private _options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
-
-  private handleBlur = async () => {
-    this.hasFocus = false;
-    await new Promise(res => setTimeout(res, 200));
-    // this._open = this._options.some(o => o.hasFocus);
-  };
+  #id = window.BCE.generateId();
+  #initialized = false;
+  #initialValue?: SelectValue = this.value;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #menu!: MenuControl;
+  #popper?: Instance;
+  #options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
 
   private handleClick = () => {
     switch (this.type) {
       case 'checkbox':
       case 'filter':
-        this.value = this._options
+        this.value = this.#options
           .filter(option => !!option.value && !!option.checked)
           .map(option => option.value!);
         return;
 
       case 'choice':
       case 'radio':
-        const option = this._options.find(option => option.checked);
+        const option = this.#options.find(option => option.checked);
         this.value = option ? option.value : null;
         return;
     }
-  };
-
-  private handleDropdownClick = () => {
-    // this._open = !this._open;
   };
 
   private handleFilter = (event: Event) => {
     const value = (event.target as HTMLBceInputElement).value || '';
     const filter = value.toLowerCase().trim();
 
-    for (const option of this._options) {
+    for (const option of this.#options) {
       const check1 = option.innerText.toLowerCase();
       const check2 = option.value?.toLowerCase();
 
@@ -114,35 +107,34 @@ export class Select {
       option.style.display = visible ? '' : 'none';
     }
 
+    const filtered = this.#options.filter(o => o.style.display !== 'none');
+    this.#menu?.setItems(filtered);
     event.stopPropagation();
-  };
-
-  private handleFocus = () => {
-    this.hasFocus = true;
-    this._open = true;
   };
 
   private handleSlotChange = () => {
     // Remove existing event listeners
-    for (const option of this._options) this.removeEventHandlers(option);
+    for (const option of this.#options) this.removeEventHandlers(option);
 
     // Load new options
     const children = Array.from(this.el.childNodes);
-    this._options = children.filter(
+    this.#options = children.filter(
       n => ['BCE-CHIP', 'BCE-OPTION'].indexOf(n.nodeName) >= 0
     ) as any;
 
     // Initialize options & attach event listeners
-    for (const option of this._options) {
+    for (const option of this.#options) {
       option.type = this.type;
-      option.name = this.name;
+      option.name = this.name || this.#id;
       this.attachEventHandlers(option);
     }
+
+    if (this.#menu) this.#menu.setItems(this.#options);
   };
 
   @Watch('value')
   public watchValue(value?: SelectValue) {
-    if (this._initialized) this._inputCreator.handleInput();
+    if (this.#initialized) this.#inputCreator.handleInput();
 
     switch (this.type) {
       case 'checkbox':
@@ -151,13 +143,15 @@ export class Select {
           ? value
           : (value && value.split(',').map(v => v.trim())) || [];
 
-        for (const option of this._options)
+        for (const option of this.#options)
           option.checked = values.indexOf(option.value || '') >= 0;
         return;
 
+      case 'dropdown':
+        this.updateDropdown();
       case 'choice':
       case 'radio':
-        for (const option of this._options)
+        for (const option of this.#options)
           option.checked = this.value === option.value;
         return;
     }
@@ -174,11 +168,6 @@ export class Select {
     const dispatch = !equal(this.value || null, event.detail || null);
     this.value = event.detail;
 
-    if (this.type === 'dropdown') {
-      this.updateDropdown();
-      this._open = false;
-    }
-
     if (dispatch) {
       const e = new Event('input', { bubbles: true, composed: true });
       this.el.dispatchEvent(e);
@@ -186,54 +175,70 @@ export class Select {
   }
 
   @Method()
+  public async next() {
+    return this.#menu && this.#menu.next();
+  }
+
+  @Method()
+  public async prev() {
+    return this.#menu && this.#menu.prev();
+  }
+
+  @Method()
   public async reset() {
-    this.value = this._initialValue;
-    this._inputCreator.reset();
+    this.value = this.#initialValue;
+    this.#inputCreator.reset();
+  }
+
+  @Method()
+  public async toggle(active = !this.active) {
+    if (this.type !== 'dropdown') return;
+    this.active = active;
+    if (this.#popper) this.#popper.update();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   private attachEventHandlers(el: HTMLElement) {
-    el.addEventListener('blur', this.handleBlur);
     el.addEventListener('click', this.handleClick);
-    el.addEventListener('focus', this.handleFocus);
   }
 
   private removeEventHandlers(el: HTMLElement) {
-    el.removeEventListener('blur', this.handleBlur);
     el.removeEventListener('click', this.handleClick);
-    el.removeEventListener('focus', this.handleFocus);
   }
 
   private updateDropdown() {
-    const option = this._options.find(o => o.value === this.value);
+    const option = this.#options.find(o => o.value === this.value);
     const input = this.el.shadowRoot!.querySelector('bce-input')!;
-    input.value = option?.innerText || '';
+
+    if (option) {
+      input.value = option.innerText || '';
+      if (this.#menu) this.#menu.setValue(option);
+    }
   }
 
   componentDidLoad() {
-    const slot = this.el.shadowRoot!.querySelector('slot');
-    if (slot) {
-      slot.addEventListener('slotchange', this.handleSlotChange);
-      this.handleSlotChange();
-    }
-
-    this.watchValue(this.value);
-
     if (this.type === 'dropdown') {
       const root = this.el.shadowRoot!;
       const ref = '.trigger bce-input';
       const reference = root.querySelector(ref) as HTMLBceInputElement;
-      const dropdown = root.querySelector('.dropdown') as HTMLDivElement;
+      const dropdown = root.querySelector("[role='listbox']") as HTMLDivElement;
+
+      this.#menu = new MenuControl({
+        parent: this.el,
+        trigger: reference,
+        onToggle: this.toggle.bind(this),
+        listbox: true
+      });
 
       // Create popper.js dropdown
-      createPopper(reference, dropdown, {
-        strategy: 'fixed',
+      this.#popper = createPopper(reference, dropdown, {
+        modifiers: [{ name: 'offset', options: { offset: [0, 2] } }],
         placement: 'bottom-start',
-        modifiers: [{ name: 'offset', options: { offset: [0, 2] } }]
+        strategy: 'fixed'
       });
 
       // Patch popper.js fixed position
@@ -245,41 +250,49 @@ export class Select {
         dropdown.style.left = `${x - offset}px`;
         dropdown.style.width = width + 'px';
       }).observe(reference);
-      this.updateDropdown();
     }
 
-    this._initialized = true;
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    slot?.addEventListener('slotchange', this.handleSlotChange);
+    this.handleSlotChange();
+    this.watchValue(this.value);
+
+    this.#initialized = true;
+  }
+
+  componentDidUnload() {
+    if (this.#popper) this.#popper.destroy();
+    if (this.#menu) this.#menu.dispose();
   }
 
   renderDropdown() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
 
     return (
       <InputCreator>
         <div class="trigger">
           <bce-input
+            a11yAriaHaspopup="listbox"
+            a11yAriaExpanded={this.active}
             placeholder={this.placeholder}
-            data-active={this._open}
-            onBlur={this.handleBlur}
-            onClick={this.handleDropdownClick}
-            onFocus={this.handleFocus}
+            data-active={this.active}
             onInput={this.handleFilter}
           />
-          <bce-icon pre="fas" name="angle-down" fixed-width />
+          <bce-button
+            design="text"
+            icon={this.active ? 'fas:angle-up' : 'fas:angle-down'}
+            tabIndex={-1}
+          />
         </div>
-        <div
-          class="dropdown"
-          aria-expanded={this._open}
-          data-active={this._open}
-        >
+        <ul role="listbox" data-active={this.active}>
           <slot />
-        </div>
+        </ul>
       </InputCreator>
     );
   }
 
   renderFieldset() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
     const radio = this.type === 'choice' || this.type === 'radio';
     const role = radio ? 'radiogroup' : 'group';
 

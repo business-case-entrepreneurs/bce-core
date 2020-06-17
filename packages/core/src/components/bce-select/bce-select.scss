@@ -47,18 +47,20 @@
       }
     }
 
-    bce-icon {
+    bce-button {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
-      right: 12px;
+      right: 0;
+      transform: translateY(-55%);
       pointer-events: none;
     }
   }
 
-  .dropdown {
+  [role='listbox'] {
     @include elevate(2, false);
     display: none;
+    margin: 0;
+    padding: 0;
     font-size: 0.9em;
     border-radius: 4px;
     background-color: bce-color(surface);

@@ -79,6 +79,17 @@ export class Input {
   public value?: string;
   // #endregion
 
+  // #region a11y forwarding
+  @Prop({ reflect: false })
+  public a11yAriaExpanded?: boolean;
+
+  @Prop({ reflect: false })
+  public a11yAriaHaspopup?: 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree';
+
+  @Prop({ reflect: false })
+  public a11yRole?: string;
+  // #endregion
+
   @State()
   private showPassword = false;
 
@@ -189,11 +200,14 @@ export class Input {
           max={this.max}
           min={this.min}
           placeholder={this.placeholder}
+          role={this.a11yRole}
           type={type}
           value={this.value}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           onInput={this.handleInput}
+          aria-expanded={this.a11yAriaExpanded}
+          aria-haspopup={this.a11yAriaHaspopup}
           aria-label={this.label}
           data-hover={this.hover}
         />

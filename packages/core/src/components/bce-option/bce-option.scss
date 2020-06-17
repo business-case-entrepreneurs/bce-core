@@ -88,6 +88,10 @@
   border-radius: 4px;
   cursor: pointer;
 
+  li {
+    list-style: none;
+  }
+
   // Visually hide input
   input {
     position: absolute !important;
@@ -96,6 +100,11 @@
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
   }
+}
+
+:host([type='dropdown']:focus-within) {
+  background-color: bce-color(500);
+  color: bce-color-on();
 }
 
 :host([type='dropdown']:hover) {

@@ -85,13 +85,10 @@ export class Button {
   public a11yAriaExpanded?: boolean;
 
   @Prop({ reflect: false })
-  public a11yAriaHaspopup?: boolean;
+  public a11yAriaHaspopup?: 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree';
 
   @Prop({ reflect: false })
   public a11yRole?: string;
-
-  @Prop({ reflect: false })
-  public a11yTabIndex?: number;
   // #endregion
 
   @State()
@@ -155,7 +152,6 @@ export class Button {
           formmethod={this.formMethod}
           formtarget={this.formTarget}
           role={this.a11yRole}
-          tabIndex={this.a11yTabIndex}
           type={this.type}
           aria-expanded={this.a11yAriaExpanded}
           aria-haspopup={this.a11yAriaHaspopup}

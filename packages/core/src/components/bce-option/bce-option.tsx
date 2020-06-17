@@ -25,9 +25,6 @@ export class Option {
   @Element()
   private el!: HTMLBceOptionElement;
 
-  @Prop({ reflect: true, attribute: 'focus' })
-  public hasFocus?: boolean;
-
   // #region Forwarded to native input
   @Prop({ reflect: true })
   public checked?: boolean;
@@ -45,22 +42,20 @@ export class Option {
   public value?: string;
   // #endregion
 
-  @Event({ eventName: 'bce-core:option' })
-  private onOption!: EventEmitter<SelectValue>;
+  // #region a11y forwarding
+  @Prop({ reflect: false })
+  public a11yRole?: string;
+  // #endregion
 
   @State()
   private _hasLabel = false;
 
+  @Event({ eventName: 'bce-core:option' })
+  private onOption!: EventEmitter<SelectValue>;
+
   #id = window.BCE.generateId();
 
-  private handleBlur = () => {
-    this.hasFocus = false;
-  };
-
-  public handleClick = (event: Event) => {
-    event.preventDefault();
-    event.cancelBubble = true;
-
+  public handleClick = () => {
     const query = this.name
       ? `bce-option[type='${this.type}'][name='${this.name}']`
       : `bce-option[type='${this.type}']`;
@@ -86,16 +81,12 @@ export class Option {
     }
   };
 
-  private handleFocus = () => {
-    this.hasFocus = true;
-  };
-
   private handleSlotChange = () => {
     this._hasLabel = !!this.el.childNodes.length;
   };
 
   private ignoreEvent = (event: Event) => {
-    event.cancelBubble = true;
+    event.stopPropagation();
   };
 
   componentWillLoad() {
@@ -107,30 +98,38 @@ export class Option {
     slot?.addEventListener('slotchange', this.handleSlotChange);
   }
 
+  renderInner() {
+    return [
+      <input
+        id={this.#id}
+        checked={!!this.checked}
+        name={this.name}
+        role={this.a11yRole}
+        type={this.type === 'dropdown' ? 'checkbox' : this.type}
+        aria-selected={this.type === 'dropdown' && this.checked}
+        onInput={this.ignoreEvent}
+      />,
+      this.type === 'checkbox' && this.checked && (
+        <bce-icon raw="fas:check" fixed-width />
+      ),
+      <label
+        htmlFor={this.#id}
+        onClick={this.ignoreEvent}
+        data-empty={!this._hasLabel}
+      >
+        <slot />
+      </label>
+    ];
+  }
+
+  renderLi() {
+    return <li>{this.renderInner()}</li>;
+  }
+
   render() {
     return (
-      <Host
-        onBlur={this.handleBlur}
-        onClick={this.handleClick}
-        onFocus={this.handleFocus}
-      >
-        <input
-          id={this.#id}
-          checked={!!this.checked}
-          name={this.name}
-          type={this.type === 'dropdown' ? 'checkbox' : this.type}
-          onInput={this.ignoreEvent}
-        />
-        {this.type === 'checkbox' && this.checked && (
-          <bce-icon raw="fas:check" fixed-width />
-        )}
-        <label
-          htmlFor={this.#id}
-          onClick={this.ignoreEvent}
-          data-empty={!this._hasLabel}
-        >
-          <slot />
-        </label>
+      <Host onClick={this.handleClick}>
+        {this.type === 'dropdown' ? this.renderLi() : this.renderInner()}
       </Host>
     );
   }

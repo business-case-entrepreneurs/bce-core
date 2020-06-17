@@ -1,18 +1,33 @@
 import { modulo } from './modulo';
 
+type Item = HTMLBceChipElement | HTMLBceButtonElement | HTMLBceOptionElement;
+
 type OnToggle = (active?: boolean) => Promise<void> | void;
 
-type AnyButton = HTMLBceButtonElement | HTMLButtonElement;
+type Trigger =
+  | HTMLBceButtonElement
+  | HTMLButtonElement
+  | HTMLBceInputElement
+  | HTMLInputElement;
+
+interface MenuControlOptions {
+  listbox?: boolean;
+  onToggle: OnToggle;
+  parent: HTMLElement;
+  trigger: Trigger;
+}
 
 export class MenuControl {
-  #items: HTMLBceButtonElement[] = [];
+  #elItems: Item[] = [];
+  #elParent: HTMLElement;
+  #elTrigger: Trigger;
+  #listbox?: boolean;
   #onToggle: OnToggle;
-  #parent: HTMLElement;
-  #selected?: HTMLBceButtonElement;
-  #trigger: AnyButton;
+  #selected?: Item;
+  #value?: Item;
 
   private handleClickDocument = (event: MouseEvent) => {
-    const parent = this.#parent;
+    const parent = this.#elParent;
     if (parent.contains(event.target as Node)) return;
     if (event.composedPath().indexOf(parent) >= 0) return;
 
@@ -25,7 +40,7 @@ export class MenuControl {
 
   private handleClickItem = () => {
     this.toggle(false);
-    this.select(this.#trigger);
+    this.selectTrigger();
   };
 
   private handleKeyDownTrigger = (event: Event) => {
@@ -36,47 +51,40 @@ export class MenuControl {
     return this.handleKeyDown(event as KeyboardEvent, false);
   };
 
-  private get selectedIndex() {
-    return this.#selected ? this.#items.indexOf(this.#selected) : -1;
-  }
-
-  constructor(parent: HTMLElement, trigger: AnyButton, onToggle: OnToggle) {
-    this.#onToggle = onToggle;
-    this.#parent = parent;
-    this.#trigger = trigger;
+  constructor(options: MenuControlOptions) {
+    this.#elParent = options.parent;
+    this.#listbox = options.listbox;
+    this.#elTrigger = options.trigger;
+    this.#onToggle = options.onToggle;
 
     document.addEventListener('click', this.handleClickDocument);
-    this.#trigger.addEventListener('click', this.handleClickTrigger);
-    this.#trigger.addEventListener('keydown', this.handleKeyDownTrigger);
+    this.#elTrigger.addEventListener('click', this.handleClickTrigger);
+    this.#elTrigger.addEventListener('keydown', this.handleKeyDownTrigger);
   }
 
   public dispose() {
     document.removeEventListener('click', this.handleClickDocument);
-    this.#trigger.removeEventListener('click', this.handleClickTrigger);
-    this.#trigger.removeEventListener('keydown', this.handleKeyDownTrigger);
-
-    for (const item of this.#items) {
-      item.removeEventListener('keydown', this.handleKeyDownItem);
-      item.removeEventListener('click', this.handleClickItem);
-    }
+    this.#elTrigger.removeEventListener('click', this.handleClickTrigger);
+    this.#elTrigger.removeEventListener('keydown', this.handleKeyDownTrigger);
   }
 
-  public next() {
-    const target = this.#selected
-      ? this.#items[modulo(this.selectedIndex + 1, this.#items.length)]
-      : this.#items[0];
-    this.select(target);
+  public next(current = this.#selected) {
+    const e = this.#elItems;
+    const i = current ? this.#elItems.indexOf(current) : -1;
+    const target = current ? e[modulo(i + 1, e.length)] : e[0];
+    this.selectItem(target);
   }
 
-  public prev() {
-    const target = this.#selected
-      ? this.#items[modulo(this.selectedIndex - 1, this.#items.length)]
-      : this.#items[this.#items.length - 1];
-    this.select(target);
+  public prev(current = this.#selected) {
+    const e = this.#elItems;
+    const i = current ? this.#elItems.indexOf(current) : -1;
+    const target = current ? e[modulo(i - 1, e.length)] : e[e.length - 1];
+    this.selectItem(target);
   }
 
-  public setItems(items: HTMLBceButtonElement[]) {
-    this.#items = items;
+  public setItems(items: Item[]) {
+    const role = this.#listbox ? 'option' : 'menuitem';
+    this.#elItems = items;
 
     for (const item of items) {
       item.removeEventListener('keydown', this.handleKeyDownItem);
@@ -85,52 +93,83 @@ export class MenuControl {
       item.addEventListener('keydown', this.handleKeyDownItem);
       item.addEventListener('click', this.handleClickItem);
 
-      item.a11yRole = item.a11yRole || 'menuitem';
-      item.a11yTabIndex = item.a11yTabIndex ?? -1;
+      item.a11yRole = item.a11yRole || role;
+      item.tabIndex = item.tabIndex ?? -1;
     }
+  }
+
+  public setValue(item: Item) {
+    this.#value = item;
+  }
+
+  private getNative(
+    el: Trigger | Item
+  ): HTMLBceButtonElement | HTMLBceInputElement {
+    return el.shadowRoot
+      ? (el.shadowRoot.querySelector('button, input') as any)
+      : el;
   }
 
   private handleKeyDown(event: KeyboardEvent, trigger: boolean) {
-    switch (event.keyCode) {
-      case 9: // Tab
+    switch (event.key) {
+      case 'Tab':
         return this.toggle(false);
-      case 13: // Enter
-      case 32: // Space
+      case 'Enter':
+        const target = event.target as Trigger | Item | null;
+        if (this.isDropdownOption(target)) this.getNative(target).click();
+      case ' ':
         if (!trigger) return;
-        this.next();
+        if (this.#value) this.selectItem(this.#value);
+        else this.next();
         event.preventDefault();
         return;
-      case 27: // Escape
+      case 'Esc':
+      case 'Escape':
         this.toggle(false);
-        this.select(this.#trigger);
+        this.selectTrigger();
         return;
-      case 35: // End
-        return !trigger && this.select(this.#items[this.#items.length - 1]);
-      case 36: // Home
-        return !trigger && this.select(this.#items[0]);
-      case 37: // Arrow Left
-      case 38: // Arrow Up
-        return this.prev();
-      case 39: // Arrow Right
-      case 40: // Arrow Down
-        return this.next();
+      case 'End':
+        if (!trigger) return;
+        const last = this.#elItems[this.#elItems.length - 1];
+        return this.selectItem(last);
+      case 'Home':
+        if (!trigger) return;
+        const first = this.#elItems[0];
+        return this.selectItem(first);
+      case 'Left':
+      case 'ArrowLeft':
+        if (trigger && this.#listbox) return this.toggle(true);
+      case 'Up':
+      case 'ArrowUp':
+        return this.prev(this.#selected || this.#value);
+      case 'Right':
+      case 'ArrowRight':
+        if (trigger && this.#listbox) return this.toggle(true);
+      case 'Down':
+      case 'ArrowDown':
+        return this.next(this.#selected || this.#value);
+      default:
+        if (trigger && this.#listbox) return this.toggle(true);
     }
   }
 
-  private isBceButton(el: AnyButton): el is HTMLBceButtonElement {
-    return 'design' in el;
+  private isDropdownOption(
+    el: Trigger | Item | null
+  ): el is HTMLBceOptionElement {
+    return !!el && el.type === 'dropdown';
   }
 
-  private select(el: AnyButton) {
-    if (!el) return;
+  private selectItem(item?: Item) {
+    if (!item) return;
 
-    if (this.isBceButton(el) && el.a11yRole === 'menuitem') {
-      this.toggle(true);
-      this.#selected = el;
-    }
+    this.toggle(true);
+    this.#selected = item;
+    setTimeout(() => this.getNative(item).focus(), 100);
+  }
 
-    if (el.shadowRoot) el.shadowRoot.querySelector('button')!.focus();
-    else el.focus();
+  private selectTrigger() {
+    this.toggle(false);
+    this.getNative(this.#elTrigger).focus();
   }
 
   private toggle(active?: boolean) {

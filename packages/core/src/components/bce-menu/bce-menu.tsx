@@ -70,7 +70,11 @@ export class BceMenu {
   }
 
   componentDidLoad() {
-    this.#menu = new MenuControl(this.el, this.trigger, this.toggle.bind(this));
+    this.#menu = new MenuControl({
+      parent: this.el,
+      trigger: this.trigger,
+      onToggle: this.toggle.bind(this)
+    });
 
     const slot = this.el.shadowRoot!.querySelector('slot');
     slot?.addEventListener('slotchange', this.handleSlotChange);
@@ -86,7 +90,7 @@ export class BceMenu {
   render() {
     return [
       <bce-button
-        a11yAriaHaspopup={true}
+        a11yAriaHaspopup="menu"
         a11yAriaExpanded={this.active}
         class="trigger"
         design="text"

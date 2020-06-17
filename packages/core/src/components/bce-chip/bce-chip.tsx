@@ -67,6 +67,11 @@ export class BceChip {
   public value?: string;
   // #endregion
 
+  // #region a11y forwarding
+  @Prop({ reflect: false })
+  public a11yRole?: string;
+  // #endregion
+
   @Event({ eventName: 'bce-core:chip' })
   private onChip!: EventEmitter<SelectValue>;
 
@@ -166,9 +171,10 @@ export class BceChip {
         {this.renderThumbnail()}
         {this.renderIcon()}
         <input
-          id={this._id}
           checked={!!this.checked}
+          id={this._id}
           name={this.name}
+          role={this.a11yRole}
           type={this.type ? INPUT_TYPE_MAP[this.type] : 'button'}
           value={this.value}
           onClick={this.ignoreClick}
