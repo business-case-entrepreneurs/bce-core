@@ -1,6 +1,6 @@
 :host {
   @include bce-color-default(surface);
-  @include elevate(1);
+  @include elevate(1, false);
   position: relative;
   display: block;
   margin-bottom: 0.5rem;
