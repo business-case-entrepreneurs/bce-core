@@ -20,6 +20,9 @@ export class Color {
   public compact?: boolean;
 
   @Prop({ reflect: true })
+  public default?: string;
+
+  @Prop({ reflect: true })
   public error?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
@@ -60,17 +63,18 @@ export class Color {
     this.hasFocus = true;
   };
 
+  private handleReset = () => {
+    if (!this.default || this.color === this.default) return;
+    const [c1, c2] = this.default.split(' ');
+    this.updateValue(c1, c2);
+  };
+
   private handleInput = (e: Event) => {
     e.stopPropagation();
 
     const colors = this.el.shadowRoot!.querySelectorAll('input');
     const [c1, c2] = Array.from(colors).map(i => i.value);
-    this.value = `${c1} ${c2}`;
-    this._inputCreator.handleInput();
-
-    const shades = colorShade(c1, c2);
-    const event = new CustomEvent(e.type, { bubbles: true, detail: shades });
-    this.el.dispatchEvent(event);
+    this.updateValue(c1, c2);
   };
 
   @Watch('value')
@@ -87,7 +91,7 @@ export class Color {
 
   @Method()
   public async reset() {
-    this.value = this._initialValue;
+    this.value = this.default || this._initialValue;
     this._inputCreator.reset();
   }
 
@@ -99,6 +103,15 @@ export class Color {
   @Watch('validation')
   public watchValidation() {
     this.validate();
+  }
+
+  private updateValue(c1: string, c2: string) {
+    this.value = `${c1} ${c2}`;
+    this._inputCreator.handleInput();
+
+    const shades = colorShade(c1, c2);
+    const event = new CustomEvent('input', { bubbles: true, detail: shades });
+    this.el.dispatchEvent(event);
   }
 
   render() {
@@ -126,13 +139,17 @@ export class Color {
             onInput={this.handleInput}
             aria-label={this.label + ' 2'}
           />
-
           <div class="preview">
             {[...Array(9)].map(() => (
               <div></div>
             ))}
           </div>
         </div>
+        {this.default && (
+          <bce-button design="text" onClick={this.handleReset}>
+            Reset
+          </bce-button>
+        )}
       </InputCreator>
     );
   }

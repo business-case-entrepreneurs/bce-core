@@ -519,7 +519,9 @@
 
       async function setupColorPicker(name) {
         const input = document.querySelector('#color-' + name);
-        input.value = await app.accent(name);
+        const current = await app.accent(name);
+        input.value = current;
+        input.default = current;
         input.addEventListener('input', e => app.accent(name, e.target.value));
       }
 
