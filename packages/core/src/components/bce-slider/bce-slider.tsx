@@ -88,11 +88,10 @@ export class BceSlider {
   public watchValue() {
     const min = this.min != undefined ? this.min : 0;
     const max = this.max != undefined ? this.max : 100;
-    const step = this.step != undefined ? this.step : 1;
     const value =
       this.value != undefined ? this.value : Math.round((max - min) / 2 + min);
 
-    const s = (100 / (max - min)) * step;
+    const s = 100 / (max - min);
     const width = value * s - s * min;
 
     this.el
