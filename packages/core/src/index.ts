@@ -1,5 +1,6 @@
 import { ColorScheme } from './models/color-scheme';
 import { FileManager } from './utils/file-manager';
+import { getColorShade, setColorShade } from './utils/color';
 
 export * from './models/color-scheme';
 export * from './models/condition';
@@ -20,10 +21,12 @@ export * from './utils/validator';
 declare global {
   interface BCE {
     file: FileManager;
+    FileManager: typeof FileManager;
     generateId: () => string;
     getColorScheme: () => ColorScheme;
+    getColorShade: typeof getColorShade;
     setColorScheme: (scheme: ColorScheme) => void;
-    FileManager: typeof FileManager;
+    setColorShade: typeof setColorShade;
   }
 
   interface Window {

@@ -2,15 +2,17 @@ import { setMode } from '@stencil/core';
 
 import { UUID } from '../utils/uuid';
 import { FileManager } from '../utils/file-manager';
+import { getColorShade, setColorShade } from '../utils/color';
 import * as color from '../utils/color-scheme';
 
 const bce: BCE = {
   file: FileManager.inMemory(),
-  getColorScheme: color.getColorScheme,
-  setColorScheme: color.setColorScheme,
+  FileManager,
   generateId: () => UUID.v4(),
-
-  FileManager
+  getColorScheme: color.getColorScheme,
+  getColorShade,
+  setColorScheme: color.setColorScheme,
+  setColorShade
 };
 
 const main = () => {
