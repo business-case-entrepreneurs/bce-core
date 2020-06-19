@@ -69,14 +69,14 @@ export class MenuControl {
   }
 
   public next(current = this.#selected) {
-    const e = this.#elItems;
+    const e = this.#elItems.filter(e => !e.disabled);
     const i = current ? this.#elItems.indexOf(current) : -1;
     const target = current ? e[modulo(i + 1, e.length)] : e[0];
     this.selectItem(target);
   }
 
   public prev(current = this.#selected) {
-    const e = this.#elItems;
+    const e = this.#elItems.filter(e => !e.disabled);
     const i = current ? this.#elItems.indexOf(current) : -1;
     const target = current ? e[modulo(i - 1, e.length)] : e[e.length - 1];
     this.selectItem(target);
