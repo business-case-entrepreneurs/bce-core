@@ -4,6 +4,7 @@ import {
   getMode,
   h,
   Host,
+  Listen,
   Prop,
   State
 } from '@stencil/core';
@@ -110,6 +111,13 @@ export class Button {
   private handleSlotChange = () => {
     this._iconOnly = !!this.icon && !this.el.childNodes.length;
   };
+
+  @Listen('click', { capture: true })
+  public listenClick(event: Event) {
+    if (!this.disabled) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }
 
   componentWillLoad() {
     this.handleSlotChange();
