@@ -32,7 +32,7 @@ export class Fab {
   public label?: string;
 
   #items: HTMLBceButtonElement[] = [];
-  #menu!: MenuControl;
+  #menu?: MenuControl;
 
   private get trigger(): HTMLBceButtonElement {
     const root = this.el.shadowRoot!;
@@ -46,7 +46,7 @@ export class Fab {
 
   private handleSlotChange = () => {
     this.#items = Array.from(this.el.querySelectorAll('bce-button'));
-    this.#menu.setItems(this.#items);
+    this.#menu?.setItems(this.#items);
     for (const item of this.#items) this.initButton(item);
   };
 
@@ -62,12 +62,12 @@ export class Fab {
 
   @Method()
   public async next() {
-    return this.#menu.next();
+    return this.#menu && this.#menu.next();
   }
 
   @Method()
   public async prev() {
-    return this.#menu.prev();
+    return this.#menu && this.#menu.prev();
   }
 
   @Method()
@@ -88,7 +88,7 @@ export class Fab {
   }
 
   componentDidUnload() {
-    this.#menu.dispose();
+    this.#menu?.dispose();
   }
 
   private initButton(button: HTMLBceButtonElement) {
