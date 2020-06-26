@@ -75,6 +75,44 @@
   }
 }
 
+:host([type='input']) {
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: bce-color(surface);
+    color: bce-color-on(surface);
+    border: 1px solid bce-color-on(surface, 4);
+    border-radius: 4px;
+
+    li {
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      height: 38px;
+
+      &:last-child {
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  bce-chip {
+    margin: 3px 2px;
+  }
+
+  input {
+    height: 100%;
+  }
+}
+
 :host([design='matrix']) {
   margin: 0;
 

@@ -305,21 +305,42 @@ export class Select {
     );
   }
 
-  render() {
-    if (this.type === 'input')
-      console.warn('[bce-select] The input type is unimplemented.');
+  renderInput() {
+    const InputCreator = this.#inputCreator;
 
+    return (
+      <InputCreator>
+        <ul class="input">
+          <li>
+            <bce-chip type="input">Beep Beep</bce-chip>
+          </li>
+          <li>
+            <bce-chip type="input">Thing 2</bce-chip>
+          </li>
+          <li>
+            <input type="text" />
+          </li>
+        </ul>
+
+        <slot />
+      </InputCreator>
+    );
+  }
+
+  render() {
     switch (this.type) {
       case 'action':
       case 'checkbox':
       case 'choice':
       case 'filter':
-      case 'input':
       case 'radio':
         return this.renderFieldset();
 
       case 'dropdown':
         return this.renderDropdown();
+
+      case 'input':
+        return this.renderInput();
     }
   }
 }

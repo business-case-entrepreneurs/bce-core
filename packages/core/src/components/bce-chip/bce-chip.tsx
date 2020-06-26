@@ -22,7 +22,7 @@ const INPUT_TYPE_MAP: { [Type in ChipType]: string } = {
   action: 'button',
   choice: 'radio',
   filter: 'checkbox',
-  input: 'text'
+  input: 'checkbox'
 };
 
 @Component({
@@ -42,9 +42,6 @@ export class BceChip {
 
   @Prop({ reflect: true })
   public icon?: string;
-
-  @Prop({ reflect: true })
-  public removable?: boolean;
 
   @Prop({ reflect: true })
   public thumbnail?: string;
@@ -151,7 +148,7 @@ export class BceChip {
   }
 
   renderRemove() {
-    if (!this.removable) return;
+    if (this.type !== 'input') return;
 
     return (
       <div data-remove>
@@ -161,8 +158,6 @@ export class BceChip {
   }
 
   render() {
-    if (this.type === 'input')
-      console.warn('[bce-chip] The input type is unimplemented.');
     if (this.design === 'outline')
       console.warn('[bce-chip] The outline design is unimplemented.');
 
@@ -171,7 +166,7 @@ export class BceChip {
         {this.renderThumbnail()}
         {this.renderIcon()}
         <input
-          checked={!!this.checked}
+          checked={this.type === 'input' || !!this.checked}
           id={this._id}
           name={this.name}
           role={this.a11yRole}

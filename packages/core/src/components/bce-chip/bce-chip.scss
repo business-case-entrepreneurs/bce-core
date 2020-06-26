@@ -102,6 +102,6 @@
   padding-left: 34px;
 }
 
-:host([removable]) > label {
+:host([type='input']) > label {
   padding-right: 34px;
 }
