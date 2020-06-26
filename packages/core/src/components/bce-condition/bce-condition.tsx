@@ -9,6 +9,35 @@ import {
   ConditionTemplate
 } from '../../models/condition';
 
+// Temporary translations
+const TRANSLATIONS = {
+  match: {
+    and: 'Alle',
+    or: 'Een'
+  },
+  matchParagraph: {
+    and: 'onderstaande condities zijn waar',
+    or: 'van de onderstaande condities is waar'
+  },
+  check: {
+    is: 'is',
+    'is-before': 'is voor',
+    'is-after': 'is na',
+    'is-on-or-before': 'is op of voor',
+    'is-on-or-after': 'is op of na',
+    'is-empty': 'is leeg',
+    'is-not-empty': 'is niet leeg',
+    equals: 'is gelijk aan',
+    'not-equals': 'is niet gelijk aan',
+    contains: 'bevat',
+    'not-contains': 'bevat niet',
+    'starts-with': 'begint met',
+    'not-starts-with': 'begint niet met',
+    'ends-with': 'eindigd met',
+    'not-ends-with': 'eindigd niet met'
+  }
+};
+
 @Component({
   tag: 'bce-condition',
   styleUrl: 'bce-condition.scss',
@@ -141,7 +170,10 @@ export class Condition {
         onInput={e => this.handleInput(e, path, 'check')}
       >
         {checks.map(check => (
-          <bce-option value={check}>{check.replace(/-/g, ' ')}</bce-option>
+          <bce-option value={check}>
+            {/* {check.replace(/-/g, ' ')} */}
+            {(TRANSLATIONS.check as any)[check]}
+          </bce-option>
         ))}
       </bce-select>
     );
@@ -240,10 +272,10 @@ export class Condition {
               value={group.match}
               onInput={e => this.handleInput(e, path, 'match')}
             >
-              <bce-option value="and">All</bce-option>
-              <bce-option value="or">Any</bce-option>
+              <bce-option value="and">{TRANSLATIONS.match.and}</bce-option>
+              <bce-option value="or">{TRANSLATIONS.match.or}</bce-option>
             </bce-select>
-            <p>of the following condition match</p>
+            <p>{TRANSLATIONS.matchParagraph[group.match]}</p>
           </header>
         )}
 
@@ -259,7 +291,7 @@ export class Condition {
             icon="fas:plus"
             onClick={this.handleAddCondition}
           >
-            Add Condition
+            Conditie Toevoegen
           </bce-button>
 
           {/* <bce-button
