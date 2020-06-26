@@ -1,10 +1,11 @@
 @import './bce-link.scss';
 
-:host a {
-  @include elevate(2, false);
-  background-color: bce-color(surface);
-}
+:host {
+  margin-left: 16px;
 
-// :host(:last-child) a {
-//   border-radius: 0 0 5px 5px;
-// }
+  a {
+    @include elevate(2, false);
+    background-color: bce-color(surface);
+    font-size: 14px;
+  }
+}
