@@ -16,13 +16,10 @@
 
   bce-form {
     @include elevate(24);
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: absolute;
     padding: 24px;
     width: calc(100vw - 64px);
     max-width: 560px;
-    transform: translate(-50%, -50%);
     border-radius: 4px;
     background-color: bce-color(surface);
     color: bce-color-on(surface);
@@ -46,7 +43,9 @@
 }
 
 :host([active]) {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // Currently only works in Chrome
