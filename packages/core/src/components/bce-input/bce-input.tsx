@@ -61,10 +61,10 @@ export class Input {
   public disabled = false;
 
   @Prop({ reflect: true })
-  public max?: number;
+  public max?: string;
 
   @Prop({ reflect: true })
-  public min?: number;
+  public min?: string;
 
   @Prop()
   public placeholder?: string;
