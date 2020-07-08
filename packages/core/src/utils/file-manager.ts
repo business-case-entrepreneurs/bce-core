@@ -1,7 +1,8 @@
 import { FileRef } from '../models/file-ref';
 import { FileServer } from '../models/file-server';
+import { BceFile } from './bce-file';
 
-export class FileManager implements FileServer {
+export class FileManager {
   #data = new Map<string, FileRef>();
   #observer = new Map<FileManager.Observer, string[] | undefined>();
   #queue = new Map<string, { file: FileRef; progress: number }>();
@@ -47,17 +48,17 @@ export class FileManager implements FileServer {
     return this.#serverRename(id, name);
   };
 
-  public upload: FileServer['upload'] = async (file, path) => {
+  public upload = async (file: BceFile, metadata?: any): Promise<FileRef> => {
     // Create file ref for queue
     const { id, name, type } = file;
     const hash = await file.hash();
     const url = URL.createObjectURL(file.blob);
-    const queued = { hash, id, name, path, type, url };
+    const queued: FileRef = { hash, id, name, type, url };
     this.#queue.set(file.id, { file: queued, progress: 0 });
     this.executeObservers([id]);
 
     // Perform upload task
-    const partial = await this.#serverUpload(file, path);
+    const partial = await this.#serverUpload(file, metadata);
 
     // Remove from queue
     const ref = { ...queued, ...partial };
@@ -206,7 +207,6 @@ const createInMemoryFileManager = (options: InMemoryOptions): FileManager => {
           hash: await file.hash(),
           id: file.id,
           name: file.name,
-          path: '<in-memory>',
           type: file.type,
           url: URL.createObjectURL(file.blob)
         };

@@ -5,5 +5,5 @@ export interface FileServer {
   readonly cancel: (id: string) => Promise<void>;
   readonly delete: (id: string) => Promise<void>;
   readonly rename: (id: string, name: string) => Promise<void>;
-  readonly upload: (file: BceFile, path: string) => Promise<Partial<FileRef>>;
+  readonly upload: (file: BceFile, metadata: any) => Promise<Partial<FileRef>>;
 }

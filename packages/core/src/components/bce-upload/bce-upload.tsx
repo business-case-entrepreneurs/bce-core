@@ -68,11 +68,11 @@ export class Upload {
   @Prop({ reflect: true })
   public label?: string;
 
+  @Prop()
+  public metadata?: any;
+
   @Prop({ reflect: true })
   public name?: string;
-
-  @Prop()
-  public path?: string;
 
   @Prop()
   public tooltip?: string;
@@ -258,9 +258,9 @@ export class Upload {
     const upload = this.multiple ? filtered : filtered.slice(0, 1);
     if (!upload.length) return;
 
+    const { metadata } = this;
     this.updateValue([...this.value, ...upload.map(u => u.id)], false);
-    const path = this.path || '';
-    const uploads = upload.map(file => this._server.upload(file, path));
+    const uploads = upload.map(file => this._server.upload(file, metadata));
     return Promise.all(uploads) as Promise<FileRef[]>;
   }
 
