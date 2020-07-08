@@ -47,17 +47,17 @@ export class FileManager implements FileServer {
     return this.#serverRename(id, name);
   };
 
-  public upload: FileServer['upload'] = async file => {
+  public upload: FileServer['upload'] = async (file, path) => {
     // Create file ref for queue
     const { id, name, type } = file;
     const hash = await file.hash();
     const url = URL.createObjectURL(file.blob);
-    const queued = { hash, id, name, path: '', type, url };
+    const queued = { hash, id, name, path, type, url };
     this.#queue.set(file.id, { file: queued, progress: 0 });
     this.executeObservers([id]);
 
     // Perform upload task
-    const partial = await this.#serverUpload(file);
+    const partial = await this.#serverUpload(file, path);
 
     // Remove from queue
     const ref = { ...queued, ...partial };

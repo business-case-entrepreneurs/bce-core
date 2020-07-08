@@ -72,6 +72,9 @@ export class Upload {
   public name?: string;
 
   @Prop()
+  public path?: string;
+
+  @Prop()
   public tooltip?: string;
 
   @Prop({ reflect: true })
@@ -256,7 +259,8 @@ export class Upload {
     if (!upload.length) return;
 
     this.updateValue([...this.value, ...upload.map(u => u.id)], false);
-    const uploads = upload.map(file => this._server.upload(file));
+    const path = this.path || '';
+    const uploads = upload.map(file => this._server.upload(file, path));
     return Promise.all(uploads) as Promise<FileRef[]>;
   }
 
