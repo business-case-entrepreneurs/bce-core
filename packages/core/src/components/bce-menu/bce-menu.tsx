@@ -28,7 +28,7 @@ export class BceMenu {
   @Prop({ reflect: true })
   public placement = 'bottom-start';
 
-  #menu!: MenuControl;
+  #menu?: MenuControl;
   #popper?: Instance;
 
   private get trigger(): HTMLBceButtonElement {
@@ -38,17 +38,17 @@ export class BceMenu {
 
   private handleSlotChange = () => {
     const items = Array.from(this.el.querySelectorAll('bce-button'));
-    this.#menu.setItems(items);
+    this.#menu?.setItems(items);
   };
 
   @Method()
   public async next() {
-    return this.#menu.next();
+    return this.#menu?.next();
   }
 
   @Method()
   public async prev() {
-    return this.#menu.prev();
+    return this.#menu?.prev();
   }
 
   @Method()
@@ -84,7 +84,7 @@ export class BceMenu {
 
   componentDidUnload() {
     if (this.#popper) this.#popper.destroy();
-    this.#menu.dispose();
+    if (this.#menu) this.#menu.dispose();
   }
 
   render() {

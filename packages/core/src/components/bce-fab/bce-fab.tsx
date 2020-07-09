@@ -62,12 +62,12 @@ export class Fab {
 
   @Method()
   public async next() {
-    return this.#menu && this.#menu.next();
+    return this.#menu?.next();
   }
 
   @Method()
   public async prev() {
-    return this.#menu && this.#menu.prev();
+    return this.#menu?.prev();
   }
 
   @Method()
@@ -88,7 +88,7 @@ export class Fab {
   }
 
   componentDidUnload() {
-    this.#menu?.dispose();
+    if (this.#menu) this.#menu.dispose();
   }
 
   private initButton(button: HTMLBceButtonElement) {
