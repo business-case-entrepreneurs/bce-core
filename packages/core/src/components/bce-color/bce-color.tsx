@@ -80,7 +80,7 @@ export class Color {
   @Watch('value')
   public watchValue(value?: string) {
     const [c1, c2] = value ? value.split(' ') : [];
-    const shades = colorShade(c1, c2);
+    const shades = value && colorShade(c1, c2);
     if (!shades) return;
 
     for (const key of Object.keys(shades)) {
@@ -112,6 +112,10 @@ export class Color {
     const shades = colorShade(c1, c2);
     const event = new CustomEvent('input', { bubbles: true, detail: shades });
     this.el.dispatchEvent(event);
+  }
+
+  componentDidLoad() {
+    this.watchValue(this.value);
   }
 
   render() {
