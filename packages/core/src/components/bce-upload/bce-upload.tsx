@@ -194,7 +194,7 @@ export class Upload {
   @Method()
   public async delete(id: string) {
     this.updateValue(this.value.filter(v => v !== id));
-    return this._server.delete(id);
+    return this._server.delete(id, this.metadata);
   }
 
   @Method()

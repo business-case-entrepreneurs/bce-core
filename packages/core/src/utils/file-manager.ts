@@ -26,7 +26,7 @@ export class FileManager {
     return this.#serverCancel(id);
   };
 
-  public delete: FileServer['delete'] = async id => {
+  public delete: FileServer['delete'] = async (id, metadata) => {
     const queue = this.#queue.get(id);
     const data = this.#data.get(id);
 
@@ -34,7 +34,7 @@ export class FileManager {
     if (data) this.#data.delete(id);
     if (queue || data) this.executeObservers([id]);
 
-    return this.#serverDelete(id);
+    return this.#serverDelete(id, metadata);
   };
 
   public rename: FileServer['rename'] = async (id, name) => {
