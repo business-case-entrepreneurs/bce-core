@@ -51,6 +51,9 @@ export class Upload {
   public active?: boolean;
 
   @Prop({ reflect: true })
+  public debug?: boolean;
+
+  @Prop({ reflect: true })
   public dialog?: boolean;
 
   @Prop({ reflect: true })
@@ -350,11 +353,27 @@ export class Upload {
     );
   }
 
+  renderDebug() {
+    if (!this.debug) return;
+
+    const value = JSON.stringify(this.value, undefined, 2);
+    const data = JSON.stringify(this.data, undefined, 2);
+
+    const code = [];
+    if (value) code.push(`const VALUE = ${value};`);
+    if (this.value.length) code.push('');
+    if (data) code.push(`const DATA = ${data};`);
+    if (Object.keys(data).length) code.push('');
+
+    return <bce-code value={code} language="js" />;
+  }
+
   renderContainer() {
     return (
       <div class="container">
         {this.renderDropzone()}
         {this.renderOptions()}
+        {this.renderDebug()}
       </div>
     );
   }
