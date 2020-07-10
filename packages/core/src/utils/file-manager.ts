@@ -127,10 +127,10 @@ export class FileManager {
   }
 
   private executeObservers(ids: string[]) {
-    for (const [observer, filter] of this.#observer.entries()) {
+    this.#observer.forEach((filter, observer) => {
       if (!filter || ids.some(id => filter.indexOf(id) >= 0))
         observer(this.getDataObject(filter));
-    }
+    });
   }
 
   private getDataObject(filter?: string[]) {
