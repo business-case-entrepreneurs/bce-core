@@ -44,10 +44,34 @@ export class Code {
   @Prop()
   public value: string | string[] = '';
 
-  componentDidLoad() {
+  private highlight() {
     const query = this.inline ? 'code' : 'pre';
     const el = this.el.shadowRoot!.querySelector(query)!;
     if (el) window.Prism.highlightAllUnder(el, !!this.async);
+  }
+
+  componentDidLoad() {
+    this.highlight();
+  }
+
+  componentDidUpdate() {
+    this.highlight();
+  }
+
+  renderCode(classes: string, content: string) {
+    return (
+      <code class={classes} key={content}>
+        {content}
+      </code>
+    );
+  }
+
+  renderPre(classes: string, content: string) {
+    return (
+      <pre class={classes} key={content}>
+        {this.renderCode(classes, content)}
+      </pre>
+    );
   }
 
   render() {
@@ -56,7 +80,8 @@ export class Code {
       ? this.value.join('\n')
       : this.value;
 
-    const code = <code class={classes}>{content}</code>;
-    return this.inline ? code : <pre class={classes}>{code}</pre>;
+    return this.inline
+      ? this.renderCode(classes, content)
+      : this.renderPre(classes, content);
   }
 }
