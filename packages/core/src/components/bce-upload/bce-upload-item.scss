@@ -66,6 +66,14 @@
       opacity: 1;
     }
 
+    &.loading p {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 16px;
+      text-align: center;
+    }
+
     bce-button {
       @include bce-color-default(light);
     }

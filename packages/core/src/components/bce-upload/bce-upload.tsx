@@ -300,7 +300,7 @@ export class Upload {
     return this.value.map(id => {
       const item = this.data[id];
       const { file = id, progress = 1 } = item || {};
-      return <bce-upload-item value={file} loading={progress < 1} />;
+      return <bce-upload-item progress={progress} value={file} />;
     });
   }
 

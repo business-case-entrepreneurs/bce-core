@@ -43,7 +43,7 @@ export class UploadItem {
   public value!: FileRef | string;
 
   @Prop({ reflect: true })
-  public loading?: boolean;
+  public progress!: number;
 
   @State()
   public _muted = true;
@@ -53,6 +53,10 @@ export class UploadItem {
 
   private get id() {
     return typeof this.value === 'string' ? this.value : this.value.id;
+  }
+
+  private get loading() {
+    return this.progress < 1;
   }
 
   private get type() {
@@ -142,13 +146,21 @@ export class UploadItem {
     }
   }
 
+  renderLoading() {
+    if (!this.loading) return;
+    return [
+      <bce-icon raw="fas:spinner" spin />,
+      <p>{(this.progress * 100).toFixed() + '%'}</p>
+    ];
+  }
+
   renderOverlay() {
     const classes = { overlay: true, loading: !!this.loading };
 
     return (
       <div class={classes} onClick={this.ignoreEvent}>
         {this.renderActions()}
-        {this.loading && <bce-icon raw="fas:spinner" spin />}
+        {this.renderLoading()}
         {/* <code class="filename">{this.value.name}</code> */}
         <bce-tooltip container={this.el.shadowRoot!} target=".overlay">
           {typeof this.value === 'string' ? this.value : this.value.name}
