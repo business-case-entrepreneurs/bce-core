@@ -215,7 +215,7 @@ export class Select {
     const input = this.el.shadowRoot!.querySelector('bce-input')!;
 
     if (option) {
-      input.value = option.innerText || '';
+      input.value = (option.innerText || '').trim();
       if (this.#menu) this.#menu.setValue(option);
     }
   }
