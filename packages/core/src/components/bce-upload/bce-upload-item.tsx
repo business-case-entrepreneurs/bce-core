@@ -123,7 +123,6 @@ export class UploadItem {
   }
 
   renderAction<T extends keyof typeof ACTIONS>(...actions: T[]) {
-    console.log(actions, this.disabled);
     return actions
       .filter(action => {
         return this.disabled ? ACTIONS_DISABLED.indexOf(action) < 0 : true;
