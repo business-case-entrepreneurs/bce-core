@@ -30,6 +30,12 @@ const ACTIONS = {
   unmute: 'fas:volume-mute'
 };
 
+const ACTIONS_DISABLED: (keyof typeof ACTIONS)[] = [
+  'delete',
+  'download',
+  'edit'
+];
+
 @Component({
   tag: 'bce-upload-item',
   styleUrl: 'bce-upload-item.scss',
@@ -39,11 +45,14 @@ export class UploadItem {
   @Element()
   private el!: HTMLBceUploadItemElement;
 
-  @Prop()
-  public value!: FileRef | string;
+  @Prop({ reflect: true })
+  public disabled?: boolean;
 
   @Prop({ reflect: true })
   public progress!: number;
+
+  @Prop()
+  public value!: FileRef | string;
 
   @State()
   public _muted = true;
@@ -114,13 +123,18 @@ export class UploadItem {
   }
 
   renderAction<T extends keyof typeof ACTIONS>(...actions: T[]) {
-    return actions.map(action => (
-      <bce-button
-        design="text"
-        icon={ACTIONS[action]}
-        onClick={() => this.handleAction(action)}
-      />
-    ));
+    console.log(actions, this.disabled);
+    return actions
+      .filter(action => {
+        return this.disabled ? ACTIONS_DISABLED.indexOf(action) < 0 : true;
+      })
+      .map(action => (
+        <bce-button
+          design="text"
+          icon={ACTIONS[action]}
+          onClick={() => this.handleAction(action)}
+        />
+      ));
   }
 
   renderActions() {

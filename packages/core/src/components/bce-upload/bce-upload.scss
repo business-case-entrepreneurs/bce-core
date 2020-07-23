@@ -144,3 +144,15 @@
     margin-bottom: 16px;
   }
 }
+
+:host([disabled]) {
+  .dropzone {
+    background-color: bce-color-on(surface, 4);
+    border-color: bce-color-on(surface, 4);
+    cursor: default;
+  }
+
+  .placeholder {
+    color: bce-color-on(surface, 3);
+  }
+}

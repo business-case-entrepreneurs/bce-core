@@ -57,6 +57,9 @@ export class Upload {
   public dialog?: boolean;
 
   @Prop({ reflect: true })
+  public disabled?: boolean;
+
+  @Prop({ reflect: true })
   public error?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
@@ -125,15 +128,19 @@ export class Upload {
   };
 
   private handleDragEnter = (event: DragEvent) => {
-    this._highlight = true;
     event.preventDefault();
     event.stopPropagation();
+    if (this.disabled) return;
+
+    this._highlight = true;
   };
 
   private handleDragLeave = (event: DragEvent) => {
-    this._highlight = false;
     event.preventDefault();
     event.stopPropagation();
+    if (this.disabled) return;
+
+    this._highlight = false;
   };
 
   private handleDragOver = (event: DragEvent) => {
@@ -142,12 +149,14 @@ export class Upload {
   };
 
   private handleDrop = (event: DragEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.disabled) return;
+
     this._highlight = false;
     ripple(event.target as HTMLElement, event);
 
     this.upload(event.dataTransfer!.files);
-    event.preventDefault();
-    event.stopPropagation();
   };
 
   private handleUpload = (event: Event) => {
@@ -159,6 +168,8 @@ export class Upload {
   };
 
   private handleUrl = async () => {
+    if (this.disabled) return;
+
     const url = window.prompt();
     if (!url) return;
 
@@ -183,7 +194,7 @@ export class Upload {
   };
 
   private triggerUpload = () => {
-    if (!this.multiple && this.value.length) return;
+    if (this.disabled || (!this.multiple && this.value.length)) return;
 
     const input = this.el.shadowRoot!.querySelector('input');
     if (input) input.click();
@@ -300,7 +311,14 @@ export class Upload {
     return this.value.map(id => {
       const item = this.data[id];
       const { file = id, progress = 1 } = item || {};
-      return <bce-upload-item progress={progress} value={file} />;
+
+      return (
+        <bce-upload-item
+          disabled={this.disabled}
+          progress={progress}
+          value={file}
+        />
+      );
     });
   }
 
@@ -329,7 +347,7 @@ export class Upload {
   }
 
   renderOptions() {
-    if (!this.multiple && this.value.length) return;
+    if (this.disabled || (!this.multiple && this.value.length)) return;
 
     return (
       <bce-select type="action">
