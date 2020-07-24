@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import * as FAS from '@fortawesome/free-solid-svg-icons';
 import { createPopper, Instance, Placement } from '@popperjs/core';
-import { Component, Element, Prop, h, Method } from '@stencil/core';
+import { Component, Element, Prop, h, Method, State } from '@stencil/core';
 
 import { MenuControl } from '../../utils/menu-control';
 
@@ -26,7 +26,13 @@ export class BceMenu {
   public label?: string;
 
   @Prop({ reflect: true })
+  public labelCollapse?: 'small' | 'medium' | 'large';
+
+  @Prop({ reflect: true })
   public placement = 'bottom-start';
+
+  @State()
+  public hideLabel = false;
 
   #menu?: MenuControl;
   #popper?: Instance;
@@ -39,6 +45,12 @@ export class BceMenu {
   private handleSlotChange = () => {
     const items = Array.from(this.el.querySelectorAll('bce-button'));
     this.#menu?.setItems(items);
+  };
+
+  private handleResize = () => {
+    const BP = { small: 600, medium: 1024, large: 1440 };
+    const width = window.innerWidth;
+    this.hideLabel = !!this.labelCollapse && width < BP[this.labelCollapse];
   };
 
   @Method()
@@ -69,6 +81,13 @@ export class BceMenu {
     if (this.#popper) this.#popper.update();
   }
 
+  componentWillLoad() {
+    if (this.label && this.labelCollapse) {
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
+    }
+  }
+
   componentDidLoad() {
     this.#menu = new MenuControl({
       parent: this.el,
@@ -85,6 +104,7 @@ export class BceMenu {
   componentDidUnload() {
     if (this.#popper) this.#popper.destroy();
     if (this.#menu) this.#menu.dispose();
+    window.removeEventListener('resize', this.handleResize);
   }
 
   render() {
@@ -97,7 +117,7 @@ export class BceMenu {
         icon={this.icon}
         iconPosition="right"
       >
-        {this.label}
+        {!this.hideLabel && this.label}
       </bce-button>,
       <div role="menu" data-active={this.active}>
         <slot />
