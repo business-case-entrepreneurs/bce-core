@@ -38,6 +38,9 @@ export class Select {
   public design?: 'matrix';
 
   @Prop({ reflect: true })
+  public disabled?: boolean;
+
+  @Prop({ reflect: true })
   public error?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
@@ -73,6 +76,7 @@ export class Select {
   #inputCreator = getInputCreator(this, err => (this.error = !!err));
   #menu!: MenuControl;
   #popper?: Instance;
+  #prevTagValue = '';
   #options: (HTMLBceChipElement | HTMLBceOptionElement)[] = [];
 
   private handleClick = () => {
@@ -130,6 +134,48 @@ export class Select {
     }
 
     if (this.#menu) this.#menu.setItems(this.#options);
+  };
+
+  public handleTagKeyDown = (event: KeyboardEvent) => {
+    const input = event.target as HTMLInputElement;
+    this.#prevTagValue = input.value;
+  };
+
+  public handleTagKeyUp = (event: KeyboardEvent) => {
+    if (!Array.isArray(this.value)) this.value = [];
+
+    const input = event.target as HTMLInputElement;
+    const value = input.value.trim();
+
+    switch (event.key) {
+      case 'Backspace': {
+        if (this.#prevTagValue.length) return;
+        this.value = this.value.slice(0, -1);
+        this.dispatchInputEvent();
+        return;
+      }
+      case 'Enter': {
+        this.value = [...this.value, value];
+        input.value = '';
+        this.dispatchInputEvent();
+        return;
+      }
+    }
+  };
+
+  public handleTagRemove = (event: Event) => {
+    const chip = event.target as HTMLBceChipElement;
+    const value = (chip.value || '').trim();
+
+    this.value = Array.isArray(this.value)
+      ? this.value.filter(v => v !== value)
+      : [];
+
+    this.dispatchInputEvent();
+  };
+
+  private ignoreEvent = (event: Event) => {
+    event.stopPropagation();
   };
 
   @Watch('value')
@@ -204,6 +250,11 @@ export class Select {
 
   private attachEventHandlers(el: HTMLElement) {
     el.addEventListener('click', this.handleClick);
+  }
+
+  private dispatchInputEvent() {
+    const e = new Event('input', { bubbles: true, composed: true });
+    this.el.dispatchEvent(e);
   }
 
   private removeEventHandlers(el: HTMLElement) {
@@ -305,21 +356,49 @@ export class Select {
     );
   }
 
-  render() {
-    if (this.type === 'input')
-      console.warn('[bce-select] The input type is unimplemented.');
+  renderTag(value: string) {
+    return (
+      <bce-chip
+        disabled={this.disabled}
+        removable
+        type="input"
+        value={value}
+        onRemove={this.handleTagRemove}
+      >
+        {value}
+      </bce-chip>
+    );
+  }
 
+  renderTagInput() {
+    const InputCreator = this.#inputCreator;
+    return (
+      <InputCreator>
+        <div class="container">
+          {Array.isArray(this.value) && this.value.map(v => this.renderTag(v))}
+
+          <input
+            onInput={this.ignoreEvent}
+            onKeyUp={this.handleTagKeyUp}
+            onKeyDown={this.handleTagKeyDown}
+          />
+        </div>
+      </InputCreator>
+    );
+  }
+
+  render() {
     switch (this.type) {
       case 'action':
       case 'checkbox':
       case 'choice':
       case 'filter':
-      case 'input':
       case 'radio':
         return this.renderFieldset();
-
       case 'dropdown':
         return this.renderDropdown();
+      case 'input':
+        return this.renderTagInput();
     }
   }
 }

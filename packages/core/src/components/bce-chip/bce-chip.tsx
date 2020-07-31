@@ -75,6 +75,9 @@ export class BceChip {
   @Event({ eventName: 'bce-core:chip' })
   private onChip!: EventEmitter<SelectValue>;
 
+  @Event({ eventName: 'remove' })
+  private onRemove!: EventEmitter;
+
   private _id = UUID.v4();
 
   public handleClick = () => {
@@ -107,6 +110,13 @@ export class BceChip {
   private handleMouseDown = (event: MouseEvent) => {
     if (this.disabled) return;
     ripple(this.el.shadowRoot!.querySelector('label')!, event);
+  };
+
+  private handleRemove = (event: Event) => {
+    if (this.disabled) return;
+
+    this.onRemove.emit();
+    event.stopPropagation();
   };
 
   private ignoreClick = (event: Event) => {
@@ -151,18 +161,16 @@ export class BceChip {
   }
 
   renderRemove() {
-    if (!this.removable) return;
+    if (!this.removable || this.disabled) return;
 
     return (
-      <div data-remove>
+      <div data-remove onClick={this.handleRemove}>
         <bce-icon pre="fas" name="times-circle" />
       </div>
     );
   }
 
   render() {
-    if (this.type === 'input')
-      console.warn('[bce-chip] The input type is unimplemented.');
     if (this.design === 'outline')
       console.warn('[bce-chip] The outline design is unimplemented.');
 

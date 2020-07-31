@@ -102,6 +102,6 @@
   padding-left: 34px;
 }
 
-:host([removable]) > label {
+:host([removable]:not([disabled])) > label {
   padding-right: 34px;
 }
