@@ -41,6 +41,7 @@ export const getInputCreator = <T extends any>(
           data-hover={props.hover}
         >
           {props.label}
+          <slot name="label" />
         </bce-label>
       ),
       children,
@@ -49,14 +50,14 @@ export const getInputCreator = <T extends any>(
   };
 
   const getProps: InputCreator['getProps'] = () => ({
-    el: component.el,
-    disabled: component.disabled,
-    hasFocus: component.hasFocus,
-    hover: component.hover,
-    label: component.label,
-    tooltip: component.tooltip,
-    validation: component.validation,
-    info: component.info
+    el: (component as any).el,
+    disabled: (component as any).disabled,
+    hasFocus: (component as any).hasFocus,
+    hover: (component as any).hover,
+    label: (component as any).label,
+    tooltip: (component as any).tooltip,
+    validation: (component as any).validation,
+    info: (component as any).info
   });
 
   const handleInput = () => {
