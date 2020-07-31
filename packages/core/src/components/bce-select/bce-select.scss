@@ -24,14 +24,15 @@
     line-height: 40px;
   }
 
+  .container,
   .fieldset {
     flex: 0 0 75%;
   }
+}
 
-  @include media-medium {
-    :host(:not([compact])) {
-      flex-flow: row nowrap;
-    }
+@include media-medium {
+  :host([label]:not([compact])) {
+    flex-flow: row nowrap;
   }
 }
 
@@ -88,7 +89,6 @@
     border-radius: 4px;
     background-color: bce-color(surface);
     border: 1px solid bce-color-on(surface, 4);
-    width: 100%;
 
     bce-chip {
       margin: 2px;
