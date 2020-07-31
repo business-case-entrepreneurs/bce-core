@@ -200,6 +200,13 @@ export class Select {
         for (const option of this.#options)
           option.checked = this.value === option.value;
         return;
+
+      case 'input':
+        this.value = Array.isArray(value)
+          ? value
+          : value?.split(',').map(v => v.trim()) || [];
+
+        return;
     }
   }
 
