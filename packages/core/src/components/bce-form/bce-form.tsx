@@ -31,7 +31,10 @@ export class BceForm {
   private handleSlotChange = (event: Event | HTMLSlotElement) => {
     const slot = 'target' in event ? (event.target as HTMLSlotElement) : event;
     if (!slot || slot.tagName !== 'SLOT') return;
-    this._inputs = Array.from(this.el.querySelectorAll(FORM_INPUTS.join(',')));
+
+    const query = FORM_INPUTS.join(',');
+    const element = this.findParentDialog() || this.el;
+    this._inputs = Array.from(element.querySelectorAll(query));
   };
 
   @Method()
@@ -43,7 +46,6 @@ export class BceForm {
   @Method()
   public async submit() {
     const errors = await this.validate();
-
     const type = !errors.length ? 'submit' : 'error';
     const event = new Event(type, { bubbles: true, composed: true });
     this.el.dispatchEvent(event);
@@ -54,6 +56,14 @@ export class BceForm {
     const tasks = this._inputs.map(el => el.validate(silent));
     this.errors = [].concat(...((await Promise.all(tasks)) as any[]));
     return this.errors;
+  }
+
+  private findParentDialog() {
+    if (!this.el.parentNode || !('host' in this.el.parentNode))
+      return undefined;
+
+    const parent = (this.el.parentNode as ShadowRoot).host;
+    return parent.nodeName === 'BCE-DIALOG' ? parent : undefined;
   }
 
   componentDidLoad() {
