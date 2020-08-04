@@ -278,6 +278,10 @@ export class Select {
     }
   }
 
+  componentWillLoad() {
+    this.watchValue(this.value);
+  }
+
   componentDidLoad() {
     if (this.type === 'dropdown') {
       const root = this.el.shadowRoot!;
