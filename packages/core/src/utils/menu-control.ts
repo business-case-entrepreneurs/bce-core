@@ -98,7 +98,7 @@ export class MenuControl {
     }
   }
 
-  public setValue(item: Item) {
+  public setValue(item: Item | undefined) {
     this.#value = item;
   }
 

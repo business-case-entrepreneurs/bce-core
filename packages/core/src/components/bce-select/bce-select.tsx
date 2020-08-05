@@ -264,9 +264,13 @@ export class Select {
   }
 
   private updateDropdown() {
-    const option = this.#options.find(o => o.value === this.value);
     const input = this.el.shadowRoot!.querySelector('bce-input')!;
+    if (!this.value) {
+      input.value = '';
+      this.#menu.setValue(undefined);
+    }
 
+    const option = this.#options.find(o => o.value === this.value);
     if (option) {
       input.value = (option.innerText || '').trim();
       if (this.#menu) this.#menu.setValue(option);
