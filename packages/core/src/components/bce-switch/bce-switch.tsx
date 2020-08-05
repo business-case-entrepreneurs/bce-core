@@ -77,11 +77,6 @@ export class Switch {
     return this._inputCreator.validate(silent);
   }
 
-  @Watch('validation')
-  public watchValidation() {
-    this.validate();
-  }
-
   render() {
     const InputCreator = this._inputCreator;
 

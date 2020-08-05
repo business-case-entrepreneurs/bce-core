@@ -100,11 +100,6 @@ export class Color {
     return this._inputCreator.validate(silent);
   }
 
-  @Watch('validation')
-  public watchValidation() {
-    this.validate();
-  }
-
   private updateValue(c1: string, c2: string) {
     this.value = `${c1} ${c2}`;
     this._inputCreator.handleInput();

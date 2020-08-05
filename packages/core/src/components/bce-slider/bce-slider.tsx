@@ -99,11 +99,6 @@ export class BceSlider {
       .style.setProperty('--fill-width', `${width}%`);
   }
 
-  @Watch('validation')
-  public watchValidation() {
-    this.validate();
-  }
-
   componentDidLoad() {
     this.watchValue();
   }

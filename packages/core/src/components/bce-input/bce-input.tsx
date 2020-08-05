@@ -157,11 +157,6 @@ export class Input {
     return this._inputCreator.validate(silent);
   }
 
-  @Watch('validation')
-  public watchValidation() {
-    this.validate();
-  }
-
   componentDidLoad() {
     this.resizeTextarea();
     this.el.addEventListener('mouseenter', () => (this.hasHover = true));
