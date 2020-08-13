@@ -43,7 +43,8 @@ class Validator {
       .replace(/\s/g, '')
       .split('|')
       .map(r => {
-        const [rule, arg] = r.split(':');
+        const [rule, ...argPart] = r.split(':');
+        const arg = argPart.join(':');
         const args = arg ? arg.split(',') : [];
         return { rule, args };
       });
