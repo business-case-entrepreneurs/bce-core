@@ -32,6 +32,9 @@ export class Select {
   public active?: boolean;
 
   @Prop({ reflect: true })
+  public allowNull?: boolean;
+
+  @Prop({ reflect: true })
   public center?: boolean;
 
   @Prop({ reflect: true })
@@ -130,6 +133,10 @@ export class Select {
     for (const option of this.#options) {
       option.type = this.type;
       option.name = this.name || this.#id;
+
+      if (option.nodeName === 'BCE-OPTION')
+        (option as HTMLBceOptionElement).allowNull = this.allowNull;
+
       this.attachEventHandlers(option);
     }
 

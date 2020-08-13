@@ -25,6 +25,9 @@ export class Option {
   @Element()
   private el!: HTMLBceOptionElement;
 
+  @Prop({ reflect: true })
+  public allowNull?: boolean;
+
   // #region Forwarded to native input
   @Prop({ reflect: true })
   public checked?: boolean;
@@ -75,8 +78,12 @@ export class Option {
 
       case 'dropdown':
       case 'radio':
-        for (const option of options) option.checked = this.el === option;
-        this.onOption.emit(this.value!);
+        for (const option of options) {
+          if (this.el !== option) option.checked = false;
+          else option.checked = this.allowNull ? !option.checked : true;
+        }
+
+        this.onOption.emit(this.el.checked ? this.value! : null);
         return;
     }
   };
