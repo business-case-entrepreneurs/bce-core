@@ -271,7 +271,9 @@ export class Select {
   }
 
   private updateDropdown() {
-    const input = this.el.shadowRoot!.querySelector('bce-input')!;
+    const input = this.el.shadowRoot!.querySelector('bce-input');
+    if (!input) return;
+
     if (!this.value) {
       input.value = '';
       this.#menu.setValue(undefined);
