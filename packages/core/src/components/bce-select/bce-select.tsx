@@ -211,7 +211,10 @@ export class Select {
       case 'input':
         this.value = Array.isArray(value)
           ? value
-          : value?.split(',').map(v => v.trim()) || [];
+          : value
+              ?.split(',')
+              .map(v => v.trim())
+              .filter(Boolean) || [];
 
         return;
     }
