@@ -21,7 +21,13 @@ export class NavButton {
     ripple(event.target as Element, event);
   };
 
-  private handleClick = () => {
+  private handleClick = (e: Event) => {
+    e.stopPropagation();
+
+    const o: EventInit = { composed: true, cancelable: true, bubbles: true };
+    const event = new Event(e.type, o);
+    if (!this.el.dispatchEvent(event)) return;
+
     const r = this.root;
     const n = r.querySelector('bce-side-bar') || r.querySelector('bce-nav');
     if (n) n.toggle();
