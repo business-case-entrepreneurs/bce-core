@@ -48,6 +48,22 @@
   }
 }
 
+:host([type='checkbox'][disabled]),
+:host([type='radio'][disabled]) {
+  input {
+    border-color: bce-color-on(surface, 4);
+    background-color: bce-color-on(surface, 4);
+  }
+
+  label {
+    color: bce-color-on(surface, 3);
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
 :host([type='checkbox']:focus-within),
 :host([type='radio']:focus-within) {
   label:before {
@@ -80,6 +96,11 @@
     font-size: 13px;
     pointer-events: none;
   }
+}
+
+:host([type='checkbox'][checked][disabled]) input {
+  background-color: bce-color(300);
+  border-color: bce-color(300);
 }
 
 :host([type='dropdown']) {
@@ -128,5 +149,13 @@
     line-height: 32px;
     background-color: bce-color();
     border-radius: 50%;
+  }
+}
+
+:host([type='radio'][checked][disabled]) input {
+  border-color: bce-color(300);
+
+  &:after {
+    background-color: bce-color(300);
   }
 }

@@ -59,6 +59,8 @@ export class Option {
   #id = window.BCE.generateId();
 
   public handleClick = () => {
+    if (this.disabled) return;
+
     const query = this.name
       ? `bce-option[type='${this.type}'][name='${this.name}']`
       : `bce-option[type='${this.type}']`;
@@ -108,8 +110,9 @@ export class Option {
   renderInner() {
     return [
       <input
-        id={this.#id}
         checked={!!this.checked}
+        disabled={this.disabled}
+        id={this.#id}
         name={this.name}
         role={this.a11yRole}
         type={this.type === 'dropdown' ? 'checkbox' : this.type}

@@ -185,6 +185,11 @@ export class Select {
     event.stopPropagation();
   };
 
+  @Watch('disabled')
+  public watchDisabled() {
+    for (const option of this.#options) option.disabled = this.disabled;
+  }
+
   @Watch('value')
   public watchValue(value?: SelectValue) {
     if (this.#initialized) this.#inputCreator.handleInput();
