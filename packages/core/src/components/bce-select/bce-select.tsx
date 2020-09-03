@@ -333,6 +333,7 @@ export class Select {
     const slot = this.el.shadowRoot!.querySelector('slot');
     slot?.addEventListener('slotchange', this.handleSlotChange);
     this.handleSlotChange();
+    this.watchDisabled();
     this.watchValue(this.value);
 
     this.#initialized = true;
