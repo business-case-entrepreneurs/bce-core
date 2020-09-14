@@ -40,6 +40,7 @@
       left: -35px;
       opacity: 0;
       border-radius: 6px;
+      pointer-events: none;
     }
 
     &[data-empty]:before {
