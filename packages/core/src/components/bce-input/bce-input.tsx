@@ -145,6 +145,11 @@ export class Input {
     return this.hasFocus || !!this.placeholder || !!this.value;
   }
 
+  @Watch('value')
+  public watchValue() {
+    this.resizeTextarea();
+  }
+
   @Method()
   public async reset() {
     this.value = this._initialValue;
