@@ -1,6 +1,7 @@
 import { ColorScheme } from './models/color-scheme';
-import { FileManager } from './utils/file-manager';
 import { getColorShade, setColorShade } from './utils/color';
+import { FileManager } from './utils/file-manager';
+import { ScrollSpy } from './utils/scroll-spy';
 
 export * from './models/color-scheme';
 export * from './models/condition';
@@ -27,6 +28,7 @@ declare global {
     getColorShade: typeof getColorShade;
     setColorScheme: (scheme: ColorScheme) => void;
     setColorShade: typeof setColorShade;
+    ScrollSpy: typeof ScrollSpy;
   }
 
   interface Window {

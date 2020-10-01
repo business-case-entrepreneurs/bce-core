@@ -4,6 +4,7 @@ import { UUID } from '../utils/uuid';
 import { FileManager } from '../utils/file-manager';
 import { getColorShade, setColorShade } from '../utils/color';
 import * as color from '../utils/color-scheme';
+import { ScrollSpy } from '../utils/scroll-spy';
 
 const bce: BCE = {
   file: FileManager.inMemory(),
@@ -12,7 +13,8 @@ const bce: BCE = {
   getColorScheme: color.getColorScheme,
   getColorShade,
   setColorScheme: color.setColorScheme,
-  setColorShade
+  setColorShade,
+  ScrollSpy
 };
 
 const main = () => {
@@ -25,6 +27,7 @@ const main = () => {
     if (chain(el, 'bce-button', 'bce-fab')) return 'bce-fab';
     if (chain(el, 'bce-button', 'bce-menu')) return 'bce-menu';
     if (chain(el, 'bce-link', 'bce-link')) return 'bce-link';
+    if (chain(el, 'bce-link', 'bce-nav', 'bce-header')) return 'bce-header';
     if (chain(el, 'bce-nav', 'bce-header')) return 'bce-header';
     if (chain(el, 'bce-nav', 'bce-side-bar')) return 'bce-side-bar';
 

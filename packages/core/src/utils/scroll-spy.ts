@@ -1,5 +1,6 @@
 interface ScrollSpyOptions {
   class: string;
+  scroll: HTMLElement;
 }
 
 interface ScrollSpyNode {
@@ -44,18 +45,18 @@ export class ScrollSpy {
 
   constructor(selector: string, options: Partial<ScrollSpyOptions> = {}) {
     this.selector = selector;
-    this.options = { class: 'active', ...options };
+    this.options = { class: 'active', scroll: window as any, ...options };
     this.reload();
 
     window.addEventListener('resize', this.handleScroll);
-    window.addEventListener('scroll', this.handleScroll);
+    this.options.scroll.addEventListener('scroll', this.handleScroll);
   }
 
   public destroy() {
     if (this.current) this.deactivate(this.current);
 
     window.removeEventListener('resize', this.handleScroll);
-    window.removeEventListener('scroll', this.handleScroll);
+    this.options.scroll.removeEventListener('scroll', this.handleScroll);
   }
 
   public detect() {
@@ -76,15 +77,13 @@ export class ScrollSpy {
     const elements = r.querySelectorAll<HTMLElement>(this.selector);
 
     this.nodes = Array.from(elements).reduce<ScrollSpyNode[]>((acc, el) => {
-      const hash = 'hash' in el ? (el as HTMLHyperlinkElementUtils).hash : '';
+      const hash = ('hash' in el && ((el as any).hash as string)) || '';
       const id = decodeURIComponent(hash.slice(1));
-
       const section = document.getElementById(id);
       return section ? [...acc, { nav: el, section }] : acc;
     }, []);
 
     this.offset = Math.min(...this.nodes.map(node => node.section.offsetTop));
-
     this.detect();
   }
 

@@ -13,16 +13,13 @@
     pointer-events: auto;
   }
 
-  bce-link {
-    background-color: bce-color();
-    pointer-events: auto;
-  }
-
-  nav {
+  ul[role='menubar'] {
     display: flex;
     align-items: flex-start;
-    height: 0;
     flex-flow: column nowrap;
+    height: 0;
+    margin: 0;
+    padding: 0;
     transition: height 0.3s ease-in-out;
     overflow: hidden;
   }
@@ -38,7 +35,7 @@
       display: none;
     }
 
-    nav {
+    ul[role='menubar'] {
       flex-flow: row nowrap;
       height: auto;
     }
@@ -48,7 +45,11 @@
 :host([active]) {
   @include elevate(4, false);
 
-  nav {
+  ul[role='menubar'] {
     height: auto;
+  }
+
+  @include media-medium {
+    @include elevate(0);
   }
 }

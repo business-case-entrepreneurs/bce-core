@@ -1,0 +1,23 @@
+@import './bce-link.scss';
+
+:host {
+  bce-ripple {
+    background-color: bce-color-on();
+  }
+
+  a {
+    background-color: bce-color();
+    text-transform: none;
+    padding: 0 10px;
+
+    &:focus:before {
+      display: none;
+    }
+  }
+}
+
+:host(.active) {
+  a {
+    color: bce-color-on(3);
+  }
+}

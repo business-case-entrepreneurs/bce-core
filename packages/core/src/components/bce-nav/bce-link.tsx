@@ -1,6 +1,14 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { Component, Element, h, Method, Prop, State } from '@stencil/core';
+import {
+  Component,
+  Element,
+  h,
+  Method,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core';
 
 import { HEIGHT_HEADER } from '../../utils/constants';
 import { ripple } from '../../utils/ripple';
@@ -10,6 +18,7 @@ library.add(faCaretDown);
 @Component({
   tag: 'bce-link',
   styleUrls: {
+    'bce-header': 'bce-link.header.scss',
     'bce-link': 'bce-link.link.scss',
     default: 'bce-link.scss'
   },
@@ -22,11 +31,14 @@ export class Link {
   @Prop({ reflect: true })
   public color?: string;
 
-  @Prop({ reflect: false, mutable: true })
-  public tab?: boolean;
+  @Prop({ mutable: true })
+  public hash?: string;
 
   @Prop({ reflect: true })
   public icon?: string;
+
+  @Prop({ reflect: false, mutable: true })
+  public tab?: boolean;
 
   @Prop()
   public navigate?: (event: MouseEvent) => void;
@@ -118,6 +130,13 @@ export class Link {
     if (this._links) this.toggle(!!this.open);
   };
 
+  @Watch('href')
+  public watchHref() {
+    const { href } = this;
+    const hash = href && href.indexOf('#') >= 0 && '#' + href.split('#').pop();
+    this.hash = hash || undefined;
+  }
+
   @Method()
   public async toggle(active?: boolean) {
     this.open = active != undefined ? active : !this.open;
@@ -201,6 +220,7 @@ export class Link {
 
   componentWillLoad() {
     this.handleSlotChange();
+    this.watchHref();
   }
 
   componentDidLoad() {
