@@ -6,7 +6,6 @@ import {
   Event,
   EventEmitter,
   h,
-  Host,
   Method,
   Prop
 } from '@stencil/core';
@@ -38,11 +37,6 @@ export class BceDialog {
 
   @Event()
   private backdrop!: EventEmitter;
-
-  private handleClickHost = (event: MouseEvent) => {
-    const target = event.target as HTMLBceButtonElement;
-    if (target && target.type === 'submit') this.submit();
-  };
 
   private handleClickBackdrop = () => {
     if (this.required) return;
@@ -82,28 +76,26 @@ export class BceDialog {
   }
 
   render() {
-    return (
-      <Host onClick={this.handleClickHost}>
-        <div class="backdrop" onClick={this.handleClickBackdrop} />
-        <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
-          <div class="action-header">
-            {this.closeButton && !this.required && (
-              <bce-button
-                class="close-button"
-                icon="fas:times"
-                design="text"
-                onClick={this.handleClickBackdrop}
-              />
-            )}
-          </div>
+    return [
+      <div class="backdrop" onClick={this.handleClickBackdrop} />,
+      <bce-form onSubmit={this.handleForm} onError={this.handleForm}>
+        <div class="action-header">
+          {this.closeButton && !this.required && (
+            <bce-button
+              class="close-button"
+              icon="fas:times"
+              design="text"
+              onClick={this.handleClickBackdrop}
+            />
+          )}
+        </div>
 
-          <slot />
+        <slot />
 
-          <div class="action-bar">
-            <slot name="action" />
-          </div>
-        </bce-form>
-      </Host>
-    );
+        <div class="action-bar">
+          <slot name="action" />
+        </div>
+      </bce-form>
+    ];
   }
 }
