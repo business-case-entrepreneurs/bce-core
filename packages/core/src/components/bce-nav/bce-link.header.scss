@@ -1,6 +1,8 @@
 @import './bce-link.scss';
 
 :host {
+  width: 100%;
+
   bce-ripple {
     background-color: bce-color-on();
   }
@@ -13,6 +15,10 @@
     &:focus:before {
       display: none;
     }
+  }
+
+  @include media-medium {
+    width: initial;
   }
 }
 
