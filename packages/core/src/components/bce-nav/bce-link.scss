@@ -26,6 +26,11 @@
       color: bce-color(primary, 300);
     }
 
+    &:focus {
+      outline: none;
+      color: bce-color(primary, 400);
+    }
+
     &:focus:before {
       position: absolute;
       display: block;
