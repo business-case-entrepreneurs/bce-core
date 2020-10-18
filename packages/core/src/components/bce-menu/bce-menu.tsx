@@ -20,6 +20,9 @@ export class BceMenu {
   public active?: boolean;
 
   @Prop({ reflect: true })
+  public color?: string;
+
+  @Prop({ reflect: true })
   public icon = 'fas:ellipsis-h';
 
   @Prop({ reflect: true })
