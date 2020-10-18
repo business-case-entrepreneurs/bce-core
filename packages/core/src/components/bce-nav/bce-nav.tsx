@@ -5,7 +5,8 @@ import {
   Host,
   Prop,
   State,
-  Method
+  Method,
+  getMode
 } from '@stencil/core';
 
 import { HEIGHT_HEADER } from '../../utils/constants';
@@ -31,6 +32,11 @@ export class Nav {
 
   #links = 0;
   #timer = 0;
+
+  private handleClick = (e: Event) => {
+    const mode = getMode(this.el);
+    if (mode === 'bce-header' && e.target) this.toggle(false);
+  };
 
   private handleSlotChange = () => {
     const nodes = Array.from(this.el.childNodes);
@@ -77,7 +83,7 @@ export class Nav {
     return (
       <Host role="navigation">
         <bce-nav-button></bce-nav-button>
-        <ul role="menubar" {...style}>
+        <ul role="menubar" {...style} onClick={this.handleClick}>
           <slot />
         </ul>
       </Host>
