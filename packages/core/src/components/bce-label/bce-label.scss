@@ -17,12 +17,6 @@
   }
 }
 
-:host([column]) {
-  label {
-    flex-flow: column nowrap;
-  }
-}
-
 :host([disabled]) {
   color: bce-color-on(surface, 3);
 

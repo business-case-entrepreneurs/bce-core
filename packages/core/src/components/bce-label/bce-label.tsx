@@ -7,9 +7,6 @@ import { Component, h, Prop } from '@stencil/core';
 })
 export class Label {
   @Prop({ reflect: true })
-  public column = false;
-
-  @Prop({ reflect: true })
   public disabled?: boolean;
 
   @Prop({ reflect: true, attribute: 'focus' })
