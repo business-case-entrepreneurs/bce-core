@@ -50,16 +50,22 @@
     padding: 10px 12px;
   }
 
-  bce-button {
+  .action {
     position: absolute;
-    right: 4px;
-    top: 50%;
-    width: 36px;
-    transform: translateY(-55%);
+    display: flex;
+    align-items: center;
+    right: 1px;
+    height: 100%;
 
     &[data-hidden] {
       display: none;
     }
+  }
+}
+
+:host([type='textarea']) {
+  .action {
+    align-items: flex-start;
   }
 }
 

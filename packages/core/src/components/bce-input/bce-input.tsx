@@ -96,6 +96,9 @@ export class Input {
   @State()
   private hasHover = false;
 
+  @State()
+  private padRight = 0;
+
   private _initialValue?: string = this.value;
   private _inputCreator = getInputCreator(this, err => (this.error = !!err));
 
@@ -121,6 +124,11 @@ export class Input {
 
     const query = this.type === 'textarea' ? 'textarea' : 'input';
     this.el.shadowRoot!.querySelector(query)!.focus();
+  };
+
+  private handleSlotChange = () => {
+    const div = this.el.shadowRoot!.querySelector('.action')!;
+    this.padRight = div.clientWidth + 12;
   };
 
   private resizeTextarea = () => {
@@ -162,11 +170,18 @@ export class Input {
     return this._inputCreator.validate(silent);
   }
 
+  componentWillLoad() {
+    this.handleSlotChange();
+  }
+
   componentDidLoad() {
     this.resizeTextarea();
     this.el.addEventListener('mouseenter', () => (this.hasHover = true));
     this.el.addEventListener('mouseleave', () => (this.hasHover = false));
     window.addEventListener('resize', this.resizeTextarea);
+
+    const slot = this.el.shadowRoot!.querySelector('slot');
+    slot?.addEventListener('slotchange', this.handleSlotChange);
   }
 
   componentDidUnload() {
@@ -201,6 +216,7 @@ export class Input {
           min={this.min}
           placeholder={this.placeholder}
           role={this.a11yRole}
+          style={{ paddingRight: this.padRight + 'px' }}
           type={type}
           value={this.value}
           onBlur={this.handleBlur}
@@ -211,7 +227,11 @@ export class Input {
           aria-label={this.label}
           data-hover={this.hover}
         />
-        {this.renderIcon()}
+
+        <div class="action">
+          {this.renderIcon()}
+          <slot />
+        </div>
       </InputCreator>
     );
   }
