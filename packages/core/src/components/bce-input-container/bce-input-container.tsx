@@ -10,6 +10,9 @@ import { ValidatorError } from '../../utils/validator';
 })
 export class InputContainer {
   @Prop({ reflect: true })
+  public center?: boolean;
+
+  @Prop({ reflect: true })
   public color?: string;
 
   @Prop({ reflect: true })

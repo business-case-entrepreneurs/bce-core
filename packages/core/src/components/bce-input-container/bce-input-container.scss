@@ -25,3 +25,7 @@
     }
   }
 }
+
+:host([center]) .container {
+  text-align: center;
+}
