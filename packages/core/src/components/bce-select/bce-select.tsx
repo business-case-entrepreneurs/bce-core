@@ -38,6 +38,9 @@ export class Select {
   public center?: boolean;
 
   @Prop({ reflect: true })
+  public color?: string;
+
+  @Prop({ reflect: true })
   public design?: 'matrix';
 
   @Prop({ reflect: true })
