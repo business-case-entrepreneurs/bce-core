@@ -9,8 +9,6 @@ import {
   getMode
 } from '@stencil/core';
 
-import { HEIGHT_HEADER } from '../../utils/constants';
-
 @Component({
   tag: 'bce-nav',
   styleUrls: {
@@ -59,7 +57,7 @@ export class Nav {
     // Animation logic
     if (this.#timer) window.clearTimeout(this.#timer);
 
-    const height = this.#links * HEIGHT_HEADER;
+    const height = this.#links * 56;
     this._height = this.active ? 0 : height;
 
     await new Promise(res => setTimeout(res, 20));
