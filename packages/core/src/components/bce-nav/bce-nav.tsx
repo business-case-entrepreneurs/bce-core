@@ -48,6 +48,7 @@ export class Nav {
 
   @Method()
   public async toggle(active?: boolean) {
+    if (this.active === active) return;
     this.active = active != undefined ? active : !this.active;
 
     // Collapse nested links
