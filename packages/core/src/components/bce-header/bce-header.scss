@@ -23,5 +23,6 @@
 :host([responsive]) {
   header {
     @include fixed-width();
+    box-sizing: border-box;
   }
 }
