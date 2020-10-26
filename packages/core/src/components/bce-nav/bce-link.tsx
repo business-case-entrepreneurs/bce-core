@@ -10,7 +10,6 @@ import {
   Watch
 } from '@stencil/core';
 
-import { HEIGHT_HEADER } from '../../utils/constants';
 import { ripple } from '../../utils/ripple';
 
 library.add(faCaretDown);
@@ -140,7 +139,7 @@ export class Link {
   @Method()
   public async toggle(active?: boolean) {
     this.open = active != undefined ? active : !this.open;
-    this._height = this.open ? (this._links || 0) * HEIGHT_HEADER : 0;
+    this._height = this.open ? (this._links || 0) * 56 : 0;
   }
 
   private focusOther(el: HTMLBceLinkElement) {
