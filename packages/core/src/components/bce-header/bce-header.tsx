@@ -10,6 +10,9 @@ export class BceHeader {
   public color?: string;
 
   @Prop({ reflect: true })
+  public noShadow?: boolean;
+
+  @Prop({ reflect: true })
   public responsive?: boolean;
 
   render() {
