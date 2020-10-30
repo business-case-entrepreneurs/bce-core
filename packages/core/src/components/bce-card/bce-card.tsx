@@ -5,7 +5,7 @@ import { Component, h } from '@stencil/core';
   styleUrl: 'bce-card.scss',
   shadow: true
 })
-export class BceCard {
+export class Card {
   render() {
     return <slot />;
   }
