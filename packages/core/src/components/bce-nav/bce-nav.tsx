@@ -12,9 +12,9 @@ import {
 @Component({
   tag: 'bce-nav',
   styleUrls: {
-    'bce-header': 'bce-nav.header.scss',
-    'bce-side-bar': 'bce-nav.side-bar.scss',
-    default: 'bce-nav.side-bar.scss'
+    header: 'bce-nav.header.scss',
+    sidebar: 'bce-nav.side-bar.scss',
+    regular: 'bce-nav.side-bar.scss'
   },
   shadow: true
 })
@@ -33,7 +33,7 @@ export class Nav {
 
   private handleClick = (e: Event) => {
     const mode = getMode(this.el);
-    if (mode === 'bce-header' && e.target) this.toggle(false);
+    if (mode === 'header' && e.target) this.toggle(false);
   };
 
   private handleSlotChange = () => {

@@ -87,7 +87,7 @@ export class Fab {
     this.handleSlotChange();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.#menu) this.#menu.dispose();
   }
 

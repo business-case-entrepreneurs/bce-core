@@ -15,10 +15,10 @@ import { ripple } from '../../utils/ripple';
 @Component({
   tag: 'bce-button',
   styleUrls: {
-    'bce-fab': 'bce-button.fab.scss',
-    'bce-menu': 'bce-button.menu.scss',
+    fab: 'bce-button.fab.scss',
+    menu: 'bce-button.menu.scss',
     bucket: 'bce-button.bucket.scss',
-    default: 'bce-button.scss'
+    regular: 'bce-button.scss'
   },
   shadow: true
 })
@@ -131,8 +131,7 @@ export class Button {
   renderIcon() {
     const mode = getMode(this);
     const size = this.el.clientHeight + 'px';
-    const style =
-      mode === 'bce-fab' ? undefined : { width: size, height: size };
+    const style = mode === 'fab' ? undefined : { width: size, height: size };
 
     return (
       <bce-icon

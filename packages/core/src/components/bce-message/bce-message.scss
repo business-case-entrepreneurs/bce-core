@@ -1,3 +1,5 @@
+@import '../../global/shadow-color.scss';
+
 :host {
   @include bce-color-default(dark);
   @include elevate(6);

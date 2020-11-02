@@ -46,13 +46,13 @@ export class CodeEditor {
   @Prop({ mutable: true })
   public value?: string;
 
-  private _editor?: any;
-  private _initialValue?: string = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #editor?: any;
+  #initialValue?: string;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = (event: FocusEvent) => {
     this.hasFocus = false;
-    this._inputCreator.validate();
+    this.#inputCreator.validate();
 
     const e = new FocusEvent(event.type, { ...event, bubbles: true });
     this.el.dispatchEvent(e);
@@ -65,28 +65,32 @@ export class CodeEditor {
     this.el.dispatchEvent(e);
   };
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Watch('value')
   private watchValue(value?: string) {
-    if (this._editor) this._editor.updateCode(value);
+    if (this.#editor) this.#editor.updateCode(value);
   }
 
   @Watch('disabled')
   private watchDisabled(value: boolean) {
-    if (!this._editor) return;
+    if (!this.#editor) return;
 
-    if (value) this._editor.enableReadonlyMode();
-    else this._editor.disableReadonlyMode();
+    if (value) this.#editor.enableReadonlyMode();
+    else this.#editor.disableReadonlyMode();
   }
 
   @Method()
   public async reset() {
-    this.value = this._initialValue;
-    this._inputCreator.reset();
+    this.value = this.#initialValue;
+    this.#inputCreator.reset();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   private resize() {
@@ -104,7 +108,7 @@ export class CodeEditor {
   }
 
   async componentDidLoad() {
-    this._editor = new CodeFlask(this.el, {
+    this.#editor = new CodeFlask(this.el, {
       language: 'js',
       lineNumbers: this.lineNumbers,
       readonly: this.disabled
@@ -113,7 +117,7 @@ export class CodeEditor {
     this.watchValue(this.value);
     this.watchDisabled(this.disabled);
 
-    this._editor.onUpdate((code: string) => {
+    this.#editor.onUpdate((code: string) => {
       this.resize();
       this.value = code;
 
@@ -129,7 +133,7 @@ export class CodeEditor {
   }
 
   render() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
     return (
       <InputCreator>
         <slot />

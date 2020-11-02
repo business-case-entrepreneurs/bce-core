@@ -24,15 +24,15 @@ const main = () => {
 
   setMode(el => {
     // Component specific mode's (e.g. bce-button within bce-fab)
-    if (chain(el, 'bce-button', 'bce-fab')) return 'bce-fab';
-    if (chain(el, 'bce-button', 'bce-menu')) return 'bce-menu';
-    if (chain(el, 'bce-link', 'bce-link')) return 'bce-link';
-    if (chain(el, 'bce-link', 'bce-nav', 'bce-header')) return 'bce-header';
-    if (chain(el, 'bce-nav', 'bce-header')) return 'bce-header';
-    if (chain(el, 'bce-nav', 'bce-side-bar')) return 'bce-side-bar';
+    if (chain(el, 'bce-button', 'bce-fab')) return 'fab';
+    if (chain(el, 'bce-button', 'bce-menu')) return 'menu';
+    if (chain(el, 'bce-link', 'bce-link')) return 'link';
+    if (chain(el, 'bce-link', 'bce-nav', 'bce-header')) return 'header';
+    if (chain(el, 'bce-nav', 'bce-header')) return 'header';
+    if (chain(el, 'bce-nav', 'bce-side-bar')) return 'sidebar';
 
     const root = el.closest('bce-root');
-    return el.getAttribute('mode') || (root && root.mode) || 'default';
+    return el.getAttribute('mode') || (root && root.mode) || 'regular';
   });
 };
 

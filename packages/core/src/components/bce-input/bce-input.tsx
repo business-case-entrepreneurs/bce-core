@@ -96,12 +96,12 @@ export class Input {
   @State()
   private hasHover = false;
 
-  private _initialValue?: string = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #initialValue?: string;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = () => {
     this.hasFocus = false;
-    this._inputCreator.validate();
+    this.#inputCreator.validate();
   };
 
   private handleFocus = () => {
@@ -113,7 +113,7 @@ export class Input {
     if (input) this.value = input.value || '';
 
     this.resizeTextarea();
-    this._inputCreator.handleInput();
+    this.#inputCreator.handleInput();
   };
 
   private handleShowPassword = () => {
@@ -154,6 +154,10 @@ export class Input {
     return this.hasFocus || !!this.placeholder || !!this.value;
   }
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Watch('value')
   public watchValue() {
     this.resizeTextarea();
@@ -161,14 +165,14 @@ export class Input {
 
   @Method()
   public async reset() {
-    this.value = this._initialValue;
+    this.value = this.#initialValue;
     this.showPassword = false;
-    this._inputCreator.reset();
+    this.#inputCreator.reset();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   componentDidLoad() {
@@ -182,7 +186,7 @@ export class Input {
     window.addEventListener('resize', this.resizeTextarea);
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     window.removeEventListener('resize', this.resizeTextarea);
   }
 
@@ -201,7 +205,7 @@ export class Input {
   }
 
   render() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
     const Input = this.type === 'textarea' ? 'textarea' : 'input';
     const type = this.showPassword ? 'text' : this.type;
 

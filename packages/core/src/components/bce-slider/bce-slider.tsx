@@ -54,12 +54,12 @@ export class BceSlider {
   @Prop({ mutable: true })
   public value?: number;
 
-  private _initialValue?: number = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #initialValue?: number;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = () => {
     this.hasFocus = false;
-    this._inputCreator.validate();
+    this.#inputCreator.validate();
   };
 
   private handleFocus = () => {
@@ -73,15 +73,19 @@ export class BceSlider {
     this.value = parseInt(input.value, 10);
   };
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Method()
   public async reset() {
-    this.value = this._initialValue;
-    this._inputCreator.reset();
+    this.value = this.#initialValue;
+    this.#inputCreator.reset();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   @Watch('value')
@@ -104,7 +108,7 @@ export class BceSlider {
   }
 
   render() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
 
     return (
       <InputCreator>

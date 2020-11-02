@@ -303,7 +303,7 @@ export class Upload {
     this.watchValue(this.value);
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this._server.unsubscribe(this.handleData);
   }
 

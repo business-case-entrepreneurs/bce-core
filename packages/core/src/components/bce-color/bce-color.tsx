@@ -51,12 +51,12 @@ export class Color {
   public value?: string;
   // #endregion
 
-  private _initialValue?: string = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #initialValue?: string;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = () => {
     this.hasFocus = false;
-    this._inputCreator.validate();
+    this.#inputCreator.validate();
   };
 
   private handleFocus = () => {
@@ -77,6 +77,10 @@ export class Color {
     this.updateValue(c1, c2);
   };
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Watch('value')
   public watchValue(value?: string) {
     const [c1, c2] = value ? value.split(' ') : [];
@@ -91,18 +95,18 @@ export class Color {
 
   @Method()
   public async reset() {
-    this.value = this.default || this._initialValue;
-    this._inputCreator.reset();
+    this.value = this.default || this.#initialValue;
+    this.#inputCreator.reset();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   private updateValue(c1: string, c2: string) {
     this.value = `${c1} ${c2}`;
-    this._inputCreator.handleInput();
+    this.#inputCreator.handleInput();
 
     const shades = colorShade(c1, c2);
     const event = new CustomEvent('input', { bubbles: true, detail: shades });
@@ -114,7 +118,7 @@ export class Color {
   }
 
   render() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
     const [v1, v2] = this.value ? this.value.split(' ') : [];
 
     return (

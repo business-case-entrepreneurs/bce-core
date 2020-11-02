@@ -28,7 +28,7 @@ const INPUT_TYPE_MAP: { [Type in ChipType]: string } = {
 @Component({
   tag: 'bce-chip',
   styleUrls: {
-    default: 'bce-chip.scss'
+    regular: 'bce-chip.scss'
   },
   shadow: true
 })

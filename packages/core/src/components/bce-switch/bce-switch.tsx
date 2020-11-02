@@ -1,4 +1,4 @@
-import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Method, Prop } from '@stencil/core';
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { ValidatorError } from '../../utils/validator';
@@ -42,12 +42,12 @@ export class Switch {
   @Prop({ mutable: true })
   public value?: boolean;
 
-  private _initialValue?: boolean = this.value;
-  private _inputCreator = getInputCreator(this, err => (this.error = !!err));
+  #initialValue?: boolean;
+  #inputCreator = getInputCreator(this, err => (this.error = !!err));
 
   private handleBlur = () => {
     this.hasFocus = false;
-    this._inputCreator.validate();
+    this.#inputCreator.validate();
   };
 
   private handleChange = (event: Event) => {
@@ -66,19 +66,23 @@ export class Switch {
     event.cancelBubble = true;
   };
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Method()
   public async reset() {
-    this.value = this._initialValue;
-    this._inputCreator.reset();
+    this.value = this.#initialValue;
+    this.#inputCreator.reset();
   }
 
   @Method()
   public async validate(silent = false): Promise<ValidatorError[]> {
-    return this._inputCreator.validate(silent);
+    return this.#inputCreator.validate(silent);
   }
 
   render() {
-    const InputCreator = this._inputCreator;
+    const InputCreator = this.#inputCreator;
 
     return (
       <InputCreator>

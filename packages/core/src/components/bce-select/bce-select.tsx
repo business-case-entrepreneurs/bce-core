@@ -78,7 +78,7 @@ export class Select {
 
   #id = window.BCE.generateId();
   #initialized = false;
-  #initialValue?: SelectValue = this.value;
+  #initialValue?: SelectValue;
   #inputCreator = getInputCreator(this, err => (this.error = !!err));
   #menu!: MenuControl;
   #popper?: Instance;
@@ -188,6 +188,10 @@ export class Select {
     event.stopPropagation();
   };
 
+  constructor() {
+    this.#initialValue = this.value;
+  }
+
   @Watch('disabled')
   public watchDisabled() {
     for (const option of this.#options) option.disabled = this.disabled;
@@ -210,6 +214,10 @@ export class Select {
 
       case 'dropdown':
         this.updateDropdown();
+        for (const option of this.#options)
+          option.checked = this.value === option.value;
+        return;
+
       case 'choice':
       case 'radio':
         for (const option of this.#options)
@@ -342,7 +350,7 @@ export class Select {
     this.#initialized = true;
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.#popper) this.#popper.destroy();
     if (this.#menu) this.#menu.dispose();
   }

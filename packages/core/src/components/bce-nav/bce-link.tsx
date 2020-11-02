@@ -17,9 +17,9 @@ library.add(faCaretDown);
 @Component({
   tag: 'bce-link',
   styleUrls: {
-    'bce-header': 'bce-link.header.scss',
-    'bce-link': 'bce-link.link.scss',
-    default: 'bce-link.scss'
+    header: 'bce-link.header.scss',
+    link: 'bce-link.link.scss',
+    regular: 'bce-link.scss'
   },
   shadow: true
 })

@@ -104,7 +104,7 @@ export class BceMenu {
     this.reattach();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.#popper) this.#popper.destroy();
     if (this.#menu) this.#menu.dispose();
     window.removeEventListener('resize', this.handleResize);

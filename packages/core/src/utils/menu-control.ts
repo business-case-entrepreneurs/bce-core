@@ -117,6 +117,11 @@ export class MenuControl {
       case 'Enter':
         const target = event.target as Trigger | Item | null;
         if (this.isDropdownOption(target)) this.getNative(target).click();
+        if (!trigger) return;
+        if (this.#value) this.selectItem(this.#value);
+        else this.next();
+        event.preventDefault();
+        return;
       case ' ':
         if (!trigger) return;
         if (this.#value) this.selectItem(this.#value);
@@ -138,13 +143,13 @@ export class MenuControl {
         return this.selectItem(first);
       case 'Left':
       case 'ArrowLeft':
-        if (trigger && this.#listbox) return this.toggle(true);
+        return trigger && this.#listbox && this.toggle(true);
       case 'Up':
       case 'ArrowUp':
         return this.prev(this.#selected || this.#value);
       case 'Right':
       case 'ArrowRight':
-        if (trigger && this.#listbox) return this.toggle(true);
+        return trigger && this.#listbox && this.toggle(true);
       case 'Down':
       case 'ArrowDown':
         return this.next(this.#selected || this.#value);
