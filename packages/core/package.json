@@ -20,7 +20,7 @@
   "scripts": {
     "build": "stencil build",
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
-    "serve": "stencil build --dev --watch --serve"
+    "serve": "stencil build --prod --watch --serve"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",

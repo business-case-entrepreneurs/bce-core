@@ -1,9 +1,10 @@
+import './App.css';
+
 import {
   BceButton,
   BceCode,
   BceHeader,
   BceNavButton,
-  BceRoot,
   BceSideBar,
   BceStatusBar
 } from '@bcase/core-react';
@@ -29,23 +30,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <BceRoot className="app">
-        <BceStatusBar slot="header" />
-        <BceHeader slot="header">
+      <>
+        <BceStatusBar />
+        <BceHeader>
           <BceNavButton />
         </BceHeader>
 
-        <BceSideBar slot="left" />
+        <BceSideBar />
 
-        <main>
-          <section style={{ padding: 16 }}>
-            <BceCode value={this.code} language="html" />
-            <br />
+        <main style={{ padding: 16 }}>
+          <BceCode value={this.code} language="html" />
+          <br />
 
-            <BceButton>Hello World!</BceButton>
-          </section>
+          <BceButton>Hello World!</BceButton>
         </main>
-      </BceRoot>
+      </>
     );
   }
 }
