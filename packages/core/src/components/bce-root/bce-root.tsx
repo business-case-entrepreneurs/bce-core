@@ -126,8 +126,54 @@ export class Root {
 
     this.el.appendChild(el);
     result.then(() => this.el.removeChild(el));
-
     return result;
+  }
+
+  @Method()
+  public prompt(
+    title: string,
+    message: string,
+    label: string,
+    options: PromptOptions = {}
+  ) {
+    const dialog = document.createElement('bce-dialog');
+    dialog.active = true;
+    dialog.required = options.required == undefined ? true : options.required;
+    dialog.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
+
+    const input = document.createElement('bce-input');
+    input.compact = true;
+    input.label = label;
+    input.validation = options.validation;
+    dialog.appendChild(input);
+
+    const action2 = document.createElement('bce-button');
+    action2.slot = 'action';
+    action2.design = 'text';
+    action2.innerText = options.cancel || 'Cancel';
+    dialog.appendChild(action2);
+
+    const action1 = document.createElement('bce-button');
+    action1.slot = 'action';
+    action1.design = 'outline';
+    action1.innerText = options.ok || 'Ok';
+    action1.type = 'submit';
+    if (options.ok !== false) dialog.appendChild(action1);
+
+    setTimeout(() => {
+      const el = input.shadowRoot!.querySelector('input');
+      if (el) el.focus();
+    }, 20);
+
+    return this.execute<string>(
+      dialog,
+      res => {
+        dialog.addEventListener('submit', () => res(input.value));
+        dialog.addEventListener('backdrop', () => res(''));
+        action2.addEventListener('click', () => res(''));
+      },
+      { display: true }
+    );
   }
 
   @Method()
@@ -238,6 +284,13 @@ export interface ConfirmOptions {
 
 export interface ExecuteOptions {
   readonly display?: boolean;
+}
+
+export interface PromptOptions {
+  readonly cancel?: string;
+  readonly ok?: string | false;
+  readonly required?: boolean;
+  readonly validation?: string;
 }
 
 export type Executor<T> = (
