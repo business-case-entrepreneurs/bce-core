@@ -296,7 +296,7 @@ export class Upload {
           .map(ref => ref.id)
       : value;
 
-    this.el.dispatchEvent(new globalThis.Event('input'));
+    this.el.dispatchEvent(new globalThis.Event('input', { composed: true }));
   }
 
   componentWillLoad() {
