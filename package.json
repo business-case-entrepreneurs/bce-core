@@ -10,10 +10,11 @@
   },
   "main": "README.md",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "npm run sort && npm run clean && lerna run build",
     "clean": "lerna run clean",
     "deploy:alpha": "npm run build && lerna publish --no-git-reset --canary --preid alpha --dist-tag alpha --yes",
-    "postinstall": "lerna bootstrap && npm run sort",
+    "postinstall": "npm run bootstrap && npm run sort",
     "prettier": "prettier --config config/prettier.config.js --ignore-path config/.prettierignore --check '**'",
     "serve": "lerna run serve --parallel --stream",
     "sort": "sort-package-json && lerna exec sort-package-json"
