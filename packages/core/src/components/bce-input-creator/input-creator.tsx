@@ -1,11 +1,10 @@
 import { FunctionalComponent, h } from '@stencil/core';
 
-import { FormInput } from '../../models/form-input';
 import { debounce } from '../../utils/debounce';
 import { validator, ValidatorError } from '../../utils/validator';
 
 interface Props {
-  el: FormInput;
+  el: HTMLElement;
   disabled?: boolean;
   hasFocus?: boolean;
   hover?: boolean;

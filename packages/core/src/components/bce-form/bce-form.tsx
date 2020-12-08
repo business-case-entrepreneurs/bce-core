@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
 
-import { FormInput, FORM_INPUTS } from '../../models/form-input';
+import { FORM_INPUTS } from '../../models/form-input';
 import { Validation } from '../../models/validation';
 
 @Component({
@@ -18,7 +18,7 @@ export class BceForm {
   @Prop()
   public errors: Validation[] = [];
 
-  private _inputs: FormInput[] = [];
+  private _inputs: any[] = [];
 
   private handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLBceButtonElement;

@@ -1,7 +1,6 @@
-import { FormInput } from '../models/form-input';
 import { isEmail } from './is-email';
 
-type Metadata = { el: FormInput; tag: string; [custom: string]: any };
+type Metadata = { el: any; tag: string; [custom: string]: any };
 
 type Translator = (ctx: TranslatorContext) => Promise<string>;
 
@@ -10,13 +9,13 @@ interface TranslatorContext {
   readonly message: string;
   readonly meta: Metadata;
   readonly rule: string;
-  readonly value: FormInput['value'];
+  readonly value: any;
 }
 
 type ValidatorResult = boolean | { valid: boolean; message: string };
 
 type ValidatorFunc = (
-  value: FormInput['value'] | number,
+  value: any,
   args: string[],
   meta: Metadata
 ) => Promise<ValidatorResult>;
@@ -33,7 +32,7 @@ class Validator {
 
   public async validate(
     validation: string,
-    el: FormInput,
+    el: any,
     meta: Omit<Metadata, 'el'> = {}
   ) {
     const { value } = el;
@@ -61,7 +60,7 @@ class Validator {
   public async validateRule(
     rule: string,
     args: string[] = [],
-    value: FormInput['value'],
+    value: any,
     meta: Metadata
   ) {
     const validator = this.rules.get(rule);
@@ -281,7 +280,7 @@ const getUnsupportedMessage = (rule: string, meta: Metadata) => {
   return `[${meta.el}] Unsupported validation rule: ${rule}`;
 };
 
-const getSize = (el: FormInput): number => {
+const getSize = (el: any): number => {
   if (Array.isArray(el.value)) return el.value.length;
   if ('type' in el && el.type === 'date')
     return new Date(el.value || 0).getTime();
@@ -291,7 +290,7 @@ const getSize = (el: FormInput): number => {
   return ('' + el.value).length;
 };
 
-const getRangeArg = (arg: string | undefined, el: FormInput): number => {
+const getRangeArg = (arg: string | undefined, el: any): number => {
   if ('type' in el && el.type === 'date') return new Date(arg || 0).getTime();
   return arg == undefined ? 0 : Number(arg);
 };
