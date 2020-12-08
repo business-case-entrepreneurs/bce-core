@@ -27,10 +27,11 @@
     }
   },
   "devDependencies": {
+    "@bce-technology/config-prettier": "^1.0.1",
     "commitizen": "^4.2.2",
     "cz-customizable": "^6.3.0",
     "lerna": "^3.22.1",
-    "prettier": "^2.1.2",
-    "sort-package-json": "^1.46.1"
+    "prettier": "^2.2.1",
+    "sort-package-json": "^1.48.0"
   }
 }
