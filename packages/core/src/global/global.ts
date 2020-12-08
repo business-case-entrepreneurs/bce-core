@@ -6,12 +6,13 @@ import { getColorShade, setColorShade } from '../utils/color';
 import * as color from '../utils/color-scheme';
 import { ScrollSpy } from '../utils/scroll-spy';
 
-const bce: BCE = {
+const bce: BceCore = {
   file: FileManager.inMemory(),
   FileManager,
   generateId: () => UUID.v4(),
   getColorScheme: color.getColorScheme,
   getColorShade,
+  i18n: null,
   setColorScheme: color.setColorScheme,
   setColorShade,
   ScrollSpy

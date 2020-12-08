@@ -1,3 +1,4 @@
+import { I18n } from '@bce-technology/i18n';
 import { ColorScheme } from './models/color-scheme';
 import { getColorShade, setColorShade } from './utils/color';
 import { FileManager } from './utils/file-manager';
@@ -20,18 +21,19 @@ export * from './utils/uuid';
 export * from './utils/validator';
 
 declare global {
-  interface BCE {
+  interface BceCore {
     file: FileManager;
     FileManager: typeof FileManager;
     generateId: () => string;
     getColorScheme: () => ColorScheme;
     getColorShade: typeof getColorShade;
+    i18n: I18n | null;
     setColorScheme: (scheme: ColorScheme) => void;
     setColorShade: typeof setColorShade;
     ScrollSpy: typeof ScrollSpy;
   }
 
   interface Window {
-    BCE: BCE;
+    BCE: BceCore;
   }
 }
