@@ -12,7 +12,6 @@ const bce: BceCore = {
   generateId: () => UUID.v4(),
   getColorScheme: color.getColorScheme,
   getColorShade,
-  i18n: null,
   setColorScheme: color.setColorScheme,
   setColorShade,
   ScrollSpy

@@ -1,5 +1,3 @@
-import { I18n } from '@bce-technology/i18n';
-
 import { ColorScheme } from './models/color-scheme';
 import { getColorShade, setColorShade } from './utils/color';
 import { FileManager } from './utils/file-manager';
@@ -28,7 +26,6 @@ declare global {
     generateId: () => string;
     getColorScheme: () => ColorScheme;
     getColorShade: typeof getColorShade;
-    i18n: I18n | null;
     setColorScheme: (scheme: ColorScheme) => void;
     setColorShade: typeof setColorShade;
     ScrollSpy: typeof ScrollSpy;

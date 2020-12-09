@@ -23,7 +23,6 @@
     "serve": "stencil build --prod --watch --serve"
   },
   "devDependencies": {
-    "@bce-technology/i18n": "^1.1.10",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -35,9 +34,6 @@
     "prismjs": "^1.22.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.1.2"
-  },
-  "peerDependencies": {
-    "@bce-technology/i18n": "^1.1.10"
   },
   "publishConfig": {
     "access": "public"
