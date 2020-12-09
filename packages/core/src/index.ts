@@ -1,4 +1,5 @@
 import { I18n } from '@bce-technology/i18n';
+
 import { ColorScheme } from './models/color-scheme';
 import { getColorShade, setColorShade } from './utils/color';
 import { FileManager } from './utils/file-manager';
