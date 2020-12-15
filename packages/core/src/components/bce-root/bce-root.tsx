@@ -255,6 +255,7 @@ export class Root {
         key={this.#messageTimer}
         color={message.color}
         fab={this._fab}
+        style={{ whiteSpace: 'pre' }}
       >
         {message.text}
       </bce-message>
