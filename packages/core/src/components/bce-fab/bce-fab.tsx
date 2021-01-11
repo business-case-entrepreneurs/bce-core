@@ -31,6 +31,9 @@ export class Fab {
   @Prop({ reflect: true })
   public label?: string;
 
+  @Prop({ reflect: true })
+  public labelHover?: boolean;
+
   #items: HTMLBceButtonElement[] = [];
   #menu?: MenuControl;
 
