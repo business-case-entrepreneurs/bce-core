@@ -1,4 +1,14 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Host,
+  Method,
+  Prop,
+  Watch
+} from '@stencil/core';
 
 @Component({
   tag: 'bce-side-bar',
@@ -15,6 +25,9 @@ export class SideBar {
   @Prop({ reflect: true })
   public position: 'left' | 'right' = 'left';
 
+  @Event({ eventName: 'state' })
+  public onState!: EventEmitter;
+
   @Method()
   public async toggle(open?: boolean) {
     if (open != undefined) return (this.state = open ? 'open' : 'closed');
@@ -25,6 +38,11 @@ export class SideBar {
         : this.state !== 'open';
 
     return (this.state = isOpen ? 'open' : 'closed');
+  }
+
+  @Watch('state')
+  public watchState() {
+    this.onState.emit(this.state);
   }
 
   componentDidLoad() {
