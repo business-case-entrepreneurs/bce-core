@@ -12,6 +12,7 @@ export const config: Config = {
   plugins: [sass({ injectGlobalPaths: ['./scss/index.scss'] })],
   outputTargets: [
     { type: 'dist', dir: './dist', esmLoaderPath: '../loader' },
+    { type: 'dist-custom-elements-bundle' },
     {
       type: 'www',
       dir: './www',

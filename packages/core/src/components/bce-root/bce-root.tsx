@@ -168,7 +168,7 @@ export class Root {
     return this.execute<string>(
       dialog,
       res => {
-        dialog.addEventListener('submit', () => res(input.value));
+        dialog.addEventListener('submit', () => res(input.value || ''));
         dialog.addEventListener('backdrop', () => res(''));
         action2.addEventListener('click', () => res(''));
       },
@@ -295,6 +295,6 @@ export interface PromptOptions {
 }
 
 export type Executor<T> = (
-  resolve: (value?: T | PromiseLike<T>) => void,
+  resolve: (value: T | PromiseLike<T>) => void,
   reject: (reason?: any) => void
 ) => Promise<any> | void;
