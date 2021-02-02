@@ -22,12 +22,14 @@
     "clean": "rimraf .stencil dist loader www src/components.d.ts",
     "serve": "stencil build --prod --watch --serve"
   },
+  "dependencies": {
+    "@stencil/core": "^2.4.0"
+  },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@popperjs/core": "^2.5.4",
-    "@stencil/core": "^2.4.0",
     "@stencil/react-output-target": "0.0.9",
     "@stencil/sass": "^1.4.1",
     "codeflask": "^1.4.1",
