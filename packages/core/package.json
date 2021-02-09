@@ -8,7 +8,7 @@
     "email": "solutions@bcase.nl"
   },
   "main": "dist/index.cjs.js",
-  "unpkg": "dist/bce/bce.js",
+  "unpkg": "dist/bce/bce.esm.js",
   "module": "dist/index.js",
   "jsnext:main": "dist/esm/index.js",
   "types": "dist/types/types.d.ts",

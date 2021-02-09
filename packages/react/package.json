@@ -9,6 +9,7 @@
   },
   "sideEffects": false,
   "main": "dist/index.js",
+  "unpkg": "dist/index.esm.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
