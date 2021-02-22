@@ -41,6 +41,8 @@ export class BceForm {
   public async reset() {
     const tasks = this._inputs.map(el => el.reset());
     await Promise.all(tasks);
+    const event = new Event('reset', { bubbles: true, composed: true });
+    this.el.dispatchEvent(event);
   }
 
   @Method()
