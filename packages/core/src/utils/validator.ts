@@ -270,6 +270,29 @@ validator.rules.set('numeric', async (value, args, meta) => {
   return { valid, message };
 });
 
+validator.rules.set('phone', async (value, args, meta) => {
+  if (typeof value !== 'string') {
+    const message = getUnsupportedMessage('phone', meta);
+    throw new Error(message);
+  }
+
+  const regex = /^([\+][0-9]{1,3}([ \.\-])?)?([\(]{1}[0-9]{3}[\)])?([0-9A-Z \.\-]{1,32})((x|ext|extension)?[0-9]{1,4}?)$/;
+  const valid = regex.test(value);
+  const message = 'This field should contain a phone number';
+  return { valid, message };
+});
+
+validator.rules.set('postal-code', async (value, args, meta) => {
+  if (typeof value !== 'string') {
+    const message = getUnsupportedMessage('postal-code', meta);
+    throw new Error(message);
+  }
+
+  const valid = /^[1-9][0-9]{3}(?!SA|SD|SS)[A-Z]{2}$/.test(value);
+  const message = 'This field should contain a Dutch postal code';
+  return { valid, message };
+});
+
 validator.rules.set('required', async value => {
   const valid = Array.isArray(value) ? !!value.length : value === 0 || !!value;
   const message = 'This field is required.';
