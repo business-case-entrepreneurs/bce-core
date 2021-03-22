@@ -270,11 +270,15 @@ export class Upload {
     if (!this.multiple && this.value.length) return;
 
     if (this.store) {
+      const ids: string[] = [];
+
       for (const file of Array.from(files)) {
         const id = window.BCE.generateId();
         this.store.upload(id, file, this.metadata);
+        ids.push(id);
       }
 
+      this.updateValue([...this.value, ...ids], false);
       return;
     }
 
