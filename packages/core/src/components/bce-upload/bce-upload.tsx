@@ -12,6 +12,7 @@ import {
 
 import { getInputCreator } from '../bce-input-creator/input-creator';
 import { FileRef } from '../../models/file-ref';
+import { FileStore } from '../../models/file-store';
 import { FileManager } from '../../utils/file-manager';
 import { BceFile } from '../../utils/bce-file';
 import { ripple } from '../../utils/ripple';
@@ -81,6 +82,9 @@ export class Upload {
   public name?: string;
 
   @Prop()
+  public store?: FileStore;
+
+  @Prop()
   public tooltip?: string;
 
   @Prop({ reflect: true })
@@ -123,8 +127,22 @@ export class Upload {
     }
   }
 
-  private handleData = (data: FileManager.Data) => {
-    this.data = data;
+  private handleData = (data: FileManager.Data | FileStore.Data) => {
+    this.data = Object.keys(data).reduce((acc, id) => {
+      const value = data[id];
+      if ('file' in value) return { ...acc, [id]: value };
+
+      const progress = value.progress === undefined ? -1 : value.progress;
+      const file: FileRef = {
+        hash: value.record.hash,
+        id: value.claim.id,
+        name: value.claim.name,
+        type: value.record.type,
+        url: value.record.url
+      };
+
+      return { ...acc, [id]: { file, progress } };
+    }, {} as FileManager.Data);
   };
 
   private handleDragEnter = (event: DragEvent) => {
@@ -202,13 +220,15 @@ export class Upload {
 
   @Method()
   public async cancel(id: string) {
-    return this._server.cancel(id);
+    return this.store ? this.store.cancel(id) : this._server.cancel(id);
   }
 
   @Method()
   public async delete(id: string) {
     this.updateValue(this.value.filter(v => v !== id));
-    return this._server.delete(id, this.metadata);
+    return this.store
+      ? this.store.delete(id)
+      : this._server.delete(id, this.metadata);
   }
 
   @Method()
@@ -240,7 +260,9 @@ export class Upload {
       ? (filename?.replace(regex, '') || value.name) + ext
       : filename || value.name;
 
-    return this._server.rename(id, name);
+    return this.store
+      ? this.store.rename(id, name)
+      : this._server.rename(id, name);
   }
 
   @Method()
@@ -251,6 +273,18 @@ export class Upload {
     const converted = Array.isArray(files)
       ? files
       : Array.from(files).map(f => this.toFile(f, f.name));
+
+    if (this.store) {
+      for (const file of converted) {
+        this.store.upload(
+          file.id,
+          { ...file.blob, lastModified: -1, name: file.name },
+          this.metadata
+        );
+      }
+
+      return;
+    }
 
     // Filter files
     const tasks = converted.map(async file => {
@@ -280,7 +314,8 @@ export class Upload {
 
   @Watch('value')
   public watchValue(value: string[]) {
-    this._server.subscribe(this.handleData, value);
+    if (this.store) this.store.subscribe(this.handleData, value);
+    else this._server.subscribe(this.handleData, value);
   }
 
   private toFile(blob: Blob, name: string) {
@@ -305,6 +340,7 @@ export class Upload {
   }
 
   disconnectedCallback() {
+    this.store?.unsubscribe(this.handleData);
     this._server.unsubscribe(this.handleData);
   }
 

@@ -7,6 +7,7 @@ export * from './models/color-scheme';
 export * from './models/condition';
 export * from './models/file-ref';
 export * from './models/file-server';
+export * from './models/file-store';
 export * from './utils/bce-file';
 export * from './utils/color';
 export * from './utils/debounce';
