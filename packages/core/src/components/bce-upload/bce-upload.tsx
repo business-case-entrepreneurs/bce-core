@@ -185,27 +185,27 @@ export class Upload {
     input.value = '';
   };
 
-  private handleUrl = async () => {
-    if (this.disabled) return;
+  // private handleUrl = async () => {
+  //   if (this.disabled) return;
 
-    const url = window.prompt();
-    if (!url) return;
+  //   const url = window.prompt();
+  //   if (!url) return;
 
-    // Download as blob
-    const req = new Request(url);
-    const res = await fetch(req);
-    const blob = await res.blob();
+  //   // Download as blob
+  //   const req = new Request(url);
+  //   const res = await fetch(req);
+  //   const blob = await res.blob();
 
-    // Find filename
-    const header = res.headers.get('content-disposition');
-    const match = header?.match(/filename="(.+)"/);
-    const name = match && match[1];
-    const fallback = new URL(url).pathname.split('/').pop();
+  //   // Find filename
+  //   const header = res.headers.get('content-disposition');
+  //   const match = header?.match(/filename="(.+)"/);
+  //   const name = match && match[1];
+  //   const fallback = new URL(url).pathname.split('/').pop();
 
-    // Download and use the file
-    const file = this.toFile(blob, name || fallback || 'unnamed');
-    this.upload([file]);
-  };
+  //   // Download and use the file
+  //   const file = this.toFile(blob, name || fallback || 'unnamed');
+  //   this.upload([file]);
+  // };
 
   private ignoreEvent = (event: Event) => {
     event.stopPropagation();
@@ -266,25 +266,20 @@ export class Upload {
   }
 
   @Method()
-  public async upload(files: BceFile[] | FileList) {
+  public async upload(files: FileList) {
     if (!this.multiple && this.value.length) return;
 
-    // Ensure input is a BceFile array
-    const converted = Array.isArray(files)
-      ? files
-      : Array.from(files).map(f => this.toFile(f, f.name));
-
     if (this.store) {
-      for (const file of converted) {
-        this.store.upload(
-          file.id,
-          { ...file.blob, lastModified: -1, name: file.name },
-          this.metadata
-        );
+      for (const file of Array.from(files)) {
+        const id = window.BCE.generateId();
+        this.store.upload(id, file, this.metadata);
       }
 
       return;
     }
+
+    // Ensure input is a BceFile array
+    const converted = Array.from(files).map(f => this.toFile(f, f.name));
 
     // Filter files
     const tasks = converted.map(async file => {
@@ -395,10 +390,10 @@ export class Upload {
         >
           File
         </bce-chip>
-        <bce-chip icon="fas:globe" value="url" onClick={this.handleUrl}>
+        {/* <bce-chip icon="fas:globe" value="url" onClick={this.handleUrl}>
           URL
         </bce-chip>
-        {/* <bce-chip icon="fas:cloud" value="cloud">
+        <bce-chip icon="fas:cloud" value="cloud">
           Cloud
         </bce-chip>
         <bce-chip icon="bce:unsplash" value="unsplash">
