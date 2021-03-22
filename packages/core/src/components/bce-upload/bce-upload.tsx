@@ -132,7 +132,7 @@ export class Upload {
       const value = data[id];
       if ('file' in value) return { ...acc, [id]: value };
 
-      const progress = value.progress === undefined ? -1 : value.progress;
+      const progress = value.progress === undefined ? 1 : value.progress;
       const file: FileRef = {
         hash: value.record.hash,
         id: value.claim.id,
