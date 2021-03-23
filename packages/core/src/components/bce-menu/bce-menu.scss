@@ -2,7 +2,7 @@
   @include bce-color-default(primary);
   display: inline-block;
 
-  .trigger {
+  .trigger bce-button {
     @include bce-color-default-on(surface);
     cursor: pointer;
     text-transform: none;

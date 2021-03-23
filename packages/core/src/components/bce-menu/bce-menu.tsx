@@ -40,9 +40,9 @@ export class BceMenu {
   #menu?: MenuControl;
   #popper?: Instance;
 
-  private get trigger(): HTMLBceButtonElement {
+  private get trigger() {
     const root = this.el.shadowRoot!;
-    return root.querySelector('.trigger') as HTMLBceButtonElement;
+    return root.querySelector('.trigger') as HTMLDivElement;
   }
 
   private handleSlotChange = () => {
@@ -112,16 +112,13 @@ export class BceMenu {
 
   render() {
     return [
-      <bce-button
-        a11yAriaHaspopup="menu"
-        a11yAriaExpanded={this.active}
-        class="trigger"
-        design="text"
-        icon={this.icon}
-        iconPosition="right"
-      >
-        {!this.hideLabel && this.label}
-      </bce-button>,
+      <div aria-haspopup="menu" aria-expanded={this.active} class="trigger">
+        <slot name="trigger">
+          <bce-button design="text" icon={this.icon} iconPosition="right">
+            {!this.hideLabel && this.label}
+          </bce-button>
+        </slot>
+      </div>,
       <div role="menu" data-active={this.active}>
         <slot />
       </div>

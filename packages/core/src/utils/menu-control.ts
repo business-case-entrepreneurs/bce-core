@@ -8,6 +8,7 @@ type Trigger =
   | HTMLBceButtonElement
   | HTMLButtonElement
   | HTMLBceInputElement
+  | HTMLDivElement
   | HTMLInputElement;
 
 interface MenuControlOptions {
@@ -161,7 +162,7 @@ export class MenuControl {
   private isDropdownOption(
     el: Trigger | Item | null
   ): el is HTMLBceOptionElement {
-    return !!el && el.type === 'dropdown';
+    return !!el && 'type' in el && el.type === 'dropdown';
   }
 
   private selectItem(item?: Item) {
