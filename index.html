@@ -1,0 +1,80 @@
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <meta name="theme-color" content="#080707"> <title>BCE Core</title> <link rel="stylesheet" href="build/bce.css"> <style>html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        vertical-align: top;
+        height: 100%;
+        padding: 0 16px;
+        letter-spacing: 2px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      main {
+        padding: 16px;
+      }</style> </head> <body> <bce-root id="app"> <bce-status-bar></bce-status-bar> <bce-header> <bce-nav-button></bce-nav-button> <a class="logo" href="/#" tabindex="-1"> BCE Technology </a> </bce-header> <bce-side-bar> <bce-nav> <bce-link icon="fas:home" href="/#">Home</bce-link> <bce-link icon="fas:chart-line" href="/#dashboard"> Dashboard </bce-link> <bce-link icon="fas:users" href="/#respondents">Respondents</bce-link> <bce-link icon="fas:building"> Organization <bce-link slot="menu" icon="fas:user-plus" href="/#org/users"> Users </bce-link> <bce-link slot="menu" icon="fas:user-tag" href="/#org/roles"> Roles </bce-link> <bce-link slot="menu" icon="fas:credit-card" href="/#org/billing"> Billing </bce-link> </bce-link> <bce-link icon="fas:tools"> Admin <bce-link slot="menu" icon="fas:user-circle" href="/#admin/accounts"> Accounts </bce-link> <bce-link slot="menu" icon="fas:city" href="/#admin/organizations"> Organizations </bce-link> <bce-link slot="menu" icon="fas:file-invoice" href="/#admin/invoices"> Invoices </bce-link> <bce-link slot="menu" icon="fas:shapes" href="/#admin/editor"> Module Editor </bce-link> </bce-link> <bce-link icon="fas:cog" href="/#settings">Settings</bce-link> </bce-nav> <div style="flex: 1 0 auto;"></div> <bce-menu id="color-scheme" color="dark" icon="fas:star-half-alt" label="Color Theme" placement="top"> <bce-button icon="fas:star-half-alt" onclick="BCE.setColorScheme('auto'); updateColorSchemeIcon()"> Auto </bce-button> <bce-button icon="far:star" onclick="BCE.setColorScheme('light'); updateColorSchemeIcon()"> Light </bce-button> <bce-button icon="fas:star" onclick="BCE.setColorScheme('dark'); updateColorSchemeIcon()"> Dark </bce-button> </bce-menu> </bce-side-bar> <main> <bce-card> <bce-color compact="" id="color-primary" label="Primary"></bce-color> <bce-color compact="" id="color-secondary" label="Secondary"></bce-color> </bce-card> <bce-card> <h3>BCE Button</h3> <section> <h4>Contained</h4> <bce-button>Primary</bce-button> <bce-button color="secondary">Secondary</bce-button> <bce-button icon="square">Icon</bce-button> <bce-button color="secondary" icon="square"></bce-button> <bce-button disabled="">Disabled</bce-button> <br> <bce-button color="light">Light</bce-button> <bce-button color="dark">Dark</bce-button> </section> <section> <h4>Outline</h4> <bce-button design="outline">Primary</bce-button> <bce-button color="secondary" design="outline"> Secondary </bce-button> <bce-button design="outline" icon="square"> Icon </bce-button> <bce-button color="secondary" design="outline" icon="square"></bce-button> <bce-button design="outline" disabled=""> Disabled </bce-button> </section> <section> <h4>Text</h4> <bce-button design="text">Primary</bce-button> <bce-button color="secondary" design="text"> Secondary </bce-button> <bce-button design="text" icon="square"> Icon </bce-button> <bce-button color="secondary" design="text" icon="square"></bce-button> <bce-button design="text" disabled=""> Disabled </bce-button> </section> <section> <h4>Floating Action Button</h4> <bce-fab color="dark" inline=""> <bce-button onclick="print('Audio')">Audio</bce-button> <bce-button onclick="print('Checkbox')">Checkbox</bce-button> <bce-button onclick="print('Header')">Header</bce-button> <bce-button onclick="print('Icon')">Icon</bce-button> <bce-button onclick="print('Image')">Image</bce-button> <bce-button onclick="print('Input')">Input</bce-button> <bce-button onclick="print('Matrix')">Matrix</bce-button> <bce-button onclick="print('Radio')">Radio</bce-button> <bce-button onclick="print('Slider')">Slider</bce-button> <bce-button onclick="print('Text')">Text</bce-button> <bce-button onclick="print('Video')">Video</bce-button> </bce-fab> </section> </bce-card> <bce-card> <h3>BCE Form</h3> <section> <h4>Input</h4> <bce-form onerror="app.message('Error')" onsubmit="app.message('Submit')"> <bce-input type="email" label="Email" info="What's your email address?" tooltip="bce-tooltip" autocomplete="email" validation="required|email"></bce-input> <bce-input type="password" label="Password" autocomplete="current-password" validation="required" info="This should be a value only you know..."></bce-input> <bce-input type="number" label="OTP code" info="The One Time Password code." value="1234" disabled=""></bce-input> <bce-input type="textarea" label="Description" placeholder="Placeholder Textarea" rows="4" info="Provide a description."></bce-input> <div style="text-align: right;"> <bce-button design="text" type="reset">Reset</bce-button> <bce-button design="text" type="submit">Submit</bce-button> </div> </bce-form> </section> <section> <h4>Select</h4> <bce-form> <bce-select type="checkbox" label="bce-select[type='checkbox']" value="a,b" validation="required|min:2"> <bce-option value="a">Option A</bce-option> <bce-option value="b">Option B</bce-option> <bce-option value="c">Option C</bce-option> </bce-select> <bce-select type="radio" label="bce-select[type='radio']" value="z" validation="is:z"> <bce-option value="x">Option X</bce-option> <bce-option value="y">Option Y</bce-option> <bce-option value="z">Option Z</bce-option> </bce-select> <bce-select type="filter" label="bce-select[type='filter']" validation="is:the-hague,nijmegen" value="the-hague,nijmegen" center=""> <bce-chip value="amsterdam">Amsterdam</bce-chip> <bce-chip value="arnhem">Arnhem</bce-chip> <bce-chip value="delft">Delft</bce-chip> <bce-chip value="groningen">Groningen</bce-chip> <bce-chip value="the-hague">The Hague</bce-chip> <bce-chip value="leiden">Leiden</bce-chip> <bce-chip value="maastricht">Maastricht</bce-chip> <bce-chip value="nijmegen">Nijmegen</bce-chip> <bce-chip value="rotterdam">Rotterdam</bce-chip> <bce-chip value="utrecht">Utrecht</bce-chip> <bce-chip value="leeuwarden">Leeuwarden</bce-chip> </bce-select> <bce-select type="choice" label="bce-select[type='choice']" value="groningen" center=""> <bce-chip value="amsterdam">Amsterdam</bce-chip> <bce-chip value="arnhem">Arnhem</bce-chip> <bce-chip value="delft">Delft</bce-chip> <bce-chip value="groningen">Groningen</bce-chip> <bce-chip value="the-hague">The Hague</bce-chip> <bce-chip value="leiden">Leiden</bce-chip> <bce-chip value="maastricht">Maastricht</bce-chip> <bce-chip value="nijmegen">Nijmegen</bce-chip> <bce-chip value="rotterdam">Rotterdam</bce-chip> <bce-chip value="utrecht">Utrecht</bce-chip> <bce-chip value="leeuwarden">Leeuwarden</bce-chip> </bce-select> <bce-select type="dropdown" label="bce-select[type='dropdown']" value="leiden"> <bce-option value="amsterdam">Amsterdam</bce-option> <bce-option value="arnhem">Arnhem</bce-option> <bce-option value="delft">Delft</bce-option> <bce-option value="groningen">Groningen</bce-option> <bce-option value="the-hague">The Hague</bce-option> <bce-option value="leiden">Leiden</bce-option> <bce-option value="maastricht">Maastricht</bce-option> <bce-option value="nijmegen">Nijmegen</bce-option> <bce-option value="rotterdam">Rotterdam</bce-option> <bce-option value="utrecht">Utrecht</bce-option> <bce-option value="leeuwarden">Leeuwarden</bce-option> </bce-select> <bce-select label="bce-select[type='input']" id="taginput" info="Type something and press enter to add is as an option." type="input"></bce-select> </bce-form> </section> <section> <h4>Switch</h4> <bce-form> <bce-switch value="true" color="primary"></bce-switch> <bce-switch value="true" color="secondary"></bce-switch> <br> <bce-switch value="true" color="success"></bce-switch> <bce-switch value="true" color="error"></bce-switch> <bce-switch value="true" color="warning"></bce-switch> <br> <bce-switch label="Regular"></bce-switch> <bce-switch label="Slotted" info="Default slot">...</bce-switch> <bce-switch label="Conditional" info="slot=true / slot=false"> <span slot="true">True</span> <span slot="false">False</span> </bce-switch> </bce-form> </section> <section> <h4>Slider</h4> <bce-form> <bce-slider color="primary"></bce-slider> <bce-slider color="secondary"></bce-slider> <br> <bce-slider color="success"></bce-slider> <bce-slider color="error"></bce-slider> <bce-slider color="warning"></bce-slider> <br> <bce-slider label="Regular"></bce-slider> <bce-slider label="Block" min="0" max="3" info="min: 0 - max: 3 - step: 1"></bce-slider> </bce-form> </section> </bce-card> <bce-card> <h3>File Upload</h3> <p> There is no file manager attached to this preview. By default the
+            upload component will fake a server upload. </p> <bce-upload label="Audio" accept="audio/*" multiple=""></bce-upload> <bce-upload label="Images" accept="image/*" multiple=""></bce-upload> <bce-upload label="Videos" accept="video/*" multiple=""></bce-upload> <bce-upload label="Anything" multiple=""></bce-upload> </bce-card> <bce-card id="message"> <h3>BCE Message</h3> <bce-button color="dark" design="text" onclick="app.message('Default Message')"> Message </bce-button> <br> <bce-button color="primary" design="text" onclick="app.message('Primary color', { color: 'primary' })"> Primary </bce-button> <bce-button color="secondary" design="text" onclick="app.message('Secondary color', { color: 'secondary' })"> Secondary </bce-button> <br> <bce-button color="success" design="text" onclick="app.message('Success message', { color: 'success' })"> Success </bce-button> <bce-button color="error" design="text" onclick="app.message('Error message', { color: 'error' })"> Error </bce-button> <bce-button color="warning" design="text" onclick="app.message('Warning message', { color: 'warning' })"> Warning </bce-button> <h3>BCE Dialog</h3> <bce-button design="text" onclick="alert()">Alert</bce-button> <bce-button design="text" onclick="confirm()">Confirm</bce-button> <bce-button design="text" disabled="">Prompt</bce-button> </bce-card> <bce-card> <h3>BCE Code</h3> <section> <h4>Code Viewer</h4> <bce-code value="console.log('Hello World!');" language="js"></bce-code> </section> <section> <h4>Code Editor</h4> <bce-code-editor value="console.log('Hello World!');" language="js"></bce-code-editor> </section> </bce-card> <bce-card> <h4>BCE Menu</h4> <bce-menu> <bce-button icon="square" onclick="print(1)">Action 1</bce-button> <bce-button icon="square" onclick="print(2)">Action 2</bce-button> <bce-button icon="square" onclick="print(3)">Action 3</bce-button> <bce-button icon="square" onclick="print(4)">Action 4</bce-button> </bce-menu> </bce-card> <bce-fab color="primary" label="Floating Action Button"> <bce-button onclick="print('Lorem ipsum?')">Lorem ipsum?</bce-button> <bce-button onclick="print('Hello World!')">Hello World!</bce-button> </bce-fab> </main> </bce-root> <script type="module" src="build/bce.esm.js"></script> <script nomodule="" src="build/bce.js"></script> <script>
+      window.onload = () => {
+        updateColorSchemeIcon();
+        setupColorPicker('primary');
+        setupColorPicker('secondary');
+      };
+
+      function print(msg) {
+        app.message(msg);
+      }
+
+      function alert() {
+        const title = 'Alert dialog';
+        const message = 'Lorem ipsum dolor sit amet!';
+        app.alert(title, message);
+      }
+
+      async function confirm() {
+        const title = 'Hello World!';
+        const message =
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat atque, magnam odio consequuntur pariatur totam quis tenetur, temporibus dolorem sapiente corrupti ex. Enim doloribus vitae fugiat quia odio consectetur voluptates.';
+
+        const options = { ok: 'Yes', cancel: 'Cancel' };
+        const answer = await app.confirm(title, message, options);
+        app.message('Answer: ' + answer);
+      }
+
+      async function setupColorPicker(name) {
+        const input = document.querySelector('#color-' + name);
+        const current = await app.accent(name);
+        input.value = current;
+        input.default = current;
+        input.addEventListener('input', e => app.accent(name, e.target.value));
+      }
+
+      function getColorSchemeIcon(color) {
+        switch (color) {
+          case 'auto':
+            return 'fas:star-half-alt';
+          case 'dark':
+            return 'fas:star';
+          case 'light':
+            return 'far:star';
+        }
+      }
+
+      function updateColorSchemeIcon() {
+        const el = document.querySelector('#color-scheme');
+        el.icon = getColorSchemeIcon(BCE.getColorScheme());
+      }
+    </script> <script type="module">
+      import { library } from './static/fa-core.js';
+      import { far } from './static/fa-far.js';
+      import { fas } from './static/fa-fas.js';
+
+      library.add(far, fas);
+    </script> </body></html>

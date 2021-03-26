@@ -1,0 +1,1 @@
+function n(n,t=200){let o;return function(){const i=this,w=arguments;window.clearTimeout(o),o=window.setTimeout((()=>n.apply(i,w)),t)}}export{n as d}
