@@ -5,6 +5,7 @@ import { FileManager } from '../utils/file-manager';
 import { getColorShade, setColorShade } from '../utils/color';
 import * as color from '../utils/color-scheme';
 import { ScrollSpy } from '../utils/scroll-spy';
+import { validator } from '../utils/validator';
 
 const bce: BceCore = {
   file: FileManager.inMemory(),
@@ -14,7 +15,8 @@ const bce: BceCore = {
   getColorShade,
   setColorScheme: color.setColorScheme,
   setColorShade,
-  ScrollSpy
+  ScrollSpy,
+  validator
 };
 
 const main = () => {

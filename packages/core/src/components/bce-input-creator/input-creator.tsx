@@ -1,7 +1,7 @@
 import { FunctionalComponent, h } from '@stencil/core';
 
 import { debounce } from '../../utils/debounce';
-import { validator, ValidatorError } from '../../utils/validator';
+import { ValidatorError } from '../../utils/validator';
 
 interface Props {
   el: HTMLElement;
@@ -26,6 +26,7 @@ export const getInputCreator = <T extends any>(
   component: T,
   onerror?: (error: string) => any
 ): InputCreator => {
+  const { validator } = window.BCE;
   let error = '';
 
   const fc: FunctionalComponent = (_, children) => {

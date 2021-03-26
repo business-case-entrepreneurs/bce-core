@@ -2,6 +2,7 @@ import { ColorScheme } from './models/color-scheme';
 import { getColorShade, setColorShade } from './utils/color';
 import { FileManager } from './utils/file-manager';
 import { ScrollSpy } from './utils/scroll-spy';
+import { validator } from './utils/validator';
 
 export * from './models/color-scheme';
 export * from './models/condition';
@@ -27,6 +28,7 @@ declare global {
     generateId: () => string;
     getColorScheme: () => ColorScheme;
     getColorShade: typeof getColorShade;
+    validator: typeof validator;
     setColorScheme: (scheme: ColorScheme) => void;
     setColorShade: typeof setColorShade;
     ScrollSpy: typeof ScrollSpy;
