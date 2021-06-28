@@ -89,6 +89,6 @@ jobs:
           path: packages/core/www
 
       - uses: JamesIves/github-pages-deploy-action@4.1.1
-        env:
+        with:
           branch: gh-pages
           folder: packages/core/www
