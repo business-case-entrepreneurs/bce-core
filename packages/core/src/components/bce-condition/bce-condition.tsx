@@ -48,6 +48,9 @@ export class Condition {
   private el!: HTMLBceConditionElement;
 
   @Prop()
+  public color?: string;
+
+  @Prop()
   public template: ConditionTemplate[] = [
     { name: 'date', label: 'Date', input: 'date' }
   ];
@@ -164,6 +167,7 @@ export class Condition {
 
     return (
       <bce-select
+        color={this.color}
         key={row.data}
         type="dropdown"
         value={row.check}
@@ -197,6 +201,7 @@ export class Condition {
         return [
           this.renderCheck(row, path, type),
           <bce-input
+            color={this.color}
             type={type}
             value={row.value}
             onInput={e => this.handleInput(e, path, 'value')}
@@ -234,6 +239,7 @@ export class Condition {
     return (
       <li key={path.join('-') + '-' + row.data}>
         <bce-select
+          color={this.color}
           type="dropdown"
           value={row.data}
           onInput={e => this.handleInput(e, path, 'data')}
@@ -247,7 +253,7 @@ export class Condition {
         {this.renderInput(row, path, template?.input)}
 
         {deletable && (
-          <bce-menu>
+          <bce-menu color={this.color}>
             <bce-button
               icon="fas:trash"
               onClick={e => this.handleRemoveCondition(e, path)}
@@ -268,6 +274,7 @@ export class Condition {
         {group.condition.length > 1 && (
           <header>
             <bce-select
+              color={this.color}
               type="dropdown"
               value={group.match}
               onInput={e => this.handleInput(e, path, 'match')}
@@ -287,6 +294,7 @@ export class Condition {
 
         <footer>
           <bce-button
+            color={this.color}
             design="text"
             icon="fas:plus"
             onClick={this.handleAddCondition}
@@ -295,6 +303,7 @@ export class Condition {
           </bce-button>
 
           {/* <bce-button
+            color={this.color}
             design="text"
             icon="fas:layer-group"
             onClick={this.handleAddGroup}
