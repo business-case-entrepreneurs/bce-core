@@ -1,4 +1,5 @@
 :host {
+  --bce-dialog-max-width: 560px;
   @include bce-color-default(surface);
   position: fixed;
   top: 0;
@@ -19,7 +20,7 @@
     position: absolute;
     padding: 24px;
     width: calc(100vw - 64px);
-    max-width: 560px;
+    max-width: var(--bce-dialog-max-width);
     border-radius: 4px;
     background-color: bce-color(surface);
     color: bce-color-on(surface);
