@@ -1,8 +1,10 @@
 :host {
+  --bce-msg-bottom: -16px;
+
   small {
     position: absolute;
     font-size: 12px;
-    bottom: -16px;
+    bottom: var(--bce-msg-bottom);
     left: 12px;
     text-align: left;
     transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
