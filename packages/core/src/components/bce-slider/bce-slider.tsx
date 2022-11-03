@@ -62,6 +62,14 @@ export class BceSlider {
     this.#inputCreator.validate();
   };
 
+  private handleClick = () => {
+    if (this.value == undefined) {
+      const min = this.min != undefined ? this.min : 0;
+      const max = this.max != undefined ? this.max : 100;
+      this.value = Math.round((max - min) / 2 + min);
+    }
+  };
+
   private handleFocus = () => {
     this.hasFocus = true;
   };
@@ -97,10 +105,11 @@ export class BceSlider {
 
     const s = 100 / (max - min);
     const width = value * s - s * min;
+    const fillWidth = this.value != undefined ? width : 0;
 
     this.el
       .shadowRoot!.querySelector('input')!
-      .style.setProperty('--fill-width', `${width}%`);
+      .style.setProperty('--fill-width', `${fillWidth}%`);
   }
 
   componentDidLoad() {
@@ -113,6 +122,7 @@ export class BceSlider {
     return (
       <InputCreator>
         <input
+          data-value={this.value}
           disabled={this.disabled}
           max={this.max}
           min={this.min}
@@ -120,6 +130,7 @@ export class BceSlider {
           type="range"
           value={this.value}
           onBlur={this.handleBlur}
+          onClick={this.handleClick}
           onFocus={this.handleFocus}
           onInput={this.handleInput}
           aria-label={this.label}
