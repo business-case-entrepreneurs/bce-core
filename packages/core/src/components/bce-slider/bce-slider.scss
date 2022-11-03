@@ -66,3 +66,20 @@
     }
   }
 }
+
+:host([disabled]) input[type='range'] {
+  background: linear-gradient(
+    to right,
+    bce-color(300) var(--fill-width, 50%),
+    bce-color(ghost) 0
+  );
+  cursor: default;
+
+  &::-webkit-slider-thumb {
+    background-color: bce-color(300);
+  }
+
+  &::-moz-range-thumb {
+    background-color: bce-color(300);
+  }
+}
