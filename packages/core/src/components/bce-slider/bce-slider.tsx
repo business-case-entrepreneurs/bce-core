@@ -63,11 +63,14 @@ export class BceSlider {
   };
 
   private handleClick = () => {
-    if (this.value == undefined) {
-      const min = this.min != undefined ? this.min : 0;
-      const max = this.max != undefined ? this.max : 100;
-      this.value = Math.round((max - min) / 2 + min);
-    }
+    if (this.value != undefined) return;
+
+    const min = this.min != undefined ? this.min : 0;
+    const max = this.max != undefined ? this.max : 100;
+    this.value = Math.round((max - min) / 2 + min);
+
+    const e = new Event('input', { bubbles: true, composed: true });
+    this.el.dispatchEvent(e);
   };
 
   private handleFocus = () => {
