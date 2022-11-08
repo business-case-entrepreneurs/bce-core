@@ -79,14 +79,9 @@
   }
 }
 
-:host([type='checkbox']) input {
-  border-radius: 3px;
-}
-
-:host([type='checkbox'][checked]) {
+:host([type='checkbox']) {
   input {
-    background-color: bce-color();
-    border-color: bce-color();
+    border-radius: 3px;
   }
 
   bce-icon {
@@ -99,9 +94,46 @@
   }
 }
 
-:host([type='checkbox'][checked][disabled]) input {
-  background-color: bce-color(300);
-  border-color: bce-color(300);
+:host([type='checkbox'][checked]) {
+  input {
+    background-color: bce-color();
+    border-color: bce-color();
+  }
+
+  label {
+    color: bce-color();
+  }
+}
+
+:host([type='checkbox'][checked-error]) {
+  input {
+    background-color: bce-color(error);
+  }
+
+  label {
+    color: bce-color(error);
+  }
+}
+
+:host([type='checkbox'][checked][disabled]) {
+  input {
+    background-color: bce-color(300);
+    border-color: bce-color(300);
+  }
+
+  label {
+    color: bce-color(300);
+  }
+}
+
+:host([type='checkbox'][checked-warning]) {
+  input {
+    background-color: bce-color(warning);
+  }
+
+  label {
+    color: bce-color(warning);
+  }
 }
 
 :host([type='dropdown']) {
@@ -137,11 +169,10 @@
   border-radius: 50%;
 }
 
-:host([type='radio'][checked]) input {
-  border-width: 2px;
-  border-color: bce-color();
-
-  &:after {
+:host([type='radio'][checked]),
+:host([type='radio'][checked-error]),
+:host([type='radio'][checked-warning]) {
+  input:after {
     position: absolute;
     content: '';
     margin: 2px;
@@ -150,6 +181,47 @@
     line-height: 32px;
     background-color: bce-color();
     border-radius: 50%;
+  }
+}
+
+:host([type='radio'][checked]) {
+  input {
+    border-width: 2px;
+    border-color: bce-color();
+  }
+
+  label {
+    color: bce-color();
+  }
+}
+
+:host([type='radio'][checked-error]) {
+  input {
+    border-width: 2px;
+    border-color: bce-color(error);
+
+    &:after {
+      background-color: bce-color(error);
+    }
+  }
+
+  label {
+    color: bce-color(error);
+  }
+}
+
+:host([type='radio'][checked-warning]) {
+  input {
+    border-width: 2px;
+    border-color: bce-color(warning);
+
+    &:after {
+      background-color: bce-color(warning);
+    }
+  }
+
+  label {
+    color: bce-color(warning);
   }
 }
 

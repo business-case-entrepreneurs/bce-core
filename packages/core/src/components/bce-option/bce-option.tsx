@@ -28,6 +28,12 @@ export class Option {
   @Prop({ reflect: true })
   public allowNull?: boolean;
 
+  @Prop({ reflect: true })
+  public checkedError?: boolean;
+
+  @Prop({ reflect: true })
+  public checkedWarning?: boolean;
+
   // #region Forwarded to native input
   @Prop({ reflect: true })
   public checked?: boolean;
@@ -121,6 +127,12 @@ export class Option {
       />,
       this.type === 'checkbox' && this.checked && (
         <bce-icon raw="fas:check" fixed-width />
+      ),
+      this.type === 'checkbox' && this.checkedError && (
+        <bce-icon raw="fas:times" fixed-width />
+      ),
+      this.type === 'checkbox' && this.checkedWarning && (
+        <bce-icon raw="fas:minus" fixed-width />
       ),
       <label
         htmlFor={this.#id}

@@ -34,6 +34,12 @@ export class Select {
   @Prop({ reflect: true })
   public allowNull?: boolean;
 
+  @Prop({})
+  public answerError?: SelectValue;
+
+  @Prop({})
+  public answerWarning?: SelectValue;
+
   @Prop({ reflect: true })
   public center?: boolean;
 
@@ -197,6 +203,30 @@ export class Select {
     for (const option of this.#options) option.disabled = this.disabled;
   }
 
+  @Watch('answerError')
+  @Watch('answerWarning')
+  public watchAnswer() {
+    const { answerError, answerWarning } = this;
+
+    switch (this.type) {
+      case 'checkbox':
+        const errors = this.parseValues(answerError);
+        const warning = this.parseValues(answerWarning);
+
+        for (const option of this.#options as HTMLBceOptionElement[]) {
+          option.checkedError = errors.indexOf(option.value || '') >= 0;
+          option.checkedWarning = warning.indexOf(option.value || '') >= 0;
+        }
+        return;
+      case 'radio':
+        for (const option of this.#options as HTMLBceOptionElement[]) {
+          option.checkedError = this.answerError === option.value;
+          option.checkedWarning = this.answerWarning === option.value;
+        }
+        return;
+    }
+  }
+
   @Watch('value')
   public watchValue(value?: SelectValue) {
     if (this.#initialized) this.#inputCreator.handleInput();
@@ -285,6 +315,12 @@ export class Select {
     this.el.dispatchEvent(e);
   }
 
+  private parseValues(values?: SelectValue) {
+    return Array.isArray(values)
+      ? values
+      : values?.split(',').map(v => v.trim()) ?? [];
+  }
+
   private removeEventHandlers(el: HTMLElement) {
     el.removeEventListener('click', this.handleClick);
   }
@@ -306,6 +342,7 @@ export class Select {
   }
 
   componentWillLoad() {
+    this.watchAnswer();
     this.watchValue(this.value);
   }
 
@@ -345,6 +382,8 @@ export class Select {
     slot?.addEventListener('slotchange', this.handleSlotChange);
     this.handleSlotChange();
     this.watchDisabled();
+
+    this.watchAnswer();
     this.watchValue(this.value);
 
     this.#initialized = true;
