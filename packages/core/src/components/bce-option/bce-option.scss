@@ -20,7 +20,7 @@
     -webkit-appearance: none;
     appearance: none;
     outline: none;
-    cursor: pointer;
+    cursor: inherit;
   }
 
   label {
@@ -28,7 +28,7 @@
     display: inline-block;
     line-height: 32px;
     height: 100%;
-    cursor: pointer;
+    cursor: inherit;
 
     &:before {
       position: absolute;
@@ -51,6 +51,8 @@
 
 :host([type='checkbox'][disabled]),
 :host([type='radio'][disabled]) {
+  cursor: default;
+
   input {
     border-color: bce-color-on(surface, 4);
     background-color: bce-color-on(surface, 4);
@@ -97,7 +99,6 @@
 :host([type='checkbox'][checked]) {
   input {
     background-color: bce-color();
-    border-color: bce-color();
   }
 
   label {
@@ -105,7 +106,18 @@
   }
 }
 
-:host([type='checkbox'][checked-error]) {
+:host([type='checkbox'][checked][disabled]) {
+  input {
+    background-color: bce-color(300);
+  }
+
+  label {
+    color: bce-color(300);
+  }
+}
+
+:host([type='checkbox'][checked-error]),
+:host([type='checkbox'][checked-error][disabled]) {
   input {
     background-color: bce-color(error);
   }
@@ -115,18 +127,8 @@
   }
 }
 
-:host([type='checkbox'][checked][disabled]) {
-  input {
-    background-color: bce-color(300);
-    border-color: bce-color(300);
-  }
-
-  label {
-    color: bce-color(300);
-  }
-}
-
-:host([type='checkbox'][checked-warning]) {
+:host([type='checkbox'][checked-warning]),
+:host([type='checkbox'][checked-warning][disabled]) {
   input {
     background-color: bce-color(warning);
   }
@@ -195,7 +197,16 @@
   }
 }
 
-:host([type='radio'][checked-error]) {
+:host([type='radio'][checked][disabled]) input {
+  border-color: bce-color(300);
+
+  &:after {
+    background-color: bce-color(300);
+  }
+}
+
+:host([type='radio'][checked-error]),
+:host([type='radio'][checked-error][disabled]) {
   input {
     border-width: 2px;
     border-color: bce-color(error);
@@ -210,7 +221,8 @@
   }
 }
 
-:host([type='radio'][checked-warning]) {
+:host([type='radio'][checked-warning]),
+:host([type='radio'][checked-warning][disabled]) {
   input {
     border-width: 2px;
     border-color: bce-color(warning);
@@ -222,13 +234,5 @@
 
   label {
     color: bce-color(warning);
-  }
-}
-
-:host([type='radio'][checked][disabled]) input {
-  border-color: bce-color(300);
-
-  &:after {
-    background-color: bce-color(300);
   }
 }

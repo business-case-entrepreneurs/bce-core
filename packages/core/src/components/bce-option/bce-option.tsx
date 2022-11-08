@@ -125,15 +125,16 @@ export class Option {
         aria-selected={this.type === 'dropdown' && this.checked}
         onInput={this.ignoreEvent}
       />,
-      this.type === 'checkbox' && this.checked && (
-        <bce-icon raw="fas:check" fixed-width />
-      ),
-      this.type === 'checkbox' && this.checkedError && (
-        <bce-icon raw="fas:times" fixed-width />
-      ),
-      this.type === 'checkbox' && this.checkedWarning && (
-        <bce-icon raw="fas:minus" fixed-width />
-      ),
+
+      this.type === 'checkbox' &&
+        (this.checkedError ? (
+          <bce-icon raw="fas:times" fixed-width />
+        ) : this.checkedWarning ? (
+          <bce-icon raw="fas:minus" fixed-width />
+        ) : this.checked ? (
+          <bce-icon raw="fas:check" fixed-width />
+        ) : null),
+
       <label
         htmlFor={this.#id}
         onClick={this.ignoreEvent}

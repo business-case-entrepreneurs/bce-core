@@ -210,18 +210,13 @@ export class Select {
 
     switch (this.type) {
       case 'checkbox':
+      case 'radio':
         const errors = this.parseValues(answerError);
         const warning = this.parseValues(answerWarning);
 
         for (const option of this.#options as HTMLBceOptionElement[]) {
           option.checkedError = errors.indexOf(option.value || '') >= 0;
           option.checkedWarning = warning.indexOf(option.value || '') >= 0;
-        }
-        return;
-      case 'radio':
-        for (const option of this.#options as HTMLBceOptionElement[]) {
-          option.checkedError = this.answerError === option.value;
-          option.checkedWarning = this.answerWarning === option.value;
         }
         return;
     }
