@@ -19,22 +19,28 @@
     );
 
     &::-webkit-slider-thumb {
-      @include elevate(1, false);
+      box-shadow: none;
       -webkit-appearance: none;
       appearance: none;
       width: 14px;
       height: 14px;
       background-color: bce-color(light);
       border-radius: 50%;
+      background-clip: padding-box;
+      border: 0.34rem solid transparent;
+      transform: scale(4);
     }
 
     &::-moz-range-thumb {
-      @include elevate(1, false);
+      box-shadow: none;
       width: 14px;
       height: 14px;
       background-color: bce-color(light);
       border-radius: 50%;
       border: none;
+      background-clip: padding-box;
+      border: 0.34rem solid transparent;
+      transform: scale(4);
     }
 
     &[data-value] {
