@@ -74,12 +74,12 @@
   }
 }
 
-:host([type='checkbox']:hover),
-:host([type='radio']:hover) {
-  label:before {
-    opacity: 0.1;
-  }
-}
+// :host([type='checkbox']:hover),
+// :host([type='radio']:hover) {
+//   label:before {
+//     opacity: 0.1;
+//   }
+// }
 
 :host([type='checkbox']) {
   input {
